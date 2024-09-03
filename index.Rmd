@@ -1,6 +1,6 @@
 ---
 title: "Lab journal"
-author: "by: Your Name"
+author: "by: Niels Vullings"
 bibliography: references.bib
 
  
@@ -46,6 +46,7 @@ klippy::klippy(position = c('top', 'right'))
 Last compiled on `r format(Sys.time(), '%B, %Y')`  
 
 *Describe lab journal here.*
+In this labjournal, I will track my work throughout the course Social Networks.
 <br>
 
 ----
