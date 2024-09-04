@@ -4,8 +4,6 @@ title: "Journal 1"
 author: "Niels Vullings"
 ---
 
-
-
 ```{r, globalsettings, echo=FALSE, warning=FALSE, results='hide'}
 library(knitr)
 
@@ -30,18 +28,20 @@ Last compiled on `r format(Sys.time(), '%B, %Y')`
 
 <br>
 
-----
-  
-This is just an example page of your `r colorize("lab journal", "red")`.
-You can journal the assignments of the first day here.
-  
+------------------------------------------------------------------------
 
-----
+# Assignment Week 1
+<br>
 
+## Step 1) The social problem
 
-```{r}
-print("Hello Lab Journal")
-```
+During the course *Comparative Research Project*, two fellow students and I studied the extent to which highbrow cultural tastes influence someone's network diversity in terms of educational attainment. This has complications for cohesion and inequality, because these highbrow activities cost money and, as highbrow tastes are more prevalent among higher educated, there would be segregation within society in terms of educational attainment.
 
+## Step 2) The naive Approach
 
+In our approach, we argued the basic idea that people want to surround themselves with people with similar preferences. Similarly, we argued that highbrow tastes are more prevelant among higher educated, following the works of Pierre Bourdieu. Thus, for those who are lower educated, having highbrow tastes results in a network that is more educationally diverse, as you will have more higher educated individuals in your network. Contrarily, for those who are higher educated, it will lead to a less diverse network, because there are more people who have the same educational attainment as you. In this approach, the ego (or respondent) is central to the story and the people in their "network" solely serve as a count of differing educational levels, relative to the size of one's network.
+
+## Step 3) The social networks approach
+
+Our study did contain some elements of a social networks approach, simply because we looked at egonetworks. However, there are some clear differences between our approach and a true social networks approach. Firstly, due to data limitations, we simply assumed that being high educated and having highbrow tastes was related and thus, having a stronger preferences for highbrow tastes should result in **less** educationally diverse networks for higher educated individuals and **more** educationally diverse networks for lower educated individuals, without taking into account the cultural preferences of the alters. We did not have any information about the alters, apart from what the ego supplied us with (we used name generator data). This also means that we know nothing about the ego's whole network, which would be the next step in having a social network approach. Alongside, we would also need information about the relation between the alters and their preferences. Second, a social network approach would make our theory simpler, we could simply see if people with similar cultural tastes connect (), or if there is segregation based on other characteristics. This would result in a cleaner, less noisy theoretical framework
 
