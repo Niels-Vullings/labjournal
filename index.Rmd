@@ -1,5 +1,5 @@
 ---
-title: "Lab journal"
+title: "Social Networks - Lab Journal"
 author: "by: Niels Vullings"
 bibliography: references.bib
 ---
@@ -24,8 +24,9 @@ colorize <- function(x, color) {sprintf("<span style='color: %s;'>%s</span>", co
 ```
 
 ```{r klippy, echo=FALSE, include=TRUE}
+#Klippy offers a copy/paste button for code files
 klippy::klippy(position = c('top', 'right'))
-# klippy::klippy(color = 'darkgreen')
+klippy::klippy(color = 'darkgreen')
 #klippy::klippy(tooltip_message = 'Click to copy', tooltip_success = 'Done')
 ```
 
@@ -55,13 +56,13 @@ We, Jochem Tolsma and Bas Hofstra, use this repository for our Social Network An
 
 ## How to use
 
-1.  Fork the repository for this website and follow instructions on `README` to get started [here](https://github.com/JochemTolsma/labjournal).
+1.  Under the *My journal*, you can keep track of my progress per week 
 
-2.  Journal your work, by editing the .Rmd-files
+2.  TBD
 
-3.  ...
+3.  TBD
 
-4.  Change everything to make it your own!
+4.  TBD
 
 <br>
 
