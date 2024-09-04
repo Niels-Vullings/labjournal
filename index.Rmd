@@ -32,6 +32,7 @@ klippy::klippy(color = 'darkgreen')
 
 ------------------------------------------------------------------------
 
+
 ::: columns
 ::: {.column width="50%"}
 # My Lab Journal
