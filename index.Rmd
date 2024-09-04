@@ -2,17 +2,12 @@
 title: "Lab journal"
 author: "by: Niels Vullings"
 bibliography: references.bib
-
- 
 ---
-
-
-
 
 ```{r, install remotely, globalsettings, echo=FALSE, warning=FALSE, results='hide'}
 # install.packages("remotes")
 #remotes::install_github("rlesur/klippy")
-``` 
+```
 
 ```{r, globalsettings, echo=FALSE, warning=FALSE, results='hide'}
 library(knitr)
@@ -30,67 +25,48 @@ colorize <- function(x, color) {sprintf("<span style='color: %s;'>%s</span>", co
 
 ```{r klippy, echo=FALSE, include=TRUE}
 klippy::klippy(position = c('top', 'right'))
-klippy::klippy(color = 'darkgreen')
+# klippy::klippy(color = 'darkgreen')
 #klippy::klippy(tooltip_message = 'Click to copy', tooltip_success = 'Done')
 ```
 
+------------------------------------------------------------------------
 
-
-
-----
-
-:::::::::::::: {.columns}
+::: columns
 ::: {.column width="50%"}
-
 # My Lab Journal
-Last compiled on `r format(Sys.time(), '%B, %Y')`  
 
-*Describe lab journal here.*
-In this labjournal, I will track my work throughout the course Social Networks.
-<br>
+Last compiled on `r format(Sys.time(), '%B, %Y')`
 
-----
+In this lab journal, I will track my work throughout the course Social Networks. Here you can find all source code and project development. <br>
 
-##   
+------------------------------------------------------------------------
 
-Everyone can fork this repository. Use this example to journal your lab work and assignments. 
+## 
 
-We, Jochem Tolsma and Bas Hofstra, use this repository for our Social Network Analysis For Social Scientists course [@SNASS]. 
+Everyone can fork this repository. Use this example to journal your lab work and assignments.
 
-
+We, Jochem Tolsma and Bas Hofstra, use this repository for our Social Network Analysis For Social Scientists course [@SNASS].
 :::
+
 ::: {.column width="50%"}
-
-
-
-
 ![](images/cover.jpg)
-
-
 :::
-::::::::::::::
-
+:::
 
 ## How to use
 
-1. Fork the repository for this website and follow instructions on `README` to get started [here](https://github.com/JochemTolsma/labjournal).  
+1.  Fork the repository for this website and follow instructions on `README` to get started [here](https://github.com/JochemTolsma/labjournal).
 
-2. Journal your work, by editing the .Rmd-files
+2.  Journal your work, by editing the .Rmd-files
 
-3. ...
+3.  ...
 
-4. Change everything to make it your own!
-
+4.  Change everything to make it your own!
 
 <br>
 
 Use the top menu to navigate through the journal.
 
-
-----
+------------------------------------------------------------------------
 
 # References
-
-
-
-
