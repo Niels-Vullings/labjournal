@@ -23,7 +23,7 @@ navbar:
     href: https://github.com/Niels-Vullings/labjournal
 output:
   html_document:
-    theme: flatly
+    theme: cerulean
     highlight: default
     toc:  true
     toc_float: true
