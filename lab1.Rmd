@@ -2,6 +2,7 @@
 title: "Journal 1"
 #bibliography: references.bib
 author: "Niels Vullings"
+bibliography: references.bib
 ---
 
 ```{r, globalsettings, echo=FALSE, warning=FALSE, results='hide'}
@@ -31,17 +32,16 @@ Last compiled on `r format(Sys.time(), '%B, %Y')`
 ------------------------------------------------------------------------
 
 # Assignment Week 1
+
 <br>
 
-## Step 1) The social problem
+## Research Questions
 
-During the course *Comparative Research Project*, two fellow students and I studied the extent to which highbrow cultural tastes influence someone's network diversity in terms of educational attainment. This has complications for cohesion and inequality, because these highbrow activities cost money and, as highbrow tastes are more prevalent among higher educated, there would be segregation within society in terms of educational attainment.
+Inequalities are omnipresent in society and this does not exclude the academic world. Be it conscious or subconscious, our actions are in part shaped by bias and stereotypes (author, year). One of the most dividing lines in the 21st century is that of gender. Even within the social sciences, men and women do not receive the same treatment and grants, publications and upper academic positions are unequally distributed [@bellotti2022]. This concept of academic inequality has been called the *Matilda effect*, named after the *Matthew effect*, named by Robert Merton. Bellotti et al. (2022) studied the composition of male and female collaboration networks in Italy. They find persisting inequalities between men and women in terms of research funding and collaboration across all academic disciplines. They argue that their findings are generalisable to fields where collaboration is key to succes.
 
-## Step 2) The naive Approach
+In a study that looked at the impact that networks have on gender differences in coauthorship, it was found that representation of women matters in relation to their network access [@mcdowell2006a]. The study looked at how male and female economist PhD's have access in their networks for publications and coauthorship. They find that over time, women are less likely to coauthor and publish articles compared to men. However, they also find that this probability does dwindle by 1993. When other forms of gender differences are included, women are less likely to be "succesful" in academics.
 
-In our approach, we argued the basic idea that people want to surround themselves with people with similar preferences. Similarly, we argued that highbrow tastes are more prevelant among higher educated, following the works of Pierre Bourdieu. Thus, for those who are lower educated, having highbrow tastes results in a network that is more educationally diverse, as you will have more higher educated individuals in your network. Contrarily, for those who are higher educated, it will lead to a less diverse network, because there are more people who have the same educational attainment as you. In this approach, the ego (or respondent) is central to the story and the people in their "network" solely serve as a count of differing educational levels, relative to the size of one's network.
+-   RQ 1: To what extent has gender segregation of publication networks in the Dutch social sciences changed between `r, colorize("red", "timepoint 1")` and `r, colorize("red", "timepoint 2")`?
+-   RQ 2: How has this change in segregation influenced the succes[^1] of female scholars?
 
-## Step 3) The social networks approach
-
-Our study did contain some elements of a social networks approach, simply because we looked at egonetworks. However, there are some clear differences between our approach and a true social networks approach. Firstly, due to data limitations, we simply assumed that being high educated and having highbrow tastes was related and thus, having a stronger preferences for highbrow tastes should result in **less** educationally diverse networks for higher educated individuals and **more** educationally diverse networks for lower educated individuals, without taking into account the cultural preferences of the alters. We did not have any information about the alters, apart from what the ego supplied us with (we used name generator data). This also means that we know nothing about the ego's whole network, which would be the next step in having a social network approach. Alongside, we would also need information about the relation between the alters and their preferences. Second, a social network approach would make our theory simpler, we could simply see if people with similar cultural tastes connect (), or if there is segregation based on other characteristics. This would result in a cleaner, less noisy theoretical framework
-
+[^1]: I define succes as the total amount of citations a scholar has received within that timeframe

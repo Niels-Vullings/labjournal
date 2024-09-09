@@ -74,6 +74,29 @@ if (window.hljs) {
 }
 </style>
 
+<style type="text/css">
+/* for pandoc --citeproc since 2.11 */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
 
 <link rel="stylesheet" href="tweaks.css" type="text/css" />
 
@@ -397,60 +420,70 @@ div.tocify {
 <div id="assignment-week-1" class="section level1" number="1">
 <h1><span class="header-section-number">1</span> Assignment Week 1</h1>
 <p><br></p>
-<div id="step-1-the-social-problem" class="section level2" number="1.1">
-<h2><span class="header-section-number">1.1</span> Step 1) The social
-problem</h2>
-<p>During the course <em>Comparative Research Project</em>, two fellow
-students and I studied the extent to which highbrow cultural tastes
-influence someone’s network diversity in terms of educational
-attainment. This has complications for cohesion and inequality, because
-these highbrow activities cost money and, as highbrow tastes are more
-prevalent among higher educated, there would be segregation within
-society in terms of educational attainment.</p>
+<div id="research-questions" class="section level2" number="1.1">
+<h2><span class="header-section-number">1.1</span> Research
+Questions</h2>
+<p>Inequalities are omnipresent in society and this does not exclude the
+academic world. Be it conscious or subconscious, our actions are in part
+shaped by bias and stereotypes (author, year). One of the most dividing
+lines in the 21st century is that of gender. Even within the social
+sciences, men and women do not receive the same treatment and grants,
+publications and upper academic positions are unequally distributed
+<span class="citation">(Bellotti et al. 2022)</span>. This concept of
+academic inequality has been called the <em>Matilda effect</em>, named
+after the <em>Matthew effect</em>, named by Robert Merton. Bellotti et
+al. (2022) studied the composition of male and female collaboration
+networks in Italy. They find persisting inequalities between men and
+women in terms of research funding and collaboration across all academic
+disciplines. They argue that their findings are generalisable to fields
+where collaboration is key to succes.</p>
+<p>In a study that looked at the impact that networks have on gender
+differences in coauthorship, it was found that representation of women
+matters in relation to their network access <span
+class="citation">(MCDOWELL, SINGELL, and STATER 2006)</span>. The study
+looked at how male and female economist PhD’s have access in their
+networks for publications and coauthorship. They find that over time,
+women are less likely to coauthor and publish articles compared to men.
+However, they also find that this probability does dwindle by 1993. When
+other forms of gender differences are included, women are less likely to
+be “succesful” in academics.</p>
+<ul>
+<li>RQ 1: To what extent has gender segregation of publication networks
+in the Dutch social sciences changed between
+<code>r, colorize("red", "timepoint 1")</code> and
+<code>r, colorize("red", "timepoint 2")</code>?</li>
+<li>RQ 2: How has this change in segregation influenced the succes<a
+href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> of female
+scholars?</li>
+</ul>
+<div id="refs" class="references csl-bib-body hanging-indent"
+entry-spacing="0">
+<div id="ref-bellotti2022" class="csl-entry">
+Bellotti, Elisa, Dominika Czerniawska, Martin G. Everett, and Luigi
+Guadalupi. 2022. <span>“Gender Inequalities in Research Funding: Unequal
+Network Configurations, or Unequal Network Returns?”</span> <em>Social
+Networks</em> 70 (July): 138–51. <a
+href="https://doi.org/10.1016/j.socnet.2021.12.007">https://doi.org/10.1016/j.socnet.2021.12.007</a>.
 </div>
-<div id="step-2-the-naive-approach" class="section level2" number="1.2">
-<h2><span class="header-section-number">1.2</span> Step 2) The naive
-Approach</h2>
-<p>In our approach, we argued the basic idea that people want to
-surround themselves with people with similar preferences. Similarly, we
-argued that highbrow tastes are more prevelant among higher educated,
-following the works of Pierre Bourdieu. Thus, for those who are lower
-educated, having highbrow tastes results in a network that is more
-educationally diverse, as you will have more higher educated individuals
-in your network. Contrarily, for those who are higher educated, it will
-lead to a less diverse network, because there are more people who have
-the same educational attainment as you. In this approach, the ego (or
-respondent) is central to the story and the people in their “network”
-solely serve as a count of differing educational levels, relative to the
-size of one’s network.</p>
+<div id="ref-mcdowell2006a" class="csl-entry">
+MCDOWELL, JOHN M., LARRY D. SINGELL, and MARK STATER. 2006. <span>“TWO
+TO TANGO? GENDER DIFFERENCES IN THE DECISIONS TO PUBLISH AND
+COAUTHOR.”</span> <em>Economic Inquiry</em> 44 (1): 153–68. <a
+href="https://doi.org/10.1093/ei/cbi065">https://doi.org/10.1093/ei/cbi065</a>.
 </div>
-<div id="step-3-the-social-networks-approach" class="section level2"
-number="1.3">
-<h2><span class="header-section-number">1.3</span> Step 3) The social
-networks approach</h2>
-<p>Our study did contain some elements of a social networks approach,
-simply because we looked at egonetworks. However, there are some clear
-differences between our approach and a true social networks approach.
-Firstly, due to data limitations, we simply assumed that being high
-educated and having highbrow tastes was related and thus, having a
-stronger preferences for highbrow tastes should result in
-<strong>less</strong> educationally diverse networks for higher educated
-individuals and <strong>more</strong> educationally diverse networks for
-lower educated individuals, without taking into account the cultural
-preferences of the alters. We did not have any information about the
-alters, apart from what the ego supplied us with (we used name generator
-data). This also means that we know nothing about the ego’s whole
-network, which would be the next step in having a social network
-approach. Alongside, we would also need information about the relation
-between the alters and their preferences. Second, a social network
-approach would make our theory simpler, we could simply see if people
-with similar cultural tastes connect (), or if there is segregation
-based on other characteristics. This would result in a cleaner, less
-noisy theoretical framework</p>
 </div>
+</div>
+</div>
+<div class="footnotes footnotes-end-of-document">
+<hr />
+<ol>
+<li id="fn1"><p>I define succes as the total amount of citations a
+scholar has received within that timeframe<a href="#fnref1"
+class="footnote-back">↩︎</a></p></li>
+</ol>
 </div>
 
-<div id="rmd-source-code">LS0tDQp0aXRsZTogIkpvdXJuYWwgMSINCiNiaWJsaW9ncmFwaHk6IHJlZmVyZW5jZXMuYmliDQphdXRob3I6ICJOaWVscyBWdWxsaW5ncyINCi0tLQ0KDQpgYGB7ciwgZ2xvYmFsc2V0dGluZ3MsIGVjaG89RkFMU0UsIHdhcm5pbmc9RkFMU0UsIHJlc3VsdHM9J2hpZGUnfQ0KbGlicmFyeShrbml0cikNCg0Ka25pdHI6Om9wdHNfY2h1bmskc2V0KGVjaG8gPSBUUlVFKQ0Kb3B0c19jaHVuayRzZXQodGlkeS5vcHRzPWxpc3Qod2lkdGguY3V0b2ZmPTEwMCksdGlkeT1UUlVFLCB3YXJuaW5nID0gRkFMU0UsIG1lc3NhZ2UgPSBGQUxTRSxjb21tZW50ID0gIiM+IiwgY2FjaGU9VFJVRSwgY2xhc3Muc291cmNlPWMoInRlc3QiKSwgY2xhc3Mub3V0cHV0PWMoInRlc3QyIikpDQpvcHRpb25zKHdpZHRoID0gMTAwKQ0KcmdsOjpzZXR1cEtuaXRyKCkNCg0KDQoNCmNvbG9yaXplIDwtIGZ1bmN0aW9uKHgsIGNvbG9yKSB7c3ByaW50ZigiPHNwYW4gc3R5bGU9J2NvbG9yOiAlczsnPiVzPC9zcGFuPiIsIGNvbG9yLCB4KSB9DQoNCmBgYA0KDQpgYGB7ciBrbGlwcHksIGVjaG89RkFMU0UsIGluY2x1ZGU9VFJVRX0NCmtsaXBweTo6a2xpcHB5KHBvc2l0aW9uID0gYygndG9wJywgJ3JpZ2h0JykpDQojIGtsaXBweTo6a2xpcHB5KGNvbG9yID0gJ2RhcmtncmVlbicpDQoja2xpcHB5OjprbGlwcHkodG9vbHRpcF9tZXNzYWdlID0gJ0NsaWNrIHRvIGNvcHknLCB0b29sdGlwX3N1Y2Nlc3MgPSAnRG9uZScpDQpgYGANCg0KTGFzdCBjb21waWxlZCBvbiBgciBmb3JtYXQoU3lzLnRpbWUoKSwgJyVCLCAlWScpYA0KDQo8YnI+DQoNCi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQ0KDQojIEFzc2lnbm1lbnQgV2VlayAxDQo8YnI+DQoNCiMjIFN0ZXAgMSkgVGhlIHNvY2lhbCBwcm9ibGVtDQoNCkR1cmluZyB0aGUgY291cnNlICpDb21wYXJhdGl2ZSBSZXNlYXJjaCBQcm9qZWN0KiwgdHdvIGZlbGxvdyBzdHVkZW50cyBhbmQgSSBzdHVkaWVkIHRoZSBleHRlbnQgdG8gd2hpY2ggaGlnaGJyb3cgY3VsdHVyYWwgdGFzdGVzIGluZmx1ZW5jZSBzb21lb25lJ3MgbmV0d29yayBkaXZlcnNpdHkgaW4gdGVybXMgb2YgZWR1Y2F0aW9uYWwgYXR0YWlubWVudC4gVGhpcyBoYXMgY29tcGxpY2F0aW9ucyBmb3IgY29oZXNpb24gYW5kIGluZXF1YWxpdHksIGJlY2F1c2UgdGhlc2UgaGlnaGJyb3cgYWN0aXZpdGllcyBjb3N0IG1vbmV5IGFuZCwgYXMgaGlnaGJyb3cgdGFzdGVzIGFyZSBtb3JlIHByZXZhbGVudCBhbW9uZyBoaWdoZXIgZWR1Y2F0ZWQsIHRoZXJlIHdvdWxkIGJlIHNlZ3JlZ2F0aW9uIHdpdGhpbiBzb2NpZXR5IGluIHRlcm1zIG9mIGVkdWNhdGlvbmFsIGF0dGFpbm1lbnQuDQoNCiMjIFN0ZXAgMikgVGhlIG5haXZlIEFwcHJvYWNoDQoNCkluIG91ciBhcHByb2FjaCwgd2UgYXJndWVkIHRoZSBiYXNpYyBpZGVhIHRoYXQgcGVvcGxlIHdhbnQgdG8gc3Vycm91bmQgdGhlbXNlbHZlcyB3aXRoIHBlb3BsZSB3aXRoIHNpbWlsYXIgcHJlZmVyZW5jZXMuIFNpbWlsYXJseSwgd2UgYXJndWVkIHRoYXQgaGlnaGJyb3cgdGFzdGVzIGFyZSBtb3JlIHByZXZlbGFudCBhbW9uZyBoaWdoZXIgZWR1Y2F0ZWQsIGZvbGxvd2luZyB0aGUgd29ya3Mgb2YgUGllcnJlIEJvdXJkaWV1LiBUaHVzLCBmb3IgdGhvc2Ugd2hvIGFyZSBsb3dlciBlZHVjYXRlZCwgaGF2aW5nIGhpZ2hicm93IHRhc3RlcyByZXN1bHRzIGluIGEgbmV0d29yayB0aGF0IGlzIG1vcmUgZWR1Y2F0aW9uYWxseSBkaXZlcnNlLCBhcyB5b3Ugd2lsbCBoYXZlIG1vcmUgaGlnaGVyIGVkdWNhdGVkIGluZGl2aWR1YWxzIGluIHlvdXIgbmV0d29yay4gQ29udHJhcmlseSwgZm9yIHRob3NlIHdobyBhcmUgaGlnaGVyIGVkdWNhdGVkLCBpdCB3aWxsIGxlYWQgdG8gYSBsZXNzIGRpdmVyc2UgbmV0d29yaywgYmVjYXVzZSB0aGVyZSBhcmUgbW9yZSBwZW9wbGUgd2hvIGhhdmUgdGhlIHNhbWUgZWR1Y2F0aW9uYWwgYXR0YWlubWVudCBhcyB5b3UuIEluIHRoaXMgYXBwcm9hY2gsIHRoZSBlZ28gKG9yIHJlc3BvbmRlbnQpIGlzIGNlbnRyYWwgdG8gdGhlIHN0b3J5IGFuZCB0aGUgcGVvcGxlIGluIHRoZWlyICJuZXR3b3JrIiBzb2xlbHkgc2VydmUgYXMgYSBjb3VudCBvZiBkaWZmZXJpbmcgZWR1Y2F0aW9uYWwgbGV2ZWxzLCByZWxhdGl2ZSB0byB0aGUgc2l6ZSBvZiBvbmUncyBuZXR3b3JrLg0KDQojIyBTdGVwIDMpIFRoZSBzb2NpYWwgbmV0d29ya3MgYXBwcm9hY2gNCg0KT3VyIHN0dWR5IGRpZCBjb250YWluIHNvbWUgZWxlbWVudHMgb2YgYSBzb2NpYWwgbmV0d29ya3MgYXBwcm9hY2gsIHNpbXBseSBiZWNhdXNlIHdlIGxvb2tlZCBhdCBlZ29uZXR3b3Jrcy4gSG93ZXZlciwgdGhlcmUgYXJlIHNvbWUgY2xlYXIgZGlmZmVyZW5jZXMgYmV0d2VlbiBvdXIgYXBwcm9hY2ggYW5kIGEgdHJ1ZSBzb2NpYWwgbmV0d29ya3MgYXBwcm9hY2guIEZpcnN0bHksIGR1ZSB0byBkYXRhIGxpbWl0YXRpb25zLCB3ZSBzaW1wbHkgYXNzdW1lZCB0aGF0IGJlaW5nIGhpZ2ggZWR1Y2F0ZWQgYW5kIGhhdmluZyBoaWdoYnJvdyB0YXN0ZXMgd2FzIHJlbGF0ZWQgYW5kIHRodXMsIGhhdmluZyBhIHN0cm9uZ2VyIHByZWZlcmVuY2VzIGZvciBoaWdoYnJvdyB0YXN0ZXMgc2hvdWxkIHJlc3VsdCBpbiAqKmxlc3MqKiBlZHVjYXRpb25hbGx5IGRpdmVyc2UgbmV0d29ya3MgZm9yIGhpZ2hlciBlZHVjYXRlZCBpbmRpdmlkdWFscyBhbmQgKiptb3JlKiogZWR1Y2F0aW9uYWxseSBkaXZlcnNlIG5ldHdvcmtzIGZvciBsb3dlciBlZHVjYXRlZCBpbmRpdmlkdWFscywgd2l0aG91dCB0YWtpbmcgaW50byBhY2NvdW50IHRoZSBjdWx0dXJhbCBwcmVmZXJlbmNlcyBvZiB0aGUgYWx0ZXJzLiBXZSBkaWQgbm90IGhhdmUgYW55IGluZm9ybWF0aW9uIGFib3V0IHRoZSBhbHRlcnMsIGFwYXJ0IGZyb20gd2hhdCB0aGUgZWdvIHN1cHBsaWVkIHVzIHdpdGggKHdlIHVzZWQgbmFtZSBnZW5lcmF0b3IgZGF0YSkuIFRoaXMgYWxzbyBtZWFucyB0aGF0IHdlIGtub3cgbm90aGluZyBhYm91dCB0aGUgZWdvJ3Mgd2hvbGUgbmV0d29yaywgd2hpY2ggd291bGQgYmUgdGhlIG5leHQgc3RlcCBpbiBoYXZpbmcgYSBzb2NpYWwgbmV0d29yayBhcHByb2FjaC4gQWxvbmdzaWRlLCB3ZSB3b3VsZCBhbHNvIG5lZWQgaW5mb3JtYXRpb24gYWJvdXQgdGhlIHJlbGF0aW9uIGJldHdlZW4gdGhlIGFsdGVycyBhbmQgdGhlaXIgcHJlZmVyZW5jZXMuIFNlY29uZCwgYSBzb2NpYWwgbmV0d29yayBhcHByb2FjaCB3b3VsZCBtYWtlIG91ciB0aGVvcnkgc2ltcGxlciwgd2UgY291bGQgc2ltcGx5IHNlZSBpZiBwZW9wbGUgd2l0aCBzaW1pbGFyIGN1bHR1cmFsIHRhc3RlcyBjb25uZWN0ICgpLCBvciBpZiB0aGVyZSBpcyBzZWdyZWdhdGlvbiBiYXNlZCBvbiBvdGhlciBjaGFyYWN0ZXJpc3RpY3MuIFRoaXMgd291bGQgcmVzdWx0IGluIGEgY2xlYW5lciwgbGVzcyBub2lzeSB0aGVvcmV0aWNhbCBmcmFtZXdvcmsNCg0K</div>
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIkpvdXJuYWwgMSINCiNiaWJsaW9ncmFwaHk6IHJlZmVyZW5jZXMuYmliDQphdXRob3I6ICJOaWVscyBWdWxsaW5ncyINCmJpYmxpb2dyYXBoeTogcmVmZXJlbmNlcy5iaWINCi0tLQ0KDQpgYGB7ciwgZ2xvYmFsc2V0dGluZ3MsIGVjaG89RkFMU0UsIHdhcm5pbmc9RkFMU0UsIHJlc3VsdHM9J2hpZGUnfQ0KbGlicmFyeShrbml0cikNCg0Ka25pdHI6Om9wdHNfY2h1bmskc2V0KGVjaG8gPSBUUlVFKQ0Kb3B0c19jaHVuayRzZXQodGlkeS5vcHRzPWxpc3Qod2lkdGguY3V0b2ZmPTEwMCksdGlkeT1UUlVFLCB3YXJuaW5nID0gRkFMU0UsIG1lc3NhZ2UgPSBGQUxTRSxjb21tZW50ID0gIiM+IiwgY2FjaGU9VFJVRSwgY2xhc3Muc291cmNlPWMoInRlc3QiKSwgY2xhc3Mub3V0cHV0PWMoInRlc3QyIikpDQpvcHRpb25zKHdpZHRoID0gMTAwKQ0KcmdsOjpzZXR1cEtuaXRyKCkNCg0KDQoNCmNvbG9yaXplIDwtIGZ1bmN0aW9uKHgsIGNvbG9yKSB7c3ByaW50ZigiPHNwYW4gc3R5bGU9J2NvbG9yOiAlczsnPiVzPC9zcGFuPiIsIGNvbG9yLCB4KSB9DQoNCmBgYA0KDQpgYGB7ciBrbGlwcHksIGVjaG89RkFMU0UsIGluY2x1ZGU9VFJVRX0NCmtsaXBweTo6a2xpcHB5KHBvc2l0aW9uID0gYygndG9wJywgJ3JpZ2h0JykpDQojIGtsaXBweTo6a2xpcHB5KGNvbG9yID0gJ2RhcmtncmVlbicpDQoja2xpcHB5OjprbGlwcHkodG9vbHRpcF9tZXNzYWdlID0gJ0NsaWNrIHRvIGNvcHknLCB0b29sdGlwX3N1Y2Nlc3MgPSAnRG9uZScpDQpgYGANCg0KTGFzdCBjb21waWxlZCBvbiBgciBmb3JtYXQoU3lzLnRpbWUoKSwgJyVCLCAlWScpYA0KDQo8YnI+DQoNCi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQ0KDQojIEFzc2lnbm1lbnQgV2VlayAxDQoNCjxicj4NCg0KIyMgUmVzZWFyY2ggUXVlc3Rpb25zDQoNCkluZXF1YWxpdGllcyBhcmUgb21uaXByZXNlbnQgaW4gc29jaWV0eSBhbmQgdGhpcyBkb2VzIG5vdCBleGNsdWRlIHRoZSBhY2FkZW1pYyB3b3JsZC4gQmUgaXQgY29uc2Npb3VzIG9yIHN1YmNvbnNjaW91cywgb3VyIGFjdGlvbnMgYXJlIGluIHBhcnQgc2hhcGVkIGJ5IGJpYXMgYW5kIHN0ZXJlb3R5cGVzIChhdXRob3IsIHllYXIpLiBPbmUgb2YgdGhlIG1vc3QgZGl2aWRpbmcgbGluZXMgaW4gdGhlIDIxc3QgY2VudHVyeSBpcyB0aGF0IG9mIGdlbmRlci4gRXZlbiB3aXRoaW4gdGhlIHNvY2lhbCBzY2llbmNlcywgbWVuIGFuZCB3b21lbiBkbyBub3QgcmVjZWl2ZSB0aGUgc2FtZSB0cmVhdG1lbnQgYW5kIGdyYW50cywgcHVibGljYXRpb25zIGFuZCB1cHBlciBhY2FkZW1pYyBwb3NpdGlvbnMgYXJlIHVuZXF1YWxseSBkaXN0cmlidXRlZCBbQGJlbGxvdHRpMjAyMl0uIFRoaXMgY29uY2VwdCBvZiBhY2FkZW1pYyBpbmVxdWFsaXR5IGhhcyBiZWVuIGNhbGxlZCB0aGUgKk1hdGlsZGEgZWZmZWN0KiwgbmFtZWQgYWZ0ZXIgdGhlICpNYXR0aGV3IGVmZmVjdCosIG5hbWVkIGJ5IFJvYmVydCBNZXJ0b24uIEJlbGxvdHRpIGV0IGFsLiAoMjAyMikgc3R1ZGllZCB0aGUgY29tcG9zaXRpb24gb2YgbWFsZSBhbmQgZmVtYWxlIGNvbGxhYm9yYXRpb24gbmV0d29ya3MgaW4gSXRhbHkuIFRoZXkgZmluZCBwZXJzaXN0aW5nIGluZXF1YWxpdGllcyBiZXR3ZWVuIG1lbiBhbmQgd29tZW4gaW4gdGVybXMgb2YgcmVzZWFyY2ggZnVuZGluZyBhbmQgY29sbGFib3JhdGlvbiBhY3Jvc3MgYWxsIGFjYWRlbWljIGRpc2NpcGxpbmVzLiBUaGV5IGFyZ3VlIHRoYXQgdGhlaXIgZmluZGluZ3MgYXJlIGdlbmVyYWxpc2FibGUgdG8gZmllbGRzIHdoZXJlIGNvbGxhYm9yYXRpb24gaXMga2V5IHRvIHN1Y2Nlcy4NCg0KSW4gYSBzdHVkeSB0aGF0IGxvb2tlZCBhdCB0aGUgaW1wYWN0IHRoYXQgbmV0d29ya3MgaGF2ZSBvbiBnZW5kZXIgZGlmZmVyZW5jZXMgaW4gY29hdXRob3JzaGlwLCBpdCB3YXMgZm91bmQgdGhhdCByZXByZXNlbnRhdGlvbiBvZiB3b21lbiBtYXR0ZXJzIGluIHJlbGF0aW9uIHRvIHRoZWlyIG5ldHdvcmsgYWNjZXNzIFtAbWNkb3dlbGwyMDA2YV0uIFRoZSBzdHVkeSBsb29rZWQgYXQgaG93IG1hbGUgYW5kIGZlbWFsZSBlY29ub21pc3QgUGhEJ3MgaGF2ZSBhY2Nlc3MgaW4gdGhlaXIgbmV0d29ya3MgZm9yIHB1YmxpY2F0aW9ucyBhbmQgY29hdXRob3JzaGlwLiBUaGV5IGZpbmQgdGhhdCBvdmVyIHRpbWUsIHdvbWVuIGFyZSBsZXNzIGxpa2VseSB0byBjb2F1dGhvciBhbmQgcHVibGlzaCBhcnRpY2xlcyBjb21wYXJlZCB0byBtZW4uIEhvd2V2ZXIsIHRoZXkgYWxzbyBmaW5kIHRoYXQgdGhpcyBwcm9iYWJpbGl0eSBkb2VzIGR3aW5kbGUgYnkgMTk5My4gV2hlbiBvdGhlciBmb3JtcyBvZiBnZW5kZXIgZGlmZmVyZW5jZXMgYXJlIGluY2x1ZGVkLCB3b21lbiBhcmUgbGVzcyBsaWtlbHkgdG8gYmUgInN1Y2Nlc2Z1bCIgaW4gYWNhZGVtaWNzLg0KDQotICAgUlEgMTogVG8gd2hhdCBleHRlbnQgaGFzIGdlbmRlciBzZWdyZWdhdGlvbiBvZiBwdWJsaWNhdGlvbiBuZXR3b3JrcyBpbiB0aGUgRHV0Y2ggc29jaWFsIHNjaWVuY2VzIGNoYW5nZWQgYmV0d2VlbiBgciwgY29sb3JpemUoInJlZCIsICJ0aW1lcG9pbnQgMSIpYCBhbmQgYHIsIGNvbG9yaXplKCJyZWQiLCAidGltZXBvaW50IDIiKWA/DQotICAgUlEgMjogSG93IGhhcyB0aGlzIGNoYW5nZSBpbiBzZWdyZWdhdGlvbiBpbmZsdWVuY2VkIHRoZSBzdWNjZXNbXjFdIG9mIGZlbWFsZSBzY2hvbGFycz8NCg0KW14xXTogSSBkZWZpbmUgc3VjY2VzIGFzIHRoZSB0b3RhbCBhbW91bnQgb2YgY2l0YXRpb25zIGEgc2Nob2xhciBoYXMgcmVjZWl2ZWQgd2l0aGluIHRoYXQgdGltZWZyYW1lDQo=</div>
 
 
 </div>
