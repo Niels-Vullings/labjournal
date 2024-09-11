@@ -35,6 +35,7 @@ Last compiled on `r format(Sys.time(), '%B, %Y')`
 
 <br>
 
+
 ## Research Questions
 
 Inequalities are omnipresent in society and this does not exclude the academic world. Be it conscious or subconscious, our actions are in part shaped by bias and stereotypes (author, year). One of the most dividing lines in the 21st century is that of gender. Even within the social sciences, men and women do not receive the same treatment and grants, publications and upper academic positions are unequally distributed [@bellotti2022]. This concept of academic inequality has been called the *Matilda effect*, named after the *Matthew effect*, named by Robert Merton. Bellotti et al. (2022) studied the composition of male and female collaboration networks in Italy. They find persisting inequalities between men and women in terms of research funding and collaboration across all academic disciplines. They argue that their findings are generalisable to fields where collaboration is key to succes.
