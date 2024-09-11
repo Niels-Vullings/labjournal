@@ -57,9 +57,9 @@ We, Jochem Tolsma and Bas Hofstra, use this repository for our Social Network An
 
 ## How to use
 
-1.  Under the *My journal*, you can keep track of my progress per week 
+1.  Under the tab called *My journal*, you can keep track of my progress per week 
 
-2.  TBD
+2.  Under the tab called *My paper*, you can find the research paper 
 
 3.  TBD
 

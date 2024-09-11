@@ -1,5 +1,5 @@
 ---
-title: "Journal 1"
+title: "Journal - Week 1"
 #bibliography: references.bib
 author: "Niels Vullings"
 bibliography: references.bib
@@ -42,7 +42,7 @@ Inequalities are omnipresent in society and this does not exclude the academic w
 
 In a study that looked at the impact that networks have on gender differences in coauthorship, it was found that representation of women matters in relation to their network access [@mcdowell2006a]. The study looked at how male and female economist PhD's have access in their networks for publications and co-authorship. They find that over time, women are less likely to coauthor and publish articles compared to men. However, they also find that this probability does dwindle by 1993. When other forms of gender differences are included, women are less likely to be "successful" in academics.
 
--   RQ 1: To what extent has gender segregation of publication networks in the Dutch social sciences changed between `r colorize("timepoint 1", "red")` and `r colorize("timepoint 2", "red")`?
+-   RQ 1: To what extent has gender segregation of publication networks in the Dutch sociology departments changed between `r colorize("timepoint 1", "red")` and `r colorize("timepoint 2", "red")`?
 -   RQ 2: How has this change in segregation influenced the succes[^1] of female scholars?
 
 [^1]: I define succes as the total amount of citations a scholar has received within that timeframe

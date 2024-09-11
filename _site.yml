@@ -13,7 +13,13 @@ navbar:
     - text: "My journal"
       menu:
       - text: "Week 1"
-        href: lab1.html
+        href: Week1.html
+      - text: "Week 2"
+        href: Week2.html
+    - text: "My paper"
+      menu:
+      - text: "Introduction"
+        href: 
         
         # here, other .Rmds can be added
 

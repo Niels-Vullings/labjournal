@@ -1,0 +1,134 @@
+---
+title: "Journal - Week 2"
+#bibliography: references.bib
+author: "Niels Vullings"
+bibliography: references.bib
+---
+
+```{r, globalsettings, echo=FALSE, warning=FALSE, results='hide'}
+library(knitr)
+
+knitr::opts_chunk$set(echo = TRUE)
+opts_chunk$set(tidy.opts=list(width.cutoff=100),tidy=TRUE, warning = FALSE, message = FALSE,comment = "#>", cache=TRUE, class.source=c("test"), class.output=c("test2"))
+options(width = 100)
+rgl::setupKnitr()
+
+
+
+colorize <- function(x, color) {sprintf("<span style='color: %s;'>%s</span>", color, x) }
+
+```
+
+```{r klippy, echo=FALSE, include=TRUE}
+klippy::klippy(position = c('top', 'right'))
+# klippy::klippy(color = 'darkgreen')
+#klippy::klippy(tooltip_message = 'Click to copy', tooltip_success = 'Done')
+```
+
+Last compiled on `r format(Sys.time(), '%B, %Y')`
+
+<br>
+
+------------------------------------------------------------------------
+
+## Packages
+```{r}
+library(igraph)
+library(RSiena)
+# library(sna)
+```
+
+## Make adjacency matrix
+```{r}
+df <- c(0,0,0,0,
+        0,0,0,0,
+        0,0,0,0,
+        0,0,0,0)
+
+(AM_empty <- matrix(df,nrow=4,ncol = 4))
+
+```
+## Insert 1 tie
+```{r}
+
+df <- c(0,0,0,0,
+        0,0,1,0,
+        0,1,0,0,
+        0,0,0,0)
+
+(AM_1 <- matrix(df,nrow=4,ncol = 4))
+
+# (4*3*2*1)
+
+```
+
+## Triad census
+```{r}
+# Empty graph
+graph <- graph_from_adjacency_matrix(AM_empty, mode = "directed")
+
+triad_census(graph)
+```
+```{r}
+# 1 inserted tie
+graph2 <- graph_from_adjacency_matrix(AM_1, mode = "directed")
+
+triad_census(graph2)
+```
+## Social Network
+```{r}
+net <- s501
+
+small_net <- net[15:25,15:25]
+
+
+graph <- graph_from_adjacency_matrix(small_net, mode = "directed")
+
+plot(graph)
+
+
+```
+
+## Assignment
+Give ego level descriptives on all types on centrality measures.
+
+### Density
+```{r}
+#
+dens <- function(N, data = net, directed = TRUE){
+
+  if(directed == TRUE){
+    pos_tie <- (N*(N-1))
+  } else{
+    pos_tie <- (N*(N-1))/2
+
+  }
+
+  obs_tie <- sum(sna::dyad.census(data)[1:2])
+  dens <- obs_tie/pos_tie
+
+  return(dens)
+}
+dens(10, small_net, directed = TRUE)
+
+```
+### Degrees
+```{r}
+#degree centrality
+centr_degree(graph, mode = "out")
+
+```
+
+```{r}
+
+closeness(graph)
+
+```
+```{r}
+betweenness(graph, directed = TRUE)
+```
+
+
+
+
+
