@@ -12,7 +12,7 @@
 <meta name="author" content="Niels Vullings" />
 
 
-<title>Journal - Week 2</title>
+<title>Introduction (draft)</title>
 
 <script src="site_libs/header-attrs-2.18/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -74,6 +74,29 @@ if (window.hljs) {
 }
 </style>
 
+<style type="text/css">
+/* for pandoc --citeproc since 2.11 */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
 
 <link rel="stylesheet" href="tweaks.css" type="text/css" />
 
@@ -396,7 +419,7 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Journal - Week 2</h1>
+<h1 class="title toc-ignore">Introduction (draft)</h1>
 <h4 class="author">Niels Vullings</h4>
 
 </div>
@@ -413,165 +436,98 @@ text-align: justify}
 <p>Last compiled on september, 2024</p>
 <p><br></p>
 <hr />
-<div id="packages" class="section level2" number="0.1">
-<h2><span class="header-section-number">0.1</span> Packages</h2>
-<pre class="r test"><code>library(igraph)
-library(RSiena)
-# library(sna)</code></pre>
+<div id="introduction" class="section level2" number="0.1">
+<h2><span class="header-section-number">0.1</span> Introduction</h2>
+<p>Inequalities are omnipresent in society and this does not exclude the
+academic world. Be it conscious or subconscious, our actions are in part
+shaped by bias and stereotypes (author, year). One of the most dividing
+lines in the 21st century is that of gender. In a study that looked at
+the impact that networks have on gender differences in coauthorship, it
+was found that representation of women matters in relation to their
+network access <span class="citation">(McDowell, Singell, and Stater
+2006)</span>. The study looked at how male and female economist PhD’s
+have access in their networks for publications and co-authorship. They
+find that over time, women are less likely to coauthor and publish
+articles compared to men. However, they also find that this probability
+does dwindle by 1993. When other forms of gender differences are
+included, women are less likely to be “successful” in academics. Even
+within the social sciences, men and women do not receive the same
+treatment and grants, publications and upper academic positions are
+unequally distributed <span class="citation">(Bellotti et al.
+2022)</span>. This concept of academic inequality has been called the
+<em>Matilda effect</em>, named after the <em>Matthew effect</em>, named
+by Robert Merton. Bellotti et al. (2022) studied the composition of male
+and female collaboration networks in Italy. They find persisting
+inequalities between men and women in terms of research funding and
+collaboration across all academic disciplines. They argue that their
+findings are generalisable to fields where collaboration is key to
+success.<br />
+  From a scientific standpoint, very little studies within the
+collaboration literature have focused on clustering in terms of social
+inequalities. <span class="citation">(Long, Cunningham, and Braithwaite
+2013)</span> wrote a systematic review on brokers in collaborative
+networks and how this influence the spread of information. Their
+conclusion is that while brokers, bridges and boundary spanners do play
+a critical role in spreading information throughout networks,
+information will spread more efficiently when networks are more close
+knit. However, this paper and thus the articles it has reviewed, pay
+little attention to who these brokers are. In organisational science,
+organisations are assumed to be egalitarian and thus social inequalities
+are deemed non existent. This study will drop this assumption in order
+to see whether gender inequalities play a role in the collaborative
+networks of academics. Specifically, this article will study how
+coauthorship networks of Dutch Sociologists are clustered in terms of
+gender.<br />
+  Secondly, this article will look at how this gender clustering in
+coauthorship networks influences the prestige or success of female
+scholars. Previous studies pointed out that not all research is valued
+equally and that gender is still an indicator of this inequality <span
+class="citation">(Bellotti et al. 2022; Bozeman and Gaughan
+2011)</span>. By studying this inequality through a social network
+perspective, this study will help us to see how male and female scholars
+relate to each other and how there preferences influence the likelihood
+of publishing together (or not), and will give insights into the
+patterns of gaining academic prestige (or not). This leads to the
+following research question:</p>
+<ul>
+<li><p>RQ 1: How are publication networks of scholars in Sociology
+departments clustered in terms of gender?</p></li>
+<li><p>RQ 2: To what extent does gender clustering of publication
+networks influence the prestige/success of female scholars?</p></li>
+</ul>
+<p><br></p>
+<hr />
+<div id="refs" class="references csl-bib-body hanging-indent"
+entry-spacing="0">
+<div id="ref-bellotti2022" class="csl-entry">
+Bellotti, E., D. Czerniawska, M. G. Everett, and Luigi Guadalupi. 2022.
+<span>“Gender Inequalities in Research Funding: Unequal Network
+Configurations, or Unequal Network Returns?”</span> <em>Social
+Networks</em> 70 (July): 138–51. <a
+href="https://doi.org/10.1016/j.socnet.2021.12.007">https://doi.org/10.1016/j.socnet.2021.12.007</a>.
 </div>
-<div id="make-adjacency-matrix" class="section level2" number="0.2">
-<h2><span class="header-section-number">0.2</span> Make adjacency
-matrix</h2>
-<pre class="r test"><code>df &lt;- c(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
-
-(AM_empty &lt;- matrix(df, nrow = 4, ncol = 4))</code></pre>
-<pre class="test2"><code>#&gt;      [,1] [,2] [,3] [,4]
-#&gt; [1,]    0    0    0    0
-#&gt; [2,]    0    0    0    0
-#&gt; [3,]    0    0    0    0
-#&gt; [4,]    0    0    0    0</code></pre>
+<div id="ref-bozeman2011men" class="csl-entry">
+Bozeman, Barry, and Monica Gaughan. 2011. <span>“How Do Men and Women
+Differ in Research Collaborations? An Analysis of the Collaborative
+Motives and Strategies of Academic Researchers.”</span> <em>Research
+Policy</em> 40 (10): 1393–1402.
 </div>
-<div id="insert-1-tie" class="section level2" number="0.3">
-<h2><span class="header-section-number">0.3</span> Insert 1 tie</h2>
-<pre class="r test"><code>df &lt;- c(0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0)
-
-(AM_1 &lt;- matrix(df, nrow = 4, ncol = 4))</code></pre>
-<pre class="test2"><code>#&gt;      [,1] [,2] [,3] [,4]
-#&gt; [1,]    0    0    0    0
-#&gt; [2,]    0    0    1    0
-#&gt; [3,]    0    1    0    0
-#&gt; [4,]    0    0    0    0</code></pre>
-<pre class="r test"><code># (4*3*2*1)</code></pre>
+<div id="ref-long2013bridges" class="csl-entry">
+Long, Janet C, Frances C Cunningham, and Jeffrey Braithwaite. 2013.
+<span>“Bridges, Brokers and Boundary Spanners in Collaborative Networks:
+A Systematic Review.”</span> <em>BMC Health Services Research</em> 13:
+1–13.
 </div>
-<div id="triad-census" class="section level2" number="0.4">
-<h2><span class="header-section-number">0.4</span> Triad census</h2>
-<pre class="r test"><code># Empty graph
-graph &lt;- graph_from_adjacency_matrix(AM_empty, mode = &quot;directed&quot;)
-
-triad_census(graph)</code></pre>
-<pre class="test2"><code>#&gt;  [1] 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</code></pre>
-<pre class="r test"><code># 1 inserted tie
-graph2 &lt;- graph_from_adjacency_matrix(AM_1, mode = &quot;directed&quot;)
-
-triad_census(graph2)</code></pre>
-<pre class="test2"><code>#&gt;  [1] 2 0 2 0 0 0 0 0 0 0 0 0 0 0 0 0</code></pre>
+<div id="ref-mcdowell2006a" class="csl-entry">
+McDowell, John M., Larry D. Singell, and Mark Stater. 2006. <span>“Two
+to Tango? Gender Differences in the Decision to Publish and
+Coauthor.”</span> <em>Economic Inquiry</em> 44 (1): 153–68. <a
+href="https://doi.org/10.1093/ei/cbi065">https://doi.org/10.1093/ei/cbi065</a>.
 </div>
-<div id="social-network" class="section level2" number="0.5">
-<h2><span class="header-section-number">0.5</span> Social Network</h2>
-<pre class="r test"><code>net &lt;- s501
-
-small_net &lt;- net[15:25, 15:25]
-
-
-graph &lt;- graph_from_adjacency_matrix(small_net, mode = &quot;directed&quot;)
-
-plot(graph)</code></pre>
-<p><img src="Week2_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
-</div>
-<div id="assignment" class="section level2" number="0.6">
-<h2><span class="header-section-number">0.6</span> Assignment</h2>
-<p>Give ego level descriptives on all types on centrality measures.</p>
-<div id="density" class="section level3" number="0.6.1">
-<h3><span class="header-section-number">0.6.1</span> Density</h3>
-<pre class="r test"><code>#
-dens &lt;- function(N, data = net, directed = TRUE) {
-
-    if (directed == TRUE) {
-        pos_tie &lt;- (N * (N - 1))
-    } else {
-        pos_tie &lt;- (N * (N - 1))/2
-
-    }
-
-    obs_tie &lt;- sum(sna::dyad.census(data)[1:2])
-    dens &lt;- obs_tie/pos_tie
-
-    return(dens)
-}
-dens(10, small_net, directed = TRUE)</code></pre>
-<pre class="test2"><code>#&gt; [1] 0.1444444</code></pre>
-</div>
-<div id="degrees" class="section level3" number="0.6.2">
-<h3><span class="header-section-number">0.6.2</span> Degrees</h3>
-<pre class="r test"><code># degree centrality
-test_deg &lt;- centr_degree(graph, mode = &quot;out&quot;)
-test_deg &lt;- test_deg$res
-
-
-for (i in 1:length(test_deg)) {
-
-    norm &lt;- (test_deg[i] - max(test_deg))/(max(test_deg) - min(test_deg))
-    print(norm)
-}</code></pre>
-<pre class="test2"><code>#&gt; [1] -0.8
-#&gt; [1] -0.8
-#&gt; [1] 0
-#&gt; [1] -0.8
-#&gt; [1] -0.8
-#&gt; [1] -1
-#&gt; [1] -0.8
-#&gt; [1] -0.6
-#&gt; [1] -0.8
-#&gt; [1] 0
-#&gt; [1] -0.8</code></pre>
-<pre class="r test"><code>centr_degree(graph, mode = &quot;out&quot;, normalized = FALSE)</code></pre>
-<pre class="test2"><code>#&gt; $res
-#&gt;  [1] 1 1 5 1 1 0 1 2 1 5 1
-#&gt; 
-#&gt; $centralization
-#&gt; [1] 36
-#&gt; 
-#&gt; $theoretical_max
-#&gt; [1] 110</code></pre>
-<pre class="r test"><code>centr_degree(graph, mode = &quot;out&quot;, normalized = TRUE)</code></pre>
-<pre class="test2"><code>#&gt; $res
-#&gt;  [1] 1 1 5 1 1 0 1 2 1 5 1
-#&gt; 
-#&gt; $centralization
-#&gt; [1] 0.3272727
-#&gt; 
-#&gt; $theoretical_max
-#&gt; [1] 110</code></pre>
-<pre class="r test"><code># Closeness centrality
-closeness(graph)</code></pre>
-<pre class="test2"><code>#&gt;        V15        V16        V17        V18        V19        V20        V21        V22        V23 
-#&gt; 1.00000000 1.00000000 0.14285714 0.06666667 0.08333333        NaN 0.06250000 0.09090909 0.08333333 
-#&gt;        V24        V25 
-#&gt; 0.14285714 0.05555556</code></pre>
-<pre class="r test"><code># Betweenness centrality
-test_bet &lt;- betweenness(graph, directed = TRUE)
-
-for (i in 1:length(test_bet)) {
-
-    norm &lt;- (test_bet[i] - max(test_bet))/(max(test_bet) - min(test_bet))
-    print(norm)
-}</code></pre>
-<pre class="test2"><code>#&gt; V15 
-#&gt;  -1 
-#&gt; V16 
-#&gt;  -1 
-#&gt;        V17 
-#&gt; -0.1666667 
-#&gt; V18 
-#&gt;  -1 
-#&gt;        V19 
-#&gt; -0.7222222 
-#&gt; V20 
-#&gt;  -1 
-#&gt; V21 
-#&gt;  -1 
-#&gt;        V22 
-#&gt; -0.3888889 
-#&gt; V23 
-#&gt;  -1 
-#&gt; V24 
-#&gt;   0 
-#&gt; V25 
-#&gt;  -1</code></pre>
 </div>
 </div>
 
-<div id="rmd-source-code">LS0tDQp0aXRsZTogIkpvdXJuYWwgLSBXZWVrIDIiDQojYmlibGlvZ3JhcGh5OiByZWZlcmVuY2VzLmJpYg0KYXV0aG9yOiAiTmllbHMgVnVsbGluZ3MiDQpiaWJsaW9ncmFwaHk6IHJlZmVyZW5jZXMuYmliDQotLS0NCg0KYGBgez1odG1sfQ0KPHN0eWxlPg0KYm9keSB7DQp0ZXh0LWFsaWduOiBqdXN0aWZ5fQ0KPC9zdHlsZT4NCmBgYA0KDQpgYGB7ciwgZ2xvYmFsc2V0dGluZ3MsIGVjaG89RkFMU0UsIHdhcm5pbmc9RkFMU0UsIHJlc3VsdHM9J2hpZGUnfQ0KbGlicmFyeShrbml0cikNCg0Ka25pdHI6Om9wdHNfY2h1bmskc2V0KGVjaG8gPSBUUlVFKQ0Kb3B0c19jaHVuayRzZXQodGlkeS5vcHRzPWxpc3Qod2lkdGguY3V0b2ZmPTEwMCksdGlkeT1UUlVFLCB3YXJuaW5nID0gRkFMU0UsIG1lc3NhZ2UgPSBGQUxTRSxjb21tZW50ID0gIiM+IiwgY2FjaGU9VFJVRSwgY2xhc3Muc291cmNlPWMoInRlc3QiKSwgY2xhc3Mub3V0cHV0PWMoInRlc3QyIikpDQpvcHRpb25zKHdpZHRoID0gMTAwKQ0KcmdsOjpzZXR1cEtuaXRyKCkNCg0KDQoNCmNvbG9yaXplIDwtIGZ1bmN0aW9uKHgsIGNvbG9yKSB7c3ByaW50ZigiPHNwYW4gc3R5bGU9J2NvbG9yOiAlczsnPiVzPC9zcGFuPiIsIGNvbG9yLCB4KSB9DQoNCmBgYA0KDQpgYGB7ciBrbGlwcHksIGVjaG89RkFMU0UsIGluY2x1ZGU9VFJVRX0NCmtsaXBweTo6a2xpcHB5KHBvc2l0aW9uID0gYygndG9wJywgJ3JpZ2h0JykpDQojIGtsaXBweTo6a2xpcHB5KGNvbG9yID0gJ2RhcmtncmVlbicpDQoja2xpcHB5OjprbGlwcHkodG9vbHRpcF9tZXNzYWdlID0gJ0NsaWNrIHRvIGNvcHknLCB0b29sdGlwX3N1Y2Nlc3MgPSAnRG9uZScpDQpgYGANCg0KTGFzdCBjb21waWxlZCBvbiBgciBmb3JtYXQoU3lzLnRpbWUoKSwgJyVCLCAlWScpYA0KDQo8YnI+DQoNCi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQ0KDQojIyBQYWNrYWdlcw0KDQpgYGB7cn0NCmxpYnJhcnkoaWdyYXBoKQ0KbGlicmFyeShSU2llbmEpDQojIGxpYnJhcnkoc25hKQ0KYGBgDQoNCiMjIE1ha2UgYWRqYWNlbmN5IG1hdHJpeA0KDQpgYGB7cn0NCmRmIDwtIGMoMCwwLDAsMCwNCiAgICAgICAgMCwwLDAsMCwNCiAgICAgICAgMCwwLDAsMCwNCiAgICAgICAgMCwwLDAsMCkNCg0KKEFNX2VtcHR5IDwtIG1hdHJpeChkZixucm93PTQsbmNvbCA9IDQpKQ0KDQpgYGANCg0KIyMgSW5zZXJ0IDEgdGllDQoNCmBgYHtyfQ0KDQpkZiA8LSBjKDAsMCwwLDAsDQogICAgICAgIDAsMCwxLDAsDQogICAgICAgIDAsMSwwLDAsDQogICAgICAgIDAsMCwwLDApDQoNCihBTV8xIDwtIG1hdHJpeChkZixucm93PTQsbmNvbCA9IDQpKQ0KDQojICg0KjMqMioxKQ0KDQpgYGANCg0KIyMgVHJpYWQgY2Vuc3VzDQoNCmBgYHtyfQ0KIyBFbXB0eSBncmFwaA0KZ3JhcGggPC0gZ3JhcGhfZnJvbV9hZGphY2VuY3lfbWF0cml4KEFNX2VtcHR5LCBtb2RlID0gImRpcmVjdGVkIikNCg0KdHJpYWRfY2Vuc3VzKGdyYXBoKQ0KYGBgDQoNCmBgYHtyfQ0KIyAxIGluc2VydGVkIHRpZQ0KZ3JhcGgyIDwtIGdyYXBoX2Zyb21fYWRqYWNlbmN5X21hdHJpeChBTV8xLCBtb2RlID0gImRpcmVjdGVkIikNCg0KdHJpYWRfY2Vuc3VzKGdyYXBoMikNCmBgYA0KDQojIyBTb2NpYWwgTmV0d29yaw0KDQpgYGB7cn0NCm5ldCA8LSBzNTAxDQoNCnNtYWxsX25ldCA8LSBuZXRbMTU6MjUsMTU6MjVdDQoNCg0KZ3JhcGggPC0gZ3JhcGhfZnJvbV9hZGphY2VuY3lfbWF0cml4KHNtYWxsX25ldCwgbW9kZSA9ICJkaXJlY3RlZCIpDQoNCnBsb3QoZ3JhcGgpDQoNCg0KYGBgDQoNCiMjIEFzc2lnbm1lbnQNCg0KR2l2ZSBlZ28gbGV2ZWwgZGVzY3JpcHRpdmVzIG9uIGFsbCB0eXBlcyBvbiBjZW50cmFsaXR5IG1lYXN1cmVzLg0KDQojIyMgRGVuc2l0eQ0KDQpgYGB7cn0NCiMNCmRlbnMgPC0gZnVuY3Rpb24oTiwgZGF0YSA9IG5ldCwgZGlyZWN0ZWQgPSBUUlVFKXsNCg0KICBpZihkaXJlY3RlZCA9PSBUUlVFKXsNCiAgICBwb3NfdGllIDwtIChOKihOLTEpKQ0KICB9IGVsc2V7DQogICAgcG9zX3RpZSA8LSAoTiooTi0xKSkvMg0KDQogIH0NCg0KICBvYnNfdGllIDwtIHN1bShzbmE6OmR5YWQuY2Vuc3VzKGRhdGEpWzE6Ml0pDQogIGRlbnMgPC0gb2JzX3RpZS9wb3NfdGllDQoNCiAgcmV0dXJuKGRlbnMpDQp9DQpkZW5zKDEwLCBzbWFsbF9uZXQsIGRpcmVjdGVkID0gVFJVRSkNCg0KYGBgDQoNCiMjIyBEZWdyZWVzDQoNCmBgYHtyfQ0KI2RlZ3JlZSBjZW50cmFsaXR5DQp0ZXN0X2RlZyA8LSBjZW50cl9kZWdyZWUoZ3JhcGgsIG1vZGUgPSAib3V0IikNCnRlc3RfZGVnIDwtIHRlc3RfZGVnJHJlcw0KDQoNCmZvciAoaSBpbiAxOmxlbmd0aCh0ZXN0X2RlZykpew0KICANCiAgbm9ybSA8LSAodGVzdF9kZWdbaV0tbWF4KHRlc3RfZGVnKSkvKG1heCh0ZXN0X2RlZyktbWluKHRlc3RfZGVnKSkNCiAgcHJpbnQobm9ybSkNCn0NCg0KY2VudHJfZGVncmVlKGdyYXBoLCBtb2RlID0gIm91dCIsIG5vcm1hbGl6ZWQgPSBGQUxTRSkNCmNlbnRyX2RlZ3JlZShncmFwaCwgbW9kZSA9ICJvdXQiLCBub3JtYWxpemVkID0gVFJVRSkNCmBgYA0KDQpgYGB7cn0NCiMgQ2xvc2VuZXNzIGNlbnRyYWxpdHkNCmNsb3NlbmVzcyhncmFwaCkNCg0KYGBgDQoNCmBgYHtyfQ0KIyBCZXR3ZWVubmVzcyBjZW50cmFsaXR5DQp0ZXN0X2JldCA8LSBiZXR3ZWVubmVzcyhncmFwaCwgZGlyZWN0ZWQgPSBUUlVFKQ0KDQpmb3IgKGkgaW4gMTpsZW5ndGgodGVzdF9iZXQpKXsNCiAgDQogIG5vcm0gPC0gKHRlc3RfYmV0W2ldLW1heCh0ZXN0X2JldCkpLyhtYXgodGVzdF9iZXQpLW1pbih0ZXN0X2JldCkpDQogIHByaW50KG5vcm0pDQp9DQoNCg0KYGBgDQoNCmBgYHtyfQ0KDQpgYGANCg==</div>
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIkludHJvZHVjdGlvbiAoZHJhZnQpIg0KI2JpYmxpb2dyYXBoeTogcmVmZXJlbmNlcy5iaWINCmF1dGhvcjogIk5pZWxzIFZ1bGxpbmdzIg0KYmlibGlvZ3JhcGh5OiByZWZlcmVuY2VzLmJpYg0KLS0tDQoNCmBgYHs9aHRtbH0NCjxzdHlsZT4NCmJvZHkgew0KdGV4dC1hbGlnbjoganVzdGlmeX0NCjwvc3R5bGU+DQpgYGANCg0KYGBge3IsIGdsb2JhbHNldHRpbmdzLCBlY2hvPUZBTFNFLCB3YXJuaW5nPUZBTFNFLCByZXN1bHRzPSdoaWRlJ30NCmxpYnJhcnkoa25pdHIpDQoNCmtuaXRyOjpvcHRzX2NodW5rJHNldChlY2hvID0gVFJVRSkNCm9wdHNfY2h1bmskc2V0KHRpZHkub3B0cz1saXN0KHdpZHRoLmN1dG9mZj0xMDApLHRpZHk9VFJVRSwgd2FybmluZyA9IEZBTFNFLCBtZXNzYWdlID0gRkFMU0UsY29tbWVudCA9ICIjPiIsIGNhY2hlPVRSVUUsIGNsYXNzLnNvdXJjZT1jKCJ0ZXN0IiksIGNsYXNzLm91dHB1dD1jKCJ0ZXN0MiIpKQ0Kb3B0aW9ucyh3aWR0aCA9IDEwMCkNCnJnbDo6c2V0dXBLbml0cigpDQoNCg0KDQpjb2xvcml6ZSA8LSBmdW5jdGlvbih4LCBjb2xvcikge3NwcmludGYoIjxzcGFuIHN0eWxlPSdjb2xvcjogJXM7Jz4lczwvc3Bhbj4iLCBjb2xvciwgeCkgfQ0KDQpgYGANCg0KYGBge3Iga2xpcHB5LCBlY2hvPUZBTFNFLCBpbmNsdWRlPVRSVUV9DQprbGlwcHk6OmtsaXBweShwb3NpdGlvbiA9IGMoJ3RvcCcsICdyaWdodCcpKQ0KIyBrbGlwcHk6OmtsaXBweShjb2xvciA9ICdkYXJrZ3JlZW4nKQ0KI2tsaXBweTo6a2xpcHB5KHRvb2x0aXBfbWVzc2FnZSA9ICdDbGljayB0byBjb3B5JywgdG9vbHRpcF9zdWNjZXNzID0gJ0RvbmUnKQ0KYGBgDQoNCkxhc3QgY29tcGlsZWQgb24gYHIgZm9ybWF0KFN5cy50aW1lKCksICclQiwgJVknKWANCg0KPGJyPg0KDQotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0NCg0KIyMgSW50cm9kdWN0aW9uDQoNCkluZXF1YWxpdGllcyBhcmUgb21uaXByZXNlbnQgaW4gc29jaWV0eSBhbmQgdGhpcyBkb2VzIG5vdCBleGNsdWRlIHRoZSBhY2FkZW1pYyB3b3JsZC4gQmUgaXQgY29uc2Npb3VzIG9yIHN1YmNvbnNjaW91cywgb3VyIGFjdGlvbnMgYXJlIGluIHBhcnQgc2hhcGVkIGJ5IGJpYXMgYW5kIHN0ZXJlb3R5cGVzIChhdXRob3IsIHllYXIpLiBPbmUgb2YgdGhlIG1vc3QgZGl2aWRpbmcgbGluZXMgaW4gdGhlIDIxc3QgY2VudHVyeSBpcyB0aGF0IG9mIGdlbmRlci4gSW4gYSBzdHVkeSB0aGF0IGxvb2tlZCBhdCB0aGUgaW1wYWN0IHRoYXQgbmV0d29ya3MgaGF2ZSBvbiBnZW5kZXIgZGlmZmVyZW5jZXMgaW4gY29hdXRob3JzaGlwLCBpdCB3YXMgZm91bmQgdGhhdCByZXByZXNlbnRhdGlvbiBvZiB3b21lbiBtYXR0ZXJzIGluIHJlbGF0aW9uIHRvIHRoZWlyIG5ldHdvcmsgYWNjZXNzIFtAbWNkb3dlbGwyMDA2YV0uIFRoZSBzdHVkeSBsb29rZWQgYXQgaG93IG1hbGUgYW5kIGZlbWFsZSBlY29ub21pc3QgUGhEJ3MgaGF2ZSBhY2Nlc3MgaW4gdGhlaXIgbmV0d29ya3MgZm9yIHB1YmxpY2F0aW9ucyBhbmQgY28tYXV0aG9yc2hpcC4gVGhleSBmaW5kIHRoYXQgb3ZlciB0aW1lLCB3b21lbiBhcmUgbGVzcyBsaWtlbHkgdG8gY29hdXRob3IgYW5kIHB1Ymxpc2ggYXJ0aWNsZXMgY29tcGFyZWQgdG8gbWVuLiBIb3dldmVyLCB0aGV5IGFsc28gZmluZCB0aGF0IHRoaXMgcHJvYmFiaWxpdHkgZG9lcyBkd2luZGxlIGJ5IDE5OTMuIFdoZW4gb3RoZXIgZm9ybXMgb2YgZ2VuZGVyIGRpZmZlcmVuY2VzIGFyZSBpbmNsdWRlZCwgd29tZW4gYXJlIGxlc3MgbGlrZWx5IHRvIGJlICJzdWNjZXNzZnVsIiBpbiBhY2FkZW1pY3MuIEV2ZW4gd2l0aGluIHRoZSBzb2NpYWwgc2NpZW5jZXMsIG1lbiBhbmQgd29tZW4gZG8gbm90IHJlY2VpdmUgdGhlIHNhbWUgdHJlYXRtZW50IGFuZCBncmFudHMsIHB1YmxpY2F0aW9ucyBhbmQgdXBwZXIgYWNhZGVtaWMgcG9zaXRpb25zIGFyZSB1bmVxdWFsbHkgZGlzdHJpYnV0ZWQgW0BiZWxsb3R0aTIwMjJdLiBUaGlzIGNvbmNlcHQgb2YgYWNhZGVtaWMgaW5lcXVhbGl0eSBoYXMgYmVlbiBjYWxsZWQgdGhlICpNYXRpbGRhIGVmZmVjdCosIG5hbWVkIGFmdGVyIHRoZSAqTWF0dGhldyBlZmZlY3QqLCBuYW1lZCBieSBSb2JlcnQgTWVydG9uLiBCZWxsb3R0aSBldCBhbC4gKDIwMjIpIHN0dWRpZWQgdGhlIGNvbXBvc2l0aW9uIG9mIG1hbGUgYW5kIGZlbWFsZSBjb2xsYWJvcmF0aW9uIG5ldHdvcmtzIGluIEl0YWx5LiBUaGV5IGZpbmQgcGVyc2lzdGluZyBpbmVxdWFsaXRpZXMgYmV0d2VlbiBtZW4gYW5kIHdvbWVuIGluIHRlcm1zIG9mIHJlc2VhcmNoIGZ1bmRpbmcgYW5kIGNvbGxhYm9yYXRpb24gYWNyb3NzIGFsbCBhY2FkZW1pYyBkaXNjaXBsaW5lcy4gVGhleSBhcmd1ZSB0aGF0IHRoZWlyIGZpbmRpbmdzIGFyZSBnZW5lcmFsaXNhYmxlIHRvIGZpZWxkcyB3aGVyZSBjb2xsYWJvcmF0aW9uIGlzIGtleSB0byBzdWNjZXNzLlwNCuKAgyBGcm9tIGEgc2NpZW50aWZpYyBzdGFuZHBvaW50LCB2ZXJ5IGxpdHRsZSBzdHVkaWVzIHdpdGhpbiB0aGUgY29sbGFib3JhdGlvbiBsaXRlcmF0dXJlIGhhdmUgZm9jdXNlZCBvbiBjbHVzdGVyaW5nIGluIHRlcm1zIG9mIHNvY2lhbCBpbmVxdWFsaXRpZXMuIFtAbG9uZzIwMTNicmlkZ2VzXSB3cm90ZSBhIHN5c3RlbWF0aWMgcmV2aWV3IG9uIGJyb2tlcnMgaW4gY29sbGFib3JhdGl2ZSBuZXR3b3JrcyBhbmQgaG93IHRoaXMgaW5mbHVlbmNlIHRoZSBzcHJlYWQgb2YgaW5mb3JtYXRpb24uIFRoZWlyIGNvbmNsdXNpb24gaXMgdGhhdCB3aGlsZSBicm9rZXJzLCBicmlkZ2VzIGFuZCBib3VuZGFyeSBzcGFubmVycyBkbyBwbGF5IGEgY3JpdGljYWwgcm9sZSBpbiBzcHJlYWRpbmcgaW5mb3JtYXRpb24gdGhyb3VnaG91dCBuZXR3b3JrcywgaW5mb3JtYXRpb24gd2lsbCBzcHJlYWQgbW9yZSBlZmZpY2llbnRseSB3aGVuIG5ldHdvcmtzIGFyZSBtb3JlIGNsb3NlIGtuaXQuIEhvd2V2ZXIsIHRoaXMgcGFwZXIgYW5kIHRodXMgdGhlIGFydGljbGVzIGl0IGhhcyByZXZpZXdlZCwgcGF5IGxpdHRsZSBhdHRlbnRpb24gdG8gd2hvIHRoZXNlIGJyb2tlcnMgYXJlLiBJbiBvcmdhbmlzYXRpb25hbCBzY2llbmNlLCBvcmdhbmlzYXRpb25zIGFyZSBhc3N1bWVkIHRvIGJlIGVnYWxpdGFyaWFuIGFuZCB0aHVzIHNvY2lhbCBpbmVxdWFsaXRpZXMgYXJlIGRlZW1lZCBub24gZXhpc3RlbnQuIFRoaXMgc3R1ZHkgd2lsbCBkcm9wIHRoaXMgYXNzdW1wdGlvbiBpbiBvcmRlciB0byBzZWUgd2hldGhlciBnZW5kZXIgaW5lcXVhbGl0aWVzIHBsYXkgYSByb2xlIGluIHRoZSBjb2xsYWJvcmF0aXZlIG5ldHdvcmtzIG9mIGFjYWRlbWljcy4gU3BlY2lmaWNhbGx5LCB0aGlzIGFydGljbGUgd2lsbCBzdHVkeSBob3cgY29hdXRob3JzaGlwIG5ldHdvcmtzIG9mIER1dGNoIFNvY2lvbG9naXN0cyBhcmUgY2x1c3RlcmVkIGluIHRlcm1zIG9mIGdlbmRlci5cDQrigIMgU2Vjb25kbHksIHRoaXMgYXJ0aWNsZSB3aWxsIGxvb2sgYXQgaG93IHRoaXMgZ2VuZGVyIGNsdXN0ZXJpbmcgaW4gY29hdXRob3JzaGlwIG5ldHdvcmtzIGluZmx1ZW5jZXMgdGhlIHByZXN0aWdlIG9yIHN1Y2Nlc3Mgb2YgZmVtYWxlIHNjaG9sYXJzLiBQcmV2aW91cyBzdHVkaWVzIHBvaW50ZWQgb3V0IHRoYXQgbm90IGFsbCByZXNlYXJjaCBpcyB2YWx1ZWQgZXF1YWxseSBhbmQgdGhhdCBnZW5kZXIgaXMgc3RpbGwgYW4gaW5kaWNhdG9yIG9mIHRoaXMgaW5lcXVhbGl0eSBbQGJlbGxvdHRpMjAyMjsgQGJvemVtYW4yMDExbWVuXS4gQnkgc3R1ZHlpbmcgdGhpcyBpbmVxdWFsaXR5IHRocm91Z2ggYSBzb2NpYWwgbmV0d29yayBwZXJzcGVjdGl2ZSwgdGhpcyBzdHVkeSB3aWxsIGhlbHAgdXMgdG8gc2VlIGhvdyBtYWxlIGFuZCBmZW1hbGUgc2Nob2xhcnMgcmVsYXRlIHRvIGVhY2ggb3RoZXIgYW5kIGhvdyB0aGVyZSBwcmVmZXJlbmNlcyBpbmZsdWVuY2UgdGhlIGxpa2VsaWhvb2Qgb2YgcHVibGlzaGluZyB0b2dldGhlciAob3Igbm90KSwgYW5kIHdpbGwgZ2l2ZSBpbnNpZ2h0cyBpbnRvIHRoZSBwYXR0ZXJucyBvZiBnYWluaW5nIGFjYWRlbWljIHByZXN0aWdlIChvciBub3QpLiBUaGlzIGxlYWRzIHRvIHRoZSBmb2xsb3dpbmcgcmVzZWFyY2ggcXVlc3Rpb246DQoNCi0gICBSUSAxOiBIb3cgYXJlIHB1YmxpY2F0aW9uIG5ldHdvcmtzIG9mIHNjaG9sYXJzIGluIFNvY2lvbG9neSBkZXBhcnRtZW50cyBjbHVzdGVyZWQgaW4gdGVybXMgb2YgZ2VuZGVyPw0KDQotICAgUlEgMjogVG8gd2hhdCBleHRlbnQgZG9lcyBnZW5kZXIgY2x1c3RlcmluZyBvZiBwdWJsaWNhdGlvbiBuZXR3b3JrcyBpbmZsdWVuY2UgdGhlIHByZXN0aWdlL3N1Y2Nlc3Mgb2YgZmVtYWxlIHNjaG9sYXJzPw0KDQo8YnI+DQoNCi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQ==</div>
 
 
 </div>
@@ -609,7 +565,7 @@ $(document).ready(function () {
 <!-- code folding -->
 <script>
 $(document).ready(function () {
-  window.initializeSourceEmbed("Week2.Rmd");
+  window.initializeSourceEmbed("Introduction.Rmd");
   window.initializeCodeFolding("show" === "show");
 });
 </script>

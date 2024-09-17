@@ -5,6 +5,13 @@ author: "Niels Vullings"
 bibliography: references.bib
 ---
 
+```{=html}
+<style>
+body {
+text-align: justify}
+</style>
+```
+
 ```{r, globalsettings, echo=FALSE, warning=FALSE, results='hide'}
 library(knitr)
 
@@ -32,6 +39,7 @@ Last compiled on `r format(Sys.time(), '%B, %Y')`
 ------------------------------------------------------------------------
 
 ## Packages
+
 ```{r}
 library(igraph)
 library(RSiena)
@@ -39,6 +47,7 @@ library(RSiena)
 ```
 
 ## Make adjacency matrix
+
 ```{r}
 df <- c(0,0,0,0,
         0,0,0,0,
@@ -48,7 +57,9 @@ df <- c(0,0,0,0,
 (AM_empty <- matrix(df,nrow=4,ncol = 4))
 
 ```
+
 ## Insert 1 tie
+
 ```{r}
 
 df <- c(0,0,0,0,
@@ -63,19 +74,23 @@ df <- c(0,0,0,0,
 ```
 
 ## Triad census
+
 ```{r}
 # Empty graph
 graph <- graph_from_adjacency_matrix(AM_empty, mode = "directed")
 
 triad_census(graph)
 ```
+
 ```{r}
 # 1 inserted tie
 graph2 <- graph_from_adjacency_matrix(AM_1, mode = "directed")
 
 triad_census(graph2)
 ```
+
 ## Social Network
+
 ```{r}
 net <- s501
 
@@ -90,9 +105,11 @@ plot(graph)
 ```
 
 ## Assignment
+
 Give ego level descriptives on all types on centrality measures.
 
 ### Density
+
 ```{r}
 #
 dens <- function(N, data = net, directed = TRUE){
@@ -112,23 +129,44 @@ dens <- function(N, data = net, directed = TRUE){
 dens(10, small_net, directed = TRUE)
 
 ```
+
 ### Degrees
+
 ```{r}
 #degree centrality
-centr_degree(graph, mode = "out")
+test_deg <- centr_degree(graph, mode = "out")
+test_deg <- test_deg$res
 
+
+for (i in 1:length(test_deg)){
+  
+  norm <- (test_deg[i]-max(test_deg))/(max(test_deg)-min(test_deg))
+  print(norm)
+}
+
+centr_degree(graph, mode = "out", normalized = FALSE)
+centr_degree(graph, mode = "out", normalized = TRUE)
 ```
 
 ```{r}
-
+# Closeness centrality
 closeness(graph)
 
 ```
+
 ```{r}
-betweenness(graph, directed = TRUE)
+# Betweenness centrality
+test_bet <- betweenness(graph, directed = TRUE)
+
+for (i in 1:length(test_bet)){
+  
+  norm <- (test_bet[i]-max(test_bet))/(max(test_bet)-min(test_bet))
+  print(norm)
+}
+
+
 ```
 
+```{r}
 
-
-
-
+```

@@ -32,7 +32,6 @@ klippy::klippy(color = 'darkgreen')
 
 ------------------------------------------------------------------------
 
-
 ::: columns
 ::: {.column width="50%"}
 # My Lab Journal
@@ -51,15 +50,15 @@ We, Jochem Tolsma and Bas Hofstra, use this repository for our Social Network An
 :::
 
 ::: {.column width="50%"}
-![](images/cover.jpg)
 :::
+![](images/picture_labjournal-01.png){width="188"}
 :::
 
 ## How to use
 
-1.  Under the tab called *My journal*, you can keep track of my progress per week 
+1.  Under the tab called *My journal*, you can keep track of my progress per week
 
-2.  Under the tab called *My paper*, you can find the research paper 
+2.  Under the tab called *My paper*, you can find the research paper
 
 3.  TBD
 

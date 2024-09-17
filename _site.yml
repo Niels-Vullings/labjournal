@@ -19,7 +19,7 @@ navbar:
     - text: "My paper"
       menu:
       - text: "Introduction"
-        href: 
+        href: Introduction.html
         
         # here, other .Rmds can be added
 
