@@ -16,10 +16,13 @@ navbar:
         href: Week1.html
       - text: "Week 2"
         href: Week2.html
+      - text: "Week 3"
+        href: Week3-webscraping.html
     - text: "My paper"
       menu:
       - text: "Introduction"
         href: Introduction.html
+        
         
         # here, other .Rmds can be added
 

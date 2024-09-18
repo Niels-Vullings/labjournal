@@ -1,0 +1,329 @@
+---
+title: "Journal - Week 2"
+#bibliography: references.bib
+author: "Niels Vullings"
+bibliography: references.bib
+output: 
+  html_document: 
+    df_print: tibble
+---
+
+```{=html}
+<style>
+body {
+text-align: justify}
+</style>
+```
+
+```{r, globalsettings, echo=FALSE, warning=FALSE, results='hide'}
+library(knitr)
+
+knitr::opts_chunk$set(echo = TRUE)
+opts_chunk$set(tidy.opts=list(width.cutoff=100),tidy=TRUE, warning = FALSE, message = FALSE,comment = "#>", cache=TRUE, class.source=c("test"), class.output=c("test2"))
+options(width = 100)
+rgl::setupKnitr()
+
+
+
+colorize <- function(x, color) {sprintf("<span style='color: %s;'>%s</span>", color, x) }
+
+```
+
+```{r klippy, echo=FALSE, include=TRUE}
+klippy::klippy(position = c('top', 'right'))
+# klippy::klippy(color = 'darkgreen')
+#klippy::klippy(tooltip_message = 'Click to copy', tooltip_success = 'Done')
+```
+
+Last compiled on `r format(Sys.time(), '%B, %Y')`
+
+<br>
+
+------------------------------------------------------------------------
+# Set up
+```{r packages1}
+# start with clean workspace
+rm(list = ls())
+
+# install.packages('data.table')
+library(data.table)  # mainly for faster data handling
+library(tidyverse)  # I assume you already installed this one!
+# install.packages('httr') # we don't need this for now require(httr)
+# install.packages("xml2")
+library(xml2)
+# install.packages("rvest")
+library(rvest)
+# install.packages("devtools")
+library(devtools)
+# Note we're doing something different here. We're installing a *latest* version directly from
+# GitHub This is because the released version of this packages contains some errors!
+# devtools::install_github("jkeirstead/scholar")
+
+library(scholar)
+
+# define workdirectory, note the double *backslashes* if you're on windows setwd('/yourpathhere)'
+
+```
+
+# Scrape Radboud data
+## Get website input
+```{r wayback}
+# Let's first get the staff page read_html is a function that simply extracts html webpages and
+# puts them in xml format
+soc_staff <- read_html("https://web.archive.org/web/20230528153336/https://www.ru.nl/sociology/research/staff/")
+head(soc_staff)
+```
+
+## Get all names of Radboud Sociologists
+```{r webscrape RU}
+# so we need to find WHERE the table is located in the html 'inspect element' in mozilla firefox or
+# 'view page source' and you see that everything AFTER /td in the 'body' of the page seems to be
+# the table we do need
+
+soc_staff_filt <- soc_staff %>%
+  rvest::html_elements("body") %>%
+  rvest::html_table()
+
+
+# soc_staff_filt
+
+```
+
+# Find University Leiden Staff
+## Get website input
+```{r webscrape UL}
+
+soc_staff_UL1 <- read_html("https://www.universiteitleiden.nl/wetenschappers/overzicht?pageNumber=1&faculty=social-and-behavioural-sciences&facultyinstitute=institute-of-political-science")
+
+soc_staff_UL2 <- read_html("https://www.universiteitleiden.nl/en/social-behavioural-sciences/political-science/staff#tab-1")
+
+```
+
+## Scrape Names
+```{r}
+# First try -> WRONG
+soc_staff_UL_filt1 <- soc_staff_UL1 %>%
+  rvest::html_elements("body") %>%
+  rvest::html_elements("ul") %>% 
+  rvest::html_elements("strong")
+
+soc_staff_UL_filt1
+```
+
+## All names of Political Scientists 
+```{r}
+soc_staff_UL_filt2 <- soc_staff_UL2 %>%
+  rvest::html_elements("body") %>%
+  rvest::html_elements("ul.table-list") %>%
+  rvest::html_text()
+
+soc_staff_UL_filt3 <- soc_staff_UL2 %>%
+  rvest::html_elements("body") %>%
+  rvest::html_elements("ul.table-list") %>%
+  rvest::html_elements("strong") %>% 
+  rvest::html_text()
+
+soc_staff_UL_JT <- soc_staff_UL2 %>%
+  html_nodes("body") %>%
+  html_nodes(xpath = "//a") %>%
+  html_text()
+```
+
+### Display scraped data
+```{r }
+soc_staff_UL_filt2
+
+soc_staff_UL_JT
+```
+
+---------------------------------------------------------------------------------------------------
+# Part II
+
+## Set up
+```{r packages2, eval = FALSE}
+# start with clean workspace
+rm(list = ls())
+
+# install.packages('data.table')
+library(data.table)  # mainly for faster data handling
+# library(tidyverse)  # I assume you already installed this one!
+# install.packages('httr') # we don't need this for now require(httr)
+# install.packages("xml2")
+library(xml2)
+# install.packages("rvest")
+library(rvest)
+# install.packages("devtools")
+library(devtools)
+# Note we're doing something different here. We're installing a *latest* version directly from
+# GitHub This is because the released version of this packages contains some errors!
+# devtools::install_github("jkeirstead/scholar")
+
+require(scholar)
+
+# define workdirectory, note the double *backslashes* if you're on windows setwd('/yourpathhere)'
+
+```
+
+
+```{r UDF}
+fpackage.check <- function(packages) {
+    lapply(packages, FUN = function(x) {
+        if (!require(x, character.only = TRUE)) {
+            install.packages(x, dependencies = TRUE)
+            library(x, character.only = TRUE)
+        }
+    })
+}
+
+fsave <- function(x, file, location = "./local/", ...) {
+    if (!dir.exists(location))
+        dir.create(location)
+    datename <- substr(gsub("[:-]", "", Sys.time()), 1, 8)
+    totalname <- paste(location, datename, file, sep = "")
+    print(paste("SAVED: ", totalname, sep = ""))
+    save(x, file = totalname)
+}
+
+fload <- function(fileName) {
+    load(fileName)
+    get(ls()[ls() != "fileName"])
+}
+
+
+fshowdf <- function(x, digits = 2, ...) {
+    knitr::kable(x, digits = digits, "html", ...) %>%
+        kableExtra::kable_styling(bootstrap_options = c("striped", "hover")) %>%
+        kableExtra::scroll_box(width = "100%", height = "300px")
+}
+```
+
+## Set up Selenium
+```{r}
+# packages = c("RSelenium", "rvest", "tidyverse", "netstat", "pingr", "stringr")
+# fpackage.check(packages)
+# rm(packages)
+# install.packages("selenider")
+```
+```{r}
+# # find a free port
+# port <- netstat::free_port(random = TRUE)
+# 
+# # ping port for confirmation
+# pingr::ping_port("www.jochemtolsma.nl", port = port)
+# ping_port("r-project.org")
+```
+
+```{r}
+# rD <- rsDriver(browser = "firefox", port = port, chromever = NULL, verbose = FALSE)
+# remDr <- rD[["client"]]
+# 
+# #---- Terminate Process ----
+# # pid <- rD$server$process$get_pid()  #get process id
+# # system(paste0("Taskkill /F /T", " /PID ", pid))
+
+```
+
+## Search RU Staff
+```{r}
+# # navigate to RU staff page
+# remDr$navigate("https://www.ru.nl/en/search/scope/staff/")
+# 
+# # handle cookies
+# remDr$findElement(using = "css", value = ".agree-button")$highlightElement()
+# remDr$findElement(using = "css", value = ".agree-button")$clickElement()
+# 
+# cookies <- remDr$getAllCookies()
+# saveRDS(cookies, "cookies.rds")
+# remDr$addCookie(name = cookies[[1]][["name"]], value = cookies[[1]][["value"]])
+# 
+# remDr$maxWindowSize()
+```
+
+# Open Alex
+```{r}
+# install.packages("openalexR")
+library(openalexR)
+```
+
+```{r}
+df <- oa_fetch(entity = "authors", search = "jochem tolsma")
+fshowdf(df)
+
+```
+
+```{r}
+df_papers <- oa_fetch(entity = "works", author.id = df$id)
+# class(df_papers)
+head(df_papers)
+df_papers$author[1]
+
+```
+
+```{r}
+options(openalexR.mailto = "niels1908@gmail.com")
+```
+# Final Assignment
+## Institution ID
+```{r}
+df_insts <- oa_fetch(entity = "institutions", search = "radboud", verbose = TRUE)$id[1]
+
+
+f_inst <- function(x){
+  oa_fetch(entity = "institutions", search = x)$id[1]
+  }
+```
+## Author ID
+```{r}
+authors <- c("Jochem Tolsma", "Tom van der Meer", "Maurice Gesthuizen", "Michael Savelkoul")
+
+df_authors <- NA
+for (i in 1: length(authors)) {
+  df_authors[i] <- oa_fetch(entity = "authors", search = authors[i], affiliations.institution.id = df_insts)[1,] %>% select(id)
+}
+df_authors <- unlist(df_authors)
+
+```
+## All Works
+```{r}
+
+df_works <- oa_fetch(entity = "works", author.id = df_authors, verbose = TRUE)
+
+```
+## Make the adjacency matrix
+### Raw Data
+```{r}
+T1_raw <- df_works %>% filter(publication_year >= 2014 & publication_year <= 2018)
+T2_raw <- df_works %>% filter(publication_year >= 2019 & publication_year <= 2023)
+
+```
+
+
+### Empty Adjacency Matrix
+```{r}
+Wave_1 <- matrix(0, nrow = 4, ncol = 4, dimnames = list(authors,authors))
+
+Wave_2 <- Wave_1
+
+```
+
+### Construct the network
+```{r eval = FALSE}
+for(i in 1:length(T1_raw)){
+
+  ego <- T1_raw[i,]$author[[1]]$au_display_name[1]
+  alters <- T1_raw[i,]$author[[1]]$au_display_name[-1]
+
+  if(alters %in% authors){
+
+
+  }
+}
+
+
+Wave_1[ego, alters] <- 1
+```
+
+
+
+
+
