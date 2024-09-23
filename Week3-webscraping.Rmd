@@ -167,33 +167,33 @@ require(scholar)
 
 ```{r UDF}
 fpackage.check <- function(packages) {
-    lapply(packages, FUN = function(x) {
-        if (!require(x, character.only = TRUE)) {
-            install.packages(x, dependencies = TRUE)
-            library(x, character.only = TRUE)
-        }
-    })
+  lapply(packages, FUN = function(x) {
+    if (!require(x, character.only = TRUE)) {
+      install.packages(x, dependencies = TRUE)
+      library(x, character.only = TRUE)
+    }
+  })
 }
 
 fsave <- function(x, file, location = "./local/", ...) {
-    if (!dir.exists(location))
-        dir.create(location)
-    datename <- substr(gsub("[:-]", "", Sys.time()), 1, 8)
-    totalname <- paste(location, datename, file, sep = "")
-    print(paste("SAVED: ", totalname, sep = ""))
-    save(x, file = totalname)
+  if (!dir.exists(location))
+    dir.create(location)
+  datename <- substr(gsub("[:-]", "", Sys.time()), 1, 8)
+  totalname <- paste(location, datename, file, sep = "")
+  print(paste("SAVED: ", totalname, sep = ""))
+  save(x, file = totalname)
 }
 
 fload <- function(fileName) {
-    load(fileName)
-    get(ls()[ls() != "fileName"])
+  load(fileName)
+  get(ls()[ls() != "fileName"])
 }
 
 
 fshowdf <- function(x, digits = 2, ...) {
-    knitr::kable(x, digits = digits, "html", ...) %>%
-        kableExtra::kable_styling(bootstrap_options = c("striped", "hover")) %>%
-        kableExtra::scroll_box(width = "100%", height = "300px")
+  knitr::kable(x, digits = digits, "html", ...) %>%
+    kableExtra::kable_styling(bootstrap_options = c("striped", "hover")) %>%
+    kableExtra::scroll_box(width = "100%", height = "300px")
 }
 ```
 
@@ -270,7 +270,7 @@ df_insts <- oa_fetch(entity = "institutions", search = "radboud", verbose = TRUE
 
 f_inst <- function(x){
   oa_fetch(entity = "institutions", search = x)$id[1]
-  }
+}
 ```
 ## Author ID
 ```{r}
@@ -307,20 +307,33 @@ Wave_2 <- Wave_1
 ```
 
 ### Construct the network
-```{r eval = FALSE}
-for(i in 1:length(T1_raw)){
+```{r eval = FALSE, echo = TRUE}
+i <- 6
+check <- 0
 
+for(i in 1:length(T1_raw)){
+  
+  print(i)
+  
   ego <- T1_raw[i,]$author[[1]]$au_display_name[1]
   alters <- T1_raw[i,]$author[[1]]$au_display_name[-1]
-
-  if(alters %in% authors){
-
-
+  
+  if (length(alters) == 0){
+    
+    next
+    
+  } else if(ego %in% authors == TRUE & alters %in% authors == TRUE){
+    
+    Wave_1[ego,alters] <- 1 
+    
+  } else{
+    
+    next
   }
 }
 
+any(alters %in% authors == TRUE)
 
-Wave_1[ego, alters] <- 1
 ```
 
 
