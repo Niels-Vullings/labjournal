@@ -1,0 +1,301 @@
+---
+title: "Data preparation"
+#bibliography: references.bib
+author: "Niels Vullings"
+bibliography: references.bib
+---
+
+```{=html}
+<style>
+body {
+text-align: justify}
+</style>
+```
+
+```{r, globalsettings, echo=FALSE, warning=FALSE, results='hide'}
+library(knitr)
+
+knitr::opts_chunk$set(echo = TRUE)
+opts_chunk$set(tidy.opts=list(width.cutoff=100),tidy=TRUE, warning = FALSE, message = FALSE,comment = "#>", cache=TRUE, class.source=c("test"), class.output=c("test2"))
+options(width = 100)
+rgl::setupKnitr()
+
+
+
+colorize <- function(x, color) {sprintf("<span style='color: %s;'>%s</span>", color, x) }
+
+```
+
+```{r klippy, echo=FALSE, include=TRUE}
+klippy::klippy(position = c('top', 'right'))
+# klippy::klippy(color = 'darkgreen')
+#klippy::klippy(tooltip_message = 'Click to copy', tooltip_success = 'Done')
+```
+
+Last compiled on `r format(Sys.time(), '%B, %Y')`
+
+<br>
+
+------------------------------------------------------------------------
+
+# Set up
+
+```{r}
+rm(list = ls())
+
+# Libraries
+library(data.table)  # mainly for faster data handling
+library(tidyverse)  # I assume you already installed this one!
+# install.packages('httr') # we don't need this for now require(httr)
+# install.packages("xml2")
+library(xml2)
+# install.packages("rvest")
+library(rvest)
+
+```
+
+# Load data
+
+```{r}
+load("data/scholars_20240924.rda")
+scholars <- x
+rm(x)
+
+```
+
+## User function for Network data creation
+
+About the parameters:
+
+data: our scholars file university: Character vector with names of universities. We have several universities in the Netherlands. See above for relevant names.
+
+discipline: Character vector, either sociology or political science or both. waves: a list of numeric vectors with start and end year of wave.
+
+type: "first": directed: first author sending to others "last": directed: last author sending to others "all": undirected: ties between all authors
+
+Output: a list
+
+-   \$nets: array of nomination networks.
+
+-   \$data: sample of data (scholars)
+
+```{r}
+fcolnet <- function(data = scholars, university = "RU", discipline = "sociology", waves = list(c(2015,
+                                                                                                 2018), c(2019, 2023)), type = c("first")) {
+  
+  # step 1
+  demographics <- do.call(rbind.data.frame, data$demographics)
+  demographics <- demographics %>%
+    mutate(Universiteit1.22 = replace(Universiteit1.22, is.na(Universiteit1.22), ""), Universiteit2.22 = replace(Universiteit2.22,
+                                                                                                                 is.na(Universiteit2.22), ""), Universiteit1.24 = replace(Universiteit1.24, is.na(Universiteit1.24),
+                                                                                                                                                                          ""), Universiteit2.24 = replace(Universiteit2.24, is.na(Universiteit2.24), ""), discipline.22 = replace(discipline.22,
+                                                                                                                                                                                                                                                                                  is.na(discipline.22), ""), discipline.24 = replace(discipline.24, is.na(discipline.24), ""))
+  
+  sample <- which((demographics$Universiteit1.22 %in% university | demographics$Universiteit2.22 %in%
+                     university | demographics$Universiteit1.24 %in% university | demographics$Universiteit2.24 %in%
+                     university) & (demographics$discipline.22 %in% discipline | demographics$discipline.24 %in% discipline))
+  
+  demographics_soc <- demographics[sample, ]
+  scholars_sel <- lapply(scholars, "[", sample)
+  
+  # step 2
+  ids <- demographics_soc$au_id
+  nwaves <- length(waves)
+  nets <- array(0, dim = c(nwaves, length(ids), length(ids)), dimnames = list(wave = 1:nwaves, ids,
+                                                                              ids))
+  dimnames(nets)
+  
+  # step 3
+  df_works <- tibble(works_id = unlist(lapply(scholars_sel$work, function(l) l$id)), works_author = unlist(lapply(scholars_sel$work,
+                                                                                                                  function(l) l$author), recursive = FALSE), works_year = unlist(lapply(scholars_sel$work, function(l) l$publication_year),
+                                                                                                                                                                                 recursive = FALSE))
+  
+  df_works <- df_works[!duplicated(df_works), ]
+  
+  # step 4
+  if (type == "first") {
+    for (j in 1:nwaves) {
+      df_works_w <- df_works[df_works$works_year >= waves[[j]][1] & df_works$works_year <= waves[[j]][2],
+      ]
+      for (i in 1:nrow(df_works_w)) {
+        ego <- df_works_w$works_author[i][[1]]$au_id[1]
+        alters <- df_works_w$works_author[i][[1]]$au_id[-1]
+        if (sum(ids %in% ego) > 0 & sum(ids %in% alters) > 0) {
+          nets[j, which(ids %in% ego), which(ids %in% alters)] <- 1
+        }
+      }
+    }
+  }
+  
+  if (type == "last") {
+    for (j in 1:nwaves) {
+      df_works_w <- df_works[df_works$works_year >= waves[[j]][1] & df_works$works_year <= waves[[j]][2],
+      ]
+      for (i in 1:nrow(df_works_w)) {
+        ego <- rev(df_works_w$works_author[i][[1]]$au_id)[1]
+        alters <- rev(df_works_w$works_author[i][[1]]$au_id)[-1]
+        if (sum(ids %in% ego) > 0 & sum(ids %in% alters) > 0) {
+          nets[j, which(ids %in% ego), which(ids %in% alters)] <- 1
+        }
+      }
+    }
+  }
+  
+  if (type == "all") {
+    for (j in 1:nwaves) {
+      df_works_w <- df_works[df_works$works_year >= waves[[j]][1] & df_works$works_year <= waves[[j]][2],
+      ]
+      for (i in 1:nrow(df_works_w)) {
+        egos <- df_works_w$works_author[i][[1]]$au_id
+        if (sum(ids %in% egos) > 0) {
+          nets[j, which(ids %in% egos), which(ids %in% egos)] <- 1
+        }
+      }
+    }
+  }
+  output <- list()
+  output$data <- scholars_sel
+  output$nets <- nets
+  return(output)
+}
+```
+
+# Data Manipulation
+
+## Subset relevant data
+
+I want to study the Sociology departments
+
+```{r}
+
+soc_data <- fcolnet(data = scholars, 
+                    university = c("RU", "UU"), 
+                    discipline = c("sociology"), 
+                    waves = list(c(2015, 2019), c(2020, 2024)), 
+                    type = c("first"))
+
+df <- soc_data$data
+df_ego <- do.call(rbind.data.frame, df$demographics)
+
+# soc_data$nets[2,,] # How to call a specific network
+
+```
+
+## Create the gender variable
+
+In order to get use scrape first names, we first need to have the first names of all authors in our network
+
+### Screwing around with strings
+```{r}
+vect <- c("Now this string is not split", "It is a nice Picture", "Is it ready", "Split Screen")
+
+vect
+# ?nchar()
+
+testje <- data.frame(string = vect, job = c(TRUE,TRUE,TRUE,FALSE))
+
+testje$first_el <- sapply(strsplit(vect, " "), `[`, 1) # This code should work as a way to extract first names from the ego characteristics dataset
+
+```
+
+### Extract first names
+
+```{r}
+
+x <- data.frame(Naam = df_ego$Naam)
+
+first_name <- sapply(strsplit(x$Naam, " "), `[`, 1) # This code should work as a way to extract first names from the ego characteristics dataset
+
+
+
+df_names <- data.frame(x,first_name, male = NA, female = NA) # seem to have worked
+
+```
+
+### Gender Scraper
+
+The function gender_scraper uses HTML-scraping with rvest to extract first names from a string with one's full name. Input can be any dataframe that contains names, but this one is specifically made to be compatible with the '*fcolnet*' function by Jochem Tolsma. The function first extracts the first element of a string and saves it in variable first_name. I then loop over every first name in the dataframe, with each first name serving as new input for the "voornamenbank" <https://nvb.meertens.knaw.nl/>. If the name is in the database, the function will extract the occurences of the name by gender. If the name is not in the database, the function will return a NA value for the gender of that respondent. The final step is creating a scaled (0/1) variable '[*perc_female*]{.underline}', which represents the likelihood that a name corresponds with the female gender (1 = 100% female, 0 = 100% male).
+
+```{r}
+# df_names <- df_names[1:5,] # take first elements to try out
+
+i <- 1
+df_names$first_name[i]
+
+
+gender_scraper.NV <- function(names = "names element", web_page = "https://nvb.meertens.knaw.nl/naam/is/"){
+  
+  
+  names$first_name <- sapply(strsplit(names$Naam, " "), `[`, 1) # This code should work as a way to extract first names from the ego characteristics dataset
+  names$male <- NA
+  names$female <- NA
+  
+  for(i in 1:nrow(names)){
+    
+    # print(names$first_name[i])
+    
+    web_page <- read_html(paste0("https://nvb.meertens.knaw.nl/naam/is/", names$first_name[i]))
+    
+    table <- web_page %>% 
+      rvest::html_elements("body") %>% 
+      rvest::html_elements("table") %>% 
+      rvest::html_table()
+    
+    if(length(table) == 0){
+      
+      print(length(table))
+      
+      names$male[i] <- NA
+      names$female[i] <- NA
+      
+    } else{
+      
+      # print(table)
+      # print(table[[1]][[2,3]]) # Check if values for male are coherent and accurate
+      # print(table[[1]][[6,3]]) # Check if values for female are coherent and accurate
+      
+      names$male[i] <- as.numeric(ifelse(table[[1]][[2,3]] == "--", 0, table[[1]][[2,3]])) # Make sure non-occurences are not registered as "--"
+      names$female[i] <- as.numeric(ifelse(table[[1]][[6,3]] == "--", 0, table[[1]][[6,3]])) # Make sure non-occurences are not registered as "--"
+      
+      
+    }
+    
+  } # end forloop
+  
+  names <- names %>% mutate(perc_female = case_when(is.na(female == TRUE) & is.na(male) == TRUE ~ NA,
+                                                 is.na(female) == TRUE ~ 0,
+                                                 is.na(male == TRUE) ~ 1,
+                                                 .default = round((female/(male + female)),2))) %>% 
+    select(!c(male,female, first_name))
+  
+  return(names)
+  
+  
+} # end function
+
+# ?mutate()
+# ?case_when
+testing <- gender_scraper.NV(names = df_ego, web_page = "https://nvb.meertens.knaw.nl/naam/is/")
+
+
+# paste0("https://nvb.meertens.knaw.nl/naam/is/", "name") # This will eventually be used for automating the scraping process
+
+```
+### Check results
+```{r}
+check <- testing %>% count(perc_female)
+
+plot(check$perc_female, check$n)
+```
+
+
+```{r}
+# net_w2 <- igraph::graph_from_adjacency_matrix(soc_data$nets[2,,], #now, I take the second wave
+#                                               mode = c("directed"),
+#                                               weighted = NULL,diag = FALSE,add.colnames = NULL)
+
+```
+
+<br>
+
+------------------------------------------------------------------------

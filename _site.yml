@@ -18,10 +18,19 @@ navbar:
         href: Week2.html
       - text: "Week 3"
         href: Week3-webscraping.html
+      - text: "Week 4"
+        href: Week4.html
+    - text: "Data Preparation"
+      menu:
+      - text: "Data Exploration"
+        href: Data_exploration.html
+      - text: "Data Manipulation"
+        href: Data_preparation.html
     - text: "My paper"
       menu:
       - text: "Introduction"
         href: Introduction.html
+
         
         
         # here, other .Rmds can be added

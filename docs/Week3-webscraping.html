@@ -360,6 +360,24 @@ div.tocify {
     <li>
       <a href="Week3-webscraping.html">Week 3</a>
     </li>
+    <li>
+      <a href="Week4.html">Week 4</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Data Preparation
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="Data_exploration.html">Data Exploration</a>
+    </li>
+    <li>
+      <a href="Data_preparation.html">Data Manipulation</a>
+    </li>
   </ul>
 </li>
 <li class="dropdown">
@@ -417,137 +435,131 @@ text-align: justify}
 </script>
 <p>Last compiled on september, 2024</p>
 <p><br></p>
-<table>
-<colgroup>
-<col width="100%" />
-</colgroup>
-<tbody>
-<tr class="odd">
-<td align="left"># Set up</td>
-</tr>
-<tr class="even">
-<td align="left">```{.r .test} # start with clean workspace rm(list =
-ls())</td>
-</tr>
-<tr class="odd">
-<td align="left"># install.packages(‘data.table’) library(data.table) #
-mainly for faster data handling library(tidyverse) # I assume you
-already installed this one! # install.packages(‘httr’) # we don’t need
-this for now require(httr) install.packages(‘xml2’) library(xml2) #
-install.packages(‘rvest’) library(rvest) # install.packages(‘devtools’)
-library(devtools) # Note we’re doing something different here. We’re
-installing a <em>latest</em> version directly from # GitHub This is
-because the released version of this packages contains some errors! #
-devtools::install_github(‘jkeirstead/scholar’)</td>
-</tr>
-<tr class="even">
-<td align="left">library(scholar)</td>
-</tr>
-<tr class="odd">
-<td align="left"># define workdirectory, note the double
-<em>backslashes</em> if you’re on windows setwd(‘/yourpathhere)’
-```</td>
-</tr>
-<tr class="even">
-<td align="left"># Scrape Radboud data ## Get website input</td>
-</tr>
-<tr class="odd">
-<td
-align="left"><code>{.r .test} # Let's first get the staff page read_html is a function that simply extracts html webpages and # puts them in xml format soc_staff &lt;- read_html("https://web.archive.org/web/20230528153336/https://www.ru.nl/sociology/research/staff/") head(soc_staff)</code></td>
-</tr>
-<tr class="even">
-<td
-align="left"><code>{.test2} #&gt; $node #&gt; &lt;pointer: 0x00000267555fead0&gt; #&gt; #&gt; $doc #&gt; &lt;pointer: 0x000002674c67c040&gt;</code></td>
-</tr>
-<tr class="odd">
-<td align="left">## Get all names of Radboud Sociologists</td>
-</tr>
-<tr class="even">
-<td align="left">```{.r .test} # so we need to find WHERE the table is
-located in the html ‘inspect element’ in mozilla firefox or # ‘view page
-source’ and you see that everything AFTER /td in the ‘body’ of the page
-seems to be # the table we do need</td>
-</tr>
-<tr class="odd">
-<td align="left">soc_staff_filt &lt;- soc_staff %&gt;%
-rvest::html_elements(“body”) %&gt;% rvest::html_table()</td>
-</tr>
-<tr class="even">
-<td align="left"># soc_staff_filt ```</td>
-</tr>
-<tr class="odd">
-<td align="left"># Find University Leiden Staff ## Get website
-input</td>
-</tr>
-<tr class="even">
-<td align="left">```{.r .test} soc_staff_UL1 &lt;- read_html(“<a
-href="https://www.universiteitleiden.nl/wetenschappers/overzicht?pageNumber=1&amp;faculty=social-and-behavioural-sciences&amp;facultyinstitute=institute-of-political-science"
-class="uri">https://www.universiteitleiden.nl/wetenschappers/overzicht?pageNumber=1&amp;faculty=social-and-behavioural-sciences&amp;facultyinstitute=institute-of-political-science</a>”)</td>
-</tr>
-<tr class="odd">
-<td align="left">soc_staff_UL2 &lt;- read_html(“<a
-href="https://www.universiteitleiden.nl/en/social-behavioural-sciences/political-science/staff#tab-1"
-class="uri">https://www.universiteitleiden.nl/en/social-behavioural-sciences/political-science/staff#tab-1</a>”)
-```</td>
-</tr>
-<tr class="even">
-<td align="left">## Scrape Names</td>
-</tr>
-<tr class="odd">
-<td align="left">```{.r .test} # First try -&gt; WRONG
+<hr />
+<div id="set-up" class="section level1" number="1">
+<h1><span class="header-section-number">1</span> Set up</h1>
+<pre class="r test"><code># start with clean workspace
+rm(list = ls())
+
+# install.packages(&#39;data.table&#39;)
+library(data.table)  # mainly for faster data handling
+library(tidyverse)  # I assume you already installed this one!
+# install.packages(&#39;httr&#39;) # we don&#39;t need this for now require(httr) install.packages(&#39;xml2&#39;)
+library(xml2)
+# install.packages(&#39;rvest&#39;)
+library(rvest)
+# install.packages(&#39;devtools&#39;)
+library(devtools)
+# Note we&#39;re doing something different here. We&#39;re installing a *latest* version directly from
+# GitHub This is because the released version of this packages contains some errors!
+# devtools::install_github(&#39;jkeirstead/scholar&#39;)
+
+library(scholar)
+
+# define workdirectory, note the double *backslashes* if you&#39;re on windows setwd(&#39;/yourpathhere)&#39;</code></pre>
+</div>
+<div id="scrape-radboud-data" class="section level1" number="2">
+<h1><span class="header-section-number">2</span> Scrape Radboud
+data</h1>
+<div id="get-website-input" class="section level2" number="2.1">
+<h2><span class="header-section-number">2.1</span> Get website
+input</h2>
+<pre class="r test"><code># Let&#39;s first get the staff page read_html is a function that simply extracts html webpages and
+# puts them in xml format
+soc_staff &lt;- read_html(&quot;https://web.archive.org/web/20230528153336/https://www.ru.nl/sociology/research/staff/&quot;)
+head(soc_staff)</code></pre>
+<pre class="test2"><code>#&gt; $node
+#&gt; &lt;pointer: 0x000002f661a80ec0&gt;
+#&gt; 
+#&gt; $doc
+#&gt; &lt;pointer: 0x000002f661a7cca0&gt;</code></pre>
+</div>
+<div id="get-all-names-of-radboud-sociologists" class="section level2"
+number="2.2">
+<h2><span class="header-section-number">2.2</span> Get all names of
+Radboud Sociologists</h2>
+<pre class="r test"><code># so we need to find WHERE the table is located in the html &#39;inspect element&#39; in mozilla firefox or
+# &#39;view page source&#39; and you see that everything AFTER /td in the &#39;body&#39; of the page seems to be
+# the table we do need
+
+soc_staff_filt &lt;- soc_staff %&gt;%
+    rvest::html_elements(&quot;body&quot;) %&gt;%
+    rvest::html_table()
+
+
+# soc_staff_filt</code></pre>
+</div>
+</div>
+<div id="find-university-leiden-staff" class="section level1"
+number="3">
+<h1><span class="header-section-number">3</span> Find University Leiden
+Staff</h1>
+<div id="get-website-input-1" class="section level2" number="3.1">
+<h2><span class="header-section-number">3.1</span> Get website
+input</h2>
+<pre class="r test"><code>soc_staff_UL1 &lt;- read_html(&quot;https://www.universiteitleiden.nl/wetenschappers/overzicht?pageNumber=1&amp;faculty=social-and-behavioural-sciences&amp;facultyinstitute=institute-of-political-science&quot;)
+
+soc_staff_UL2 &lt;- read_html(&quot;https://www.universiteitleiden.nl/en/social-behavioural-sciences/political-science/staff#tab-1&quot;)</code></pre>
+</div>
+<div id="scrape-names" class="section level2" number="3.2">
+<h2><span class="header-section-number">3.2</span> Scrape Names</h2>
+<pre class="r test"><code># First try -&gt; WRONG
 soc_staff_UL_filt1 &lt;- soc_staff_UL1 %&gt;%
-rvest::html_elements(“body”) %&gt;% rvest::html_elements(“ul”) %&gt;%
-rvest::html_elements(“strong”)</td>
-</tr>
-<tr class="even">
-<td align="left">soc_staff_UL_filt1 ```</td>
-</tr>
-<tr class="odd">
-<td
-align="left"><code>{.test2} #&gt; {xml_nodeset (15)} #&gt;  [1] &lt;strong&gt;Adina Akbik&lt;/strong&gt; #&gt;  [2] &lt;strong&gt;Femke Bakker&lt;/strong&gt; #&gt;  [3] &lt;strong&gt;Ingrid van Biezen&lt;/strong&gt; #&gt;  [4] &lt;strong&gt;Nicolas Blarel&lt;/strong&gt; #&gt;  [5] &lt;strong&gt;Arjen Boin&lt;/strong&gt; #&gt;  [6] &lt;strong&gt;Theo Brinkel&lt;/strong&gt; #&gt;  [7] &lt;strong&gt;Manuel Cabal Lopez&lt;/strong&gt; #&gt;  [8] &lt;strong&gt;Valentina Carraro&lt;/strong&gt; #&gt;  [9] &lt;strong&gt;Stefan Cetkovic&lt;/strong&gt; #&gt; [10] &lt;strong&gt;Diana Davila Gordillo&lt;/strong&gt; #&gt; [11] &lt;strong&gt;Leila Demarest&lt;/strong&gt; #&gt; [12] &lt;strong&gt;Matthew di Giuseppe&lt;/strong&gt; #&gt; [13] &lt;strong&gt;Roos van der Haer&lt;/strong&gt; #&gt; [14] &lt;strong&gt;Gisela Hirschmann&lt;/strong&gt; #&gt; [15] &lt;strong&gt;Joop van Holsteijn&lt;/strong&gt;</code></td>
-</tr>
-<tr class="even">
-<td align="left">## All names of Political Scientists</td>
-</tr>
-<tr class="odd">
-<td align="left">```{.r .test} soc_staff_UL_filt2 &lt;- soc_staff_UL2
-%&gt;% rvest::html_elements(“body”) %&gt;%
-rvest::html_elements(“ul.table-list”) %&gt;% rvest::html_text()</td>
-</tr>
-<tr class="even">
-<td align="left">soc_staff_UL_filt3 &lt;- soc_staff_UL2 %&gt;%
-rvest::html_elements(“body”) %&gt;%
-rvest::html_elements(“ul.table-list”) %&gt;%
-rvest::html_elements(“strong”) %&gt;% rvest::html_text()</td>
-</tr>
-<tr class="odd">
-<td align="left">soc_staff_UL_JT &lt;- soc_staff_UL2 %&gt;%
-html_nodes(“body”) %&gt;% html_nodes(xpath = “//a”) %&gt;% html_text()
-```</td>
-</tr>
-<tr class="even">
-<td align="left">### Display scraped data</td>
-</tr>
-<tr class="odd">
-<td align="left"><code>{.r .test} soc_staff_UL_filt2</code></td>
-</tr>
-<tr class="even">
-<td
-align="left"><code>{.test2} #&gt; [1] "\n\n\n\n\n\n\n\n\n\n                    \n        Adina Akbik\n            Senior Assistant Professor\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Femke Bakker\n            Senior assistant professor\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Ingrid van Biezen\n            Professor of Comparative Politics\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Nicolas Blarel\n            Associate Professor\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Arjen Boin\n            Professor of Public Institutions and Governance\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Theo Brinkel\n            Professor by Special Appointment Military-social studies\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n\n                    \n        Manuel Cabal Lopez\n            Assistant professor\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n\n                    \n        Valentina Carraro\n            Assistant Professor in Global Transformations and Governance Challenges\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Stefan Cetkovic\n            Assistant Professor\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n\n                    \n        Diana Davila Gordillo\n            Assistant professor\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Leila Demarest\n            Associate Professor\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Matthew di Giuseppe\n            Director of Studies / Associate Professor\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Roos van der Haer\n            Assistant Professor\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Gisela Hirschmann\n            Senior Assistant Professor\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Joop van Holsteijn\n            Professor Political Behaviour and Research Methods\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Corinna Jentzsch\n            Assistant Professor\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Petr Kopecky\n            Professor of Comparative Studies Political Parties and Party Systems\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Matthew Longo\n            Senior Assistant Professor\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Tom Louwerse\n            Director of Research / Associate Professor\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Floris Mansvelt Beck\n            Assistant Professor\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Hilde van Meegdenburg\n            Assistant Professor\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Michael Meffert\n            Assistant Professor\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Frits Meijerink\n            Assistant professor\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Tim Mickler\n            Senior assistant professor\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Martijn Mos\n            Assistant Professor\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Katharina Natter\n            Senior assistant professor\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Paul Nieuwenburg\n            Professor Political Philosophy\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Simon Otjes\n            Senior Assistant Professor\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Hans Oversloot\n            Guest researcher\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Jonathan Phillips\n            Assistant Professor\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Rebecca Ploof\n            Assistant Professor\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Karolina Pomorska\n            Associate professor\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Francesco Ragazzi\n            Associate professor\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Babak Rezaeedaryakenari\n            Senior Assistant Professor\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Josh Robison\n            Assistant Professor\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Michael Sampson\n            Senior Assistant Professor\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n\n                    \n        Jan Aart Scholte\n            Professor Global Transformations and Governance Challenges\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Jonah Schulhofer-Wohl\n            Senior assistant professor\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Maria Spirova\n            Associate Professor\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Tilko Arne Swalve\n            Assistant Professor\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Tom Theuns\n            Senior Assistant Professor\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Daniel Thomas\n            Professor of International Relations\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Christina Luise Toenshoff\n            Assistant professor\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Vasiliki (Billy) Tsagkroni\n            Senior assistant professor\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Wouter Veenendaal\n            Professor by Special Appointment Kingdom Relations\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Claire Vergerio\n            Guest\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Marco Verschoor\n            Assistant Professor\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Cynthia van Vonno\n            Assistant Professor\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Niels van Willigen\n            Director of Studies/Associate Professor\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Nikoleta Yordanova\n            Associate professor\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Yuan Yi Zhu\n            Assistant professor\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Frank de Zwart\n            Guest\n    \n\n\n                " #&gt; [2] "\n\n\n\n\n\n\n\n\n\n                    \n        Alessia Aspide\n            PhD candidate\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Cyan Bae\n            PhD candidate\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Kathleen Brown\n            PhD candidate\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Mateo Cohen\n            External PhD candidate\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Josette Daemen\n            Postdoc\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Jesse Doornenbal\n            Lecturer\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Eleftherios Karchimakis\n            Lecturer\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Aleksandra Khokhlova\n            PhD candidate\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Hannah Kuhn\n            PhD candidate\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Ruben van de Ven\n            PhD candidate\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Anouk van Vliet\n            Lecturer\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Denny van der Vlist\n            PhD candidate\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Thijs Vos\n            PhD candidate\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Rick van Well\n            Lecturer\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Daan van den Wollenberg\n            PhD candidate / self funded\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Elina Zorina\n            PhD candidate\n    \n\n\n                " #&gt; [3] "\n\n\n\n\n\n\n\n\n\n                    \n        Agha Bayramov\n            Lecturer\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Jelena Belic\n            Lecturer\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Jelke Bethlehem\n            Professor emeritus Survey Methodology\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Peter Castenmiller\n            Lecturer\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Henk Dekker\n            Emeritus professor of Political Socialization and Integration\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Rutger Hagen\n            Lecturer\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Henriëtte van den Heuvel\n            Scientific Director ad interim\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Galen Irwin\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Devrim Kabasakal Badamchi-\n            Guest researcher\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Eleftherios Karchimakis\n            Lecturer\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Müge Kinacioglu\n            Lecturer\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Ruud Koole\n            Professor emeritus Politicologie\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Amber Lauwers\n            Lecturer\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        José Lourenço\n            Lecturer\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Jan Meijer\n            Lecturer\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Marijn Nagtzaam\n            Lecturer\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Christoph Niessen\n            Guest\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Alexandros Ntaflos\n            Lecturer\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Joyce Outshoorn\n            Emeritus professor vrouwenstudies\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Siebe Overdijk\n            Lecturer\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Jimena Pacheco Miranda\n            Lecturer\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Julia Puente Duyn\n            Lecturer\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Ellen van Reuler\n            Lecturer\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Thomas Scarff\n            Lecturer\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Radostina Sharenkova-Toshkova\n            Guest\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n\n                    \n        Justin Spruit\n            Lecturer\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Vishwesh Sundar\n            Lecturer\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Eldad Vainstoc\n            Lecturer\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Harmen van der Veer\n            Lecturer\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Amy Verdun\n            Guest professor\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Ruben Verheul\n            Web editor\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Anouk van Vliet\n            Lecturer\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Carina van de Wetering\n            Lecturer\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n\n                    \n        Gul-i-Hina van der Zwan\n            Postdoc / guest\n    \n\n\n                " #&gt; [4] "\n\n\n\n\n\n\n\n\n\n                    \n        Wencke Appelman\n            Study adviser\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Ester Blom\n            Study Adviser\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Anna van Dijk\n            Management/office-assistent\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Nathalie van Dooren\n            Coordinator Marketing &amp; Student Recruitment\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Desiree van Drongelen\n            Staff Member Studentregistrations\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Nynke Heegstra\n            Study Advisor\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Ingrid van Heeringen-Göbbels\n            Institute manager\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Katie Hudson\n            Data Steward\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Lianne Janssen\n            Policy Officer Education and Quality Assurance\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Eline Joor\n            Internationalisation Officer\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Ian Lau\n            Study adviser\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Daniëlle Lovink\n            Study Adviser\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Carien Nelissen\n            Education manager\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Caroline Remmerswaal\n            Secretary board of examiners\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Marjan Rijnja\n            Teaching Coordinator\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Elka Smith\n            Research Project Manager\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Judy Spruit\n            Management/office-assistent\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Tessa Thomas\n            Management assistant\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Debbie Tromper\n            Management assistant\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Gerard van der Veer\n            Secretary board of examiners\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Ruben Verheul\n            Web editor\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Jeanne Viet\n            Communication staff member\n    \n\n\n                            \n\n\n\n\n\n\n\n\n\n                    \n        Denise Zeeuw-van Veen\n            Management/office assistant\n    \n\n\n                "</code></td>
-</tr>
-<tr class="odd">
-<td align="left"><code>{.r .test} soc_staff_UL_JT</code></td>
-</tr>
-<tr class="even">
-<td
-align="left"><code>{.test2} #&gt;   [1] "Leiden University" #&gt;   [2] "Students" #&gt;   [3] "Staff members" #&gt;   [4] "Organisational structure" #&gt;   [5] "Library" #&gt;   [6] "\n" #&gt;   [7] "\nAll categories " #&gt;   [8] "\nPersons\n" #&gt;   [9] "\nEducation\n" #&gt;  [10] "\nResearch\n" #&gt;  [11] "\nNews\n" #&gt;  [12] "\nEvents\n" #&gt;  [13] "\nDossiers\n" #&gt;  [14] "\nLocations\n" #&gt;  [15] "\nCourses\n" #&gt;  [16] "\nVacancies\n" #&gt;  [17] "\nOther\n" #&gt;  [18] "\nKeywords\n" #&gt;  [19] "\nnl\n" #&gt;  [20] "Home" #&gt;  [21] "Research" #&gt;  [22] "Education" #&gt;  [23] "Academic staff" #&gt;  [24] "About us" #&gt;  [25] "Collaboration" #&gt;  [26] "Faculties" #&gt;  [27] "Campus The Hague" #&gt;  [28] "Alumni" #&gt;  [29] "Library" #&gt;  [30] "Home" #&gt;  [31] "\nSocial and Behavioural Sciences\n" #&gt;  [32] "\nPolitical Science\n" #&gt;  [33] "Political Science" #&gt;  [34] "Research" #&gt;  [35] "Education" #&gt;  [36] "PhD" #&gt;  [37] "Organisation" #&gt;  [38] "Staff" #&gt;  [39] "Contact" #&gt;  [40] "\n\n\n\n\n                    \n        Adina Akbik\n            Senior Assistant Professor\n    \n" #&gt;  [41] "\n\n\n\n\n                    \n        Femke Bakker\n            Senior assistant professor\n    \n" #&gt;  [42] "\n\n\n\n\n                    \n        Ingrid van Biezen\n            Professor of Comparative Politics\n    \n" #&gt;  [43] "\n\n\n\n\n                    \n        Nicolas Blarel\n            Associate Professor\n    \n" #&gt;  [44] "\n\n\n\n\n                    \n        Arjen Boin\n            Professor of Public Institutions and Governance\n    \n" #&gt;  [45] "\n\n\n\n\n                    \n        Theo Brinkel\n            Professor by Special Appointment Military-social studies\n    \n" #&gt;  [46] "\n\n\n\n\n\n                    \n        Manuel Cabal Lopez\n            Assistant professor\n    \n" #&gt;  [47] "\n\n\n\n\n\n                    \n        Valentina Carraro\n            Assistant Professor in Global Transformations and Governance Challenges\n    \n" #&gt;  [48] "\n\n\n\n\n                    \n        Stefan Cetkovic\n            Assistant Professor\n    \n" #&gt;  [49] "\n\n\n\n\n\n                    \n        Diana Davila Gordillo\n            Assistant professor\n    \n" #&gt;  [50] "\n\n\n\n\n                    \n        Leila Demarest\n            Associate Professor\n    \n" #&gt;  [51] "\n\n\n\n\n                    \n        Matthew di Giuseppe\n            Director of Studies / Associate Professor\n    \n" #&gt;  [52] "\n\n\n\n\n                    \n        Roos van der Haer\n            Assistant Professor\n    \n" #&gt;  [53] "\n\n\n\n\n                    \n        Gisela Hirschmann\n            Senior Assistant Professor\n    \n" #&gt;  [54] "\n\n\n\n\n                    \n        Joop van Holsteijn\n            Professor Political Behaviour and Research Methods\n    \n" #&gt;  [55] "\n\n\n\n\n                    \n        Corinna Jentzsch\n            Assistant Professor\n    \n" #&gt;  [56] "\n\n\n\n\n                    \n        Petr Kopecky\n            Professor of Comparative Studies Political Parties and Party Systems\n    \n" #&gt;  [57] "\n\n\n\n\n                    \n        Matthew Longo\n            Senior Assistant Professor\n    \n" #&gt;  [58] "\n\n\n\n\n                    \n        Tom Louwerse\n            Director of Research / Associate Professor\n    \n" #&gt;  [59] "\n\n\n\n\n                    \n        Floris Mansvelt Beck\n            Assistant Professor\n    \n" #&gt;  [60] "\n\n\n\n\n                    \n        Hilde van Meegdenburg\n            Assistant Professor\n    \n" #&gt;  [61] "\n\n\n\n\n                    \n        Michael Meffert\n            Assistant Professor\n    \n" #&gt;  [62] "\n\n\n\n\n                    \n        Frits Meijerink\n            Assistant professor\n    \n" #&gt;  [63] "\n\n\n\n\n                    \n        Tim Mickler\n            Senior assistant professor\n    \n" #&gt;  [64] "\n\n\n\n\n                    \n        Martijn Mos\n            Assistant Professor\n    \n" #&gt;  [65] "\n\n\n\n\n                    \n        Katharina Natter\n            Senior assistant professor\n    \n" #&gt;  [66] "\n\n\n\n\n                    \n        Paul Nieuwenburg\n            Professor Political Philosophy\n    \n" #&gt;  [67] "\n\n\n\n\n                    \n        Simon Otjes\n            Senior Assistant Professor\n    \n" #&gt;  [68] "\n\n\n\n\n                    \n        Hans Oversloot\n            Guest researcher\n    \n" #&gt;  [69] "\n\n\n\n\n                    \n        Jonathan Phillips\n            Assistant Professor\n    \n" #&gt;  [70] "\n\n\n\n\n                    \n        Rebecca Ploof\n            Assistant Professor\n    \n" #&gt;  [71] "\n\n\n\n\n                    \n        Karolina Pomorska\n            Associate professor\n    \n" #&gt;  [72] "\n\n\n\n\n                    \n        Francesco Ragazzi\n            Associate professor\n    \n" #&gt;  [73] "\n\n\n\n\n                    \n        Babak Rezaeedaryakenari\n            Senior Assistant Professor\n    \n" #&gt;  [74] "\n\n\n\n\n                    \n        Josh Robison\n            Assistant Professor\n    \n" #&gt;  [75] "\n\n\n\n\n                    \n        Michael Sampson\n            Senior Assistant Professor\n    \n" #&gt;  [76] "\n\n\n\n\n\n                    \n        Jan Aart Scholte\n            Professor Global Transformations and Governance Challenges\n    \n" #&gt;  [77] "\n\n\n\n\n                    \n        Jonah Schulhofer-Wohl\n            Senior assistant professor\n    \n" #&gt;  [78] "\n\n\n\n\n                    \n        Maria Spirova\n            Associate Professor\n    \n" #&gt;  [79] "\n\n\n\n\n                    \n        Tilko Arne Swalve\n            Assistant Professor\n    \n" #&gt;  [80] "\n\n\n\n\n                    \n        Tom Theuns\n            Senior Assistant Professor\n    \n" #&gt;  [81] "\n\n\n\n\n                    \n        Daniel Thomas\n            Professor of International Relations\n    \n" #&gt;  [82] "\n\n\n\n\n                    \n        Christina Luise Toenshoff\n            Assistant professor\n    \n" #&gt;  [83] "\n\n\n\n\n                    \n        Vasiliki (Billy) Tsagkroni\n            Senior assistant professor\n    \n" #&gt;  [84] "\n\n\n\n\n                    \n        Wouter Veenendaal\n            Professor by Special Appointment Kingdom Relations\n    \n" #&gt;  [85] "\n\n\n\n\n                    \n        Claire Vergerio\n            Guest\n    \n" #&gt;  [86] "\n\n\n\n\n                    \n        Marco Verschoor\n            Assistant Professor\n    \n" #&gt;  [87] "\n\n\n\n\n                    \n        Cynthia van Vonno\n            Assistant Professor\n    \n" #&gt;  [88] "\n\n\n\n\n                    \n        Niels van Willigen\n            Director of Studies/Associate Professor\n    \n" #&gt;  [89] "\n\n\n\n\n                    \n        Nikoleta Yordanova\n            Associate professor\n    \n" #&gt;  [90] "\n\n\n\n\n                    \n        Yuan Yi Zhu\n            Assistant professor\n    \n" #&gt;  [91] "\n\n\n\n\n                    \n        Frank de Zwart\n            Guest\n    \n" #&gt;  [92] "\n\n\n\n\n                    \n        Alessia Aspide\n            PhD candidate\n    \n" #&gt;  [93] "\n\n\n\n\n                    \n        Cyan Bae\n            PhD candidate\n    \n" #&gt;  [94] "\n\n\n\n\n                    \n        Kathleen Brown\n            PhD candidate\n    \n" #&gt;  [95] "\n\n\n\n\n                    \n        Mateo Cohen\n            External PhD candidate\n    \n" #&gt;  [96] "\n\n\n\n\n                    \n        Josette Daemen\n            Postdoc\n    \n" #&gt;  [97] "\n\n\n\n\n                    \n        Jesse Doornenbal\n            Lecturer\n    \n" #&gt;  [98] "\n\n\n\n\n                    \n        Eleftherios Karchimakis\n            Lecturer\n    \n" #&gt;  [99] "\n\n\n\n\n                    \n        Aleksandra Khokhlova\n            PhD candidate\n    \n" #&gt; [100] "\n\n\n\n\n                    \n        Hannah Kuhn\n            PhD candidate\n    \n" #&gt; [101] "\n\n\n\n\n                    \n        Ruben van de Ven\n            PhD candidate\n    \n" #&gt; [102] "\n\n\n\n\n                    \n        Anouk van Vliet\n            Lecturer\n    \n" #&gt; [103] "\n\n\n\n\n                    \n        Denny van der Vlist\n            PhD candidate\n    \n" #&gt; [104] "\n\n\n\n\n                    \n        Thijs Vos\n            PhD candidate\n    \n" #&gt; [105] "\n\n\n\n\n                    \n        Rick van Well\n            Lecturer\n    \n" #&gt; [106] "\n\n\n\n\n                    \n        Daan van den Wollenberg\n            PhD candidate / self funded\n    \n" #&gt; [107] "\n\n\n\n\n                    \n        Elina Zorina\n            PhD candidate\n    \n" #&gt; [108] "\n\n\n\n\n                    \n        Agha Bayramov\n            Lecturer\n    \n" #&gt; [109] "\n\n\n\n\n                    \n        Jelena Belic\n            Lecturer\n    \n" #&gt; [110] "\n\n\n\n\n                    \n        Jelke Bethlehem\n            Professor emeritus Survey Methodology\n    \n" #&gt; [111] "\n\n\n\n\n                    \n        Peter Castenmiller\n            Lecturer\n    \n" #&gt; [112] "\n\n\n\n\n                    \n        Henk Dekker\n            Emeritus professor of Political Socialization and Integration\n    \n" #&gt; [113] "\n\n\n\n\n                    \n        Rutger Hagen\n            Lecturer\n    \n" #&gt; [114] "\n\n\n\n\n                    \n        Henriëtte van den Heuvel\n            Scientific Director ad interim\n    \n" #&gt; [115] "\n\n\n\n\n                    \n        Galen Irwin\n    \n" #&gt; [116] "\n\n\n\n\n                    \n        Devrim Kabasakal Badamchi-\n            Guest researcher\n    \n" #&gt; [117] "\n\n\n\n\n                    \n        Eleftherios Karchimakis\n            Lecturer\n    \n" #&gt; [118] "\n\n\n\n\n                    \n        Müge Kinacioglu\n            Lecturer\n    \n" #&gt; [119] "\n\n\n\n\n                    \n        Ruud Koole\n            Professor emeritus Politicologie\n    \n" #&gt; [120] "\n\n\n\n\n                    \n        Amber Lauwers\n            Lecturer\n    \n" #&gt; [121] "\n\n\n\n\n                    \n        José Lourenço\n            Lecturer\n    \n" #&gt; [122] "\n\n\n\n\n                    \n        Jan Meijer\n            Lecturer\n    \n" #&gt; [123] "\n\n\n\n\n                    \n        Marijn Nagtzaam\n            Lecturer\n    \n" #&gt; [124] "\n\n\n\n\n                    \n        Christoph Niessen\n            Guest\n    \n" #&gt; [125] "\n\n\n\n\n                    \n        Alexandros Ntaflos\n            Lecturer\n    \n" #&gt; [126] "\n\n\n\n\n                    \n        Joyce Outshoorn\n            Emeritus professor vrouwenstudies\n    \n" #&gt; [127] "\n\n\n\n\n                    \n        Siebe Overdijk\n            Lecturer\n    \n" #&gt; [128] "\n\n\n\n\n                    \n        Jimena Pacheco Miranda\n            Lecturer\n    \n" #&gt; [129] "\n\n\n\n\n                    \n        Julia Puente Duyn\n            Lecturer\n    \n" #&gt; [130] "\n\n\n\n\n                    \n        Ellen van Reuler\n            Lecturer\n    \n" #&gt; [131] "\n\n\n\n\n                    \n        Thomas Scarff\n            Lecturer\n    \n" #&gt; [132] "\n\n\n\n\n                    \n        Radostina Sharenkova-Toshkova\n            Guest\n    \n" #&gt; [133] "\n\n\n\n\n\n                    \n        Justin Spruit\n            Lecturer\n    \n" #&gt; [134] "\n\n\n\n\n                    \n        Vishwesh Sundar\n            Lecturer\n    \n" #&gt; [135] "\n\n\n\n\n                    \n        Eldad Vainstoc\n            Lecturer\n    \n" #&gt; [136] "\n\n\n\n\n                    \n        Harmen van der Veer\n            Lecturer\n    \n" #&gt; [137] "\n\n\n\n\n                    \n        Amy Verdun\n            Guest professor\n    \n" #&gt; [138] "\n\n\n\n\n                    \n        Ruben Verheul\n            Web editor\n    \n" #&gt; [139] "\n\n\n\n\n                    \n        Anouk van Vliet\n            Lecturer\n    \n" #&gt; [140] "\n\n\n\n\n                    \n        Carina van de Wetering\n            Lecturer\n    \n" #&gt; [141] "\n\n\n\n\n\n                    \n        Gul-i-Hina van der Zwan\n            Postdoc / guest\n    \n" #&gt; [142] "\n\n\n\n\n                    \n        Wencke Appelman\n            Study adviser\n    \n" #&gt; [143] "\n\n\n\n\n                    \n        Ester Blom\n            Study Adviser\n    \n" #&gt; [144] "\n\n\n\n\n                    \n        Anna van Dijk\n            Management/office-assistent\n    \n" #&gt; [145] "\n\n\n\n\n                    \n        Nathalie van Dooren\n            Coordinator Marketing &amp; Student Recruitment\n    \n" #&gt; [146] "\n\n\n\n\n                    \n        Desiree van Drongelen\n            Staff Member Studentregistrations\n    \n" #&gt; [147] "\n\n\n\n\n                    \n        Nynke Heegstra\n            Study Advisor\n    \n" #&gt; [148] "\n\n\n\n\n                    \n        Ingrid van Heeringen-Göbbels\n            Institute manager\n    \n" #&gt; [149] "\n\n\n\n\n                    \n        Katie Hudson\n            Data Steward\n    \n" #&gt; [150] "\n\n\n\n\n                    \n        Lianne Janssen\n            Policy Officer Education and Quality Assurance\n    \n" #&gt; [151] "\n\n\n\n\n                    \n        Eline Joor\n            Internationalisation Officer\n    \n" #&gt; [152] "\n\n\n\n\n                    \n        Ian Lau\n            Study adviser\n    \n" #&gt; [153] "\n\n\n\n\n                    \n        Daniëlle Lovink\n            Study Adviser\n    \n" #&gt; [154] "\n\n\n\n\n                    \n        Carien Nelissen\n            Education manager\n    \n" #&gt; [155] "\n\n\n\n\n                    \n        Caroline Remmerswaal\n            Secretary board of examiners\n    \n" #&gt; [156] "\n\n\n\n\n                    \n        Marjan Rijnja\n            Teaching Coordinator\n    \n" #&gt; [157] "\n\n\n\n\n                    \n        Elka Smith\n            Research Project Manager\n    \n" #&gt; [158] "\n\n\n\n\n                    \n        Judy Spruit\n            Management/office-assistent\n    \n" #&gt; [159] "\n\n\n\n\n                    \n        Tessa Thomas\n            Management assistant\n    \n" #&gt; [160] "\n\n\n\n\n                    \n        Debbie Tromper\n            Management assistant\n    \n" #&gt; [161] "\n\n\n\n\n                    \n        Gerard van der Veer\n            Secretary board of examiners\n    \n" #&gt; [162] "\n\n\n\n\n                    \n        Ruben Verheul\n            Web editor\n    \n" #&gt; [163] "\n\n\n\n\n                    \n        Jeanne Viet\n            Communication staff member\n    \n" #&gt; [164] "\n\n\n\n\n                    \n        Denise Zeeuw-van Veen\n            Management/office assistant\n    \n" #&gt; [165] "Bachelor's programmes" #&gt; [166] "Master's programmes" #&gt; [167] "PhD programmes" #&gt; [168] "Education for Professionals" #&gt; [169] "Summer Schools" #&gt; [170] "Other modes of study" #&gt; [171] "Bachelor's Open Days" #&gt; [172] "Master's Open Days" #&gt; [173] "Admission &amp; Application" #&gt; [174] "Archaeology" #&gt; [175] "Governance and Global Affairs" #&gt; [176] "Humanities" #&gt; [177] "Law" #&gt; [178] "Medicine/LUMC" #&gt; [179] "Science" #&gt; [180] "Social and Behavioural Sciences" #&gt; [181] "African Studies Centre Leiden" #&gt; [182] "Honours Academy" #&gt; [183] "ICLON (Graduate School of Teaching)" #&gt; [184] "Working at Leiden University" #&gt; [185] "Support Leiden University" #&gt; [186] "Alumni" #&gt; [187] "Impact" #&gt; [188] "Leiden-Delft-Erasmus Universities" #&gt; [189] "Locations" #&gt; [190] "Disclaimer" #&gt; [191] "Cookies" #&gt; [192] "Privacy" #&gt; [193] "Contact" #&gt; [194] "Sign up to receive our monthly newsletter" #&gt; [195] "" #&gt; [196] "" #&gt; [197] "" #&gt; [198] "" #&gt; [199] "" #&gt; [200] "" #&gt; [201] "\nMore information. "</code></td>
-</tr>
-</tbody>
-</table>
-<div id="part-ii" class="section level1" number="1">
-<h1><span class="header-section-number">1</span> Part II</h1>
-<div id="set-up" class="section level2" number="1.1">
-<h2><span class="header-section-number">1.1</span> Set up</h2>
+    rvest::html_elements(&quot;body&quot;) %&gt;%
+    rvest::html_elements(&quot;ul&quot;) %&gt;%
+    rvest::html_elements(&quot;strong&quot;)
+
+soc_staff_UL_filt1</code></pre>
+<pre class="test2"><code>#&gt; {xml_nodeset (15)}
+#&gt;  [1] &lt;strong&gt;Adina Akbik&lt;/strong&gt;
+#&gt;  [2] &lt;strong&gt;Femke Bakker&lt;/strong&gt;
+#&gt;  [3] &lt;strong&gt;Ingrid van Biezen&lt;/strong&gt;
+#&gt;  [4] &lt;strong&gt;Nicolas Blarel&lt;/strong&gt;
+#&gt;  [5] &lt;strong&gt;Arjen Boin&lt;/strong&gt;
+#&gt;  [6] &lt;strong&gt;Theo Brinkel&lt;/strong&gt;
+#&gt;  [7] &lt;strong&gt;Manuel Cabal Lopez&lt;/strong&gt;
+#&gt;  [8] &lt;strong&gt;Valentina Carraro&lt;/strong&gt;
+#&gt;  [9] &lt;strong&gt;Stefan Cetkovic&lt;/strong&gt;
+#&gt; [10] &lt;strong&gt;Diana Davila Gordillo&lt;/strong&gt;
+#&gt; [11] &lt;strong&gt;Leila Demarest&lt;/strong&gt;
+#&gt; [12] &lt;strong&gt;Matthew di Giuseppe&lt;/strong&gt;
+#&gt; [13] &lt;strong&gt;Roos van der Haer&lt;/strong&gt;
+#&gt; [14] &lt;strong&gt;Gisela Hirschmann&lt;/strong&gt;
+#&gt; [15] &lt;strong&gt;Joop van Holsteijn&lt;/strong&gt;</code></pre>
+</div>
+<div id="all-names-of-political-scientists" class="section level2"
+number="3.3">
+<h2><span class="header-section-number">3.3</span> All names of
+Political Scientists</h2>
+<pre class="r test"><code>soc_staff_UL_filt2 &lt;- soc_staff_UL2 %&gt;%
+    rvest::html_elements(&quot;body&quot;) %&gt;%
+    rvest::html_elements(&quot;ul.table-list&quot;) %&gt;%
+    rvest::html_text()
+
+soc_staff_UL_filt3 &lt;- soc_staff_UL2 %&gt;%
+    rvest::html_elements(&quot;body&quot;) %&gt;%
+    rvest::html_elements(&quot;ul.table-list&quot;) %&gt;%
+    rvest::html_elements(&quot;strong&quot;) %&gt;%
+    rvest::html_text()
+
+soc_staff_UL_JT &lt;- soc_staff_UL2 %&gt;%
+    html_nodes(&quot;body&quot;) %&gt;%
+    html_nodes(xpath = &quot;//a&quot;) %&gt;%
+    html_text()</code></pre>
+<div id="display-scraped-data" class="section level3" number="3.3.1">
+<h3><span class="header-section-number">3.3.1</span> Display scraped
+data</h3>
+<pre class="r test"><code># soc_staff_UL_filt2
+
+# soc_staff_UL_JT</code></pre>
+<hr />
+</div>
+</div>
+</div>
+<div id="part-ii" class="section level1" number="4">
+<h1><span class="header-section-number">4</span> Part II</h1>
+<div id="set-up-1" class="section level2" number="4.1">
+<h2><span class="header-section-number">4.1</span> Set up</h2>
 <pre class="r test"><code># start with clean workspace
 rm(list = ls())
 
@@ -597,8 +609,8 @@ fshowdf &lt;- function(x, digits = 2, ...) {
         kableExtra::scroll_box(width = &quot;100%&quot;, height = &quot;300px&quot;)
 }</code></pre>
 </div>
-<div id="set-up-selenium" class="section level2" number="1.2">
-<h2><span class="header-section-number">1.2</span> Set up Selenium</h2>
+<div id="set-up-selenium" class="section level2" number="4.2">
+<h2><span class="header-section-number">4.2</span> Set up Selenium</h2>
 <pre class="r test"><code># packages = c(&#39;RSelenium&#39;, &#39;rvest&#39;, &#39;tidyverse&#39;, &#39;netstat&#39;, &#39;pingr&#39;, &#39;stringr&#39;)
 # fpackage.check(packages) rm(packages) install.packages(&#39;selenider&#39;)</code></pre>
 <pre class="r test"><code># # find a free port port &lt;- netstat::free_port(random = TRUE) # ping port for confirmation
@@ -607,8 +619,8 @@ fshowdf &lt;- function(x, digits = 2, ...) {
 # rD[[&#39;client&#39;]] #---- Terminate Process ---- # pid &lt;- rD$server$process$get_pid() #get process id
 # # system(paste0(&#39;Taskkill /F /T&#39;, &#39; /PID &#39;, pid))</code></pre>
 </div>
-<div id="search-ru-staff" class="section level2" number="1.3">
-<h2><span class="header-section-number">1.3</span> Search RU Staff</h2>
+<div id="search-ru-staff" class="section level2" number="4.3">
+<h2><span class="header-section-number">4.3</span> Search RU Staff</h2>
 <pre class="r test"><code># # navigate to RU staff page remDr$navigate(&#39;https://www.ru.nl/en/search/scope/staff/&#39;) # handle
 # cookies remDr$findElement(using = &#39;css&#39;, value = &#39;.agree-button&#39;)$highlightElement()
 # remDr$findElement(using = &#39;css&#39;, value = &#39;.agree-button&#39;)$clickElement() cookies &lt;-
@@ -616,8 +628,8 @@ fshowdf &lt;- function(x, digits = 2, ...) {
 # cookies[[1]][[&#39;name&#39;]], value = cookies[[1]][[&#39;value&#39;]]) remDr$maxWindowSize()</code></pre>
 </div>
 </div>
-<div id="open-alex" class="section level1" number="2">
-<h1><span class="header-section-number">2</span> Open Alex</h1>
+<div id="open-alex" class="section level1" number="5">
+<h1><span class="header-section-number">5</span> Open Alex</h1>
 <pre class="r test"><code># install.packages(&#39;openalexR&#39;)
 library(openalexR)</code></pre>
 <pre class="r test"><code>df &lt;- oa_fetch(entity = &quot;authors&quot;, search = &quot;jochem tolsma&quot;)
@@ -696,7 +708,7 @@ Jochem Tolsma
 J. Tolsma , Jochem Tolsma, J L Tolsma
 </td>
 <td style="text-align:right;">
-8817.54
+8834.43
 </td>
 <td style="text-align:left;">
 <a href="https://openalex.org/A5087380803"
@@ -1060,10 +1072,10 @@ head(df_papers)</code></pre>
 #&gt; 2                       NL        education https://openalex.org/I145872427</code></pre>
 <pre class="r test"><code>options(openalexR.mailto = &quot;niels1908@gmail.com&quot;)</code></pre>
 </div>
-<div id="final-assignment" class="section level1" number="3">
-<h1><span class="header-section-number">3</span> Final Assignment</h1>
-<div id="institution-id" class="section level2" number="3.1">
-<h2><span class="header-section-number">3.1</span> Institution ID</h2>
+<div id="final-assignment" class="section level1" number="6">
+<h1><span class="header-section-number">6</span> Final Assignment</h1>
+<div id="institution-id" class="section level2" number="6.1">
+<h2><span class="header-section-number">6.1</span> Institution ID</h2>
 <pre class="r test"><code>df_insts &lt;- oa_fetch(entity = &quot;institutions&quot;, search = &quot;radboud&quot;, verbose = TRUE)$id[1]
 
 
@@ -1071,8 +1083,8 @@ f_inst &lt;- function(x) {
     oa_fetch(entity = &quot;institutions&quot;, search = x)$id[1]
 }</code></pre>
 </div>
-<div id="author-id" class="section level2" number="3.2">
-<h2><span class="header-section-number">3.2</span> Author ID</h2>
+<div id="author-id" class="section level2" number="6.2">
+<h2><span class="header-section-number">6.2</span> Author ID</h2>
 <pre class="r test"><code>authors &lt;- c(&quot;Jochem Tolsma&quot;, &quot;Tom van der Meer&quot;, &quot;Maurice Gesthuizen&quot;, &quot;Michael Savelkoul&quot;)
 
 df_authors &lt;- NA
@@ -1083,29 +1095,29 @@ for (i in 1:length(authors)) {
 }
 df_authors &lt;- unlist(df_authors)</code></pre>
 </div>
-<div id="all-works" class="section level2" number="3.3">
-<h2><span class="header-section-number">3.3</span> All Works</h2>
+<div id="all-works" class="section level2" number="6.3">
+<h2><span class="header-section-number">6.3</span> All Works</h2>
 <pre class="r test"><code>df_works &lt;- oa_fetch(entity = &quot;works&quot;, author.id = df_authors, verbose = TRUE)</code></pre>
 </div>
-<div id="make-the-adjacency-matrix" class="section level2" number="3.4">
-<h2><span class="header-section-number">3.4</span> Make the adjacency
+<div id="make-the-adjacency-matrix" class="section level2" number="6.4">
+<h2><span class="header-section-number">6.4</span> Make the adjacency
 matrix</h2>
-<div id="raw-data" class="section level3" number="3.4.1">
-<h3><span class="header-section-number">3.4.1</span> Raw Data</h3>
+<div id="raw-data" class="section level3" number="6.4.1">
+<h3><span class="header-section-number">6.4.1</span> Raw Data</h3>
 <pre class="r test"><code>T1_raw &lt;- df_works %&gt;%
     filter(publication_year &gt;= 2014 &amp; publication_year &lt;= 2018)
 T2_raw &lt;- df_works %&gt;%
     filter(publication_year &gt;= 2019 &amp; publication_year &lt;= 2023)</code></pre>
 </div>
-<div id="empty-adjacency-matrix" class="section level3" number="3.4.2">
-<h3><span class="header-section-number">3.4.2</span> Empty Adjacency
+<div id="empty-adjacency-matrix" class="section level3" number="6.4.2">
+<h3><span class="header-section-number">6.4.2</span> Empty Adjacency
 Matrix</h3>
 <pre class="r test"><code>Wave_1 &lt;- matrix(0, nrow = 4, ncol = 4, dimnames = list(authors, authors))
 
 Wave_2 &lt;- Wave_1</code></pre>
 </div>
-<div id="construct-the-network" class="section level3" number="3.4.3">
-<h3><span class="header-section-number">3.4.3</span> Construct the
+<div id="construct-the-network" class="section level3" number="6.4.3">
+<h3><span class="header-section-number">6.4.3</span> Construct the
 network</h3>
 <pre class="r test"><code>i &lt;- 6
 check &lt;- 0
@@ -1136,7 +1148,7 @@ any(alters %in% authors == TRUE)</code></pre>
 </div>
 </div>
 
-<div id="rmd-source-code">LS0tDQp0aXRsZTogIkpvdXJuYWwgLSBXZWVrIDIiDQojYmlibGlvZ3JhcGh5OiByZWZlcmVuY2VzLmJpYg0KYXV0aG9yOiAiTmllbHMgVnVsbGluZ3MiDQpiaWJsaW9ncmFwaHk6IHJlZmVyZW5jZXMuYmliDQpvdXRwdXQ6IA0KICBodG1sX2RvY3VtZW50OiANCiAgICBkZl9wcmludDogdGliYmxlDQotLS0NCg0KYGBgez1odG1sfQ0KPHN0eWxlPg0KYm9keSB7DQp0ZXh0LWFsaWduOiBqdXN0aWZ5fQ0KPC9zdHlsZT4NCmBgYA0KDQpgYGB7ciwgZ2xvYmFsc2V0dGluZ3MsIGVjaG89RkFMU0UsIHdhcm5pbmc9RkFMU0UsIHJlc3VsdHM9J2hpZGUnfQ0KbGlicmFyeShrbml0cikNCg0Ka25pdHI6Om9wdHNfY2h1bmskc2V0KGVjaG8gPSBUUlVFKQ0Kb3B0c19jaHVuayRzZXQodGlkeS5vcHRzPWxpc3Qod2lkdGguY3V0b2ZmPTEwMCksdGlkeT1UUlVFLCB3YXJuaW5nID0gRkFMU0UsIG1lc3NhZ2UgPSBGQUxTRSxjb21tZW50ID0gIiM+IiwgY2FjaGU9VFJVRSwgY2xhc3Muc291cmNlPWMoInRlc3QiKSwgY2xhc3Mub3V0cHV0PWMoInRlc3QyIikpDQpvcHRpb25zKHdpZHRoID0gMTAwKQ0KcmdsOjpzZXR1cEtuaXRyKCkNCg0KDQoNCmNvbG9yaXplIDwtIGZ1bmN0aW9uKHgsIGNvbG9yKSB7c3ByaW50ZigiPHNwYW4gc3R5bGU9J2NvbG9yOiAlczsnPiVzPC9zcGFuPiIsIGNvbG9yLCB4KSB9DQoNCmBgYA0KDQpgYGB7ciBrbGlwcHksIGVjaG89RkFMU0UsIGluY2x1ZGU9VFJVRX0NCmtsaXBweTo6a2xpcHB5KHBvc2l0aW9uID0gYygndG9wJywgJ3JpZ2h0JykpDQojIGtsaXBweTo6a2xpcHB5KGNvbG9yID0gJ2RhcmtncmVlbicpDQoja2xpcHB5OjprbGlwcHkodG9vbHRpcF9tZXNzYWdlID0gJ0NsaWNrIHRvIGNvcHknLCB0b29sdGlwX3N1Y2Nlc3MgPSAnRG9uZScpDQpgYGANCg0KTGFzdCBjb21waWxlZCBvbiBgciBmb3JtYXQoU3lzLnRpbWUoKSwgJyVCLCAlWScpYA0KDQo8YnI+DQoNCi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQ0KIyBTZXQgdXANCmBgYHtyIHBhY2thZ2VzMX0NCiMgc3RhcnQgd2l0aCBjbGVhbiB3b3Jrc3BhY2UNCnJtKGxpc3QgPSBscygpKQ0KDQojIGluc3RhbGwucGFja2FnZXMoJ2RhdGEudGFibGUnKQ0KbGlicmFyeShkYXRhLnRhYmxlKSAgIyBtYWlubHkgZm9yIGZhc3RlciBkYXRhIGhhbmRsaW5nDQpsaWJyYXJ5KHRpZHl2ZXJzZSkgICMgSSBhc3N1bWUgeW91IGFscmVhZHkgaW5zdGFsbGVkIHRoaXMgb25lIQ0KIyBpbnN0YWxsLnBhY2thZ2VzKCdodHRyJykgIyB3ZSBkb24ndCBuZWVkIHRoaXMgZm9yIG5vdyByZXF1aXJlKGh0dHIpDQojIGluc3RhbGwucGFja2FnZXMoInhtbDIiKQ0KbGlicmFyeSh4bWwyKQ0KIyBpbnN0YWxsLnBhY2thZ2VzKCJydmVzdCIpDQpsaWJyYXJ5KHJ2ZXN0KQ0KIyBpbnN0YWxsLnBhY2thZ2VzKCJkZXZ0b29scyIpDQpsaWJyYXJ5KGRldnRvb2xzKQ0KIyBOb3RlIHdlJ3JlIGRvaW5nIHNvbWV0aGluZyBkaWZmZXJlbnQgaGVyZS4gV2UncmUgaW5zdGFsbGluZyBhICpsYXRlc3QqIHZlcnNpb24gZGlyZWN0bHkgZnJvbQ0KIyBHaXRIdWIgVGhpcyBpcyBiZWNhdXNlIHRoZSByZWxlYXNlZCB2ZXJzaW9uIG9mIHRoaXMgcGFja2FnZXMgY29udGFpbnMgc29tZSBlcnJvcnMhDQojIGRldnRvb2xzOjppbnN0YWxsX2dpdGh1YigiamtlaXJzdGVhZC9zY2hvbGFyIikNCg0KbGlicmFyeShzY2hvbGFyKQ0KDQojIGRlZmluZSB3b3JrZGlyZWN0b3J5LCBub3RlIHRoZSBkb3VibGUgKmJhY2tzbGFzaGVzKiBpZiB5b3UncmUgb24gd2luZG93cyBzZXR3ZCgnL3lvdXJwYXRoaGVyZSknDQoNCmBgYA0KDQojIFNjcmFwZSBSYWRib3VkIGRhdGENCiMjIEdldCB3ZWJzaXRlIGlucHV0DQpgYGB7ciB3YXliYWNrfQ0KIyBMZXQncyBmaXJzdCBnZXQgdGhlIHN0YWZmIHBhZ2UgcmVhZF9odG1sIGlzIGEgZnVuY3Rpb24gdGhhdCBzaW1wbHkgZXh0cmFjdHMgaHRtbCB3ZWJwYWdlcyBhbmQNCiMgcHV0cyB0aGVtIGluIHhtbCBmb3JtYXQNCnNvY19zdGFmZiA8LSByZWFkX2h0bWwoImh0dHBzOi8vd2ViLmFyY2hpdmUub3JnL3dlYi8yMDIzMDUyODE1MzMzNi9odHRwczovL3d3dy5ydS5ubC9zb2Npb2xvZ3kvcmVzZWFyY2gvc3RhZmYvIikNCmhlYWQoc29jX3N0YWZmKQ0KYGBgDQoNCiMjIEdldCBhbGwgbmFtZXMgb2YgUmFkYm91ZCBTb2Npb2xvZ2lzdHMNCmBgYHtyIHdlYnNjcmFwZSBSVX0NCiMgc28gd2UgbmVlZCB0byBmaW5kIFdIRVJFIHRoZSB0YWJsZSBpcyBsb2NhdGVkIGluIHRoZSBodG1sICdpbnNwZWN0IGVsZW1lbnQnIGluIG1vemlsbGEgZmlyZWZveCBvcg0KIyAndmlldyBwYWdlIHNvdXJjZScgYW5kIHlvdSBzZWUgdGhhdCBldmVyeXRoaW5nIEFGVEVSIC90ZCBpbiB0aGUgJ2JvZHknIG9mIHRoZSBwYWdlIHNlZW1zIHRvIGJlDQojIHRoZSB0YWJsZSB3ZSBkbyBuZWVkDQoNCnNvY19zdGFmZl9maWx0IDwtIHNvY19zdGFmZiAlPiUNCiAgcnZlc3Q6Omh0bWxfZWxlbWVudHMoImJvZHkiKSAlPiUNCiAgcnZlc3Q6Omh0bWxfdGFibGUoKQ0KDQoNCiMgc29jX3N0YWZmX2ZpbHQNCg0KYGBgDQoNCiMgRmluZCBVbml2ZXJzaXR5IExlaWRlbiBTdGFmZg0KIyMgR2V0IHdlYnNpdGUgaW5wdXQNCmBgYHtyIHdlYnNjcmFwZSBVTH0NCg0Kc29jX3N0YWZmX1VMMSA8LSByZWFkX2h0bWwoImh0dHBzOi8vd3d3LnVuaXZlcnNpdGVpdGxlaWRlbi5ubC93ZXRlbnNjaGFwcGVycy9vdmVyemljaHQ/cGFnZU51bWJlcj0xJmZhY3VsdHk9c29jaWFsLWFuZC1iZWhhdmlvdXJhbC1zY2llbmNlcyZmYWN1bHR5aW5zdGl0dXRlPWluc3RpdHV0ZS1vZi1wb2xpdGljYWwtc2NpZW5jZSIpDQoNCnNvY19zdGFmZl9VTDIgPC0gcmVhZF9odG1sKCJodHRwczovL3d3dy51bml2ZXJzaXRlaXRsZWlkZW4ubmwvZW4vc29jaWFsLWJlaGF2aW91cmFsLXNjaWVuY2VzL3BvbGl0aWNhbC1zY2llbmNlL3N0YWZmI3RhYi0xIikNCg0KYGBgDQoNCiMjIFNjcmFwZSBOYW1lcw0KYGBge3J9DQojIEZpcnN0IHRyeSAtPiBXUk9ORw0Kc29jX3N0YWZmX1VMX2ZpbHQxIDwtIHNvY19zdGFmZl9VTDEgJT4lDQogIHJ2ZXN0OjpodG1sX2VsZW1lbnRzKCJib2R5IikgJT4lDQogIHJ2ZXN0OjpodG1sX2VsZW1lbnRzKCJ1bCIpICU+JSANCiAgcnZlc3Q6Omh0bWxfZWxlbWVudHMoInN0cm9uZyIpDQoNCnNvY19zdGFmZl9VTF9maWx0MQ0KYGBgDQoNCiMjIEFsbCBuYW1lcyBvZiBQb2xpdGljYWwgU2NpZW50aXN0cyANCmBgYHtyfQ0Kc29jX3N0YWZmX1VMX2ZpbHQyIDwtIHNvY19zdGFmZl9VTDIgJT4lDQogIHJ2ZXN0OjpodG1sX2VsZW1lbnRzKCJib2R5IikgJT4lDQogIHJ2ZXN0OjpodG1sX2VsZW1lbnRzKCJ1bC50YWJsZS1saXN0IikgJT4lDQogIHJ2ZXN0OjpodG1sX3RleHQoKQ0KDQpzb2Nfc3RhZmZfVUxfZmlsdDMgPC0gc29jX3N0YWZmX1VMMiAlPiUNCiAgcnZlc3Q6Omh0bWxfZWxlbWVudHMoImJvZHkiKSAlPiUNCiAgcnZlc3Q6Omh0bWxfZWxlbWVudHMoInVsLnRhYmxlLWxpc3QiKSAlPiUNCiAgcnZlc3Q6Omh0bWxfZWxlbWVudHMoInN0cm9uZyIpICU+JSANCiAgcnZlc3Q6Omh0bWxfdGV4dCgpDQoNCnNvY19zdGFmZl9VTF9KVCA8LSBzb2Nfc3RhZmZfVUwyICU+JQ0KICBodG1sX25vZGVzKCJib2R5IikgJT4lDQogIGh0bWxfbm9kZXMoeHBhdGggPSAiLy9hIikgJT4lDQogIGh0bWxfdGV4dCgpDQpgYGANCg0KIyMjIERpc3BsYXkgc2NyYXBlZCBkYXRhDQpgYGB7ciB9DQpzb2Nfc3RhZmZfVUxfZmlsdDINCg0Kc29jX3N0YWZmX1VMX0pUDQpgYGANCg0KLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tDQojIFBhcnQgSUkNCg0KIyMgU2V0IHVwDQpgYGB7ciBwYWNrYWdlczIsIGV2YWwgPSBGQUxTRX0NCiMgc3RhcnQgd2l0aCBjbGVhbiB3b3Jrc3BhY2UNCnJtKGxpc3QgPSBscygpKQ0KDQojIGluc3RhbGwucGFja2FnZXMoJ2RhdGEudGFibGUnKQ0KbGlicmFyeShkYXRhLnRhYmxlKSAgIyBtYWlubHkgZm9yIGZhc3RlciBkYXRhIGhhbmRsaW5nDQojIGxpYnJhcnkodGlkeXZlcnNlKSAgIyBJIGFzc3VtZSB5b3UgYWxyZWFkeSBpbnN0YWxsZWQgdGhpcyBvbmUhDQojIGluc3RhbGwucGFja2FnZXMoJ2h0dHInKSAjIHdlIGRvbid0IG5lZWQgdGhpcyBmb3Igbm93IHJlcXVpcmUoaHR0cikNCiMgaW5zdGFsbC5wYWNrYWdlcygieG1sMiIpDQpsaWJyYXJ5KHhtbDIpDQojIGluc3RhbGwucGFja2FnZXMoInJ2ZXN0IikNCmxpYnJhcnkocnZlc3QpDQojIGluc3RhbGwucGFja2FnZXMoImRldnRvb2xzIikNCmxpYnJhcnkoZGV2dG9vbHMpDQojIE5vdGUgd2UncmUgZG9pbmcgc29tZXRoaW5nIGRpZmZlcmVudCBoZXJlLiBXZSdyZSBpbnN0YWxsaW5nIGEgKmxhdGVzdCogdmVyc2lvbiBkaXJlY3RseSBmcm9tDQojIEdpdEh1YiBUaGlzIGlzIGJlY2F1c2UgdGhlIHJlbGVhc2VkIHZlcnNpb24gb2YgdGhpcyBwYWNrYWdlcyBjb250YWlucyBzb21lIGVycm9ycyENCiMgZGV2dG9vbHM6Omluc3RhbGxfZ2l0aHViKCJqa2VpcnN0ZWFkL3NjaG9sYXIiKQ0KDQpyZXF1aXJlKHNjaG9sYXIpDQoNCiMgZGVmaW5lIHdvcmtkaXJlY3RvcnksIG5vdGUgdGhlIGRvdWJsZSAqYmFja3NsYXNoZXMqIGlmIHlvdSdyZSBvbiB3aW5kb3dzIHNldHdkKCcveW91cnBhdGhoZXJlKScNCg0KYGBgDQoNCg0KYGBge3IgVURGfQ0KZnBhY2thZ2UuY2hlY2sgPC0gZnVuY3Rpb24ocGFja2FnZXMpIHsNCiAgbGFwcGx5KHBhY2thZ2VzLCBGVU4gPSBmdW5jdGlvbih4KSB7DQogICAgaWYgKCFyZXF1aXJlKHgsIGNoYXJhY3Rlci5vbmx5ID0gVFJVRSkpIHsNCiAgICAgIGluc3RhbGwucGFja2FnZXMoeCwgZGVwZW5kZW5jaWVzID0gVFJVRSkNCiAgICAgIGxpYnJhcnkoeCwgY2hhcmFjdGVyLm9ubHkgPSBUUlVFKQ0KICAgIH0NCiAgfSkNCn0NCg0KZnNhdmUgPC0gZnVuY3Rpb24oeCwgZmlsZSwgbG9jYXRpb24gPSAiLi9sb2NhbC8iLCAuLi4pIHsNCiAgaWYgKCFkaXIuZXhpc3RzKGxvY2F0aW9uKSkNCiAgICBkaXIuY3JlYXRlKGxvY2F0aW9uKQ0KICBkYXRlbmFtZSA8LSBzdWJzdHIoZ3N1YigiWzotXSIsICIiLCBTeXMudGltZSgpKSwgMSwgOCkNCiAgdG90YWxuYW1lIDwtIHBhc3RlKGxvY2F0aW9uLCBkYXRlbmFtZSwgZmlsZSwgc2VwID0gIiIpDQogIHByaW50KHBhc3RlKCJTQVZFRDogIiwgdG90YWxuYW1lLCBzZXAgPSAiIikpDQogIHNhdmUoeCwgZmlsZSA9IHRvdGFsbmFtZSkNCn0NCg0KZmxvYWQgPC0gZnVuY3Rpb24oZmlsZU5hbWUpIHsNCiAgbG9hZChmaWxlTmFtZSkNCiAgZ2V0KGxzKClbbHMoKSAhPSAiZmlsZU5hbWUiXSkNCn0NCg0KDQpmc2hvd2RmIDwtIGZ1bmN0aW9uKHgsIGRpZ2l0cyA9IDIsIC4uLikgew0KICBrbml0cjo6a2FibGUoeCwgZGlnaXRzID0gZGlnaXRzLCAiaHRtbCIsIC4uLikgJT4lDQogICAga2FibGVFeHRyYTo6a2FibGVfc3R5bGluZyhib290c3RyYXBfb3B0aW9ucyA9IGMoInN0cmlwZWQiLCAiaG92ZXIiKSkgJT4lDQogICAga2FibGVFeHRyYTo6c2Nyb2xsX2JveCh3aWR0aCA9ICIxMDAlIiwgaGVpZ2h0ID0gIjMwMHB4IikNCn0NCmBgYA0KDQojIyBTZXQgdXAgU2VsZW5pdW0NCmBgYHtyfQ0KIyBwYWNrYWdlcyA9IGMoIlJTZWxlbml1bSIsICJydmVzdCIsICJ0aWR5dmVyc2UiLCAibmV0c3RhdCIsICJwaW5nciIsICJzdHJpbmdyIikNCiMgZnBhY2thZ2UuY2hlY2socGFja2FnZXMpDQojIHJtKHBhY2thZ2VzKQ0KIyBpbnN0YWxsLnBhY2thZ2VzKCJzZWxlbmlkZXIiKQ0KYGBgDQpgYGB7cn0NCiMgIyBmaW5kIGEgZnJlZSBwb3J0DQojIHBvcnQgPC0gbmV0c3RhdDo6ZnJlZV9wb3J0KHJhbmRvbSA9IFRSVUUpDQojIA0KIyAjIHBpbmcgcG9ydCBmb3IgY29uZmlybWF0aW9uDQojIHBpbmdyOjpwaW5nX3BvcnQoInd3dy5qb2NoZW10b2xzbWEubmwiLCBwb3J0ID0gcG9ydCkNCiMgcGluZ19wb3J0KCJyLXByb2plY3Qub3JnIikNCmBgYA0KDQpgYGB7cn0NCiMgckQgPC0gcnNEcml2ZXIoYnJvd3NlciA9ICJmaXJlZm94IiwgcG9ydCA9IHBvcnQsIGNocm9tZXZlciA9IE5VTEwsIHZlcmJvc2UgPSBGQUxTRSkNCiMgcmVtRHIgPC0gckRbWyJjbGllbnQiXV0NCiMgDQojICMtLS0tIFRlcm1pbmF0ZSBQcm9jZXNzIC0tLS0NCiMgIyBwaWQgPC0gckQkc2VydmVyJHByb2Nlc3MkZ2V0X3BpZCgpICAjZ2V0IHByb2Nlc3MgaWQNCiMgIyBzeXN0ZW0ocGFzdGUwKCJUYXNra2lsbCAvRiAvVCIsICIgL1BJRCAiLCBwaWQpKQ0KDQpgYGANCg0KIyMgU2VhcmNoIFJVIFN0YWZmDQpgYGB7cn0NCiMgIyBuYXZpZ2F0ZSB0byBSVSBzdGFmZiBwYWdlDQojIHJlbURyJG5hdmlnYXRlKCJodHRwczovL3d3dy5ydS5ubC9lbi9zZWFyY2gvc2NvcGUvc3RhZmYvIikNCiMgDQojICMgaGFuZGxlIGNvb2tpZXMNCiMgcmVtRHIkZmluZEVsZW1lbnQodXNpbmcgPSAiY3NzIiwgdmFsdWUgPSAiLmFncmVlLWJ1dHRvbiIpJGhpZ2hsaWdodEVsZW1lbnQoKQ0KIyByZW1EciRmaW5kRWxlbWVudCh1c2luZyA9ICJjc3MiLCB2YWx1ZSA9ICIuYWdyZWUtYnV0dG9uIikkY2xpY2tFbGVtZW50KCkNCiMgDQojIGNvb2tpZXMgPC0gcmVtRHIkZ2V0QWxsQ29va2llcygpDQojIHNhdmVSRFMoY29va2llcywgImNvb2tpZXMucmRzIikNCiMgcmVtRHIkYWRkQ29va2llKG5hbWUgPSBjb29raWVzW1sxXV1bWyJuYW1lIl1dLCB2YWx1ZSA9IGNvb2tpZXNbWzFdXVtbInZhbHVlIl1dKQ0KIyANCiMgcmVtRHIkbWF4V2luZG93U2l6ZSgpDQpgYGANCg0KIyBPcGVuIEFsZXgNCmBgYHtyfQ0KIyBpbnN0YWxsLnBhY2thZ2VzKCJvcGVuYWxleFIiKQ0KbGlicmFyeShvcGVuYWxleFIpDQpgYGANCg0KYGBge3J9DQpkZiA8LSBvYV9mZXRjaChlbnRpdHkgPSAiYXV0aG9ycyIsIHNlYXJjaCA9ICJqb2NoZW0gdG9sc21hIikNCmZzaG93ZGYoZGYpDQoNCmBgYA0KDQpgYGB7cn0NCmRmX3BhcGVycyA8LSBvYV9mZXRjaChlbnRpdHkgPSAid29ya3MiLCBhdXRob3IuaWQgPSBkZiRpZCkNCiMgY2xhc3MoZGZfcGFwZXJzKQ0KaGVhZChkZl9wYXBlcnMpDQpkZl9wYXBlcnMkYXV0aG9yWzFdDQoNCmBgYA0KDQpgYGB7cn0NCm9wdGlvbnMob3BlbmFsZXhSLm1haWx0byA9ICJuaWVsczE5MDhAZ21haWwuY29tIikNCmBgYA0KIyBGaW5hbCBBc3NpZ25tZW50DQojIyBJbnN0aXR1dGlvbiBJRA0KYGBge3J9DQpkZl9pbnN0cyA8LSBvYV9mZXRjaChlbnRpdHkgPSAiaW5zdGl0dXRpb25zIiwgc2VhcmNoID0gInJhZGJvdWQiLCB2ZXJib3NlID0gVFJVRSkkaWRbMV0NCg0KDQpmX2luc3QgPC0gZnVuY3Rpb24oeCl7DQogIG9hX2ZldGNoKGVudGl0eSA9ICJpbnN0aXR1dGlvbnMiLCBzZWFyY2ggPSB4KSRpZFsxXQ0KfQ0KYGBgDQojIyBBdXRob3IgSUQNCmBgYHtyfQ0KYXV0aG9ycyA8LSBjKCJKb2NoZW0gVG9sc21hIiwgIlRvbSB2YW4gZGVyIE1lZXIiLCAiTWF1cmljZSBHZXN0aHVpemVuIiwgIk1pY2hhZWwgU2F2ZWxrb3VsIikNCg0KZGZfYXV0aG9ycyA8LSBOQQ0KZm9yIChpIGluIDE6IGxlbmd0aChhdXRob3JzKSkgew0KICBkZl9hdXRob3JzW2ldIDwtIG9hX2ZldGNoKGVudGl0eSA9ICJhdXRob3JzIiwgc2VhcmNoID0gYXV0aG9yc1tpXSwgYWZmaWxpYXRpb25zLmluc3RpdHV0aW9uLmlkID0gZGZfaW5zdHMpWzEsXSAlPiUgc2VsZWN0KGlkKQ0KfQ0KZGZfYXV0aG9ycyA8LSB1bmxpc3QoZGZfYXV0aG9ycykNCg0KYGBgDQojIyBBbGwgV29ya3MNCmBgYHtyfQ0KDQpkZl93b3JrcyA8LSBvYV9mZXRjaChlbnRpdHkgPSAid29ya3MiLCBhdXRob3IuaWQgPSBkZl9hdXRob3JzLCB2ZXJib3NlID0gVFJVRSkNCg0KYGBgDQojIyBNYWtlIHRoZSBhZGphY2VuY3kgbWF0cml4DQojIyMgUmF3IERhdGENCmBgYHtyfQ0KVDFfcmF3IDwtIGRmX3dvcmtzICU+JSBmaWx0ZXIocHVibGljYXRpb25feWVhciA+PSAyMDE0ICYgcHVibGljYXRpb25feWVhciA8PSAyMDE4KQ0KVDJfcmF3IDwtIGRmX3dvcmtzICU+JSBmaWx0ZXIocHVibGljYXRpb25feWVhciA+PSAyMDE5ICYgcHVibGljYXRpb25feWVhciA8PSAyMDIzKQ0KDQpgYGANCg0KDQojIyMgRW1wdHkgQWRqYWNlbmN5IE1hdHJpeA0KYGBge3J9DQpXYXZlXzEgPC0gbWF0cml4KDAsIG5yb3cgPSA0LCBuY29sID0gNCwgZGltbmFtZXMgPSBsaXN0KGF1dGhvcnMsYXV0aG9ycykpDQoNCldhdmVfMiA8LSBXYXZlXzENCg0KYGBgDQoNCiMjIyBDb25zdHJ1Y3QgdGhlIG5ldHdvcmsNCmBgYHtyIGV2YWwgPSBGQUxTRSwgZWNobyA9IFRSVUV9DQppIDwtIDYNCmNoZWNrIDwtIDANCg0KZm9yKGkgaW4gMTpsZW5ndGgoVDFfcmF3KSl7DQogIA0KICBwcmludChpKQ0KICANCiAgZWdvIDwtIFQxX3Jhd1tpLF0kYXV0aG9yW1sxXV0kYXVfZGlzcGxheV9uYW1lWzFdDQogIGFsdGVycyA8LSBUMV9yYXdbaSxdJGF1dGhvcltbMV1dJGF1X2Rpc3BsYXlfbmFtZVstMV0NCiAgDQogIGlmIChsZW5ndGgoYWx0ZXJzKSA9PSAwKXsNCiAgICANCiAgICBuZXh0DQogICAgDQogIH0gZWxzZSBpZihlZ28gJWluJSBhdXRob3JzID09IFRSVUUgJiBhbHRlcnMgJWluJSBhdXRob3JzID09IFRSVUUpew0KICAgIA0KICAgIFdhdmVfMVtlZ28sYWx0ZXJzXSA8LSAxIA0KICAgIA0KICB9IGVsc2V7DQogICAgDQogICAgbmV4dA0KICB9DQp9DQoNCmFueShhbHRlcnMgJWluJSBhdXRob3JzID09IFRSVUUpDQoNCmBgYA0KDQoNCg0KDQoNCg==</div>
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIkpvdXJuYWwgLSBXZWVrIDIiDQojYmlibGlvZ3JhcGh5OiByZWZlcmVuY2VzLmJpYg0KYXV0aG9yOiAiTmllbHMgVnVsbGluZ3MiDQpiaWJsaW9ncmFwaHk6IHJlZmVyZW5jZXMuYmliDQpvdXRwdXQ6IA0KICBodG1sX2RvY3VtZW50OiANCiAgICBkZl9wcmludDogdGliYmxlDQotLS0NCg0KYGBgez1odG1sfQ0KPHN0eWxlPg0KYm9keSB7DQp0ZXh0LWFsaWduOiBqdXN0aWZ5fQ0KPC9zdHlsZT4NCmBgYA0KDQpgYGB7ciwgZ2xvYmFsc2V0dGluZ3MsIGVjaG89RkFMU0UsIHdhcm5pbmc9RkFMU0UsIHJlc3VsdHM9J2hpZGUnfQ0KbGlicmFyeShrbml0cikNCg0Ka25pdHI6Om9wdHNfY2h1bmskc2V0KGVjaG8gPSBUUlVFKQ0Kb3B0c19jaHVuayRzZXQodGlkeS5vcHRzPWxpc3Qod2lkdGguY3V0b2ZmPTEwMCksdGlkeT1UUlVFLCB3YXJuaW5nID0gRkFMU0UsIG1lc3NhZ2UgPSBGQUxTRSxjb21tZW50ID0gIiM+IiwgY2FjaGU9VFJVRSwgY2xhc3Muc291cmNlPWMoInRlc3QiKSwgY2xhc3Mub3V0cHV0PWMoInRlc3QyIikpDQpvcHRpb25zKHdpZHRoID0gMTAwKQ0KcmdsOjpzZXR1cEtuaXRyKCkNCg0KDQoNCmNvbG9yaXplIDwtIGZ1bmN0aW9uKHgsIGNvbG9yKSB7c3ByaW50ZigiPHNwYW4gc3R5bGU9J2NvbG9yOiAlczsnPiVzPC9zcGFuPiIsIGNvbG9yLCB4KSB9DQoNCmBgYA0KDQpgYGB7ciBrbGlwcHksIGVjaG89RkFMU0UsIGluY2x1ZGU9VFJVRX0NCmtsaXBweTo6a2xpcHB5KHBvc2l0aW9uID0gYygndG9wJywgJ3JpZ2h0JykpDQojIGtsaXBweTo6a2xpcHB5KGNvbG9yID0gJ2RhcmtncmVlbicpDQoja2xpcHB5OjprbGlwcHkodG9vbHRpcF9tZXNzYWdlID0gJ0NsaWNrIHRvIGNvcHknLCB0b29sdGlwX3N1Y2Nlc3MgPSAnRG9uZScpDQpgYGANCg0KTGFzdCBjb21waWxlZCBvbiBgciBmb3JtYXQoU3lzLnRpbWUoKSwgJyVCLCAlWScpYA0KDQo8YnI+DQoNCi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQ0KDQojIFNldCB1cA0KYGBge3J9DQojIHN0YXJ0IHdpdGggY2xlYW4gd29ya3NwYWNlDQpybShsaXN0ID0gbHMoKSkNCg0KIyBpbnN0YWxsLnBhY2thZ2VzKCdkYXRhLnRhYmxlJykNCmxpYnJhcnkoZGF0YS50YWJsZSkgICMgbWFpbmx5IGZvciBmYXN0ZXIgZGF0YSBoYW5kbGluZw0KbGlicmFyeSh0aWR5dmVyc2UpICAjIEkgYXNzdW1lIHlvdSBhbHJlYWR5IGluc3RhbGxlZCB0aGlzIG9uZSENCiMgaW5zdGFsbC5wYWNrYWdlcygnaHR0cicpICMgd2UgZG9uJ3QgbmVlZCB0aGlzIGZvciBub3cgcmVxdWlyZShodHRyKQ0KIyBpbnN0YWxsLnBhY2thZ2VzKCJ4bWwyIikNCmxpYnJhcnkoeG1sMikNCiMgaW5zdGFsbC5wYWNrYWdlcygicnZlc3QiKQ0KbGlicmFyeShydmVzdCkNCiMgaW5zdGFsbC5wYWNrYWdlcygiZGV2dG9vbHMiKQ0KbGlicmFyeShkZXZ0b29scykNCiMgTm90ZSB3ZSdyZSBkb2luZyBzb21ldGhpbmcgZGlmZmVyZW50IGhlcmUuIFdlJ3JlIGluc3RhbGxpbmcgYSAqbGF0ZXN0KiB2ZXJzaW9uIGRpcmVjdGx5IGZyb20NCiMgR2l0SHViIFRoaXMgaXMgYmVjYXVzZSB0aGUgcmVsZWFzZWQgdmVyc2lvbiBvZiB0aGlzIHBhY2thZ2VzIGNvbnRhaW5zIHNvbWUgZXJyb3JzIQ0KIyBkZXZ0b29sczo6aW5zdGFsbF9naXRodWIoImprZWlyc3RlYWQvc2Nob2xhciIpDQoNCmxpYnJhcnkoc2Nob2xhcikNCg0KIyBkZWZpbmUgd29ya2RpcmVjdG9yeSwgbm90ZSB0aGUgZG91YmxlICpiYWNrc2xhc2hlcyogaWYgeW91J3JlIG9uIHdpbmRvd3Mgc2V0d2QoJy95b3VycGF0aGhlcmUpJw0KDQpgYGANCg0KIyBTY3JhcGUgUmFkYm91ZCBkYXRhDQoNCiMjIEdldCB3ZWJzaXRlIGlucHV0DQpgYGB7ciB3YXliYWNrfQ0KIyBMZXQncyBmaXJzdCBnZXQgdGhlIHN0YWZmIHBhZ2UgcmVhZF9odG1sIGlzIGEgZnVuY3Rpb24gdGhhdCBzaW1wbHkgZXh0cmFjdHMgaHRtbCB3ZWJwYWdlcyBhbmQNCiMgcHV0cyB0aGVtIGluIHhtbCBmb3JtYXQNCnNvY19zdGFmZiA8LSByZWFkX2h0bWwoImh0dHBzOi8vd2ViLmFyY2hpdmUub3JnL3dlYi8yMDIzMDUyODE1MzMzNi9odHRwczovL3d3dy5ydS5ubC9zb2Npb2xvZ3kvcmVzZWFyY2gvc3RhZmYvIikNCmhlYWQoc29jX3N0YWZmKQ0KYGBgDQoNCiMjIEdldCBhbGwgbmFtZXMgb2YgUmFkYm91ZCBTb2Npb2xvZ2lzdHMNCmBgYHtyIHdlYnNjcmFwZSBSVX0NCiMgc28gd2UgbmVlZCB0byBmaW5kIFdIRVJFIHRoZSB0YWJsZSBpcyBsb2NhdGVkIGluIHRoZSBodG1sICdpbnNwZWN0IGVsZW1lbnQnIGluIG1vemlsbGEgZmlyZWZveCBvcg0KIyAndmlldyBwYWdlIHNvdXJjZScgYW5kIHlvdSBzZWUgdGhhdCBldmVyeXRoaW5nIEFGVEVSIC90ZCBpbiB0aGUgJ2JvZHknIG9mIHRoZSBwYWdlIHNlZW1zIHRvIGJlDQojIHRoZSB0YWJsZSB3ZSBkbyBuZWVkDQoNCnNvY19zdGFmZl9maWx0IDwtIHNvY19zdGFmZiAlPiUNCiAgcnZlc3Q6Omh0bWxfZWxlbWVudHMoImJvZHkiKSAlPiUNCiAgcnZlc3Q6Omh0bWxfdGFibGUoKQ0KDQoNCiMgc29jX3N0YWZmX2ZpbHQNCg0KYGBgDQoNCiMgRmluZCBVbml2ZXJzaXR5IExlaWRlbiBTdGFmZg0KIyMgR2V0IHdlYnNpdGUgaW5wdXQNCmBgYHtyIHdlYnNjcmFwZSBVTH0NCg0Kc29jX3N0YWZmX1VMMSA8LSByZWFkX2h0bWwoImh0dHBzOi8vd3d3LnVuaXZlcnNpdGVpdGxlaWRlbi5ubC93ZXRlbnNjaGFwcGVycy9vdmVyemljaHQ/cGFnZU51bWJlcj0xJmZhY3VsdHk9c29jaWFsLWFuZC1iZWhhdmlvdXJhbC1zY2llbmNlcyZmYWN1bHR5aW5zdGl0dXRlPWluc3RpdHV0ZS1vZi1wb2xpdGljYWwtc2NpZW5jZSIpDQoNCnNvY19zdGFmZl9VTDIgPC0gcmVhZF9odG1sKCJodHRwczovL3d3dy51bml2ZXJzaXRlaXRsZWlkZW4ubmwvZW4vc29jaWFsLWJlaGF2aW91cmFsLXNjaWVuY2VzL3BvbGl0aWNhbC1zY2llbmNlL3N0YWZmI3RhYi0xIikNCg0KYGBgDQoNCiMjIFNjcmFwZSBOYW1lcw0KYGBge3J9DQojIEZpcnN0IHRyeSAtPiBXUk9ORw0Kc29jX3N0YWZmX1VMX2ZpbHQxIDwtIHNvY19zdGFmZl9VTDEgJT4lDQogIHJ2ZXN0OjpodG1sX2VsZW1lbnRzKCJib2R5IikgJT4lDQogIHJ2ZXN0OjpodG1sX2VsZW1lbnRzKCJ1bCIpICU+JSANCiAgcnZlc3Q6Omh0bWxfZWxlbWVudHMoInN0cm9uZyIpDQoNCnNvY19zdGFmZl9VTF9maWx0MQ0KYGBgDQoNCiMjIEFsbCBuYW1lcyBvZiBQb2xpdGljYWwgU2NpZW50aXN0cyANCmBgYHtyfQ0Kc29jX3N0YWZmX1VMX2ZpbHQyIDwtIHNvY19zdGFmZl9VTDIgJT4lDQogIHJ2ZXN0OjpodG1sX2VsZW1lbnRzKCJib2R5IikgJT4lDQogIHJ2ZXN0OjpodG1sX2VsZW1lbnRzKCJ1bC50YWJsZS1saXN0IikgJT4lDQogIHJ2ZXN0OjpodG1sX3RleHQoKQ0KDQpzb2Nfc3RhZmZfVUxfZmlsdDMgPC0gc29jX3N0YWZmX1VMMiAlPiUNCiAgcnZlc3Q6Omh0bWxfZWxlbWVudHMoImJvZHkiKSAlPiUNCiAgcnZlc3Q6Omh0bWxfZWxlbWVudHMoInVsLnRhYmxlLWxpc3QiKSAlPiUNCiAgcnZlc3Q6Omh0bWxfZWxlbWVudHMoInN0cm9uZyIpICU+JSANCiAgcnZlc3Q6Omh0bWxfdGV4dCgpDQoNCnNvY19zdGFmZl9VTF9KVCA8LSBzb2Nfc3RhZmZfVUwyICU+JQ0KICBodG1sX25vZGVzKCJib2R5IikgJT4lDQogIGh0bWxfbm9kZXMoeHBhdGggPSAiLy9hIikgJT4lDQogIGh0bWxfdGV4dCgpDQpgYGANCg0KIyMjIERpc3BsYXkgc2NyYXBlZCBkYXRhDQpgYGB7ciB9DQojIHNvY19zdGFmZl9VTF9maWx0Mg0KDQojIHNvY19zdGFmZl9VTF9KVA0KYGBgDQoNCi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQ0KIyBQYXJ0IElJDQoNCiMjIFNldCB1cA0KYGBge3IgcGFja2FnZXMyLCBldmFsID0gRkFMU0V9DQojIHN0YXJ0IHdpdGggY2xlYW4gd29ya3NwYWNlDQpybShsaXN0ID0gbHMoKSkNCg0KIyBpbnN0YWxsLnBhY2thZ2VzKCdkYXRhLnRhYmxlJykNCmxpYnJhcnkoZGF0YS50YWJsZSkgICMgbWFpbmx5IGZvciBmYXN0ZXIgZGF0YSBoYW5kbGluZw0KIyBsaWJyYXJ5KHRpZHl2ZXJzZSkgICMgSSBhc3N1bWUgeW91IGFscmVhZHkgaW5zdGFsbGVkIHRoaXMgb25lIQ0KIyBpbnN0YWxsLnBhY2thZ2VzKCdodHRyJykgIyB3ZSBkb24ndCBuZWVkIHRoaXMgZm9yIG5vdyByZXF1aXJlKGh0dHIpDQojIGluc3RhbGwucGFja2FnZXMoInhtbDIiKQ0KbGlicmFyeSh4bWwyKQ0KIyBpbnN0YWxsLnBhY2thZ2VzKCJydmVzdCIpDQpsaWJyYXJ5KHJ2ZXN0KQ0KIyBpbnN0YWxsLnBhY2thZ2VzKCJkZXZ0b29scyIpDQpsaWJyYXJ5KGRldnRvb2xzKQ0KIyBOb3RlIHdlJ3JlIGRvaW5nIHNvbWV0aGluZyBkaWZmZXJlbnQgaGVyZS4gV2UncmUgaW5zdGFsbGluZyBhICpsYXRlc3QqIHZlcnNpb24gZGlyZWN0bHkgZnJvbQ0KIyBHaXRIdWIgVGhpcyBpcyBiZWNhdXNlIHRoZSByZWxlYXNlZCB2ZXJzaW9uIG9mIHRoaXMgcGFja2FnZXMgY29udGFpbnMgc29tZSBlcnJvcnMhDQojIGRldnRvb2xzOjppbnN0YWxsX2dpdGh1YigiamtlaXJzdGVhZC9zY2hvbGFyIikNCg0KcmVxdWlyZShzY2hvbGFyKQ0KDQojIGRlZmluZSB3b3JrZGlyZWN0b3J5LCBub3RlIHRoZSBkb3VibGUgKmJhY2tzbGFzaGVzKiBpZiB5b3UncmUgb24gd2luZG93cyBzZXR3ZCgnL3lvdXJwYXRoaGVyZSknDQoNCmBgYA0KDQoNCmBgYHtyIFVERn0NCmZwYWNrYWdlLmNoZWNrIDwtIGZ1bmN0aW9uKHBhY2thZ2VzKSB7DQogIGxhcHBseShwYWNrYWdlcywgRlVOID0gZnVuY3Rpb24oeCkgew0KICAgIGlmICghcmVxdWlyZSh4LCBjaGFyYWN0ZXIub25seSA9IFRSVUUpKSB7DQogICAgICBpbnN0YWxsLnBhY2thZ2VzKHgsIGRlcGVuZGVuY2llcyA9IFRSVUUpDQogICAgICBsaWJyYXJ5KHgsIGNoYXJhY3Rlci5vbmx5ID0gVFJVRSkNCiAgICB9DQogIH0pDQp9DQoNCmZzYXZlIDwtIGZ1bmN0aW9uKHgsIGZpbGUsIGxvY2F0aW9uID0gIi4vbG9jYWwvIiwgLi4uKSB7DQogIGlmICghZGlyLmV4aXN0cyhsb2NhdGlvbikpDQogICAgZGlyLmNyZWF0ZShsb2NhdGlvbikNCiAgZGF0ZW5hbWUgPC0gc3Vic3RyKGdzdWIoIls6LV0iLCAiIiwgU3lzLnRpbWUoKSksIDEsIDgpDQogIHRvdGFsbmFtZSA8LSBwYXN0ZShsb2NhdGlvbiwgZGF0ZW5hbWUsIGZpbGUsIHNlcCA9ICIiKQ0KICBwcmludChwYXN0ZSgiU0FWRUQ6ICIsIHRvdGFsbmFtZSwgc2VwID0gIiIpKQ0KICBzYXZlKHgsIGZpbGUgPSB0b3RhbG5hbWUpDQp9DQoNCmZsb2FkIDwtIGZ1bmN0aW9uKGZpbGVOYW1lKSB7DQogIGxvYWQoZmlsZU5hbWUpDQogIGdldChscygpW2xzKCkgIT0gImZpbGVOYW1lIl0pDQp9DQoNCg0KZnNob3dkZiA8LSBmdW5jdGlvbih4LCBkaWdpdHMgPSAyLCAuLi4pIHsNCiAga25pdHI6OmthYmxlKHgsIGRpZ2l0cyA9IGRpZ2l0cywgImh0bWwiLCAuLi4pICU+JQ0KICAgIGthYmxlRXh0cmE6OmthYmxlX3N0eWxpbmcoYm9vdHN0cmFwX29wdGlvbnMgPSBjKCJzdHJpcGVkIiwgImhvdmVyIikpICU+JQ0KICAgIGthYmxlRXh0cmE6OnNjcm9sbF9ib3god2lkdGggPSAiMTAwJSIsIGhlaWdodCA9ICIzMDBweCIpDQp9DQpgYGANCg0KIyMgU2V0IHVwIFNlbGVuaXVtDQpgYGB7cn0NCiMgcGFja2FnZXMgPSBjKCJSU2VsZW5pdW0iLCAicnZlc3QiLCAidGlkeXZlcnNlIiwgIm5ldHN0YXQiLCAicGluZ3IiLCAic3RyaW5nciIpDQojIGZwYWNrYWdlLmNoZWNrKHBhY2thZ2VzKQ0KIyBybShwYWNrYWdlcykNCiMgaW5zdGFsbC5wYWNrYWdlcygic2VsZW5pZGVyIikNCmBgYA0KYGBge3J9DQojICMgZmluZCBhIGZyZWUgcG9ydA0KIyBwb3J0IDwtIG5ldHN0YXQ6OmZyZWVfcG9ydChyYW5kb20gPSBUUlVFKQ0KIyANCiMgIyBwaW5nIHBvcnQgZm9yIGNvbmZpcm1hdGlvbg0KIyBwaW5ncjo6cGluZ19wb3J0KCJ3d3cuam9jaGVtdG9sc21hLm5sIiwgcG9ydCA9IHBvcnQpDQojIHBpbmdfcG9ydCgici1wcm9qZWN0Lm9yZyIpDQpgYGANCg0KYGBge3J9DQojIHJEIDwtIHJzRHJpdmVyKGJyb3dzZXIgPSAiZmlyZWZveCIsIHBvcnQgPSBwb3J0LCBjaHJvbWV2ZXIgPSBOVUxMLCB2ZXJib3NlID0gRkFMU0UpDQojIHJlbURyIDwtIHJEW1siY2xpZW50Il1dDQojIA0KIyAjLS0tLSBUZXJtaW5hdGUgUHJvY2VzcyAtLS0tDQojICMgcGlkIDwtIHJEJHNlcnZlciRwcm9jZXNzJGdldF9waWQoKSAgI2dldCBwcm9jZXNzIGlkDQojICMgc3lzdGVtKHBhc3RlMCgiVGFza2tpbGwgL0YgL1QiLCAiIC9QSUQgIiwgcGlkKSkNCg0KYGBgDQoNCiMjIFNlYXJjaCBSVSBTdGFmZg0KYGBge3J9DQojICMgbmF2aWdhdGUgdG8gUlUgc3RhZmYgcGFnZQ0KIyByZW1EciRuYXZpZ2F0ZSgiaHR0cHM6Ly93d3cucnUubmwvZW4vc2VhcmNoL3Njb3BlL3N0YWZmLyIpDQojIA0KIyAjIGhhbmRsZSBjb29raWVzDQojIHJlbURyJGZpbmRFbGVtZW50KHVzaW5nID0gImNzcyIsIHZhbHVlID0gIi5hZ3JlZS1idXR0b24iKSRoaWdobGlnaHRFbGVtZW50KCkNCiMgcmVtRHIkZmluZEVsZW1lbnQodXNpbmcgPSAiY3NzIiwgdmFsdWUgPSAiLmFncmVlLWJ1dHRvbiIpJGNsaWNrRWxlbWVudCgpDQojIA0KIyBjb29raWVzIDwtIHJlbURyJGdldEFsbENvb2tpZXMoKQ0KIyBzYXZlUkRTKGNvb2tpZXMsICJjb29raWVzLnJkcyIpDQojIHJlbURyJGFkZENvb2tpZShuYW1lID0gY29va2llc1tbMV1dW1sibmFtZSJdXSwgdmFsdWUgPSBjb29raWVzW1sxXV1bWyJ2YWx1ZSJdXSkNCiMgDQojIHJlbURyJG1heFdpbmRvd1NpemUoKQ0KYGBgDQoNCiMgT3BlbiBBbGV4DQpgYGB7cn0NCiMgaW5zdGFsbC5wYWNrYWdlcygib3BlbmFsZXhSIikNCmxpYnJhcnkob3BlbmFsZXhSKQ0KYGBgDQoNCmBgYHtyfQ0KZGYgPC0gb2FfZmV0Y2goZW50aXR5ID0gImF1dGhvcnMiLCBzZWFyY2ggPSAiam9jaGVtIHRvbHNtYSIpDQpmc2hvd2RmKGRmKQ0KDQpgYGANCg0KYGBge3J9DQpkZl9wYXBlcnMgPC0gb2FfZmV0Y2goZW50aXR5ID0gIndvcmtzIiwgYXV0aG9yLmlkID0gZGYkaWQpDQojIGNsYXNzKGRmX3BhcGVycykNCmhlYWQoZGZfcGFwZXJzKQ0KZGZfcGFwZXJzJGF1dGhvclsxXQ0KDQpgYGANCg0KYGBge3J9DQpvcHRpb25zKG9wZW5hbGV4Ui5tYWlsdG8gPSAibmllbHMxOTA4QGdtYWlsLmNvbSIpDQpgYGANCiMgRmluYWwgQXNzaWdubWVudA0KIyMgSW5zdGl0dXRpb24gSUQNCmBgYHtyfQ0KZGZfaW5zdHMgPC0gb2FfZmV0Y2goZW50aXR5ID0gImluc3RpdHV0aW9ucyIsIHNlYXJjaCA9ICJyYWRib3VkIiwgdmVyYm9zZSA9IFRSVUUpJGlkWzFdDQoNCg0KZl9pbnN0IDwtIGZ1bmN0aW9uKHgpew0KICBvYV9mZXRjaChlbnRpdHkgPSAiaW5zdGl0dXRpb25zIiwgc2VhcmNoID0geCkkaWRbMV0NCn0NCmBgYA0KIyMgQXV0aG9yIElEDQpgYGB7cn0NCmF1dGhvcnMgPC0gYygiSm9jaGVtIFRvbHNtYSIsICJUb20gdmFuIGRlciBNZWVyIiwgIk1hdXJpY2UgR2VzdGh1aXplbiIsICJNaWNoYWVsIFNhdmVsa291bCIpDQoNCmRmX2F1dGhvcnMgPC0gTkENCmZvciAoaSBpbiAxOiBsZW5ndGgoYXV0aG9ycykpIHsNCiAgZGZfYXV0aG9yc1tpXSA8LSBvYV9mZXRjaChlbnRpdHkgPSAiYXV0aG9ycyIsIHNlYXJjaCA9IGF1dGhvcnNbaV0sIGFmZmlsaWF0aW9ucy5pbnN0aXR1dGlvbi5pZCA9IGRmX2luc3RzKVsxLF0gJT4lIHNlbGVjdChpZCkNCn0NCmRmX2F1dGhvcnMgPC0gdW5saXN0KGRmX2F1dGhvcnMpDQoNCmBgYA0KIyMgQWxsIFdvcmtzDQpgYGB7cn0NCg0KZGZfd29ya3MgPC0gb2FfZmV0Y2goZW50aXR5ID0gIndvcmtzIiwgYXV0aG9yLmlkID0gZGZfYXV0aG9ycywgdmVyYm9zZSA9IFRSVUUpDQoNCmBgYA0KIyMgTWFrZSB0aGUgYWRqYWNlbmN5IG1hdHJpeA0KIyMjIFJhdyBEYXRhDQpgYGB7cn0NClQxX3JhdyA8LSBkZl93b3JrcyAlPiUgZmlsdGVyKHB1YmxpY2F0aW9uX3llYXIgPj0gMjAxNCAmIHB1YmxpY2F0aW9uX3llYXIgPD0gMjAxOCkNClQyX3JhdyA8LSBkZl93b3JrcyAlPiUgZmlsdGVyKHB1YmxpY2F0aW9uX3llYXIgPj0gMjAxOSAmIHB1YmxpY2F0aW9uX3llYXIgPD0gMjAyMykNCg0KYGBgDQoNCg0KIyMjIEVtcHR5IEFkamFjZW5jeSBNYXRyaXgNCmBgYHtyfQ0KV2F2ZV8xIDwtIG1hdHJpeCgwLCBucm93ID0gNCwgbmNvbCA9IDQsIGRpbW5hbWVzID0gbGlzdChhdXRob3JzLGF1dGhvcnMpKQ0KDQpXYXZlXzIgPC0gV2F2ZV8xDQoNCmBgYA0KDQojIyMgQ29uc3RydWN0IHRoZSBuZXR3b3JrDQpgYGB7ciBldmFsID0gRkFMU0UsIGVjaG8gPSBUUlVFfQ0KaSA8LSA2DQpjaGVjayA8LSAwDQoNCmZvcihpIGluIDE6bGVuZ3RoKFQxX3Jhdykpew0KICANCiAgcHJpbnQoaSkNCiAgDQogIGVnbyA8LSBUMV9yYXdbaSxdJGF1dGhvcltbMV1dJGF1X2Rpc3BsYXlfbmFtZVsxXQ0KICBhbHRlcnMgPC0gVDFfcmF3W2ksXSRhdXRob3JbWzFdXSRhdV9kaXNwbGF5X25hbWVbLTFdDQogIA0KICBpZiAobGVuZ3RoKGFsdGVycykgPT0gMCl7DQogICAgDQogICAgbmV4dA0KICAgIA0KICB9IGVsc2UgaWYoZWdvICVpbiUgYXV0aG9ycyA9PSBUUlVFICYgYWx0ZXJzICVpbiUgYXV0aG9ycyA9PSBUUlVFKXsNCiAgICANCiAgICBXYXZlXzFbZWdvLGFsdGVyc10gPC0gMSANCiAgICANCiAgfSBlbHNlew0KICAgIA0KICAgIG5leHQNCiAgfQ0KfQ0KDQphbnkoYWx0ZXJzICVpbiUgYXV0aG9ycyA9PSBUUlVFKQ0KDQpgYGANCg0KDQoNCg0KDQo=</div>
 
 
 </div>

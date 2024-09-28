@@ -40,8 +40,9 @@ Last compiled on `r format(Sys.time(), '%B, %Y')`
 <br>
 
 ------------------------------------------------------------------------
+
 # Set up
-```{r packages1}
+```{r}
 # start with clean workspace
 rm(list = ls())
 
@@ -66,6 +67,7 @@ library(scholar)
 ```
 
 # Scrape Radboud data
+
 ## Get website input
 ```{r wayback}
 # Let's first get the staff page read_html is a function that simply extracts html webpages and
@@ -131,9 +133,9 @@ soc_staff_UL_JT <- soc_staff_UL2 %>%
 
 ### Display scraped data
 ```{r }
-soc_staff_UL_filt2
+# soc_staff_UL_filt2
 
-soc_staff_UL_JT
+# soc_staff_UL_JT
 ```
 
 ---------------------------------------------------------------------------------------------------
