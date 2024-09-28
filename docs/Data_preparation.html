@@ -36,8 +36,6 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <script src="site_libs/navigation-1.1/codefolding.js"></script>
 <script src="site_libs/navigation-1.1/sourceembed.js"></script>
-<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
-<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 <script src="site_libs/clipboard-1.7.1/clipboard.min.js"></script>
 <link href="site_libs/primer-tooltips-1.4.0/build.css" rel="stylesheet" />
 <link href="site_libs/klippy-0.0.0.9500/css/klippy.min.css" rel="stylesheet" />
@@ -54,18 +52,118 @@
   ul.task-list{list-style: none;}
     </style>
 
-<style type="text/css">code{white-space: pre;}</style>
-<script type="text/javascript">
-if (window.hljs) {
-  hljs.configure({languages: []});
-  hljs.initHighlightingOnLoad();
-  if (document.readyState && document.readyState === "complete") {
-    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+
+
+<style type="text/css">
+  code {
+    white-space: pre;
   }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
 }
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  background-color: #f8f8f8; }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ef2929; } /* Alert */
+code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #204a87; } /* Attribute */
+code span.bn { color: #0000cf; } /* BaseN */
+code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4e9a06; } /* Char */
+code span.cn { color: #8f5902; } /* Constant */
+code span.co { color: #8f5902; font-style: italic; } /* Comment */
+code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code span.dt { color: #204a87; } /* DataType */
+code span.dv { color: #0000cf; } /* DecVal */
+code span.er { color: #a40000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #0000cf; } /* Float */
+code span.fu { color: #204a87; font-weight: bold; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code span.ot { color: #8f5902; } /* Other */
+code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code span.sc { color: #ce5c00; font-weight: bold; } /* SpecialChar */
+code span.ss { color: #4e9a06; } /* SpecialString */
+code span.st { color: #4e9a06; } /* String */
+code span.va { color: #000000; } /* Variable */
+code span.vs { color: #4e9a06; } /* VerbatimString */
+code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+
+.sourceCode .row {
+  width: 100%;
+}
+.sourceCode {
+  overflow-x: auto;
+}
+.code-folding-btn {
+  margin-right: -30px;
+}
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
 </script>
-
-
 
 
 <style type="text/css">
@@ -436,21 +534,23 @@ text-align: justify}
 <hr />
 <div id="set-up" class="section level1" number="1">
 <h1><span class="header-section-number">1</span> Set up</h1>
-<pre class="r test"><code>rm(list = ls())
-
-# Libraries
-library(data.table)  # mainly for faster data handling
-library(tidyverse)  # I assume you already installed this one!
-# install.packages(&#39;httr&#39;) # we don&#39;t need this for now require(httr) install.packages(&#39;xml2&#39;)
-library(xml2)
-# install.packages(&#39;rvest&#39;)
-library(rvest)</code></pre>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>())</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="co"># Libraries</span></span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="fu">library</span>(data.table)  <span class="co"># mainly for faster data handling</span></span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="fu">library</span>(tidyverse)  <span class="co"># I assume you already installed this one!</span></span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a><span class="co"># install.packages(&#39;httr&#39;) # we don&#39;t need this for now require(httr) install.packages(&#39;xml2&#39;)</span></span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a><span class="fu">library</span>(xml2)</span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a><span class="co"># install.packages(&#39;rvest&#39;)</span></span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a><span class="fu">library</span>(rvest)</span></code></pre></div>
 </div>
 <div id="load-data" class="section level1" number="2">
 <h1><span class="header-section-number">2</span> Load data</h1>
-<pre class="r test"><code>load(&quot;data/scholars_20240924.rda&quot;)
-scholars &lt;- x
-rm(x)</code></pre>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;data/scholars_20240924.rda&quot;</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>scholars <span class="ot">&lt;-</span> x</span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a><span class="fu">rm</span>(x)</span></code></pre></div>
 <div id="user-function-for-network-data-creation" class="section level2"
 number="2.1">
 <h2><span class="header-section-number">2.1</span> User function for
@@ -470,84 +570,85 @@ all authors</p>
 <li><p>$nets: array of nomination networks.</p></li>
 <li><p>$data: sample of data (scholars)</p></li>
 </ul>
-<pre class="r test"><code>fcolnet &lt;- function(data = scholars, university = &quot;RU&quot;, discipline = &quot;sociology&quot;, waves = list(c(2015,
-    2018), c(2019, 2023)), type = c(&quot;first&quot;)) {
-
-    # step 1
-    demographics &lt;- do.call(rbind.data.frame, data$demographics)
-    demographics &lt;- demographics %&gt;%
-        mutate(Universiteit1.22 = replace(Universiteit1.22, is.na(Universiteit1.22), &quot;&quot;), Universiteit2.22 = replace(Universiteit2.22,
-            is.na(Universiteit2.22), &quot;&quot;), Universiteit1.24 = replace(Universiteit1.24, is.na(Universiteit1.24),
-            &quot;&quot;), Universiteit2.24 = replace(Universiteit2.24, is.na(Universiteit2.24), &quot;&quot;), discipline.22 = replace(discipline.22,
-            is.na(discipline.22), &quot;&quot;), discipline.24 = replace(discipline.24, is.na(discipline.24), &quot;&quot;))
-
-    sample &lt;- which((demographics$Universiteit1.22 %in% university | demographics$Universiteit2.22 %in%
-        university | demographics$Universiteit1.24 %in% university | demographics$Universiteit2.24 %in%
-        university) &amp; (demographics$discipline.22 %in% discipline | demographics$discipline.24 %in% discipline))
-
-    demographics_soc &lt;- demographics[sample, ]
-    scholars_sel &lt;- lapply(scholars, &quot;[&quot;, sample)
-
-    # step 2
-    ids &lt;- demographics_soc$au_id
-    nwaves &lt;- length(waves)
-    nets &lt;- array(0, dim = c(nwaves, length(ids), length(ids)), dimnames = list(wave = 1:nwaves, ids,
-        ids))
-    dimnames(nets)
-
-    # step 3
-    df_works &lt;- tibble(works_id = unlist(lapply(scholars_sel$work, function(l) l$id)), works_author = unlist(lapply(scholars_sel$work,
-        function(l) l$author), recursive = FALSE), works_year = unlist(lapply(scholars_sel$work, function(l) l$publication_year),
-        recursive = FALSE))
-
-    df_works &lt;- df_works[!duplicated(df_works), ]
-
-    # step 4
-    if (type == &quot;first&quot;) {
-        for (j in 1:nwaves) {
-            df_works_w &lt;- df_works[df_works$works_year &gt;= waves[[j]][1] &amp; df_works$works_year &lt;= waves[[j]][2],
-                ]
-            for (i in 1:nrow(df_works_w)) {
-                ego &lt;- df_works_w$works_author[i][[1]]$au_id[1]
-                alters &lt;- df_works_w$works_author[i][[1]]$au_id[-1]
-                if (sum(ids %in% ego) &gt; 0 &amp; sum(ids %in% alters) &gt; 0) {
-                  nets[j, which(ids %in% ego), which(ids %in% alters)] &lt;- 1
-                }
-            }
-        }
-    }
-
-    if (type == &quot;last&quot;) {
-        for (j in 1:nwaves) {
-            df_works_w &lt;- df_works[df_works$works_year &gt;= waves[[j]][1] &amp; df_works$works_year &lt;= waves[[j]][2],
-                ]
-            for (i in 1:nrow(df_works_w)) {
-                ego &lt;- rev(df_works_w$works_author[i][[1]]$au_id)[1]
-                alters &lt;- rev(df_works_w$works_author[i][[1]]$au_id)[-1]
-                if (sum(ids %in% ego) &gt; 0 &amp; sum(ids %in% alters) &gt; 0) {
-                  nets[j, which(ids %in% ego), which(ids %in% alters)] &lt;- 1
-                }
-            }
-        }
-    }
-
-    if (type == &quot;all&quot;) {
-        for (j in 1:nwaves) {
-            df_works_w &lt;- df_works[df_works$works_year &gt;= waves[[j]][1] &amp; df_works$works_year &lt;= waves[[j]][2],
-                ]
-            for (i in 1:nrow(df_works_w)) {
-                egos &lt;- df_works_w$works_author[i][[1]]$au_id
-                if (sum(ids %in% egos) &gt; 0) {
-                  nets[j, which(ids %in% egos), which(ids %in% egos)] &lt;- 1
-                }
-            }
-        }
-    }
-    output &lt;- list()
-    output$data &lt;- scholars_sel
-    output$nets &lt;- nets
-    return(output)
-}</code></pre>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>fcolnet <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">data =</span> scholars, <span class="at">university =</span> <span class="st">&quot;RU&quot;</span>, <span class="at">discipline =</span> <span class="st">&quot;sociology&quot;</span>, <span class="at">waves =</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="dv">2015</span>,</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>    <span class="dv">2018</span>), <span class="fu">c</span>(<span class="dv">2019</span>, <span class="dv">2023</span>)), <span class="at">type =</span> <span class="fu">c</span>(<span class="st">&quot;first&quot;</span>)) {</span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>    <span class="co"># step 1</span></span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>    demographics <span class="ot">&lt;-</span> <span class="fu">do.call</span>(rbind.data.frame, data<span class="sc">$</span>demographics)</span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a>    demographics <span class="ot">&lt;-</span> demographics <span class="sc">%&gt;%</span></span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a>        <span class="fu">mutate</span>(<span class="at">Universiteit1.22 =</span> <span class="fu">replace</span>(Universiteit1<span class="fl">.22</span>, <span class="fu">is.na</span>(Universiteit1<span class="fl">.22</span>), <span class="st">&quot;&quot;</span>), <span class="at">Universiteit2.22 =</span> <span class="fu">replace</span>(Universiteit2<span class="fl">.22</span>,</span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a>            <span class="fu">is.na</span>(Universiteit2<span class="fl">.22</span>), <span class="st">&quot;&quot;</span>), <span class="at">Universiteit1.24 =</span> <span class="fu">replace</span>(Universiteit1<span class="fl">.24</span>, <span class="fu">is.na</span>(Universiteit1<span class="fl">.24</span>),</span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a>            <span class="st">&quot;&quot;</span>), <span class="at">Universiteit2.24 =</span> <span class="fu">replace</span>(Universiteit2<span class="fl">.24</span>, <span class="fu">is.na</span>(Universiteit2<span class="fl">.24</span>), <span class="st">&quot;&quot;</span>), <span class="at">discipline.22 =</span> <span class="fu">replace</span>(discipline<span class="fl">.22</span>,</span>
+<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a>            <span class="fu">is.na</span>(discipline<span class="fl">.22</span>), <span class="st">&quot;&quot;</span>), <span class="at">discipline.24 =</span> <span class="fu">replace</span>(discipline<span class="fl">.24</span>, <span class="fu">is.na</span>(discipline<span class="fl">.24</span>), <span class="st">&quot;&quot;</span>))</span>
+<span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a></span>
+<span id="cb3-12"><a href="#cb3-12" tabindex="-1"></a>    sample <span class="ot">&lt;-</span> <span class="fu">which</span>((demographics<span class="sc">$</span>Universiteit1<span class="fl">.22</span> <span class="sc">%in%</span> university <span class="sc">|</span> demographics<span class="sc">$</span>Universiteit2<span class="fl">.22</span> <span class="sc">%in%</span></span>
+<span id="cb3-13"><a href="#cb3-13" tabindex="-1"></a>        university <span class="sc">|</span> demographics<span class="sc">$</span>Universiteit1<span class="fl">.24</span> <span class="sc">%in%</span> university <span class="sc">|</span> demographics<span class="sc">$</span>Universiteit2<span class="fl">.24</span> <span class="sc">%in%</span></span>
+<span id="cb3-14"><a href="#cb3-14" tabindex="-1"></a>        university) <span class="sc">&amp;</span> (demographics<span class="sc">$</span>discipline<span class="fl">.22</span> <span class="sc">%in%</span> discipline <span class="sc">|</span> demographics<span class="sc">$</span>discipline<span class="fl">.24</span> <span class="sc">%in%</span> discipline))</span>
+<span id="cb3-15"><a href="#cb3-15" tabindex="-1"></a></span>
+<span id="cb3-16"><a href="#cb3-16" tabindex="-1"></a>    demographics_soc <span class="ot">&lt;-</span> demographics[sample, ]</span>
+<span id="cb3-17"><a href="#cb3-17" tabindex="-1"></a>    scholars_sel <span class="ot">&lt;-</span> <span class="fu">lapply</span>(scholars, <span class="st">&quot;[&quot;</span>, sample)</span>
+<span id="cb3-18"><a href="#cb3-18" tabindex="-1"></a></span>
+<span id="cb3-19"><a href="#cb3-19" tabindex="-1"></a>    <span class="co"># step 2</span></span>
+<span id="cb3-20"><a href="#cb3-20" tabindex="-1"></a>    ids <span class="ot">&lt;-</span> demographics_soc<span class="sc">$</span>au_id</span>
+<span id="cb3-21"><a href="#cb3-21" tabindex="-1"></a>    nwaves <span class="ot">&lt;-</span> <span class="fu">length</span>(waves)</span>
+<span id="cb3-22"><a href="#cb3-22" tabindex="-1"></a>    nets <span class="ot">&lt;-</span> <span class="fu">array</span>(<span class="dv">0</span>, <span class="at">dim =</span> <span class="fu">c</span>(nwaves, <span class="fu">length</span>(ids), <span class="fu">length</span>(ids)), <span class="at">dimnames =</span> <span class="fu">list</span>(<span class="at">wave =</span> <span class="dv">1</span><span class="sc">:</span>nwaves, ids,</span>
+<span id="cb3-23"><a href="#cb3-23" tabindex="-1"></a>        ids))</span>
+<span id="cb3-24"><a href="#cb3-24" tabindex="-1"></a>    <span class="fu">dimnames</span>(nets)</span>
+<span id="cb3-25"><a href="#cb3-25" tabindex="-1"></a></span>
+<span id="cb3-26"><a href="#cb3-26" tabindex="-1"></a>    <span class="co"># step 3</span></span>
+<span id="cb3-27"><a href="#cb3-27" tabindex="-1"></a>    df_works <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">works_id =</span> <span class="fu">unlist</span>(<span class="fu">lapply</span>(scholars_sel<span class="sc">$</span>work, <span class="cf">function</span>(l) l<span class="sc">$</span>id)), <span class="at">works_author =</span> <span class="fu">unlist</span>(<span class="fu">lapply</span>(scholars_sel<span class="sc">$</span>work,</span>
+<span id="cb3-28"><a href="#cb3-28" tabindex="-1"></a>        <span class="cf">function</span>(l) l<span class="sc">$</span>author), <span class="at">recursive =</span> <span class="cn">FALSE</span>), <span class="at">works_year =</span> <span class="fu">unlist</span>(<span class="fu">lapply</span>(scholars_sel<span class="sc">$</span>work, <span class="cf">function</span>(l) l<span class="sc">$</span>publication_year),</span>
+<span id="cb3-29"><a href="#cb3-29" tabindex="-1"></a>        <span class="at">recursive =</span> <span class="cn">FALSE</span>))</span>
+<span id="cb3-30"><a href="#cb3-30" tabindex="-1"></a></span>
+<span id="cb3-31"><a href="#cb3-31" tabindex="-1"></a>    df_works <span class="ot">&lt;-</span> df_works[<span class="sc">!</span><span class="fu">duplicated</span>(df_works), ]</span>
+<span id="cb3-32"><a href="#cb3-32" tabindex="-1"></a></span>
+<span id="cb3-33"><a href="#cb3-33" tabindex="-1"></a>    <span class="co"># step 4</span></span>
+<span id="cb3-34"><a href="#cb3-34" tabindex="-1"></a>    <span class="cf">if</span> (type <span class="sc">==</span> <span class="st">&quot;first&quot;</span>) {</span>
+<span id="cb3-35"><a href="#cb3-35" tabindex="-1"></a>        <span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nwaves) {</span>
+<span id="cb3-36"><a href="#cb3-36" tabindex="-1"></a>            df_works_w <span class="ot">&lt;-</span> df_works[df_works<span class="sc">$</span>works_year <span class="sc">&gt;=</span> waves[[j]][<span class="dv">1</span>] <span class="sc">&amp;</span> df_works<span class="sc">$</span>works_year <span class="sc">&lt;=</span> waves[[j]][<span class="dv">2</span>],</span>
+<span id="cb3-37"><a href="#cb3-37" tabindex="-1"></a>                ]</span>
+<span id="cb3-38"><a href="#cb3-38" tabindex="-1"></a>            <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(df_works_w)) {</span>
+<span id="cb3-39"><a href="#cb3-39" tabindex="-1"></a>                ego <span class="ot">&lt;-</span> df_works_w<span class="sc">$</span>works_author[i][[<span class="dv">1</span>]]<span class="sc">$</span>au_id[<span class="dv">1</span>]</span>
+<span id="cb3-40"><a href="#cb3-40" tabindex="-1"></a>                alters <span class="ot">&lt;-</span> df_works_w<span class="sc">$</span>works_author[i][[<span class="dv">1</span>]]<span class="sc">$</span>au_id[<span class="sc">-</span><span class="dv">1</span>]</span>
+<span id="cb3-41"><a href="#cb3-41" tabindex="-1"></a>                <span class="cf">if</span> (<span class="fu">sum</span>(ids <span class="sc">%in%</span> ego) <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">&amp;</span> <span class="fu">sum</span>(ids <span class="sc">%in%</span> alters) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb3-42"><a href="#cb3-42" tabindex="-1"></a>                  nets[j, <span class="fu">which</span>(ids <span class="sc">%in%</span> ego), <span class="fu">which</span>(ids <span class="sc">%in%</span> alters)] <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb3-43"><a href="#cb3-43" tabindex="-1"></a>                }</span>
+<span id="cb3-44"><a href="#cb3-44" tabindex="-1"></a>            }</span>
+<span id="cb3-45"><a href="#cb3-45" tabindex="-1"></a>        }</span>
+<span id="cb3-46"><a href="#cb3-46" tabindex="-1"></a>    }</span>
+<span id="cb3-47"><a href="#cb3-47" tabindex="-1"></a></span>
+<span id="cb3-48"><a href="#cb3-48" tabindex="-1"></a>    <span class="cf">if</span> (type <span class="sc">==</span> <span class="st">&quot;last&quot;</span>) {</span>
+<span id="cb3-49"><a href="#cb3-49" tabindex="-1"></a>        <span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nwaves) {</span>
+<span id="cb3-50"><a href="#cb3-50" tabindex="-1"></a>            df_works_w <span class="ot">&lt;-</span> df_works[df_works<span class="sc">$</span>works_year <span class="sc">&gt;=</span> waves[[j]][<span class="dv">1</span>] <span class="sc">&amp;</span> df_works<span class="sc">$</span>works_year <span class="sc">&lt;=</span> waves[[j]][<span class="dv">2</span>],</span>
+<span id="cb3-51"><a href="#cb3-51" tabindex="-1"></a>                ]</span>
+<span id="cb3-52"><a href="#cb3-52" tabindex="-1"></a>            <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(df_works_w)) {</span>
+<span id="cb3-53"><a href="#cb3-53" tabindex="-1"></a>                ego <span class="ot">&lt;-</span> <span class="fu">rev</span>(df_works_w<span class="sc">$</span>works_author[i][[<span class="dv">1</span>]]<span class="sc">$</span>au_id)[<span class="dv">1</span>]</span>
+<span id="cb3-54"><a href="#cb3-54" tabindex="-1"></a>                alters <span class="ot">&lt;-</span> <span class="fu">rev</span>(df_works_w<span class="sc">$</span>works_author[i][[<span class="dv">1</span>]]<span class="sc">$</span>au_id)[<span class="sc">-</span><span class="dv">1</span>]</span>
+<span id="cb3-55"><a href="#cb3-55" tabindex="-1"></a>                <span class="cf">if</span> (<span class="fu">sum</span>(ids <span class="sc">%in%</span> ego) <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">&amp;</span> <span class="fu">sum</span>(ids <span class="sc">%in%</span> alters) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb3-56"><a href="#cb3-56" tabindex="-1"></a>                  nets[j, <span class="fu">which</span>(ids <span class="sc">%in%</span> ego), <span class="fu">which</span>(ids <span class="sc">%in%</span> alters)] <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb3-57"><a href="#cb3-57" tabindex="-1"></a>                }</span>
+<span id="cb3-58"><a href="#cb3-58" tabindex="-1"></a>            }</span>
+<span id="cb3-59"><a href="#cb3-59" tabindex="-1"></a>        }</span>
+<span id="cb3-60"><a href="#cb3-60" tabindex="-1"></a>    }</span>
+<span id="cb3-61"><a href="#cb3-61" tabindex="-1"></a></span>
+<span id="cb3-62"><a href="#cb3-62" tabindex="-1"></a>    <span class="cf">if</span> (type <span class="sc">==</span> <span class="st">&quot;all&quot;</span>) {</span>
+<span id="cb3-63"><a href="#cb3-63" tabindex="-1"></a>        <span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nwaves) {</span>
+<span id="cb3-64"><a href="#cb3-64" tabindex="-1"></a>            df_works_w <span class="ot">&lt;-</span> df_works[df_works<span class="sc">$</span>works_year <span class="sc">&gt;=</span> waves[[j]][<span class="dv">1</span>] <span class="sc">&amp;</span> df_works<span class="sc">$</span>works_year <span class="sc">&lt;=</span> waves[[j]][<span class="dv">2</span>],</span>
+<span id="cb3-65"><a href="#cb3-65" tabindex="-1"></a>                ]</span>
+<span id="cb3-66"><a href="#cb3-66" tabindex="-1"></a>            <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(df_works_w)) {</span>
+<span id="cb3-67"><a href="#cb3-67" tabindex="-1"></a>                egos <span class="ot">&lt;-</span> df_works_w<span class="sc">$</span>works_author[i][[<span class="dv">1</span>]]<span class="sc">$</span>au_id</span>
+<span id="cb3-68"><a href="#cb3-68" tabindex="-1"></a>                <span class="cf">if</span> (<span class="fu">sum</span>(ids <span class="sc">%in%</span> egos) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb3-69"><a href="#cb3-69" tabindex="-1"></a>                  nets[j, <span class="fu">which</span>(ids <span class="sc">%in%</span> egos), <span class="fu">which</span>(ids <span class="sc">%in%</span> egos)] <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb3-70"><a href="#cb3-70" tabindex="-1"></a>                }</span>
+<span id="cb3-71"><a href="#cb3-71" tabindex="-1"></a>            }</span>
+<span id="cb3-72"><a href="#cb3-72" tabindex="-1"></a>        }</span>
+<span id="cb3-73"><a href="#cb3-73" tabindex="-1"></a>    }</span>
+<span id="cb3-74"><a href="#cb3-74" tabindex="-1"></a>    output <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
+<span id="cb3-75"><a href="#cb3-75" tabindex="-1"></a>    output<span class="sc">$</span>data <span class="ot">&lt;-</span> scholars_sel</span>
+<span id="cb3-76"><a href="#cb3-76" tabindex="-1"></a>    output<span class="sc">$</span>nets <span class="ot">&lt;-</span> nets</span>
+<span id="cb3-77"><a href="#cb3-77" tabindex="-1"></a>    <span class="fu">return</span>(output)</span>
+<span id="cb3-78"><a href="#cb3-78" tabindex="-1"></a>}</span></code></pre></div>
 </div>
 </div>
 <div id="data-manipulation" class="section level1" number="3">
@@ -556,13 +657,14 @@ all authors</p>
 <h2><span class="header-section-number">3.1</span> Subset relevant
 data</h2>
 <p>I want to study the Sociology departments</p>
-<pre class="r test"><code>soc_data &lt;- fcolnet(data = scholars, university = c(&quot;RU&quot;, &quot;UU&quot;), discipline = c(&quot;sociology&quot;), waves = list(c(2015,
-    2019), c(2020, 2024)), type = c(&quot;first&quot;))
-
-df &lt;- soc_data$data
-df_ego &lt;- do.call(rbind.data.frame, df$demographics)
-
-# soc_data$nets[2,,] # How to call a specific network</code></pre>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>soc_data <span class="ot">&lt;-</span> <span class="fu">fcolnet</span>(<span class="at">data =</span> scholars, <span class="at">university =</span> <span class="fu">c</span>(<span class="st">&quot;RU&quot;</span>, <span class="st">&quot;UU&quot;</span>), <span class="at">discipline =</span> <span class="fu">c</span>(<span class="st">&quot;sociology&quot;</span>), <span class="at">waves =</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="dv">2015</span>,</span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>    <span class="dv">2019</span>), <span class="fu">c</span>(<span class="dv">2020</span>, <span class="dv">2024</span>)), <span class="at">type =</span> <span class="fu">c</span>(<span class="st">&quot;first&quot;</span>))</span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>df <span class="ot">&lt;-</span> soc_data<span class="sc">$</span>data</span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a>df_ego <span class="ot">&lt;-</span> <span class="fu">do.call</span>(rbind.data.frame, df<span class="sc">$</span>demographics)</span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a><span class="co"># soc_data$nets[2,,] # How to call a specific network</span></span></code></pre></div>
 </div>
 <div id="create-the-gender-variable" class="section level2"
 number="3.2">
@@ -574,27 +676,30 @@ first names of all authors in our network</p>
 number="3.2.1">
 <h3><span class="header-section-number">3.2.1</span> Screwing around
 with strings</h3>
-<pre class="r test"><code>vect &lt;- c(&quot;Now this string is not split&quot;, &quot;It is a nice Picture&quot;, &quot;Is it ready&quot;, &quot;Split Screen&quot;)
-
-vect</code></pre>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>vect <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Now this string is not split&quot;</span>, <span class="st">&quot;It is a nice Picture&quot;</span>, <span class="st">&quot;Is it ready&quot;</span>, <span class="st">&quot;Split Screen&quot;</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>vect</span></code></pre></div>
 <pre class="test2"><code>#&gt; [1] &quot;Now this string is not split&quot; &quot;It is a nice Picture&quot;         &quot;Is it ready&quot;                 
 #&gt; [4] &quot;Split Screen&quot;</code></pre>
-<pre class="r test"><code># ?nchar()
-
-testje &lt;- data.frame(string = vect, job = c(TRUE, TRUE, TRUE, FALSE))
-
-testje$first_el &lt;- sapply(strsplit(vect, &quot; &quot;), `[`, 1)  # This code should work as a way to extract first names from the ego characteristics dataset</code></pre>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="co"># ?nchar()</span></span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>testje <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">string =</span> vect, <span class="at">job =</span> <span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">TRUE</span>, <span class="cn">TRUE</span>, <span class="cn">FALSE</span>))</span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>testje<span class="sc">$</span>first_el <span class="ot">&lt;-</span> <span class="fu">sapply</span>(<span class="fu">strsplit</span>(vect, <span class="st">&quot; &quot;</span>), <span class="st">`</span><span class="at">[</span><span class="st">`</span>, <span class="dv">1</span>)  <span class="co"># This code should work as a way to extract first names from the ego characteristics dataset</span></span></code></pre></div>
 </div>
 <div id="extract-first-names" class="section level3" number="3.2.2">
 <h3><span class="header-section-number">3.2.2</span> Extract first
 names</h3>
-<pre class="r test"><code>x &lt;- data.frame(Naam = df_ego$Naam)
-
-first_name &lt;- sapply(strsplit(x$Naam, &quot; &quot;), `[`, 1)  # This code should work as a way to extract first names from the ego characteristics dataset
-
-
-
-df_names &lt;- data.frame(x, first_name, male = NA, female = NA)  # seem to have worked</code></pre>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Naam =</span> df_ego<span class="sc">$</span>Naam)</span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a>first_name <span class="ot">&lt;-</span> <span class="fu">sapply</span>(<span class="fu">strsplit</span>(x<span class="sc">$</span>Naam, <span class="st">&quot; &quot;</span>), <span class="st">`</span><span class="at">[</span><span class="st">`</span>, <span class="dv">1</span>)  <span class="co"># This code should work as a way to extract first names from the ego characteristics dataset</span></span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a></span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a>df_names <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(x, first_name, <span class="at">male =</span> <span class="cn">NA</span>, <span class="at">female =</span> <span class="cn">NA</span>)  <span class="co"># seem to have worked</span></span></code></pre></div>
 </div>
 <div id="gender-scraper" class="section level3" number="3.2.3">
 <h3><span class="header-section-number">3.2.3</span> Gender Scraper</h3>
@@ -613,73 +718,78 @@ NA value for the gender of that respondent. The final step is creating a
 scaled (0/1) variable ‘<u><em>perc_female</em></u>’, which represents
 the likelihood that a name corresponds with the female gender (1 = 100%
 female, 0 = 100% male).</p>
-<pre class="r test"><code># df_names &lt;- df_names[1:5,] # take first elements to try out
-
-i &lt;- 1
-df_names$first_name[i]</code></pre>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="co"># df_names &lt;- df_names[1:5,] # take first elements to try out</span></span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>i <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a>df_names<span class="sc">$</span>first_name[i]</span></code></pre></div>
 <pre class="test2"><code>#&gt; [1] &quot;Ece&quot;</code></pre>
-<pre class="r test"><code>gender_scraper.NV &lt;- function(names = &quot;names element&quot;, web_page = &quot;https://nvb.meertens.knaw.nl/naam/is/&quot;) {
-
-    names$first_name &lt;- sapply(strsplit(names$Naam, &quot; &quot;), `[`, 1)  # This code should work as a way to extract first names from the ego characteristics dataset
-    names$male &lt;- NA
-    names$female &lt;- NA
-
-    for (i in 1:nrow(names)) {
-
-        # print(names$first_name[i])
-
-        web_page &lt;- read_html(paste0(&quot;https://nvb.meertens.knaw.nl/naam/is/&quot;, names$first_name[i]))
-
-        table &lt;- web_page %&gt;%
-            rvest::html_elements(&quot;body&quot;) %&gt;%
-            rvest::html_elements(&quot;table&quot;) %&gt;%
-            rvest::html_table()
-
-        if (length(table) == 0) {
-
-            print(length(table))
-
-            names$male[i] &lt;- NA
-            names$female[i] &lt;- NA
-
-        } else {
-
-            # print(table) print(table[[1]][[2,3]]) # Check if values for male are coherent and
-            # accurate print(table[[1]][[6,3]]) # Check if values for female are coherent and
-            # accurate
-
-            names$male[i] &lt;- as.numeric(ifelse(table[[1]][[2, 3]] == &quot;--&quot;, 0, table[[1]][[2, 3]]))  # Make sure non-occurences are not registered as &#39;--&#39;
-            names$female[i] &lt;- as.numeric(ifelse(table[[1]][[6, 3]] == &quot;--&quot;, 0, table[[1]][[6, 3]]))  # Make sure non-occurences are not registered as &#39;--&#39;
-
-        }
-
-    }  # end forloop
-
-    names &lt;- names %&gt;%
-        mutate(perc_female = case_when(is.na(female == TRUE) &amp; is.na(male) == TRUE ~ NA, is.na(female) ==
-            TRUE ~ 0, is.na(male == TRUE) ~ 1, .default = round((female/(male + female)), 2))) %&gt;%
-        select(!c(male, female, first_name))
-
-    return(names)
-
-
-}  # end function
-
-# ?mutate() ?case_when
-testing &lt;- gender_scraper.NV(names = df_ego, web_page = &quot;https://nvb.meertens.knaw.nl/naam/is/&quot;)</code></pre>
+<div class="sourceCode" id="cb11"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a>gender_scraper.NV <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">names =</span> <span class="st">&quot;names element&quot;</span>, <span class="at">web_page =</span> <span class="st">&quot;https://nvb.meertens.knaw.nl/naam/is/&quot;</span>) {</span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a>    names<span class="sc">$</span>first_name <span class="ot">&lt;-</span> <span class="fu">sapply</span>(<span class="fu">strsplit</span>(names<span class="sc">$</span>Naam, <span class="st">&quot; &quot;</span>), <span class="st">`</span><span class="at">[</span><span class="st">`</span>, <span class="dv">1</span>)  <span class="co"># This code should work as a way to extract first names from the ego characteristics dataset</span></span>
+<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a>    names<span class="sc">$</span>male <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a>    names<span class="sc">$</span>female <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb11-6"><a href="#cb11-6" tabindex="-1"></a></span>
+<span id="cb11-7"><a href="#cb11-7" tabindex="-1"></a>    <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(names)) {</span>
+<span id="cb11-8"><a href="#cb11-8" tabindex="-1"></a></span>
+<span id="cb11-9"><a href="#cb11-9" tabindex="-1"></a>        <span class="co"># print(names$first_name[i])</span></span>
+<span id="cb11-10"><a href="#cb11-10" tabindex="-1"></a></span>
+<span id="cb11-11"><a href="#cb11-11" tabindex="-1"></a>        web_page <span class="ot">&lt;-</span> <span class="fu">read_html</span>(<span class="fu">paste0</span>(<span class="st">&quot;https://nvb.meertens.knaw.nl/naam/is/&quot;</span>, names<span class="sc">$</span>first_name[i]))</span>
+<span id="cb11-12"><a href="#cb11-12" tabindex="-1"></a></span>
+<span id="cb11-13"><a href="#cb11-13" tabindex="-1"></a>        table <span class="ot">&lt;-</span> web_page <span class="sc">%&gt;%</span></span>
+<span id="cb11-14"><a href="#cb11-14" tabindex="-1"></a>            rvest<span class="sc">::</span><span class="fu">html_elements</span>(<span class="st">&quot;body&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb11-15"><a href="#cb11-15" tabindex="-1"></a>            rvest<span class="sc">::</span><span class="fu">html_elements</span>(<span class="st">&quot;table&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb11-16"><a href="#cb11-16" tabindex="-1"></a>            rvest<span class="sc">::</span><span class="fu">html_table</span>()</span>
+<span id="cb11-17"><a href="#cb11-17" tabindex="-1"></a></span>
+<span id="cb11-18"><a href="#cb11-18" tabindex="-1"></a>        <span class="cf">if</span> (<span class="fu">length</span>(table) <span class="sc">==</span> <span class="dv">0</span>) {</span>
+<span id="cb11-19"><a href="#cb11-19" tabindex="-1"></a></span>
+<span id="cb11-20"><a href="#cb11-20" tabindex="-1"></a>            <span class="fu">print</span>(<span class="fu">length</span>(table))</span>
+<span id="cb11-21"><a href="#cb11-21" tabindex="-1"></a></span>
+<span id="cb11-22"><a href="#cb11-22" tabindex="-1"></a>            names<span class="sc">$</span>male[i] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb11-23"><a href="#cb11-23" tabindex="-1"></a>            names<span class="sc">$</span>female[i] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb11-24"><a href="#cb11-24" tabindex="-1"></a></span>
+<span id="cb11-25"><a href="#cb11-25" tabindex="-1"></a>        } <span class="cf">else</span> {</span>
+<span id="cb11-26"><a href="#cb11-26" tabindex="-1"></a></span>
+<span id="cb11-27"><a href="#cb11-27" tabindex="-1"></a>            <span class="co"># print(table) print(table[[1]][[2,3]]) # Check if values for male are coherent and</span></span>
+<span id="cb11-28"><a href="#cb11-28" tabindex="-1"></a>            <span class="co"># accurate print(table[[1]][[6,3]]) # Check if values for female are coherent and</span></span>
+<span id="cb11-29"><a href="#cb11-29" tabindex="-1"></a>            <span class="co"># accurate</span></span>
+<span id="cb11-30"><a href="#cb11-30" tabindex="-1"></a></span>
+<span id="cb11-31"><a href="#cb11-31" tabindex="-1"></a>            names<span class="sc">$</span>male[i] <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">ifelse</span>(table[[<span class="dv">1</span>]][[<span class="dv">2</span>, <span class="dv">3</span>]] <span class="sc">==</span> <span class="st">&quot;--&quot;</span>, <span class="dv">0</span>, table[[<span class="dv">1</span>]][[<span class="dv">2</span>, <span class="dv">3</span>]]))  <span class="co"># Make sure non-occurences are not registered as &#39;--&#39;</span></span>
+<span id="cb11-32"><a href="#cb11-32" tabindex="-1"></a>            names<span class="sc">$</span>female[i] <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">ifelse</span>(table[[<span class="dv">1</span>]][[<span class="dv">6</span>, <span class="dv">3</span>]] <span class="sc">==</span> <span class="st">&quot;--&quot;</span>, <span class="dv">0</span>, table[[<span class="dv">1</span>]][[<span class="dv">6</span>, <span class="dv">3</span>]]))  <span class="co"># Make sure non-occurences are not registered as &#39;--&#39;</span></span>
+<span id="cb11-33"><a href="#cb11-33" tabindex="-1"></a></span>
+<span id="cb11-34"><a href="#cb11-34" tabindex="-1"></a>        }</span>
+<span id="cb11-35"><a href="#cb11-35" tabindex="-1"></a></span>
+<span id="cb11-36"><a href="#cb11-36" tabindex="-1"></a>    }  <span class="co"># end forloop</span></span>
+<span id="cb11-37"><a href="#cb11-37" tabindex="-1"></a></span>
+<span id="cb11-38"><a href="#cb11-38" tabindex="-1"></a>    names <span class="ot">&lt;-</span> names <span class="sc">%&gt;%</span></span>
+<span id="cb11-39"><a href="#cb11-39" tabindex="-1"></a>        <span class="fu">mutate</span>(<span class="at">perc_female =</span> <span class="fu">case_when</span>(<span class="fu">is.na</span>(female <span class="sc">==</span> <span class="cn">TRUE</span>) <span class="sc">&amp;</span> <span class="fu">is.na</span>(male) <span class="sc">==</span> <span class="cn">TRUE</span> <span class="sc">~</span> <span class="cn">NA</span>, <span class="fu">is.na</span>(female) <span class="sc">==</span></span>
+<span id="cb11-40"><a href="#cb11-40" tabindex="-1"></a>            <span class="cn">TRUE</span> <span class="sc">~</span> <span class="dv">0</span>, <span class="fu">is.na</span>(male <span class="sc">==</span> <span class="cn">TRUE</span>) <span class="sc">~</span> <span class="dv">1</span>, <span class="at">.default =</span> <span class="fu">round</span>((female<span class="sc">/</span>(male <span class="sc">+</span> female)), <span class="dv">2</span>))) <span class="sc">%&gt;%</span></span>
+<span id="cb11-41"><a href="#cb11-41" tabindex="-1"></a>        <span class="fu">select</span>(<span class="sc">!</span><span class="fu">c</span>(male, female, first_name))</span>
+<span id="cb11-42"><a href="#cb11-42" tabindex="-1"></a></span>
+<span id="cb11-43"><a href="#cb11-43" tabindex="-1"></a>    <span class="fu">return</span>(names)</span>
+<span id="cb11-44"><a href="#cb11-44" tabindex="-1"></a></span>
+<span id="cb11-45"><a href="#cb11-45" tabindex="-1"></a></span>
+<span id="cb11-46"><a href="#cb11-46" tabindex="-1"></a>}  <span class="co"># end function</span></span>
+<span id="cb11-47"><a href="#cb11-47" tabindex="-1"></a></span>
+<span id="cb11-48"><a href="#cb11-48" tabindex="-1"></a><span class="co"># ?mutate() ?case_when</span></span>
+<span id="cb11-49"><a href="#cb11-49" tabindex="-1"></a>testing <span class="ot">&lt;-</span> <span class="fu">gender_scraper.NV</span>(<span class="at">names =</span> df_ego, <span class="at">web_page =</span> <span class="st">&quot;https://nvb.meertens.knaw.nl/naam/is/&quot;</span>)</span></code></pre></div>
 <pre class="test2"><code>#&gt; [1] 0</code></pre>
-<pre class="r test"><code># paste0(&#39;https://nvb.meertens.knaw.nl/naam/is/&#39;, &#39;name&#39;) # This will eventually be used for
-# automating the scraping process</code></pre>
+<div class="sourceCode" id="cb13"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="co"># paste0(&#39;https://nvb.meertens.knaw.nl/naam/is/&#39;, &#39;name&#39;) # This will eventually be used for</span></span>
+<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a><span class="co"># automating the scraping process</span></span></code></pre></div>
 </div>
 <div id="check-results" class="section level3" number="3.2.4">
 <h3><span class="header-section-number">3.2.4</span> Check results</h3>
-<pre class="r test"><code>check &lt;- testing %&gt;%
-    count(perc_female)
-
-plot(check$perc_female, check$n)</code></pre>
+<div class="sourceCode" id="cb14"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a>check <span class="ot">&lt;-</span> testing <span class="sc">%&gt;%</span></span>
+<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a>    <span class="fu">count</span>(perc_female)</span>
+<span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" tabindex="-1"></a><span class="fu">plot</span>(check<span class="sc">$</span>perc_female, check<span class="sc">$</span>n)</span></code></pre></div>
 <p><img src="Data_preparation_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
-<pre class="r test"><code># net_w2 &lt;- igraph::graph_from_adjacency_matrix(soc_data$nets[2,,], #now, I take the second wave
-# mode = c(&#39;directed&#39;), weighted = NULL,diag = FALSE,add.colnames = NULL)</code></pre>
+<div class="sourceCode" id="cb15"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="co"># net_w2 &lt;- igraph::graph_from_adjacency_matrix(soc_data$nets[2,,], #now, I take the second wave</span></span>
+<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a><span class="co"># mode = c(&#39;directed&#39;), weighted = NULL,diag = FALSE,add.colnames = NULL)</span></span></code></pre></div>
 <p><br></p>
 <hr />
 </div>

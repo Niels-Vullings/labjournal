@@ -42,7 +42,7 @@ navbar:
 output:
   html_document:
     theme: flatly
-    highlight: default
+    highlight: tango
     toc:  true
     toc_float: true
     number_sections: true

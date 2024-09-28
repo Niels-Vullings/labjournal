@@ -36,8 +36,6 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <script src="site_libs/navigation-1.1/codefolding.js"></script>
 <script src="site_libs/navigation-1.1/sourceembed.js"></script>
-<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
-<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 <script src="site_libs/clipboard-1.7.1/clipboard.min.js"></script>
 <link href="site_libs/primer-tooltips-1.4.0/build.css" rel="stylesheet" />
 <link href="site_libs/klippy-0.0.0.9500/css/klippy.min.css" rel="stylesheet" />
@@ -54,18 +52,118 @@
   ul.task-list{list-style: none;}
     </style>
 
-<style type="text/css">code{white-space: pre;}</style>
-<script type="text/javascript">
-if (window.hljs) {
-  hljs.configure({languages: []});
-  hljs.initHighlightingOnLoad();
-  if (document.readyState && document.readyState === "complete") {
-    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+
+
+<style type="text/css">
+  code {
+    white-space: pre;
   }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
 }
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  background-color: #f8f8f8; }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ef2929; } /* Alert */
+code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #204a87; } /* Attribute */
+code span.bn { color: #0000cf; } /* BaseN */
+code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4e9a06; } /* Char */
+code span.cn { color: #8f5902; } /* Constant */
+code span.co { color: #8f5902; font-style: italic; } /* Comment */
+code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code span.dt { color: #204a87; } /* DataType */
+code span.dv { color: #0000cf; } /* DecVal */
+code span.er { color: #a40000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #0000cf; } /* Float */
+code span.fu { color: #204a87; font-weight: bold; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code span.ot { color: #8f5902; } /* Other */
+code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code span.sc { color: #ce5c00; font-weight: bold; } /* SpecialChar */
+code span.ss { color: #4e9a06; } /* SpecialString */
+code span.st { color: #4e9a06; } /* String */
+code span.va { color: #000000; } /* Variable */
+code span.vs { color: #4e9a06; } /* VerbatimString */
+code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+
+.sourceCode .row {
+  width: 100%;
+}
+.sourceCode {
+  overflow-x: auto;
+}
+.code-folding-btn {
+  margin-right: -30px;
+}
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
 </script>
-
-
 
 
 <style type="text/css">
@@ -436,25 +534,28 @@ text-align: justify}
 <hr />
 <div id="set-up" class="section level1" number="1">
 <h1><span class="header-section-number">1</span> Set up</h1>
-<pre class="r test"><code># start with clean workspace
-rm(list = ls())
-
-library(igraph)</code></pre>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="co"># start with clean workspace</span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>())</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="fu">library</span>(igraph)</span></code></pre></div>
 </div>
 <div id="data" class="section level1" number="2">
 <h1><span class="header-section-number">2</span> Data</h1>
 <div id="zacharys-karate-club" class="section level2" number="2.1">
 <h2><span class="header-section-number">2.1</span> Zachary’s Karate
 club</h2>
-<pre class="r test"><code># Basic zachary network graph
-g_zach &lt;- make_graph(&quot;Zachary&quot;)
-
-plot(g_zach)</code></pre>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="co"># Basic zachary network graph</span></span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>g_zach <span class="ot">&lt;-</span> <span class="fu">make_graph</span>(<span class="st">&quot;Zachary&quot;</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a><span class="fu">plot</span>(g_zach)</span></code></pre></div>
 <p><img src="Week4_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
-<pre class="r test"><code># Make adjacency matrix
-g_matrix &lt;- as_adjacency_matrix(g_zach, type = &quot;both&quot;, sparse = FALSE)
-
-g_matrix</code></pre>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="co"># Make adjacency matrix</span></span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>g_matrix <span class="ot">&lt;-</span> <span class="fu">as_adjacency_matrix</span>(g_zach, <span class="at">type =</span> <span class="st">&quot;both&quot;</span>, <span class="at">sparse =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>g_matrix</span></code></pre></div>
 <pre class="test2"><code>#&gt;       [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13] [,14] [,15] [,16] [,17]
 #&gt;  [1,]    0    1    1    1    1    1    1    1    1     0     1     1     1     1     0     0     0
 #&gt;  [2,]    1    0    1    1    0    0    0    1    0     0     0     0     0     1     0     0     0
@@ -563,16 +664,21 @@ g_matrix</code></pre>
 </div>
 <div id="descriptives" class="section level2" number="2.2">
 <h2><span class="header-section-number">2.2</span> Descriptives</h2>
-<pre class="r test"><code>vcount(g_zach)  # Number of nodes in the network</code></pre>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="fu">vcount</span>(g_zach)  <span class="co"># Number of nodes in the network</span></span></code></pre></div>
 <pre class="test2"><code>#&gt; [1] 34</code></pre>
-<pre class="r test"><code>ecount(g_zach)  # Number of edges/ ties </code></pre>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="fu">ecount</span>(g_zach)  <span class="co"># Number of edges/ ties </span></span></code></pre></div>
 <pre class="test2"><code>#&gt; [1] 78</code></pre>
-<pre class="r test"><code>igraph::degree(g_zach)</code></pre>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a>igraph<span class="sc">::</span><span class="fu">degree</span>(g_zach)</span></code></pre></div>
 <pre class="test2"><code>#&gt;  [1] 16  9 10  6  3  4  4  4  5  2  3  1  2  5  2  2  2  2  2  3  2  2  2  5  3  3  2  4  3  4  4  6
 #&gt; [33] 12 17</code></pre>
-<pre class="r test"><code>hist(table(degree(g_zach)), xlab = &quot;indegree&quot;, main = &quot;Histogram of indegree&quot;)</code></pre>
+<div class="sourceCode" id="cb11"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="fu">hist</span>(<span class="fu">table</span>(<span class="fu">degree</span>(g_zach)), <span class="at">xlab =</span> <span class="st">&quot;indegree&quot;</span>, <span class="at">main =</span> <span class="st">&quot;Histogram of indegree&quot;</span>)</span></code></pre></div>
 <p><img src="Week4_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
-<pre class="r test"><code>igraph::transitivity(g_zach, type = c(&quot;localundirected&quot;), isolates = c(&quot;NaN&quot;, &quot;zero&quot;))</code></pre>
+<div class="sourceCode" id="cb12"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a>igraph<span class="sc">::</span><span class="fu">transitivity</span>(g_zach, <span class="at">type =</span> <span class="fu">c</span>(<span class="st">&quot;localundirected&quot;</span>), <span class="at">isolates =</span> <span class="fu">c</span>(<span class="st">&quot;NaN&quot;</span>, <span class="st">&quot;zero&quot;</span>))</span></code></pre></div>
 <pre class="test2"><code>#&gt;  [1] 0.1500000 0.3333333 0.2444444 0.6666667 0.6666667 0.5000000 0.5000000 1.0000000 0.5000000
 #&gt; [10] 0.0000000 0.6666667       NaN 1.0000000 0.6000000 1.0000000 1.0000000 1.0000000 1.0000000
 #&gt; [19] 1.0000000 0.3333333 1.0000000 1.0000000 1.0000000 0.4000000 0.3333333 0.3333333 1.0000000
@@ -580,7 +686,8 @@ g_matrix</code></pre>
 </div>
 <div id="dyad-census" class="section level2" number="2.3">
 <h2><span class="header-section-number">2.3</span> Dyad census</h2>
-<pre class="r test"><code>igraph::dyad_census(g_zach)</code></pre>
+<div class="sourceCode" id="cb14"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a>igraph<span class="sc">::</span><span class="fu">dyad_census</span>(g_zach)</span></code></pre></div>
 <pre class="test2"><code>#&gt; $mut
 #&gt; [1] 78
 #&gt; 
@@ -592,38 +699,48 @@ g_matrix</code></pre>
 </div>
 <div id="triad-census" class="section level2" number="2.4">
 <h2><span class="header-section-number">2.4</span> Triad census</h2>
-<pre class="r test"><code>igraph::triad.census(g_zach)</code></pre>
+<div class="sourceCode" id="cb16"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a>igraph<span class="sc">::</span><span class="fu">triad.census</span>(g_zach)</span></code></pre></div>
 <pre class="test2"><code>#&gt;  [1] 3971    0 1575    0    0    0    0    0    0    0  393    0    0    0    0   45</code></pre>
-<pre class="r test"><code># I will use sna because it shows the names of the triads as well.
-sna::triad.census(g_matrix)</code></pre>
+<div class="sourceCode" id="cb18"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a><span class="co"># I will use sna because it shows the names of the triads as well.</span></span>
+<span id="cb18-2"><a href="#cb18-2" tabindex="-1"></a>sna<span class="sc">::</span><span class="fu">triad.census</span>(g_matrix)</span></code></pre></div>
 <pre class="test2"><code>#&gt;       003 012  102 021D 021U 021C 111D 111U 030T 030C 201 120D 120U 120C 210 300
 #&gt; [1,] 3971   0 1575    0    0    0    0    0    0    0 393    0    0    0   0  45</code></pre>
-<pre class="r test"><code>unloadNamespace(&quot;sna&quot;)  #I will detach this package again, otherwise it will interfere with all kind of functions from igraph, and my students will hate me for that.</code></pre>
+<div class="sourceCode" id="cb20"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a><span class="fu">unloadNamespace</span>(<span class="st">&quot;sna&quot;</span>)  <span class="co">#I will detach this package again, otherwise it will interfere with all kind of functions from igraph, and my students will hate me for that.</span></span></code></pre></div>
 <div id="assignment" class="section level3" number="2.4.1">
 <h3><span class="header-section-number">2.4.1</span> Assignment</h3>
-<pre class="r test"><code>igraph::transitivity(g_zach, type = &quot;global&quot;)</code></pre>
+<div class="sourceCode" id="cb21"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" tabindex="-1"></a>igraph<span class="sc">::</span><span class="fu">transitivity</span>(g_zach, <span class="at">type =</span> <span class="st">&quot;global&quot;</span>)</span></code></pre></div>
 <pre class="test2"><code>#&gt; [1] 0.2556818</code></pre>
-<pre class="r test"><code>sna::gtrans(g_matrix)</code></pre>
+<div class="sourceCode" id="cb23"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" tabindex="-1"></a>sna<span class="sc">::</span><span class="fu">gtrans</span>(g_matrix)</span></code></pre></div>
 <pre class="test2"><code>#&gt; [1] 0.2556818</code></pre>
-<pre class="r test"><code>triad_g &lt;- data.frame(sna::triad.census(g_matrix))
-
-transitivity_g &lt;- (3 * triad_g$X300)/(triad_g$X201 + 3 * triad_g$X300)
-transitivity_g</code></pre>
+<div class="sourceCode" id="cb25"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" tabindex="-1"></a>triad_g <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(sna<span class="sc">::</span><span class="fu">triad.census</span>(g_matrix))</span>
+<span id="cb25-2"><a href="#cb25-2" tabindex="-1"></a></span>
+<span id="cb25-3"><a href="#cb25-3" tabindex="-1"></a>transitivity_g <span class="ot">&lt;-</span> (<span class="dv">3</span> <span class="sc">*</span> triad_g<span class="sc">$</span>X300)<span class="sc">/</span>(triad_g<span class="sc">$</span>X201 <span class="sc">+</span> <span class="dv">3</span> <span class="sc">*</span> triad_g<span class="sc">$</span>X300)</span>
+<span id="cb25-4"><a href="#cb25-4" tabindex="-1"></a>transitivity_g</span></code></pre></div>
 <pre class="test2"><code>#&gt; [1] 0.2556818</code></pre>
-<pre class="r test"><code>check &lt;- data.frame(igraph::transitivity(g_zach, type = c(&quot;localundirected&quot;), isolates = c(&quot;NaN&quot;, &quot;zero&quot;)))</code></pre>
+<div class="sourceCode" id="cb27"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" tabindex="-1"></a>check <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(igraph<span class="sc">::</span><span class="fu">transitivity</span>(g_zach, <span class="at">type =</span> <span class="fu">c</span>(<span class="st">&quot;localundirected&quot;</span>), <span class="at">isolates =</span> <span class="fu">c</span>(<span class="st">&quot;NaN&quot;</span>, <span class="st">&quot;zero&quot;</span>)))</span></code></pre></div>
 </div>
 </div>
 <div id="visualisation" class="section level2" number="2.5">
 <h2><span class="header-section-number">2.5</span> Visualisation</h2>
-<pre class="r test"><code># changing V
-V(g_zach)$size = betweenness(g_zach, normalized = T, directed = FALSE) * 60 + 10  #after some trial and error
-plot(g_zach, mode = &quot;undirected&quot;)</code></pre>
+<div class="sourceCode" id="cb28"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" tabindex="-1"></a><span class="co"># changing V</span></span>
+<span id="cb28-2"><a href="#cb28-2" tabindex="-1"></a><span class="fu">V</span>(g_zach)<span class="sc">$</span>size <span class="ot">=</span> <span class="fu">betweenness</span>(g_zach, <span class="at">normalized =</span> T, <span class="at">directed =</span> <span class="cn">FALSE</span>) <span class="sc">*</span> <span class="dv">60</span> <span class="sc">+</span> <span class="dv">10</span>  <span class="co">#after some trial and error</span></span>
+<span id="cb28-3"><a href="#cb28-3" tabindex="-1"></a><span class="fu">plot</span>(g_zach, <span class="at">mode =</span> <span class="st">&quot;undirected&quot;</span>)</span></code></pre></div>
 <p><img src="Week4_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
-<pre class="r test"><code>set.seed(2345)
-l &lt;- layout_with_mds(g_zach)  #https://igraph.org/r/doc/layout_with_mds.html
-plot(g_zach, layout = l)</code></pre>
+<div class="sourceCode" id="cb29"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2345</span>)</span>
+<span id="cb29-2"><a href="#cb29-2" tabindex="-1"></a>l <span class="ot">&lt;-</span> <span class="fu">layout_with_mds</span>(g_zach)  <span class="co">#https://igraph.org/r/doc/layout_with_mds.html</span></span>
+<span id="cb29-3"><a href="#cb29-3" tabindex="-1"></a><span class="fu">plot</span>(g_zach, <span class="at">layout =</span> l)</span></code></pre></div>
 <p><img src="Week4_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
-<pre class="r test"><code>l  #let us take a look at the coordinates</code></pre>
+<div class="sourceCode" id="cb30"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" tabindex="-1"></a>l  <span class="co">#let us take a look at the coordinates</span></span></code></pre></div>
 <pre class="test2"><code>#&gt;               [,1]         [,2]
 #&gt;  [1,]  1.070931935 -0.172458113
 #&gt;  [2,]  0.732844464  0.754023309
@@ -659,19 +776,23 @@ plot(g_zach, layout = l)</code></pre>
 #&gt; [32,] -0.048136037 -0.870967614
 #&gt; [33,] -1.023681000 -0.035802363
 #&gt; [34,] -1.146442924 -0.037605192</code></pre>
-<pre class="r test"><code>l[1, 1] &lt;- 4
-l[34, 1] &lt;- -3.5
-plot(g_zach, layout = l)</code></pre>
+<div class="sourceCode" id="cb32"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" tabindex="-1"></a>l[<span class="dv">1</span>, <span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="dv">4</span></span>
+<span id="cb32-2"><a href="#cb32-2" tabindex="-1"></a>l[<span class="dv">34</span>, <span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="sc">-</span><span class="fl">3.5</span></span>
+<span id="cb32-3"><a href="#cb32-3" tabindex="-1"></a><span class="fu">plot</span>(g_zach, <span class="at">layout =</span> l)</span></code></pre></div>
 <p><img src="Week4_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
-<pre class="r test"><code>plot(g_zach, layout = l, margin = c(0, 0, 0, 0))
-legend(x = -2, y = -1.5, c(&quot;Note: the position of nodes 1 and 34 have been set by Jochem Tolsma \n for visualisation purposes only and do not reflect network properties&quot;),
-    bty = &quot;n&quot;, cex = 0.8)</code></pre>
+<div class="sourceCode" id="cb33"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" tabindex="-1"></a><span class="fu">plot</span>(g_zach, <span class="at">layout =</span> l, <span class="at">margin =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>))</span>
+<span id="cb33-2"><a href="#cb33-2" tabindex="-1"></a><span class="fu">legend</span>(<span class="at">x =</span> <span class="sc">-</span><span class="dv">2</span>, <span class="at">y =</span> <span class="sc">-</span><span class="fl">1.5</span>, <span class="fu">c</span>(<span class="st">&quot;Note: the position of nodes 1 and 34 have been set by Jochem Tolsma </span><span class="sc">\n</span><span class="st"> for visualisation purposes only and do not reflect network properties&quot;</span>),</span>
+<span id="cb33-3"><a href="#cb33-3" tabindex="-1"></a>    <span class="at">bty =</span> <span class="st">&quot;n&quot;</span>, <span class="at">cex =</span> <span class="fl">0.8</span>)</span></code></pre></div>
 <p><img src="Week4_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
 </div>
 <div id="twittersphere" class="section level2" number="2.6">
 <h2><span class="header-section-number">2.6</span> Twittersphere</h2>
-<pre class="r test"><code>load(&quot;data/twitter_20190919.Rdata&quot;)</code></pre>
-<pre class="r test"><code>str(twitter_20190919, 1)</code></pre>
+<div class="sourceCode" id="cb34"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;data/twitter_20190919.Rdata&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb35"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" tabindex="-1"></a><span class="fu">str</span>(twitter_20190919, <span class="dv">1</span>)</span></code></pre></div>
 <pre class="test2"><code>#&gt; List of 3
 #&gt;  $ keyf  :&#39;data.frame&#39;:  147 obs. of  41 variables:
 #&gt;  $ mydata:List of 8
@@ -683,25 +804,28 @@ legend(x = -2, y = -1.5, c(&quot;Note: the position of nodes 1 and 34 have been 
 #&gt;   .. ..- attr(*, &quot;names&quot;)= chr [1:9] &quot;fnet,fnet&quot; &quot;atmnet,fnet&quot; &quot;rtnet,fnet&quot; &quot;fnet,atmnet&quot; ...
 #&gt;   ..- attr(*, &quot;class&quot;)= chr &quot;siena&quot;
 #&gt;  $ seats :&#39;data.frame&#39;:  150 obs. of  5 variables:</code></pre>
-<pre class="r test"><code>keyf &lt;- twitter_20190919[[1]]
-mydata &lt;- twitter_20190919[[2]]
-seats &lt;- twitter_20190919[[3]]</code></pre>
-<pre class="r test"><code>fnet &lt;- mydata$depvars$fnet
-atmnet &lt;- mydata$depvars$atmnet
-rtnet &lt;- mydata$depvars$rtnet
-
-vrouw &lt;- mydata$cCovars$vrouw
-partij &lt;- mydata$cCovars$partij
-ethminz &lt;- mydata$cCovars$ethminz
-lft &lt;- mydata$cCovars$lft
-
-# if you construct an object for RSiena, covariates are mean centered by default. I would like to
-# have the original values again.
-ethminz &lt;- ethminz + attributes(ethminz)$mean
-partij &lt;- partij + attributes(partij)$mean
-vrouw &lt;- vrouw + attributes(vrouw)$mean
-lft &lt;- lft + attributes(lft)$mean</code></pre>
-<pre class="r test"><code>str(fnet)</code></pre>
+<div class="sourceCode" id="cb37"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" tabindex="-1"></a>keyf <span class="ot">&lt;-</span> twitter_20190919[[<span class="dv">1</span>]]</span>
+<span id="cb37-2"><a href="#cb37-2" tabindex="-1"></a>mydata <span class="ot">&lt;-</span> twitter_20190919[[<span class="dv">2</span>]]</span>
+<span id="cb37-3"><a href="#cb37-3" tabindex="-1"></a>seats <span class="ot">&lt;-</span> twitter_20190919[[<span class="dv">3</span>]]</span></code></pre></div>
+<div class="sourceCode" id="cb38"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" tabindex="-1"></a>fnet <span class="ot">&lt;-</span> mydata<span class="sc">$</span>depvars<span class="sc">$</span>fnet</span>
+<span id="cb38-2"><a href="#cb38-2" tabindex="-1"></a>atmnet <span class="ot">&lt;-</span> mydata<span class="sc">$</span>depvars<span class="sc">$</span>atmnet</span>
+<span id="cb38-3"><a href="#cb38-3" tabindex="-1"></a>rtnet <span class="ot">&lt;-</span> mydata<span class="sc">$</span>depvars<span class="sc">$</span>rtnet</span>
+<span id="cb38-4"><a href="#cb38-4" tabindex="-1"></a></span>
+<span id="cb38-5"><a href="#cb38-5" tabindex="-1"></a>vrouw <span class="ot">&lt;-</span> mydata<span class="sc">$</span>cCovars<span class="sc">$</span>vrouw</span>
+<span id="cb38-6"><a href="#cb38-6" tabindex="-1"></a>partij <span class="ot">&lt;-</span> mydata<span class="sc">$</span>cCovars<span class="sc">$</span>partij</span>
+<span id="cb38-7"><a href="#cb38-7" tabindex="-1"></a>ethminz <span class="ot">&lt;-</span> mydata<span class="sc">$</span>cCovars<span class="sc">$</span>ethminz</span>
+<span id="cb38-8"><a href="#cb38-8" tabindex="-1"></a>lft <span class="ot">&lt;-</span> mydata<span class="sc">$</span>cCovars<span class="sc">$</span>lft</span>
+<span id="cb38-9"><a href="#cb38-9" tabindex="-1"></a></span>
+<span id="cb38-10"><a href="#cb38-10" tabindex="-1"></a><span class="co"># if you construct an object for RSiena, covariates are mean centered by default. I would like to</span></span>
+<span id="cb38-11"><a href="#cb38-11" tabindex="-1"></a><span class="co"># have the original values again.</span></span>
+<span id="cb38-12"><a href="#cb38-12" tabindex="-1"></a>ethminz <span class="ot">&lt;-</span> ethminz <span class="sc">+</span> <span class="fu">attributes</span>(ethminz)<span class="sc">$</span>mean</span>
+<span id="cb38-13"><a href="#cb38-13" tabindex="-1"></a>partij <span class="ot">&lt;-</span> partij <span class="sc">+</span> <span class="fu">attributes</span>(partij)<span class="sc">$</span>mean</span>
+<span id="cb38-14"><a href="#cb38-14" tabindex="-1"></a>vrouw <span class="ot">&lt;-</span> vrouw <span class="sc">+</span> <span class="fu">attributes</span>(vrouw)<span class="sc">$</span>mean</span>
+<span id="cb38-15"><a href="#cb38-15" tabindex="-1"></a>lft <span class="ot">&lt;-</span> lft <span class="sc">+</span> <span class="fu">attributes</span>(lft)<span class="sc">$</span>mean</span></code></pre></div>
+<div class="sourceCode" id="cb39"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" tabindex="-1"></a><span class="fu">str</span>(fnet)</span></code></pre></div>
 <pre class="test2"><code>#&gt;  &#39;sienaDependent&#39; num [1:147, 1:147, 1:3] 0 0 0 1 0 1 0 1 1 1 ...
 #&gt;  - attr(*, &quot;type&quot;)= chr &quot;oneMode&quot;
 #&gt;  - attr(*, &quot;sparse&quot;)= logi FALSE
@@ -743,36 +867,39 @@ lft &lt;- lft + attributes(lft)$mean</code></pre>
 #&gt;  - attr(*, &quot;maxObsOutDegree&quot;)= num [1:3] 137 137 137
 #&gt;  - attr(*, &quot;missings&quot;)= num [1:3] 0 0 0
 #&gt;  - attr(*, &quot;name&quot;)= chr &quot;fnet&quot;</code></pre>
-<pre class="r test"><code>fnet1 &lt;- fnet[, , 1]  #friendship network wave 1
-atmnet1 &lt;- atmnet[, , 1]  #atmention network wave 1
-# we will use wave 2 and 3 later.
-atmnet2 &lt;- atmnet[, , 2]
-atmnet3 &lt;- atmnet[, , 3]</code></pre>
-<pre class="r test"><code># table(fnet1, useNA=&#39;always&#39;) #uncomment if you want
-fnet1[fnet1 == 10] &lt;- 0
-# table(fnet1, useNA=&#39;always&#39;) #uncomment if you want
-
-atmnet1[atmnet1 == 10] &lt;- 0
-atmnet2[atmnet2 == 10] &lt;- 0
-atmnet3[atmnet3 == 10] &lt;- 0</code></pre>
+<div class="sourceCode" id="cb41"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" tabindex="-1"></a>fnet1 <span class="ot">&lt;-</span> fnet[, , <span class="dv">1</span>]  <span class="co">#friendship network wave 1</span></span>
+<span id="cb41-2"><a href="#cb41-2" tabindex="-1"></a>atmnet1 <span class="ot">&lt;-</span> atmnet[, , <span class="dv">1</span>]  <span class="co">#atmention network wave 1</span></span>
+<span id="cb41-3"><a href="#cb41-3" tabindex="-1"></a><span class="co"># we will use wave 2 and 3 later.</span></span>
+<span id="cb41-4"><a href="#cb41-4" tabindex="-1"></a>atmnet2 <span class="ot">&lt;-</span> atmnet[, , <span class="dv">2</span>]</span>
+<span id="cb41-5"><a href="#cb41-5" tabindex="-1"></a>atmnet3 <span class="ot">&lt;-</span> atmnet[, , <span class="dv">3</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb42"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" tabindex="-1"></a><span class="co"># table(fnet1, useNA=&#39;always&#39;) #uncomment if you want</span></span>
+<span id="cb42-2"><a href="#cb42-2" tabindex="-1"></a>fnet1[fnet1 <span class="sc">==</span> <span class="dv">10</span>] <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb42-3"><a href="#cb42-3" tabindex="-1"></a><span class="co"># table(fnet1, useNA=&#39;always&#39;) #uncomment if you want</span></span>
+<span id="cb42-4"><a href="#cb42-4" tabindex="-1"></a></span>
+<span id="cb42-5"><a href="#cb42-5" tabindex="-1"></a>atmnet1[atmnet1 <span class="sc">==</span> <span class="dv">10</span>] <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb42-6"><a href="#cb42-6" tabindex="-1"></a>atmnet2[atmnet2 <span class="sc">==</span> <span class="dv">10</span>] <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb42-7"><a href="#cb42-7" tabindex="-1"></a>atmnet3[atmnet3 <span class="sc">==</span> <span class="dv">10</span>] <span class="ot">&lt;-</span> <span class="dv">0</span></span></code></pre></div>
 <div id="descriptives-1" class="section level3" number="2.6.1">
 <h3><span class="header-section-number">2.6.1</span> Descriptives</h3>
-<pre class="r test"><code>G1 &lt;- igraph::graph_from_adjacency_matrix(atmnet1, mode = &quot;directed&quot;, weighted = NULL, diag = TRUE, add.colnames = NA,
-    add.rownames = NA)
-
-# we need to retrieve the edges.
-edges &lt;- igraph::as_data_frame(G1, what = &quot;edges&quot;)
-
-# the first variable of the data we can attach needs to be some id, thus reorder columns of keyf
-keyf &lt;- cbind(keyf$EGOid, keyf[, names(keyf) != &quot;EGOid&quot;])
-# the name has been changed as well. Lets correct this
-names(keyf)[1] &lt;- &quot;EGOid&quot;
-
-# rebuild the graph.
-G1 &lt;- graph_from_data_frame(edges, directed = TRUE, vertices = keyf)
-
-# let us examine the attributes
-vertex_attr(G1)</code></pre>
+<div class="sourceCode" id="cb43"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" tabindex="-1"></a>G1 <span class="ot">&lt;-</span> igraph<span class="sc">::</span><span class="fu">graph_from_adjacency_matrix</span>(atmnet1, <span class="at">mode =</span> <span class="st">&quot;directed&quot;</span>, <span class="at">weighted =</span> <span class="cn">NULL</span>, <span class="at">diag =</span> <span class="cn">TRUE</span>, <span class="at">add.colnames =</span> <span class="cn">NA</span>,</span>
+<span id="cb43-2"><a href="#cb43-2" tabindex="-1"></a>    <span class="at">add.rownames =</span> <span class="cn">NA</span>)</span>
+<span id="cb43-3"><a href="#cb43-3" tabindex="-1"></a></span>
+<span id="cb43-4"><a href="#cb43-4" tabindex="-1"></a><span class="co"># we need to retrieve the edges.</span></span>
+<span id="cb43-5"><a href="#cb43-5" tabindex="-1"></a>edges <span class="ot">&lt;-</span> igraph<span class="sc">::</span><span class="fu">as_data_frame</span>(G1, <span class="at">what =</span> <span class="st">&quot;edges&quot;</span>)</span>
+<span id="cb43-6"><a href="#cb43-6" tabindex="-1"></a></span>
+<span id="cb43-7"><a href="#cb43-7" tabindex="-1"></a><span class="co"># the first variable of the data we can attach needs to be some id, thus reorder columns of keyf</span></span>
+<span id="cb43-8"><a href="#cb43-8" tabindex="-1"></a>keyf <span class="ot">&lt;-</span> <span class="fu">cbind</span>(keyf<span class="sc">$</span>EGOid, keyf[, <span class="fu">names</span>(keyf) <span class="sc">!=</span> <span class="st">&quot;EGOid&quot;</span>])</span>
+<span id="cb43-9"><a href="#cb43-9" tabindex="-1"></a><span class="co"># the name has been changed as well. Lets correct this</span></span>
+<span id="cb43-10"><a href="#cb43-10" tabindex="-1"></a><span class="fu">names</span>(keyf)[<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="st">&quot;EGOid&quot;</span></span>
+<span id="cb43-11"><a href="#cb43-11" tabindex="-1"></a></span>
+<span id="cb43-12"><a href="#cb43-12" tabindex="-1"></a><span class="co"># rebuild the graph.</span></span>
+<span id="cb43-13"><a href="#cb43-13" tabindex="-1"></a>G1 <span class="ot">&lt;-</span> <span class="fu">graph_from_data_frame</span>(edges, <span class="at">directed =</span> <span class="cn">TRUE</span>, <span class="at">vertices =</span> keyf)</span>
+<span id="cb43-14"><a href="#cb43-14" tabindex="-1"></a></span>
+<span id="cb43-15"><a href="#cb43-15" tabindex="-1"></a><span class="co"># let us examine the attributes</span></span>
+<span id="cb43-16"><a href="#cb43-16" tabindex="-1"></a><span class="fu">vertex_attr</span>(G1)</span></code></pre></div>
 <pre class="test2"><code>#&gt; $name
 #&gt;   [1] &quot;1&quot;   &quot;2&quot;   &quot;3&quot;   &quot;4&quot;   &quot;5&quot;   &quot;6&quot;   &quot;7&quot;   &quot;8&quot;   &quot;9&quot;   &quot;10&quot;  &quot;11&quot;  &quot;12&quot;  &quot;13&quot;  &quot;14&quot;  &quot;15&quot; 
 #&gt;  [16] &quot;16&quot;  &quot;17&quot;  &quot;18&quot;  &quot;19&quot;  &quot;20&quot;  &quot;21&quot;  &quot;22&quot;  &quot;23&quot;  &quot;24&quot;  &quot;25&quot;  &quot;26&quot;  &quot;27&quot;  &quot;28&quot;  &quot;29&quot;  &quot;30&quot; 
@@ -1944,8 +2071,9 @@ vertex_attr(G1)</code></pre>
 #&gt;  [96] 10.1 10.5  8.2  9.6  8.3  3.1  4.0  2.2  3.8  2.2  3.0 11.2 11.2 11.0  7.7 10.8 10.5  9.6  8.3
 #&gt; [115]  7.5  6.8  5.8  4.1  4.8  3.8  5.4 -0.4  0.3  2.2  1.3  2.1  3.0  2.2  4.0  0.8  1.6  2.9  6.8
 #&gt; [134]  5.1  6.8  0.0 -1.7 -0.4  0.6 -1.8 -3.1 -3.2 -1.7 -4.4 -3.2 -1.9 -0.8</code></pre>
-<pre class="r test"><code># thus to find the names of our MPs we could now do this:
-V(G1)$Naam</code></pre>
+<div class="sourceCode" id="cb45"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" tabindex="-1"></a><span class="co"># thus to find the names of our MPs we could now do this:</span></span>
+<span id="cb45-2"><a href="#cb45-2" tabindex="-1"></a><span class="fu">V</span>(G1)<span class="sc">$</span>Naam</span></code></pre></div>
 <pre class="test2"><code>#&gt;   [1] &quot;Agema, Fleur                            &quot; &quot;Amhaouch, Mustafa                       &quot;
 #&gt;   [3] &quot;Arib, Khadija                           &quot; &quot;v. Ark, Tamara                          &quot;
 #&gt;   [5] &quot;Azmani, Malik                           &quot; &quot;Beertema, Harm                          &quot;
@@ -2020,146 +2148,162 @@ V(G1)$Naam</code></pre>
 #&gt; [143] &quot;Edgar Mulder                            &quot; &quot;Léon de Jong                            &quot;
 #&gt; [145] &quot;Gabriëlle Popken                        &quot; &quot;Alexander Kops                          &quot;
 #&gt; [147] &quot;Roy van Aalst                           &quot;</code></pre>
-<pre class="r test"><code>plot(G1)</code></pre>
+<div class="sourceCode" id="cb47"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" tabindex="-1"></a><span class="fu">plot</span>(G1)</span></code></pre></div>
 <p><img src="Week4_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
-<pre class="r test"><code>G1 &lt;- simplify(G1)
-plot(G1)</code></pre>
+<div class="sourceCode" id="cb48"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" tabindex="-1"></a>G1 <span class="ot">&lt;-</span> <span class="fu">simplify</span>(G1)</span>
+<span id="cb48-2"><a href="#cb48-2" tabindex="-1"></a><span class="fu">plot</span>(G1)</span></code></pre></div>
 <p><img src="Week4_files/figure-html/unnamed-chunk-18-2.png" width="672" /></p>
-<pre class="r test"><code>edge_density(G1)</code></pre>
+<div class="sourceCode" id="cb49"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" tabindex="-1"></a><span class="fu">edge_density</span>(G1)</span></code></pre></div>
 <pre class="test2"><code>#&gt; [1] 0.04845774</code></pre>
 </div>
 <div id="recip-ties" class="section level3" number="2.6.2">
 <h3><span class="header-section-number">2.6.2</span> Recip ties</h3>
-<pre class="r test"><code># define undirected network
-atmnet1_un &lt;- atmnet1 == 1 &amp; t(atmnet1) == 1
-
-G2 &lt;- graph_from_adjacency_matrix(atmnet1_un, mode = &quot;undirected&quot;, weighted = NULL, diag = TRUE, add.colnames = NA,
-    add.rownames = NA)
-
-# attach data if you want
-edges &lt;- igraph::as_data_frame(G2, what = &quot;edges&quot;)
-G2 &lt;- graph_from_data_frame(edges, directed = FALSE, vertices = keyf)
-plot(G2)</code></pre>
+<div class="sourceCode" id="cb51"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" tabindex="-1"></a><span class="co"># define undirected network</span></span>
+<span id="cb51-2"><a href="#cb51-2" tabindex="-1"></a>atmnet1_un <span class="ot">&lt;-</span> atmnet1 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> <span class="fu">t</span>(atmnet1) <span class="sc">==</span> <span class="dv">1</span></span>
+<span id="cb51-3"><a href="#cb51-3" tabindex="-1"></a></span>
+<span id="cb51-4"><a href="#cb51-4" tabindex="-1"></a>G2 <span class="ot">&lt;-</span> <span class="fu">graph_from_adjacency_matrix</span>(atmnet1_un, <span class="at">mode =</span> <span class="st">&quot;undirected&quot;</span>, <span class="at">weighted =</span> <span class="cn">NULL</span>, <span class="at">diag =</span> <span class="cn">TRUE</span>, <span class="at">add.colnames =</span> <span class="cn">NA</span>,</span>
+<span id="cb51-5"><a href="#cb51-5" tabindex="-1"></a>    <span class="at">add.rownames =</span> <span class="cn">NA</span>)</span>
+<span id="cb51-6"><a href="#cb51-6" tabindex="-1"></a></span>
+<span id="cb51-7"><a href="#cb51-7" tabindex="-1"></a><span class="co"># attach data if you want</span></span>
+<span id="cb51-8"><a href="#cb51-8" tabindex="-1"></a>edges <span class="ot">&lt;-</span> igraph<span class="sc">::</span><span class="fu">as_data_frame</span>(G2, <span class="at">what =</span> <span class="st">&quot;edges&quot;</span>)</span>
+<span id="cb51-9"><a href="#cb51-9" tabindex="-1"></a>G2 <span class="ot">&lt;-</span> <span class="fu">graph_from_data_frame</span>(edges, <span class="at">directed =</span> <span class="cn">FALSE</span>, <span class="at">vertices =</span> keyf)</span>
+<span id="cb51-10"><a href="#cb51-10" tabindex="-1"></a><span class="fu">plot</span>(G2)</span></code></pre></div>
 <p><img src="Week4_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
-<pre class="r test"><code>G2 &lt;- simplify(G2)
-plot(G2, mode = &quot;undirected&quot;)</code></pre>
+<div class="sourceCode" id="cb52"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" tabindex="-1"></a>G2 <span class="ot">&lt;-</span> <span class="fu">simplify</span>(G2)</span>
+<span id="cb52-2"><a href="#cb52-2" tabindex="-1"></a><span class="fu">plot</span>(G2, <span class="at">mode =</span> <span class="st">&quot;undirected&quot;</span>)</span></code></pre></div>
 <p><img src="Week4_files/figure-html/unnamed-chunk-20-1.png" width="672" />
 ### Which nodes to plot</p>
-<pre class="r test"><code># first make sure we don&#39;t end up with MPS who only mention themselves
-diag(atmnet1_un) &lt;- 0
-
-# lets find the noisolates
-noisolates &lt;- rowSums(atmnet1_un, na.rm = T) &gt; 0
-# length(noisolates) sum(noisolates) if you select, select both correct nomination network as ego
-# characteristics
-atmnet1_un_sel &lt;- atmnet1_un[noisolates, noisolates]
-# if you are going to use the dataset keyf to add characteristics to the plot later, make sure to
-# run the correct selection as well!!!
-keyf_sel &lt;- keyf[noisolates, ]
-
-G2_sel &lt;- graph_from_adjacency_matrix(atmnet1_un_sel, mode = &quot;undirected&quot;, weighted = NULL, diag = TRUE,
-    add.colnames = NA, add.rownames = NA)
-G2_sel &lt;- simplify(G2_sel)
-plot(G2_sel, mode = &quot;undirected&quot;)</code></pre>
+<div class="sourceCode" id="cb53"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" tabindex="-1"></a><span class="co"># first make sure we don&#39;t end up with MPS who only mention themselves</span></span>
+<span id="cb53-2"><a href="#cb53-2" tabindex="-1"></a><span class="fu">diag</span>(atmnet1_un) <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb53-3"><a href="#cb53-3" tabindex="-1"></a></span>
+<span id="cb53-4"><a href="#cb53-4" tabindex="-1"></a><span class="co"># lets find the noisolates</span></span>
+<span id="cb53-5"><a href="#cb53-5" tabindex="-1"></a>noisolates <span class="ot">&lt;-</span> <span class="fu">rowSums</span>(atmnet1_un, <span class="at">na.rm =</span> T) <span class="sc">&gt;</span> <span class="dv">0</span></span>
+<span id="cb53-6"><a href="#cb53-6" tabindex="-1"></a><span class="co"># length(noisolates) sum(noisolates) if you select, select both correct nomination network as ego</span></span>
+<span id="cb53-7"><a href="#cb53-7" tabindex="-1"></a><span class="co"># characteristics</span></span>
+<span id="cb53-8"><a href="#cb53-8" tabindex="-1"></a>atmnet1_un_sel <span class="ot">&lt;-</span> atmnet1_un[noisolates, noisolates]</span>
+<span id="cb53-9"><a href="#cb53-9" tabindex="-1"></a><span class="co"># if you are going to use the dataset keyf to add characteristics to the plot later, make sure to</span></span>
+<span id="cb53-10"><a href="#cb53-10" tabindex="-1"></a><span class="co"># run the correct selection as well!!!</span></span>
+<span id="cb53-11"><a href="#cb53-11" tabindex="-1"></a>keyf_sel <span class="ot">&lt;-</span> keyf[noisolates, ]</span>
+<span id="cb53-12"><a href="#cb53-12" tabindex="-1"></a></span>
+<span id="cb53-13"><a href="#cb53-13" tabindex="-1"></a>G2_sel <span class="ot">&lt;-</span> <span class="fu">graph_from_adjacency_matrix</span>(atmnet1_un_sel, <span class="at">mode =</span> <span class="st">&quot;undirected&quot;</span>, <span class="at">weighted =</span> <span class="cn">NULL</span>, <span class="at">diag =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb53-14"><a href="#cb53-14" tabindex="-1"></a>    <span class="at">add.colnames =</span> <span class="cn">NA</span>, <span class="at">add.rownames =</span> <span class="cn">NA</span>)</span>
+<span id="cb53-15"><a href="#cb53-15" tabindex="-1"></a>G2_sel <span class="ot">&lt;-</span> <span class="fu">simplify</span>(G2_sel)</span>
+<span id="cb53-16"><a href="#cb53-16" tabindex="-1"></a><span class="fu">plot</span>(G2_sel, <span class="at">mode =</span> <span class="st">&quot;undirected&quot;</span>)</span></code></pre></div>
 <p><img src="Week4_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
-<pre class="r test"><code># option 1: see above.  only select MPs from the liberal party
-selection &lt;- keyf$Partij == &quot;VVD&quot;
-# build new adjacency matrix
-atmnet1_un_sel2 &lt;- atmnet1_un[selection, selection]
-# etc.
-
-# option 2. Suppose we have attached our dataset to our graph object.  only select MPs from the
-# liberal party
-selection &lt;- V(G2)$Partij == &quot;VVD&quot;
-selection_id &lt;- which(selection)  # this gives us a numeric variable
-G_sel &lt;- induced_subgraph(G2, v = selection_id)
-plot(G_sel)</code></pre>
+<div class="sourceCode" id="cb54"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" tabindex="-1"></a><span class="co"># option 1: see above.  only select MPs from the liberal party</span></span>
+<span id="cb54-2"><a href="#cb54-2" tabindex="-1"></a>selection <span class="ot">&lt;-</span> keyf<span class="sc">$</span>Partij <span class="sc">==</span> <span class="st">&quot;VVD&quot;</span></span>
+<span id="cb54-3"><a href="#cb54-3" tabindex="-1"></a><span class="co"># build new adjacency matrix</span></span>
+<span id="cb54-4"><a href="#cb54-4" tabindex="-1"></a>atmnet1_un_sel2 <span class="ot">&lt;-</span> atmnet1_un[selection, selection]</span>
+<span id="cb54-5"><a href="#cb54-5" tabindex="-1"></a><span class="co"># etc.</span></span>
+<span id="cb54-6"><a href="#cb54-6" tabindex="-1"></a></span>
+<span id="cb54-7"><a href="#cb54-7" tabindex="-1"></a><span class="co"># option 2. Suppose we have attached our dataset to our graph object.  only select MPs from the</span></span>
+<span id="cb54-8"><a href="#cb54-8" tabindex="-1"></a><span class="co"># liberal party</span></span>
+<span id="cb54-9"><a href="#cb54-9" tabindex="-1"></a>selection <span class="ot">&lt;-</span> <span class="fu">V</span>(G2)<span class="sc">$</span>Partij <span class="sc">==</span> <span class="st">&quot;VVD&quot;</span></span>
+<span id="cb54-10"><a href="#cb54-10" tabindex="-1"></a>selection_id <span class="ot">&lt;-</span> <span class="fu">which</span>(selection)  <span class="co"># this gives us a numeric variable</span></span>
+<span id="cb54-11"><a href="#cb54-11" tabindex="-1"></a>G_sel <span class="ot">&lt;-</span> <span class="fu">induced_subgraph</span>(G2, <span class="at">v =</span> selection_id)</span>
+<span id="cb54-12"><a href="#cb54-12" tabindex="-1"></a><span class="fu">plot</span>(G_sel)</span></code></pre></div>
 <p><img src="Week4_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
-<pre class="r test"><code># option 1: see above.  only select MPs from the liberal party
-selection &lt;- keyf$Partij == &quot;VVD&quot;
-# build new adjacency matrix
-atmnet1_un_sel2 &lt;- atmnet1_un[selection, selection]
-# etc.
-
-# option 2. Suppose we have attached our dataset to our graph object.  only select MPs from the
-# liberal party
-selection &lt;- V(G2)$Partij == &quot;VVD&quot;
-selection_id &lt;- which(selection)  # this gives us a numeric variable
-G_sel &lt;- induced_subgraph(G2, v = selection_id)
-plot(G_sel)</code></pre>
+<div class="sourceCode" id="cb55"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" tabindex="-1"></a><span class="co"># option 1: see above.  only select MPs from the liberal party</span></span>
+<span id="cb55-2"><a href="#cb55-2" tabindex="-1"></a>selection <span class="ot">&lt;-</span> keyf<span class="sc">$</span>Partij <span class="sc">==</span> <span class="st">&quot;VVD&quot;</span></span>
+<span id="cb55-3"><a href="#cb55-3" tabindex="-1"></a><span class="co"># build new adjacency matrix</span></span>
+<span id="cb55-4"><a href="#cb55-4" tabindex="-1"></a>atmnet1_un_sel2 <span class="ot">&lt;-</span> atmnet1_un[selection, selection]</span>
+<span id="cb55-5"><a href="#cb55-5" tabindex="-1"></a><span class="co"># etc.</span></span>
+<span id="cb55-6"><a href="#cb55-6" tabindex="-1"></a></span>
+<span id="cb55-7"><a href="#cb55-7" tabindex="-1"></a><span class="co"># option 2. Suppose we have attached our dataset to our graph object.  only select MPs from the</span></span>
+<span id="cb55-8"><a href="#cb55-8" tabindex="-1"></a><span class="co"># liberal party</span></span>
+<span id="cb55-9"><a href="#cb55-9" tabindex="-1"></a>selection <span class="ot">&lt;-</span> <span class="fu">V</span>(G2)<span class="sc">$</span>Partij <span class="sc">==</span> <span class="st">&quot;VVD&quot;</span></span>
+<span id="cb55-10"><a href="#cb55-10" tabindex="-1"></a>selection_id <span class="ot">&lt;-</span> <span class="fu">which</span>(selection)  <span class="co"># this gives us a numeric variable</span></span>
+<span id="cb55-11"><a href="#cb55-11" tabindex="-1"></a>G_sel <span class="ot">&lt;-</span> <span class="fu">induced_subgraph</span>(G2, <span class="at">v =</span> selection_id)</span>
+<span id="cb55-12"><a href="#cb55-12" tabindex="-1"></a><span class="fu">plot</span>(G_sel)</span></code></pre></div>
 <p><img src="Week4_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
 </div>
 <div id="changing-vertices" class="section level3" number="2.6.3">
 <h3><span class="header-section-number">2.6.3</span> Changing
 vertices</h3>
-<pre class="r test"><code># changing V
-V(G2)$size = igraph::degree(G2) * 1.05  #naturally, you may use a different node-level structural characteristic here. 
-plot(G2, mode = &quot;undirected&quot;)</code></pre>
+<div class="sourceCode" id="cb56"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" tabindex="-1"></a><span class="co"># changing V</span></span>
+<span id="cb56-2"><a href="#cb56-2" tabindex="-1"></a><span class="fu">V</span>(G2)<span class="sc">$</span>size <span class="ot">=</span> igraph<span class="sc">::</span><span class="fu">degree</span>(G2) <span class="sc">*</span> <span class="fl">1.05</span>  <span class="co">#naturally, you may use a different node-level structural characteristic here. </span></span>
+<span id="cb56-3"><a href="#cb56-3" tabindex="-1"></a><span class="fu">plot</span>(G2, <span class="at">mode =</span> <span class="st">&quot;undirected&quot;</span>)</span></code></pre></div>
 <p><img src="Week4_files/figure-html/unnamed-chunk-24-1.png" width="672" />
 #### Labels &amp; colors</p>
-<pre class="r test"><code>V(G2)$label = as.character(V(G2)$Naam2)
-V(G2)$label.cex = 1
-V(G2)$color &lt;- ifelse(V(G2)$Geslacht == &quot;vrouw&quot;, &quot;red&quot;, &quot;green&quot;)
-plot(G2, mode = &quot;undirected&quot;)</code></pre>
+<div class="sourceCode" id="cb57"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" tabindex="-1"></a><span class="fu">V</span>(G2)<span class="sc">$</span>label <span class="ot">=</span> <span class="fu">as.character</span>(<span class="fu">V</span>(G2)<span class="sc">$</span>Naam2)</span>
+<span id="cb57-2"><a href="#cb57-2" tabindex="-1"></a><span class="fu">V</span>(G2)<span class="sc">$</span>label.cex <span class="ot">=</span> <span class="dv">1</span></span>
+<span id="cb57-3"><a href="#cb57-3" tabindex="-1"></a><span class="fu">V</span>(G2)<span class="sc">$</span>color <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(<span class="fu">V</span>(G2)<span class="sc">$</span>Geslacht <span class="sc">==</span> <span class="st">&quot;vrouw&quot;</span>, <span class="st">&quot;red&quot;</span>, <span class="st">&quot;green&quot;</span>)</span>
+<span id="cb57-4"><a href="#cb57-4" tabindex="-1"></a><span class="fu">plot</span>(G2, <span class="at">mode =</span> <span class="st">&quot;undirected&quot;</span>)</span></code></pre></div>
 <p><img src="Week4_files/figure-html/unnamed-chunk-25-1.png" width="672" />
 ### Changing Edges</p>
-<pre class="r test"><code># changing E
-E(G2)$arrow.size = 0.4
-E(G2)$curved = 0.3
-plot(G2, mode = &quot;undirected&quot;)</code></pre>
+<div class="sourceCode" id="cb58"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" tabindex="-1"></a><span class="co"># changing E</span></span>
+<span id="cb58-2"><a href="#cb58-2" tabindex="-1"></a><span class="fu">E</span>(G2)<span class="sc">$</span>arrow.size <span class="ot">=</span> <span class="fl">0.4</span></span>
+<span id="cb58-3"><a href="#cb58-3" tabindex="-1"></a><span class="fu">E</span>(G2)<span class="sc">$</span>curved <span class="ot">=</span> <span class="fl">0.3</span></span>
+<span id="cb58-4"><a href="#cb58-4" tabindex="-1"></a><span class="fu">plot</span>(G2, <span class="at">mode =</span> <span class="st">&quot;undirected&quot;</span>)</span></code></pre></div>
 <p><img src="Week4_files/figure-html/unnamed-chunk-26-1.png" width="672" /></p>
-<pre class="r test"><code># is equivalent to: plot(G2, mode= &#39;undirected&#39;, edge.arrow.size = .4, edge.curved=.3)</code></pre>
+<div class="sourceCode" id="cb59"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" tabindex="-1"></a><span class="co"># is equivalent to: plot(G2, mode= &#39;undirected&#39;, edge.arrow.size = .4, edge.curved=.3)</span></span></code></pre></div>
 </div>
 <div id="legend" class="section level3" number="2.6.4">
 <h3><span class="header-section-number">2.6.4</span> Legend</h3>
-<pre class="r test"><code># adding legend because I am working in Rmarkdown I need some {}
-plot.igraph(G2, margin = 0, mode = &quot;udirected&quot;)
-legend(x = -1, y = -1, c(&quot;Female&quot;, &quot;Male&quot;), pch = 21, col = &quot;#777777&quot;, pt.bg = c(&quot;red&quot;, &quot;green&quot;), pt.cex = 2,
-    cex = 0.8, bty = &quot;n&quot;, ncol = 1)</code></pre>
+<div class="sourceCode" id="cb60"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" tabindex="-1"></a><span class="co"># adding legend because I am working in Rmarkdown I need some {}</span></span>
+<span id="cb60-2"><a href="#cb60-2" tabindex="-1"></a><span class="fu">plot.igraph</span>(G2, <span class="at">margin =</span> <span class="dv">0</span>, <span class="at">mode =</span> <span class="st">&quot;udirected&quot;</span>)</span>
+<span id="cb60-3"><a href="#cb60-3" tabindex="-1"></a><span class="fu">legend</span>(<span class="at">x =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">y =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="fu">c</span>(<span class="st">&quot;Female&quot;</span>, <span class="st">&quot;Male&quot;</span>), <span class="at">pch =</span> <span class="dv">21</span>, <span class="at">col =</span> <span class="st">&quot;#777777&quot;</span>, <span class="at">pt.bg =</span> <span class="fu">c</span>(<span class="st">&quot;red&quot;</span>, <span class="st">&quot;green&quot;</span>), <span class="at">pt.cex =</span> <span class="dv">2</span>,</span>
+<span id="cb60-4"><a href="#cb60-4" tabindex="-1"></a>    <span class="at">cex =</span> <span class="fl">0.8</span>, <span class="at">bty =</span> <span class="st">&quot;n&quot;</span>, <span class="at">ncol =</span> <span class="dv">1</span>)</span></code></pre></div>
 <p><img src="Week4_files/figure-html/unnamed-chunk-27-1.png" width="672" /></p>
-<pre class="r test"><code># knitr::include_graphics(&#39;TK.jpg&#39;)
-plot(keyf$X, keyf$Y, xlim = c(-18, 18), ylim = c(-18, 18), col = keyf$Partij_col, pch = 16)</code></pre>
+<div class="sourceCode" id="cb61"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" tabindex="-1"></a><span class="co"># knitr::include_graphics(&#39;TK.jpg&#39;)</span></span>
+<span id="cb61-2"><a href="#cb61-2" tabindex="-1"></a><span class="fu">plot</span>(keyf<span class="sc">$</span>X, keyf<span class="sc">$</span>Y, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">18</span>, <span class="dv">18</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">18</span>, <span class="dv">18</span>), <span class="at">col =</span> keyf<span class="sc">$</span>Partij_col, <span class="at">pch =</span> <span class="dv">16</span>)</span></code></pre></div>
 <p><img src="Week4_files/figure-html/unnamed-chunk-28-1.png" width="672" /></p>
-<pre class="r test"><code># it really depends on your plotting window (size, resolution etc.) to get consistent results you
-# need to define this beforehand. won&#39;t do that now.
-
-
-
-# give nodes coler of their party
-V(G2)$color &lt;- keyf$Partij_col
-
-# change node size a bit
-V(G2)$size = igraph::degree(G2) * 1.05 + 6
-
-# remove the labels
-V(G2)$label = &quot;&quot;
-
-# less curvature
-E(G2)$curved = 0.1
-
-owncoords &lt;- cbind(keyf$X, keyf$Y)
-owncoords &lt;- owncoords/8
-owncoords[, 1] &lt;- (owncoords[, 1] - mean(owncoords[, 1]))
-owncoords[, 2] &lt;- (owncoords[, 2] - mean(owncoords[, 2]))
-plot.igraph(G2, mode = &quot;undirected&quot;, layout = owncoords, rescale = F, margin = c(0, 0, 0, 0), xlim = c(min(owncoords[,
-    1]), max(owncoords[, 1])), ylim = c(min(owncoords[, 2]), max(owncoords[, 2])))</code></pre>
+<div class="sourceCode" id="cb62"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" tabindex="-1"></a><span class="co"># it really depends on your plotting window (size, resolution etc.) to get consistent results you</span></span>
+<span id="cb62-2"><a href="#cb62-2" tabindex="-1"></a><span class="co"># need to define this beforehand. won&#39;t do that now.</span></span>
+<span id="cb62-3"><a href="#cb62-3" tabindex="-1"></a></span>
+<span id="cb62-4"><a href="#cb62-4" tabindex="-1"></a></span>
+<span id="cb62-5"><a href="#cb62-5" tabindex="-1"></a></span>
+<span id="cb62-6"><a href="#cb62-6" tabindex="-1"></a><span class="co"># give nodes coler of their party</span></span>
+<span id="cb62-7"><a href="#cb62-7" tabindex="-1"></a><span class="fu">V</span>(G2)<span class="sc">$</span>color <span class="ot">&lt;-</span> keyf<span class="sc">$</span>Partij_col</span>
+<span id="cb62-8"><a href="#cb62-8" tabindex="-1"></a></span>
+<span id="cb62-9"><a href="#cb62-9" tabindex="-1"></a><span class="co"># change node size a bit</span></span>
+<span id="cb62-10"><a href="#cb62-10" tabindex="-1"></a><span class="fu">V</span>(G2)<span class="sc">$</span>size <span class="ot">=</span> igraph<span class="sc">::</span><span class="fu">degree</span>(G2) <span class="sc">*</span> <span class="fl">1.05</span> <span class="sc">+</span> <span class="dv">6</span></span>
+<span id="cb62-11"><a href="#cb62-11" tabindex="-1"></a></span>
+<span id="cb62-12"><a href="#cb62-12" tabindex="-1"></a><span class="co"># remove the labels</span></span>
+<span id="cb62-13"><a href="#cb62-13" tabindex="-1"></a><span class="fu">V</span>(G2)<span class="sc">$</span>label <span class="ot">=</span> <span class="st">&quot;&quot;</span></span>
+<span id="cb62-14"><a href="#cb62-14" tabindex="-1"></a></span>
+<span id="cb62-15"><a href="#cb62-15" tabindex="-1"></a><span class="co"># less curvature</span></span>
+<span id="cb62-16"><a href="#cb62-16" tabindex="-1"></a><span class="fu">E</span>(G2)<span class="sc">$</span>curved <span class="ot">=</span> <span class="fl">0.1</span></span>
+<span id="cb62-17"><a href="#cb62-17" tabindex="-1"></a></span>
+<span id="cb62-18"><a href="#cb62-18" tabindex="-1"></a>owncoords <span class="ot">&lt;-</span> <span class="fu">cbind</span>(keyf<span class="sc">$</span>X, keyf<span class="sc">$</span>Y)</span>
+<span id="cb62-19"><a href="#cb62-19" tabindex="-1"></a>owncoords <span class="ot">&lt;-</span> owncoords<span class="sc">/</span><span class="dv">8</span></span>
+<span id="cb62-20"><a href="#cb62-20" tabindex="-1"></a>owncoords[, <span class="dv">1</span>] <span class="ot">&lt;-</span> (owncoords[, <span class="dv">1</span>] <span class="sc">-</span> <span class="fu">mean</span>(owncoords[, <span class="dv">1</span>]))</span>
+<span id="cb62-21"><a href="#cb62-21" tabindex="-1"></a>owncoords[, <span class="dv">2</span>] <span class="ot">&lt;-</span> (owncoords[, <span class="dv">2</span>] <span class="sc">-</span> <span class="fu">mean</span>(owncoords[, <span class="dv">2</span>]))</span>
+<span id="cb62-22"><a href="#cb62-22" tabindex="-1"></a><span class="fu">plot.igraph</span>(G2, <span class="at">mode =</span> <span class="st">&quot;undirected&quot;</span>, <span class="at">layout =</span> owncoords, <span class="at">rescale =</span> F, <span class="at">margin =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>), <span class="at">xlim =</span> <span class="fu">c</span>(<span class="fu">min</span>(owncoords[,</span>
+<span id="cb62-23"><a href="#cb62-23" tabindex="-1"></a>    <span class="dv">1</span>]), <span class="fu">max</span>(owncoords[, <span class="dv">1</span>])), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="fu">min</span>(owncoords[, <span class="dv">2</span>]), <span class="fu">max</span>(owncoords[, <span class="dv">2</span>])))</span></code></pre></div>
 <p><img src="Week4_files/figure-html/unnamed-chunk-29-1.png" width="672" />
 ### Changing edges 2</p>
-<pre class="r test"><code># construct adjacency matrix first define the recipricated atmentions in each wave
-atmnet1_un &lt;- atmnet1 == 1 &amp; t(atmnet1) == 1
-atmnet2_un &lt;- atmnet2 == 1 &amp; t(atmnet2) == 1
-atmnet3_un &lt;- atmnet3 == 1 &amp; t(atmnet3) == 1
-
-atmnet_weighted &lt;- atmnet1_un + atmnet2_un + atmnet3_un
-
-# contstruct graph / let us keep the loops note that the parameter &#39;weighted&#39; is set to true.
-G_w &lt;- igraph::graph_from_adjacency_matrix(atmnet_weighted, mode = &quot;undirected&quot;, weighted = TRUE, diag = TRUE,
-    add.colnames = NA, add.rownames = NA)
-
-# attach data
-edges &lt;- igraph::as_data_frame(G_w, what = &quot;edges&quot;)
-# inspect the weight.
-edges$weight  #not a lot of variation. </code></pre>
+<div class="sourceCode" id="cb63"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" tabindex="-1"></a><span class="co"># construct adjacency matrix first define the recipricated atmentions in each wave</span></span>
+<span id="cb63-2"><a href="#cb63-2" tabindex="-1"></a>atmnet1_un <span class="ot">&lt;-</span> atmnet1 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> <span class="fu">t</span>(atmnet1) <span class="sc">==</span> <span class="dv">1</span></span>
+<span id="cb63-3"><a href="#cb63-3" tabindex="-1"></a>atmnet2_un <span class="ot">&lt;-</span> atmnet2 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> <span class="fu">t</span>(atmnet2) <span class="sc">==</span> <span class="dv">1</span></span>
+<span id="cb63-4"><a href="#cb63-4" tabindex="-1"></a>atmnet3_un <span class="ot">&lt;-</span> atmnet3 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> <span class="fu">t</span>(atmnet3) <span class="sc">==</span> <span class="dv">1</span></span>
+<span id="cb63-5"><a href="#cb63-5" tabindex="-1"></a></span>
+<span id="cb63-6"><a href="#cb63-6" tabindex="-1"></a>atmnet_weighted <span class="ot">&lt;-</span> atmnet1_un <span class="sc">+</span> atmnet2_un <span class="sc">+</span> atmnet3_un</span>
+<span id="cb63-7"><a href="#cb63-7" tabindex="-1"></a></span>
+<span id="cb63-8"><a href="#cb63-8" tabindex="-1"></a><span class="co"># contstruct graph / let us keep the loops note that the parameter &#39;weighted&#39; is set to true.</span></span>
+<span id="cb63-9"><a href="#cb63-9" tabindex="-1"></a>G_w <span class="ot">&lt;-</span> igraph<span class="sc">::</span><span class="fu">graph_from_adjacency_matrix</span>(atmnet_weighted, <span class="at">mode =</span> <span class="st">&quot;undirected&quot;</span>, <span class="at">weighted =</span> <span class="cn">TRUE</span>, <span class="at">diag =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb63-10"><a href="#cb63-10" tabindex="-1"></a>    <span class="at">add.colnames =</span> <span class="cn">NA</span>, <span class="at">add.rownames =</span> <span class="cn">NA</span>)</span>
+<span id="cb63-11"><a href="#cb63-11" tabindex="-1"></a></span>
+<span id="cb63-12"><a href="#cb63-12" tabindex="-1"></a><span class="co"># attach data</span></span>
+<span id="cb63-13"><a href="#cb63-13" tabindex="-1"></a>edges <span class="ot">&lt;-</span> igraph<span class="sc">::</span><span class="fu">as_data_frame</span>(G_w, <span class="at">what =</span> <span class="st">&quot;edges&quot;</span>)</span>
+<span id="cb63-14"><a href="#cb63-14" tabindex="-1"></a><span class="co"># inspect the weight.</span></span>
+<span id="cb63-15"><a href="#cb63-15" tabindex="-1"></a>edges<span class="sc">$</span>weight  <span class="co">#not a lot of variation. </span></span></code></pre></div>
 <pre class="test2"><code>#&gt;   [1] 1 1 1 1 2 1 1 2 1 1 1 1 2 1 1 1 2 1 1 2 1 1 1 1 1 2 1 1 2 1 1 1 1 1 1 1 1 3 1 1 1 1 2 3 1 1 1
 #&gt;  [48] 2 1 1 2 1 1 1 1 1 1 1 2 1 2 1 1 2 1 1 1 1 1 1 1 1 1 1 1 1 1 1 2 1 1 1 2 1 1 1 1 1 1 2 1 1 1 1
 #&gt;  [95] 1 1 1 1 3 2 1 1 1 1 1 1 1 1 1 1 2 1 2 1 2 1 1 2 1 1 3 1 1 1 1 2 2 1 1 3 1 3 2 1 1 1 1 1 1 2 1
@@ -2168,124 +2312,132 @@ edges$weight  #not a lot of variation. </code></pre>
 #&gt; [236] 1 2 1 1 2 1 2 1 1 1 1 1 1 1 3 1 3 1 1 1 2 2 1 1 1 1 1 1 2 1 2 3 1 1 1 1 1 1 1 2 1 3 1 2 1 1 1
 #&gt; [283] 1 2 1 1 1 1 1 3 1 3 1 1 1 1 2 1 1 2 1 1 1 1 1 1 1 1 2 1 2 1 1 1 1 1 1 1 2 3 3 1 1 1 1 1 1 3 2
 #&gt; [330] 1 1 1</code></pre>
-<pre class="r test"><code># rebuild the graph.
-G_w &lt;- graph_from_data_frame(edges, directed = FALSE, vertices = keyf)
-
-
-
-# add changes as above
-V(G_w)$color &lt;- keyf$Partij_col
-V(G_w)$size = igraph::degree(G_w) * 1.05 + 6
-V(G_w)$label = &quot;&quot;
-E(G_w)$curved = 0.1
-
-# add the weights
-E(G_w)$width &lt;- E(G_w)$weight
-
-plot.igraph(G_w, mode = &quot;undirected&quot;, layout = owncoords, rescale = F, margin = c(0, 0, 0, 0), xlim = c(min(owncoords[,
-    1]), max(owncoords[, 1])), ylim = c(min(owncoords[, 2]), max(owncoords[, 2])))</code></pre>
+<div class="sourceCode" id="cb65"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" tabindex="-1"></a><span class="co"># rebuild the graph.</span></span>
+<span id="cb65-2"><a href="#cb65-2" tabindex="-1"></a>G_w <span class="ot">&lt;-</span> <span class="fu">graph_from_data_frame</span>(edges, <span class="at">directed =</span> <span class="cn">FALSE</span>, <span class="at">vertices =</span> keyf)</span>
+<span id="cb65-3"><a href="#cb65-3" tabindex="-1"></a></span>
+<span id="cb65-4"><a href="#cb65-4" tabindex="-1"></a></span>
+<span id="cb65-5"><a href="#cb65-5" tabindex="-1"></a></span>
+<span id="cb65-6"><a href="#cb65-6" tabindex="-1"></a><span class="co"># add changes as above</span></span>
+<span id="cb65-7"><a href="#cb65-7" tabindex="-1"></a><span class="fu">V</span>(G_w)<span class="sc">$</span>color <span class="ot">&lt;-</span> keyf<span class="sc">$</span>Partij_col</span>
+<span id="cb65-8"><a href="#cb65-8" tabindex="-1"></a><span class="fu">V</span>(G_w)<span class="sc">$</span>size <span class="ot">=</span> igraph<span class="sc">::</span><span class="fu">degree</span>(G_w) <span class="sc">*</span> <span class="fl">1.05</span> <span class="sc">+</span> <span class="dv">6</span></span>
+<span id="cb65-9"><a href="#cb65-9" tabindex="-1"></a><span class="fu">V</span>(G_w)<span class="sc">$</span>label <span class="ot">=</span> <span class="st">&quot;&quot;</span></span>
+<span id="cb65-10"><a href="#cb65-10" tabindex="-1"></a><span class="fu">E</span>(G_w)<span class="sc">$</span>curved <span class="ot">=</span> <span class="fl">0.1</span></span>
+<span id="cb65-11"><a href="#cb65-11" tabindex="-1"></a></span>
+<span id="cb65-12"><a href="#cb65-12" tabindex="-1"></a><span class="co"># add the weights</span></span>
+<span id="cb65-13"><a href="#cb65-13" tabindex="-1"></a><span class="fu">E</span>(G_w)<span class="sc">$</span>width <span class="ot">&lt;-</span> <span class="fu">E</span>(G_w)<span class="sc">$</span>weight</span>
+<span id="cb65-14"><a href="#cb65-14" tabindex="-1"></a></span>
+<span id="cb65-15"><a href="#cb65-15" tabindex="-1"></a><span class="fu">plot.igraph</span>(G_w, <span class="at">mode =</span> <span class="st">&quot;undirected&quot;</span>, <span class="at">layout =</span> owncoords, <span class="at">rescale =</span> F, <span class="at">margin =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>), <span class="at">xlim =</span> <span class="fu">c</span>(<span class="fu">min</span>(owncoords[,</span>
+<span id="cb65-16"><a href="#cb65-16" tabindex="-1"></a>    <span class="dv">1</span>]), <span class="fu">max</span>(owncoords[, <span class="dv">1</span>])), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="fu">min</span>(owncoords[, <span class="dv">2</span>]), <span class="fu">max</span>(owncoords[, <span class="dv">2</span>])))</span></code></pre></div>
 <p><img src="Week4_files/figure-html/unnamed-chunk-30-1.png" width="672" />
 ## Publication data (Radboud)</p>
-<pre class="r test"><code>rm(list = ls())
-# load the necessary datasets
-load(&quot;data/soc_df.RData&quot;)
-load(&quot;data/soc_collabs1.RData&quot;)
-load(&quot;data/soc_collabs2.RData&quot;)</code></pre>
-<pre class="r test"><code># get unique collaborators of soc staff first
-soc_collabs_unique &lt;- unique(soc_collabs[, 4])  # so 229 unique collaborators for RU staff?
-soc_collabs_unique &lt;- c(soc_collabs_unique, soc_df$gs_id)  # add the soc staff themselves.
-soc_collabs_unique &lt;- data.frame(soc_collabs_unique)
-soc_collabs_unique$v1 &lt;- 1  # convenient to select on after the merge
-soc_collabs_unique &lt;- unique(soc_collabs_unique)
-
-# so this is a very important step, we join the unique soc collaborators to the collaborators of
-# collaborators
-require(tidyverse)
-onefivedegree &lt;- left_join(collabs_1deep, soc_collabs_unique, by = c(coauth_id = &quot;soc_collabs_unique&quot;))
-
-# Then, we drop those that are not among sociology collaborators and who don&#39;t lsit coauthors
-# regardless
-onefivedegree &lt;- onefivedegree[!is.na(onefivedegree$v1), ]
-onefivedegree &lt;- onefivedegree[!is.na(onefivedegree$coauth), ]
-
-# we pick those columns and have an edgelist of soc collaborators and whether they collaborate with
-# those same collaborators the 1.5 degree network
-onefivedegree &lt;- onefivedegree[, c(&quot;name&quot;, &quot;coauth&quot;)]
-names(onefivedegree) &lt;- c(&quot;from&quot;, &quot;to&quot;)
-
-# we get soc collaborators and add those to the data above and end up with a nice edgelist!
-socc &lt;- soc_collabs[!is.na(soc_collabs$coauth), ]
-socc &lt;- socc[, c(&quot;name&quot;, &quot;coauth&quot;)]
-names(socc) &lt;- c(&quot;from&quot;, &quot;to&quot;)
-onefivedegree &lt;- rbind(socc, onefivedegree)
-save(onefivedegree, file = &quot;data/soc_onefivedegree.RData&quot;)</code></pre>
-<pre class="r test"><code>onefivedegree &lt;- as.matrix(onefivedegree)  # matrix because igraph wants that
-library(igraph)  # Notice that we call igraph here, in anticipation of the viz tutorial.
-net1 &lt;- graph_from_edgelist(onefivedegree, directed = TRUE)  # Notice the igraph function here!
-
-plot(net1)  # pretty ugly!</code></pre>
+<div class="sourceCode" id="cb66"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>())</span>
+<span id="cb66-2"><a href="#cb66-2" tabindex="-1"></a><span class="co"># load the necessary datasets</span></span>
+<span id="cb66-3"><a href="#cb66-3" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;data/soc_df.RData&quot;</span>)</span>
+<span id="cb66-4"><a href="#cb66-4" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;data/soc_collabs1.RData&quot;</span>)</span>
+<span id="cb66-5"><a href="#cb66-5" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;data/soc_collabs2.RData&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb67"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" tabindex="-1"></a><span class="co"># get unique collaborators of soc staff first</span></span>
+<span id="cb67-2"><a href="#cb67-2" tabindex="-1"></a>soc_collabs_unique <span class="ot">&lt;-</span> <span class="fu">unique</span>(soc_collabs[, <span class="dv">4</span>])  <span class="co"># so 229 unique collaborators for RU staff?</span></span>
+<span id="cb67-3"><a href="#cb67-3" tabindex="-1"></a>soc_collabs_unique <span class="ot">&lt;-</span> <span class="fu">c</span>(soc_collabs_unique, soc_df<span class="sc">$</span>gs_id)  <span class="co"># add the soc staff themselves.</span></span>
+<span id="cb67-4"><a href="#cb67-4" tabindex="-1"></a>soc_collabs_unique <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(soc_collabs_unique)</span>
+<span id="cb67-5"><a href="#cb67-5" tabindex="-1"></a>soc_collabs_unique<span class="sc">$</span>v1 <span class="ot">&lt;-</span> <span class="dv">1</span>  <span class="co"># convenient to select on after the merge</span></span>
+<span id="cb67-6"><a href="#cb67-6" tabindex="-1"></a>soc_collabs_unique <span class="ot">&lt;-</span> <span class="fu">unique</span>(soc_collabs_unique)</span>
+<span id="cb67-7"><a href="#cb67-7" tabindex="-1"></a></span>
+<span id="cb67-8"><a href="#cb67-8" tabindex="-1"></a><span class="co"># so this is a very important step, we join the unique soc collaborators to the collaborators of</span></span>
+<span id="cb67-9"><a href="#cb67-9" tabindex="-1"></a><span class="co"># collaborators</span></span>
+<span id="cb67-10"><a href="#cb67-10" tabindex="-1"></a><span class="fu">require</span>(tidyverse)</span>
+<span id="cb67-11"><a href="#cb67-11" tabindex="-1"></a>onefivedegree <span class="ot">&lt;-</span> <span class="fu">left_join</span>(collabs_1deep, soc_collabs_unique, <span class="at">by =</span> <span class="fu">c</span>(<span class="at">coauth_id =</span> <span class="st">&quot;soc_collabs_unique&quot;</span>))</span>
+<span id="cb67-12"><a href="#cb67-12" tabindex="-1"></a></span>
+<span id="cb67-13"><a href="#cb67-13" tabindex="-1"></a><span class="co"># Then, we drop those that are not among sociology collaborators and who don&#39;t lsit coauthors</span></span>
+<span id="cb67-14"><a href="#cb67-14" tabindex="-1"></a><span class="co"># regardless</span></span>
+<span id="cb67-15"><a href="#cb67-15" tabindex="-1"></a>onefivedegree <span class="ot">&lt;-</span> onefivedegree[<span class="sc">!</span><span class="fu">is.na</span>(onefivedegree<span class="sc">$</span>v1), ]</span>
+<span id="cb67-16"><a href="#cb67-16" tabindex="-1"></a>onefivedegree <span class="ot">&lt;-</span> onefivedegree[<span class="sc">!</span><span class="fu">is.na</span>(onefivedegree<span class="sc">$</span>coauth), ]</span>
+<span id="cb67-17"><a href="#cb67-17" tabindex="-1"></a></span>
+<span id="cb67-18"><a href="#cb67-18" tabindex="-1"></a><span class="co"># we pick those columns and have an edgelist of soc collaborators and whether they collaborate with</span></span>
+<span id="cb67-19"><a href="#cb67-19" tabindex="-1"></a><span class="co"># those same collaborators the 1.5 degree network</span></span>
+<span id="cb67-20"><a href="#cb67-20" tabindex="-1"></a>onefivedegree <span class="ot">&lt;-</span> onefivedegree[, <span class="fu">c</span>(<span class="st">&quot;name&quot;</span>, <span class="st">&quot;coauth&quot;</span>)]</span>
+<span id="cb67-21"><a href="#cb67-21" tabindex="-1"></a><span class="fu">names</span>(onefivedegree) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;from&quot;</span>, <span class="st">&quot;to&quot;</span>)</span>
+<span id="cb67-22"><a href="#cb67-22" tabindex="-1"></a></span>
+<span id="cb67-23"><a href="#cb67-23" tabindex="-1"></a><span class="co"># we get soc collaborators and add those to the data above and end up with a nice edgelist!</span></span>
+<span id="cb67-24"><a href="#cb67-24" tabindex="-1"></a>socc <span class="ot">&lt;-</span> soc_collabs[<span class="sc">!</span><span class="fu">is.na</span>(soc_collabs<span class="sc">$</span>coauth), ]</span>
+<span id="cb67-25"><a href="#cb67-25" tabindex="-1"></a>socc <span class="ot">&lt;-</span> socc[, <span class="fu">c</span>(<span class="st">&quot;name&quot;</span>, <span class="st">&quot;coauth&quot;</span>)]</span>
+<span id="cb67-26"><a href="#cb67-26" tabindex="-1"></a><span class="fu">names</span>(socc) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;from&quot;</span>, <span class="st">&quot;to&quot;</span>)</span>
+<span id="cb67-27"><a href="#cb67-27" tabindex="-1"></a>onefivedegree <span class="ot">&lt;-</span> <span class="fu">rbind</span>(socc, onefivedegree)</span>
+<span id="cb67-28"><a href="#cb67-28" tabindex="-1"></a><span class="fu">save</span>(onefivedegree, <span class="at">file =</span> <span class="st">&quot;data/soc_onefivedegree.RData&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb68"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" tabindex="-1"></a>onefivedegree <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(onefivedegree)  <span class="co"># matrix because igraph wants that</span></span>
+<span id="cb68-2"><a href="#cb68-2" tabindex="-1"></a><span class="fu">library</span>(igraph)  <span class="co"># Notice that we call igraph here, in anticipation of the viz tutorial.</span></span>
+<span id="cb68-3"><a href="#cb68-3" tabindex="-1"></a>net1 <span class="ot">&lt;-</span> <span class="fu">graph_from_edgelist</span>(onefivedegree, <span class="at">directed =</span> <span class="cn">TRUE</span>)  <span class="co"># Notice the igraph function here!</span></span>
+<span id="cb68-4"><a href="#cb68-4" tabindex="-1"></a></span>
+<span id="cb68-5"><a href="#cb68-5" tabindex="-1"></a><span class="fu">plot</span>(net1)  <span class="co"># pretty ugly!</span></span></code></pre></div>
 <p><img src="Week4_files/figure-html/unnamed-chunk-33-1.png" width="672" /></p>
-<pre class="r test"><code>set.seed(2345)
-l &lt;- layout_nicely(net1)  #https://igraph.org/r/doc/layout_with_mds.html
-# plot(g, layout = l)
-# Improvement
-plotje &lt;-   plot(net1 ,
-                 vertex.color = &quot;blue&quot;, # nice color for the vertices
-                 vertex.size = 8,  # we&#39;ll vertices a bit smaller
-                 vertex.frame.color = &quot;gray&quot;,  # we&#39;ll put a gray frame around vertices
-                 # vertex.label.color = &quot;black&quot;,  # not that ugly blue color for the labels (names)
-                 # vertex.label.family = &quot;Helvetica&quot;, # not a fan of times new roman in figures
-                 # vertex.label.cex = 0.4,  # make the label a bit smaller too
-                 # vertex.label.dist = 0.5,  # we&#39;ll pull the labels a bit away from the vertices
-                 vertex.label = NA,
-                 edge.curved = 0.2, # curved edges is always a nice touch
-                 edge.arrow.size = 0.1, 
-                 layout = l) # make arrow size (direction of edge) smaller</code></pre>
+<div class="sourceCode" id="cb69"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2345</span>)</span>
+<span id="cb69-2"><a href="#cb69-2" tabindex="-1"></a>l <span class="ot">&lt;-</span> <span class="fu">layout_nicely</span>(net1)  <span class="co">#https://igraph.org/r/doc/layout_with_mds.html</span></span>
+<span id="cb69-3"><a href="#cb69-3" tabindex="-1"></a><span class="co"># plot(g, layout = l)</span></span>
+<span id="cb69-4"><a href="#cb69-4" tabindex="-1"></a><span class="co"># Improvement</span></span>
+<span id="cb69-5"><a href="#cb69-5" tabindex="-1"></a>plotje <span class="ot">&lt;-</span>   <span class="fu">plot</span>(net1 ,</span>
+<span id="cb69-6"><a href="#cb69-6" tabindex="-1"></a>                 <span class="at">vertex.color =</span> <span class="st">&quot;blue&quot;</span>, <span class="co"># nice color for the vertices</span></span>
+<span id="cb69-7"><a href="#cb69-7" tabindex="-1"></a>                 <span class="at">vertex.size =</span> <span class="dv">8</span>,  <span class="co"># we&#39;ll vertices a bit smaller</span></span>
+<span id="cb69-8"><a href="#cb69-8" tabindex="-1"></a>                 <span class="at">vertex.frame.color =</span> <span class="st">&quot;gray&quot;</span>,  <span class="co"># we&#39;ll put a gray frame around vertices</span></span>
+<span id="cb69-9"><a href="#cb69-9" tabindex="-1"></a>                 <span class="co"># vertex.label.color = &quot;black&quot;,  # not that ugly blue color for the labels (names)</span></span>
+<span id="cb69-10"><a href="#cb69-10" tabindex="-1"></a>                 <span class="co"># vertex.label.family = &quot;Helvetica&quot;, # not a fan of times new roman in figures</span></span>
+<span id="cb69-11"><a href="#cb69-11" tabindex="-1"></a>                 <span class="co"># vertex.label.cex = 0.4,  # make the label a bit smaller too</span></span>
+<span id="cb69-12"><a href="#cb69-12" tabindex="-1"></a>                 <span class="co"># vertex.label.dist = 0.5,  # we&#39;ll pull the labels a bit away from the vertices</span></span>
+<span id="cb69-13"><a href="#cb69-13" tabindex="-1"></a>                 <span class="at">vertex.label =</span> <span class="cn">NA</span>,</span>
+<span id="cb69-14"><a href="#cb69-14" tabindex="-1"></a>                 <span class="at">edge.curved =</span> <span class="fl">0.2</span>, <span class="co"># curved edges is always a nice touch</span></span>
+<span id="cb69-15"><a href="#cb69-15" tabindex="-1"></a>                 <span class="at">edge.arrow.size =</span> <span class="fl">0.1</span>, </span>
+<span id="cb69-16"><a href="#cb69-16" tabindex="-1"></a>                 <span class="at">layout =</span> l) <span class="co"># make arrow size (direction of edge) smaller</span></span></code></pre></div>
 <p><img src="Week4_files/figure-html/unnamed-chunk-34-1.png" width="672" /></p>
-<pre class="r test"><code>in_network &lt;- data.frame(as_ids(V(net1)))
-names(in_network)[1] &lt;- &quot;name&quot;
-
-#soc_df$total_cites &lt;- soc_df$total_cites.x
-ru_nodes &lt;- soc_df[, c(&quot;name&quot;, &quot;total_cites&quot;)]
-in_network &lt;- left_join(in_network, ru_nodes, by = c(&quot;name&quot; = &quot;name&quot;))
-in_network$vcol &lt;- ifelse(is.na(in_network$total_cites), &quot;#E69F00&quot;, &quot;#56B4E9&quot;)
-
-plot(net1, layout = l,
-     vertex.color = in_network$vcol, #THIS WAS WHAT WE DID THE LAST CODEBLOCK FOR!
-     vertex.size = 4,  # we&#39;ll make them a bit smaller
-     vertex.frame.color = &quot;gray&quot;,  # we&#39;ll put a frame around it
-     vertex.label.color = &quot;black&quot;,  # not that ugly blue color for the names
-     vertex.label.family = &quot;Helvetica&quot;, # not a fan of times in figures
-     vertex.label.cex = 0.4,  # a bit smaller too
-     vertex.label.dist = 0.5,  # we&#39;ll pull the labels a bit away from the vertices
-     edge.curved = 0.2,  # curved edges is always a nice tough
-     edge.arrow.size = 0.1) # arrow size smaller</code></pre>
+<div class="sourceCode" id="cb70"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" tabindex="-1"></a>in_network <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">as_ids</span>(<span class="fu">V</span>(net1)))</span>
+<span id="cb70-2"><a href="#cb70-2" tabindex="-1"></a><span class="fu">names</span>(in_network)[<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="st">&quot;name&quot;</span></span>
+<span id="cb70-3"><a href="#cb70-3" tabindex="-1"></a></span>
+<span id="cb70-4"><a href="#cb70-4" tabindex="-1"></a><span class="co">#soc_df$total_cites &lt;- soc_df$total_cites.x</span></span>
+<span id="cb70-5"><a href="#cb70-5" tabindex="-1"></a>ru_nodes <span class="ot">&lt;-</span> soc_df[, <span class="fu">c</span>(<span class="st">&quot;name&quot;</span>, <span class="st">&quot;total_cites&quot;</span>)]</span>
+<span id="cb70-6"><a href="#cb70-6" tabindex="-1"></a>in_network <span class="ot">&lt;-</span> <span class="fu">left_join</span>(in_network, ru_nodes, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;name&quot;</span> <span class="ot">=</span> <span class="st">&quot;name&quot;</span>))</span>
+<span id="cb70-7"><a href="#cb70-7" tabindex="-1"></a>in_network<span class="sc">$</span>vcol <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(<span class="fu">is.na</span>(in_network<span class="sc">$</span>total_cites), <span class="st">&quot;#E69F00&quot;</span>, <span class="st">&quot;#56B4E9&quot;</span>)</span>
+<span id="cb70-8"><a href="#cb70-8" tabindex="-1"></a></span>
+<span id="cb70-9"><a href="#cb70-9" tabindex="-1"></a><span class="fu">plot</span>(net1, <span class="at">layout =</span> l,</span>
+<span id="cb70-10"><a href="#cb70-10" tabindex="-1"></a>     <span class="at">vertex.color =</span> in_network<span class="sc">$</span>vcol, <span class="co">#THIS WAS WHAT WE DID THE LAST CODEBLOCK FOR!</span></span>
+<span id="cb70-11"><a href="#cb70-11" tabindex="-1"></a>     <span class="at">vertex.size =</span> <span class="dv">4</span>,  <span class="co"># we&#39;ll make them a bit smaller</span></span>
+<span id="cb70-12"><a href="#cb70-12" tabindex="-1"></a>     <span class="at">vertex.frame.color =</span> <span class="st">&quot;gray&quot;</span>,  <span class="co"># we&#39;ll put a frame around it</span></span>
+<span id="cb70-13"><a href="#cb70-13" tabindex="-1"></a>     <span class="at">vertex.label.color =</span> <span class="st">&quot;black&quot;</span>,  <span class="co"># not that ugly blue color for the names</span></span>
+<span id="cb70-14"><a href="#cb70-14" tabindex="-1"></a>     <span class="at">vertex.label.family =</span> <span class="st">&quot;Helvetica&quot;</span>, <span class="co"># not a fan of times in figures</span></span>
+<span id="cb70-15"><a href="#cb70-15" tabindex="-1"></a>     <span class="at">vertex.label.cex =</span> <span class="fl">0.4</span>,  <span class="co"># a bit smaller too</span></span>
+<span id="cb70-16"><a href="#cb70-16" tabindex="-1"></a>     <span class="at">vertex.label.dist =</span> <span class="fl">0.5</span>,  <span class="co"># we&#39;ll pull the labels a bit away from the vertices</span></span>
+<span id="cb70-17"><a href="#cb70-17" tabindex="-1"></a>     <span class="at">edge.curved =</span> <span class="fl">0.2</span>,  <span class="co"># curved edges is always a nice tough</span></span>
+<span id="cb70-18"><a href="#cb70-18" tabindex="-1"></a>     <span class="at">edge.arrow.size =</span> <span class="fl">0.1</span>) <span class="co"># arrow size smaller</span></span></code></pre></div>
 <p><img src="Week4_files/figure-html/unnamed-chunk-35-1.png" width="1440" /></p>
-<pre class="r test"><code>plot(net1,
-     vertex.color = in_network$vcol, 
-     #NOTICE THESE CONDITIONAL STATEMENTS BELOW
-     vertex.label = ifelse(!is.na(in_network$total_cites), in_network$name, NA),
-     vertex.size = 4,  # we&#39;ll make them a bit smaller
-     vertex.frame.color = &quot;gray&quot;,  # we&#39;ll put a frame around it
-     vertex.label.color = &quot;black&quot;,  # not that ugly blue color for the names
-     vertex.label.family = &quot;Helvetica&quot;, # not a fan of times in figures
-     vertex.label.cex = 0.65,  # a bit smaller too
-     vertex.label.dist = 0.5,  # we&#39;ll pull the labels a bit away from the vertices
-     edge.curved = 0.2, # curved edges is always a nice tough
-     edge.arrow.size = 0.1) # arrow size smaller</code></pre>
+<div class="sourceCode" id="cb71"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" tabindex="-1"></a><span class="fu">plot</span>(net1,</span>
+<span id="cb71-2"><a href="#cb71-2" tabindex="-1"></a>     <span class="at">vertex.color =</span> in_network<span class="sc">$</span>vcol, </span>
+<span id="cb71-3"><a href="#cb71-3" tabindex="-1"></a>     <span class="co">#NOTICE THESE CONDITIONAL STATEMENTS BELOW</span></span>
+<span id="cb71-4"><a href="#cb71-4" tabindex="-1"></a>     <span class="at">vertex.label =</span> <span class="fu">ifelse</span>(<span class="sc">!</span><span class="fu">is.na</span>(in_network<span class="sc">$</span>total_cites), in_network<span class="sc">$</span>name, <span class="cn">NA</span>),</span>
+<span id="cb71-5"><a href="#cb71-5" tabindex="-1"></a>     <span class="at">vertex.size =</span> <span class="dv">4</span>,  <span class="co"># we&#39;ll make them a bit smaller</span></span>
+<span id="cb71-6"><a href="#cb71-6" tabindex="-1"></a>     <span class="at">vertex.frame.color =</span> <span class="st">&quot;gray&quot;</span>,  <span class="co"># we&#39;ll put a frame around it</span></span>
+<span id="cb71-7"><a href="#cb71-7" tabindex="-1"></a>     <span class="at">vertex.label.color =</span> <span class="st">&quot;black&quot;</span>,  <span class="co"># not that ugly blue color for the names</span></span>
+<span id="cb71-8"><a href="#cb71-8" tabindex="-1"></a>     <span class="at">vertex.label.family =</span> <span class="st">&quot;Helvetica&quot;</span>, <span class="co"># not a fan of times in figures</span></span>
+<span id="cb71-9"><a href="#cb71-9" tabindex="-1"></a>     <span class="at">vertex.label.cex =</span> <span class="fl">0.65</span>,  <span class="co"># a bit smaller too</span></span>
+<span id="cb71-10"><a href="#cb71-10" tabindex="-1"></a>     <span class="at">vertex.label.dist =</span> <span class="fl">0.5</span>,  <span class="co"># we&#39;ll pull the labels a bit away from the vertices</span></span>
+<span id="cb71-11"><a href="#cb71-11" tabindex="-1"></a>     <span class="at">edge.curved =</span> <span class="fl">0.2</span>, <span class="co"># curved edges is always a nice tough</span></span>
+<span id="cb71-12"><a href="#cb71-12" tabindex="-1"></a>     <span class="at">edge.arrow.size =</span> <span class="fl">0.1</span>) <span class="co"># arrow size smaller</span></span></code></pre></div>
 <p><img src="Week4_files/figure-html/unnamed-chunk-36-1.png" width="1440" /></p>
-<pre class="r test"><code>plot(net1,
-     vertex.color = in_network$vcol, 
-     vertex.label = ifelse(!is.na(in_network$total_cites), in_network$name, NA),
-     # SAME HERE, TRY TO SMOOTH THE TOTAL_CITES A BIT WITH LOGSCALE
-     vertex.size = ifelse(!is.na(in_network$total_cites), log(in_network$total_cites), 2),
-     vertex.frame.color = &quot;gray&quot;,  # we&#39;ll put a frame around it
-     vertex.label.color = &quot;black&quot;,  # not that ugly blue color for the names
-     vertex.label.family = &quot;Helvetica&quot;, # not a fan of times in figures
-     vertex.label.cex = 0.65,  # a bit smaller too
-     vertex.label.dist = 0.5,  # we&#39;ll pull the labels a bit away from the vertices
-     edge.curved = 0.2, # curved edges is always a nice tough
-     edge.arrow.size = 0.1) # arrow size smaller</code></pre>
+<div class="sourceCode" id="cb72"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" tabindex="-1"></a><span class="fu">plot</span>(net1,</span>
+<span id="cb72-2"><a href="#cb72-2" tabindex="-1"></a>     <span class="at">vertex.color =</span> in_network<span class="sc">$</span>vcol, </span>
+<span id="cb72-3"><a href="#cb72-3" tabindex="-1"></a>     <span class="at">vertex.label =</span> <span class="fu">ifelse</span>(<span class="sc">!</span><span class="fu">is.na</span>(in_network<span class="sc">$</span>total_cites), in_network<span class="sc">$</span>name, <span class="cn">NA</span>),</span>
+<span id="cb72-4"><a href="#cb72-4" tabindex="-1"></a>     <span class="co"># SAME HERE, TRY TO SMOOTH THE TOTAL_CITES A BIT WITH LOGSCALE</span></span>
+<span id="cb72-5"><a href="#cb72-5" tabindex="-1"></a>     <span class="at">vertex.size =</span> <span class="fu">ifelse</span>(<span class="sc">!</span><span class="fu">is.na</span>(in_network<span class="sc">$</span>total_cites), <span class="fu">log</span>(in_network<span class="sc">$</span>total_cites), <span class="dv">2</span>),</span>
+<span id="cb72-6"><a href="#cb72-6" tabindex="-1"></a>     <span class="at">vertex.frame.color =</span> <span class="st">&quot;gray&quot;</span>,  <span class="co"># we&#39;ll put a frame around it</span></span>
+<span id="cb72-7"><a href="#cb72-7" tabindex="-1"></a>     <span class="at">vertex.label.color =</span> <span class="st">&quot;black&quot;</span>,  <span class="co"># not that ugly blue color for the names</span></span>
+<span id="cb72-8"><a href="#cb72-8" tabindex="-1"></a>     <span class="at">vertex.label.family =</span> <span class="st">&quot;Helvetica&quot;</span>, <span class="co"># not a fan of times in figures</span></span>
+<span id="cb72-9"><a href="#cb72-9" tabindex="-1"></a>     <span class="at">vertex.label.cex =</span> <span class="fl">0.65</span>,  <span class="co"># a bit smaller too</span></span>
+<span id="cb72-10"><a href="#cb72-10" tabindex="-1"></a>     <span class="at">vertex.label.dist =</span> <span class="fl">0.5</span>,  <span class="co"># we&#39;ll pull the labels a bit away from the vertices</span></span>
+<span id="cb72-11"><a href="#cb72-11" tabindex="-1"></a>     <span class="at">edge.curved =</span> <span class="fl">0.2</span>, <span class="co"># curved edges is always a nice tough</span></span>
+<span id="cb72-12"><a href="#cb72-12" tabindex="-1"></a>     <span class="at">edge.arrow.size =</span> <span class="fl">0.1</span>) <span class="co"># arrow size smaller</span></span></code></pre></div>
 <p><img src="Week4_files/figure-html/unnamed-chunk-36-2.png" width="1440" /></p>
 </div>
 </div>
