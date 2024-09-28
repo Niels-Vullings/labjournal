@@ -194,8 +194,11 @@ vect
 
 testje <- data.frame(string = vect, job = c(TRUE,TRUE,TRUE,FALSE))
 
+testje
+
 testje$first_el <- sapply(strsplit(vect, " "), `[`, 1) # This code should work as a way to extract first names from the ego characteristics dataset
 
+testje$first_el
 ```
 
 ### Extract first names
@@ -210,6 +213,7 @@ first_name <- sapply(strsplit(x$Naam, " "), `[`, 1) # This code should work as a
 
 df_names <- data.frame(x,first_name, male = NA, female = NA) # seem to have worked
 
+head(df_names)
 ```
 
 ### Gender Scraper
