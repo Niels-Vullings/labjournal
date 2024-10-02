@@ -20,10 +20,6 @@ opts_chunk$set(tidy.opts=list(width.cutoff=100),tidy=TRUE, warning = FALSE, mess
 options(width = 100)
 rgl::setupKnitr()
 
-
-
-colorize <- function(x, color) {sprintf("<span style='color: %s;'>%s</span>", color, x) }
-
 ```
 
 ```{r klippy, echo=FALSE, include=TRUE}
@@ -53,6 +49,21 @@ library(xml2)
 library(rvest)
 
 ```
+
+## Functions
+```{r}
+colorize <- function(x, color) {sprintf("<span style='color: %s;'>%s</span>", color, x) }
+
+fsave <- function(x, file, location = "./data/processed/", ...) {
+    if (!dir.exists(location))
+        dir.create(location)
+    datename <- substr(gsub("[:-]", "", Sys.time()), 1, 8)
+    totalname <- paste(location, datename, file, sep = "")
+    print(paste("SAVED: ", totalname, sep = ""))
+    save(x, file = totalname)
+}
+```
+
 
 # Load data
 
@@ -174,8 +185,10 @@ soc_data <- fcolnet(data = scholars,
                     waves = list(c(2015, 2019), c(2020, 2024)), 
                     type = c("first"))
 
+
 df <- soc_data$data
 df_ego <- do.call(rbind.data.frame, df$demographics)
+
 
 # soc_data$nets[2,,] # How to call a specific network
 
@@ -267,9 +280,9 @@ gender_scraper.NV <- function(names = "names element", web_page = "https://nvb.m
   } # end forloop
   
   names <- names %>% mutate(perc_female = case_when(is.na(female == TRUE) & is.na(male) == TRUE ~ NA,
-                                                 is.na(female) == TRUE ~ 0,
-                                                 is.na(male == TRUE) ~ 1,
-                                                 .default = round((female/(male + female)),2))) %>% 
+                                                    is.na(female) == TRUE ~ 0,
+                                                    is.na(male == TRUE) ~ 1,
+                                                    .default = round((female/(male + female)),2))) %>% 
     select(!c(male,female, first_name))
   
   return(names)
@@ -279,7 +292,7 @@ gender_scraper.NV <- function(names = "names element", web_page = "https://nvb.m
 
 # ?mutate()
 # ?case_when
-testing <- gender_scraper.NV(names = df_ego, web_page = "https://nvb.meertens.knaw.nl/naam/is/")
+df_ego <- gender_scraper.NV(names = df_ego, web_page = "https://nvb.meertens.knaw.nl/naam/is/")
 
 
 # paste0("https://nvb.meertens.knaw.nl/naam/is/", "name") # This will eventually be used for automating the scraping process
@@ -287,10 +300,86 @@ testing <- gender_scraper.NV(names = df_ego, web_page = "https://nvb.meertens.kn
 ```
 ### Check results
 ```{r}
-check <- testing %>% count(perc_female)
+check <- df_ego %>% count(perc_female)
 
 plot(check$perc_female, check$n)
 ```
+
+## Journal Rankings
+### Extract works and check journals
+```{r}
+
+df_works <- do.call(rbind.data.frame, df$works) # put works in dataframe
+head(df_works)
+
+# test1 <- df_works %>% select(id, so, issn_l, author) # test the works
+
+```
+
+### Load journal ranking data
+
+```{r}
+dat <- read_csv2("data/scimagojr_23_journals_all.csv")
+head(dat)
+
+```
+### Split the ISSN codes if 2 are available
+```{r}
+dat$Issn_1 <- sapply(strsplit(dat$Issn, ", "), `[`, 1) # This code should work as a way to split the two issn codes
+dat$Issn_2 <- sapply(strsplit(dat$Issn, ", "), `[`, 2)
+
+# dat$Issn_1[1]
+# str_length(dat$Issn_1[1])
+
+dat$Issn_1 <- paste0(substr(dat$Issn_1, 1,4), "-", substr(dat$Issn_1, 5,8)) # Hyphenate the codes to match the target df 
+dat$Issn_2 <- ifelse(is.na(dat$Issn_2) == TRUE, NA, paste0(substr(dat$Issn_2, 1,4), "-", substr(dat$Issn_2, 5,8))) # Hyphenate the codes, but make non-existing second codes NA
+
+df_pres <- dat %>% select(Rank, Title, Issn_1, Issn_2, SJR, `SJR Best Quartile`, `H index`, `%Female`) # Make a set that will be joined with df_works
+
+```
+
+### check compatability
+```{r}
+
+df_works %>% select(issn_l)
+df_pres %>% select(Issn_1, Issn_2)
+df_works$check <- ifelse(df_works$issn_l %in% df_pres$Issn_1 | df_works$issn_l %in% df_pres$Issn_2, 1,0)
+
+mis_journal <- df_works %>% filter(check == 0)
+
+as.data.frame(unique(mis_journal$so)) # Still left with 166 missing journals
+
+```
+### Create ID variable
+```{r}
+df_pres <- df_pres %>% mutate(issn_l = case_when(Issn_1 %in% df_works$issn_l == TRUE ~ Issn_1,
+                                                 Issn_2 %in% df_works$issn_l == TRUE ~ Issn_2,
+                                                 .default = NA)) %>% filter(!is.na(issn_l))
+
+```
+### Join prestige measures and works together
+```{r}
+# ?left_join()
+df_works <- df_works %>% left_join(df_pres, by = "issn_l", multiple = "all")
+
+head(df_works)
+```
+# Save datasets 
+```{r}
+# Save the raw sociology data for RU and UU
+save(soc_data, file = "data/processed/soc_data_raw.RData")
+
+# Save the ego data for RU and UU sociologists
+save(df_ego, file = "data/processed/RU_UU_ego.RData")
+
+# Save the works for RU and UU sociologists
+save(df_works, file = "data/processed/RU_UU_works.RData")
+
+
+```
+
+
+
 
 
 ```{r}

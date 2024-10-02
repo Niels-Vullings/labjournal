@@ -1,0 +1,319 @@
+---
+title: "Data preparation"
+#bibliography: references.bib
+author: "Niels Vullings"
+bibliography: references.bib
+---
+
+```{=html}
+<style>
+body {
+text-align: justify}
+</style>
+```
+
+```{r, globalsettings, echo=FALSE, warning=FALSE, results='hide'}
+library(knitr)
+
+knitr::opts_chunk$set(echo = TRUE)
+opts_chunk$set(tidy.opts=list(width.cutoff=100),tidy=TRUE, warning = FALSE, message = FALSE,comment = "#>", cache=TRUE, class.source=c("test"), class.output=c("test2"))
+options(width = 100)
+rgl::setupKnitr()
+
+
+
+colorize <- function(x, color) {sprintf("<span style='color: %s;'>%s</span>", color, x) }
+
+```
+
+```{r klippy, echo=FALSE, include=TRUE}
+klippy::klippy(position = c('top', 'right'))
+# klippy::klippy(color = 'darkgreen')
+#klippy::klippy(tooltip_message = 'Click to copy', tooltip_success = 'Done')
+```
+
+Last compiled on `r format(Sys.time(), '%B, %Y')`
+
+<br>
+
+------------------------------------------------------------------------
+
+# Set up
+
+```{r}
+rm(list = ls())
+
+# Libraries
+library(tidyverse)  # I assume you already installed this one!
+library(igraph)
+
+
+```
+
+# Load data
+
+```{r}
+load("data/processed/soc_data_raw.RData")
+
+load("data/processed/RU_UU_ego.RData")
+
+load("data/processed/RU_UU_works.RData")
+
+```
+
+<br>
+
+------------------------------------------------------------------------
+
+# Data description
+
+## Scholars per university
+
+```{r}
+
+df_ego %>% count(Universiteit1.22)
+df_ego %>% count(Universiteit2.22)
+
+
+df_ego %>% count(Universiteit1.24)
+df_ego %>% count(Universiteit2.24)
+
+```
+
+## Functions
+
+```{r}
+df_ego %>% group_by(Universiteit1.22) %>% count(Functie.22)
+
+df_ego %>% group_by(Universiteit1.24) %>% count(Functie.24)
+```
+
+## Gender
+
+### Gender distribution per University in 22 and 24
+
+```{r}
+
+df_ego %>% group_by(Universiteit1.22) %>% 
+  summarise(mean_gender = mean(perc_female, na.rm = TRUE))
+
+
+df_ego %>% group_by(Universiteit1.24) %>% 
+  summarise(mean_gender = mean(perc_female, na.rm = TRUE))
+
+```
+
+### Gender distribution per University and per Function in 22 and 24
+
+!!Important to change function levels to have more meaningful results!!
+
+```{r}
+df_ego %>% group_by(Universiteit1.22, Functie.22) %>% 
+  summarise(mean_gender = mean(perc_female, na.rm = TRUE))
+
+df_ego %>% group_by(Universiteit1.24, Functie.24) %>% 
+  summarise(mean_gender = mean(perc_female, na.rm = TRUE))
+```
+
+### TO ADD!!
+
+-   Prestigious publications per university/gender/time
+
+-   Moran's I for network segregation in terms of gender
+
+    -   For 22 and 24 to see how/if networks change
+
+-   Other statistics
+
+    -   Nice descriptives table
+
+    -   Network statistics table (density, betweeness, transitivity etc.)
+
+## Networks
+### Make the graph object
+```{r}
+
+#---- Wave 2 ----
+graph_w1 <- igraph::graph_from_adjacency_matrix(
+  soc_data$nets[1,,], #now, I take the second wave
+  mode = c("directed"),
+  weighted = NULL,
+  diag = FALSE,
+  add.colnames = NULL
+)
+
+#---- Wave 2 ----
+graph_w2 <- igraph::graph_from_adjacency_matrix(
+  soc_data$nets[2,,], #now, I take the second wave
+  mode = c("directed"),
+  weighted = NULL,
+  diag = FALSE,
+  add.colnames = NULL
+)
+
+```
+
+### Network Visualisations (Universities)
+
+#### Wave 1 {.tabset}
+##### University Colours
+```{r, fig.width = 8}
+
+#---- Wave 1 ----
+set.seed(234544)
+l_w1 <- layout_nicely(graph_w1)
+
+plot(graph_w1, layout = l_w1,
+     vertex.color = ifelse(df_ego$Universiteit1.22 == "RU", "red", "gold"), #now, I can use actor attributes for plotting. 
+     vertex.label = NA,
+     edge.width = 1.8,
+     edge.arrow.size =0.5,
+     main = "Network of Radboud and Utrecht University Sociologists")
+legend("topleft", c("Radboud", "Utrecht University"), pch = c(21,21), col = "#777777", pt.bg = c("red", "gold"), pt.cex = 2,
+       cex = 0.8, bty = "n", ncol = 1)
+
+```
+
+##### Better contrast
+```{r, fig.width = 8}
+
+#---- Wave 1 ----
+set.seed(234544)
+l_w1 <- layout_nicely(graph_w1)
+
+plot(graph_w1, layout = l_w1,
+     vertex.color = ifelse(df_ego$Universiteit1.22 == "RU", "navy", "darkorange"), #now, I can use actor attributes for plotting. 
+     vertex.label = NA,
+     edge.width = 1.8,
+     edge.arrow.size =0.5,
+     main = "Network of Radboud and Utrecht University Sociologists")
+legend("topleft", c("Radboud", "Utrecht University"), pch = c(21,21), col = "#777777", pt.bg = c("navy", "darkorange"), pt.cex = 2,
+       cex = 0.8, bty = "n", ncol = 1)
+
+```
+
+#### Wave 2 {.tabset}
+##### University Colours
+```{r, fig.width = 8}
+#---- Wave 2 ----
+set.seed(234544)
+l_w2 <- layout_nicely(graph_w2)
+
+plot(graph_w2, layout = l_w2,
+     vertex.color = ifelse(df_ego$Universiteit1.24 == "RU", "red", "gold"), #now, I can use actor attributes for plotting. 
+     vertex.label = NA,
+     edge.width = 1.8,
+     edge.arrow.size = 0.5,
+     main = "Network of Radboud and Utrecht University Sociologists")
+legend("topleft", c("Radboud", "Utrecht University"), pch = c(21,21), col = "#777777", pt.bg = c("red", "gold"), pt.cex = 2,
+       cex = 0.8, bty = "n", ncol = 1)
+
+```
+
+##### Better Contrast
+```{r, fig.width = 8}
+#---- Wave 2 ----
+set.seed(234544)
+l_w2 <- layout_nicely(graph_w2)
+
+plot(graph_w2, layout = l_w2,
+     vertex.color = ifelse(df_ego$Universiteit1.24 == "RU", "navy", "darkorange"), #now, I can use actor attributes for plotting. 
+     vertex.label = NA,
+     edge.width = 1.8,
+     edge.arrow.size = 0.5,
+     main = "Network of Radboud and Utrecht University Sociologists")
+legend("topleft", c("Radboud", "Utrecht University"), pch = c(21,21), col = "#777777", pt.bg = c("navy", "darkorange"), pt.cex = 2,
+       cex = 0.8, bty = "n", ncol = 1)
+
+```
+
+### Network Visualisations (Gender)
+```{r}
+# Make a plotable gender variable to fix problems with vertex.shape
+df_ego <- df_ego %>% mutate(plot_gen = case_when(perc_female >= 0.80 ~ "Female",
+                                                 .default = "Male"))
+# df_ego %>% count(plot_gen)
+```
+
+#### Wave 1 {.tabset}
+##### University Colours
+```{r, fig.width = 8}
+
+#---- Wave 1 ----
+set.seed(234544)
+l_w1 <- layout_nicely(graph_w1)
+
+plot(graph_w1, layout = l_w1,
+     vertex.color = ifelse(df_ego$Universiteit1.24 == "RU", "red", "gold"), #now, I can use actor attributes for plotting. 
+     vertex.shape = ifelse(df_ego$plot_gen == "Male", "square", "circle"),
+     vertex.label = NA,
+     edge.width = 2,
+     edge.curved = 0.5,
+     edge.arrow.size =0.2,
+     main = "Gender Distribution of Two Sociology Departments 2022")
+legend("topleft", c("Radboud", "Utrecht University", "Male", "Female"), pch = c(21,21,15,20), col = "#777777", pt.bg = c("red", "gold"), pt.cex = 2,
+       cex = 0.8, bty = "n", ncol = 1)
+```
+
+##### Better Contrast
+```{r, fig.width = 8}
+
+#---- Wave 1 ----
+set.seed(234544)
+l_w1 <- layout_nicely(graph_w1)
+
+plot(graph_w1, layout = l_w1,
+     vertex.color = ifelse(df_ego$Universiteit1.24 == "RU", "navy", "darkorange"), #now, I can use actor attributes for plotting. 
+     vertex.shape = ifelse(df_ego$plot_gen == "Male", "square", "circle"),
+     vertex.label = NA,
+     edge.width = 2,
+     edge.curved = 0.5,
+     edge.arrow.size =0.2,
+     main = "Gender Distribution of Two Sociology Departments 2022")
+legend("topleft", c("Radboud", "Utrecht University", "Male", "Female"), pch = c(21,21,15,20), col = "#777777", pt.bg = c("navy", "darkorange"), pt.cex = 2,
+       cex = 0.8, bty = "n", ncol = 1)
+```
+
+#### Wave 2 {.tabset}
+##### University Colours
+```{r, fig.width = 8}
+#---- Wave 2 ----
+set.seed(234544)
+l_w2 <- layout_nicely(graph_w2)
+
+plot(graph_w2, layout = l_w2,
+     vertex.color = ifelse(df_ego$Universiteit1.24 == "RU", "red", "gold"), #now, I can use actor attributes for plotting. 
+     vertex.shape = ifelse(df_ego$plot_gen == "Male", "square", "circle"),
+     vertex.label = NA,
+     edge.width = 2,
+     edge.curved = 0.5,
+     edge.arrow.size =0.2,
+     main = "Gender Distribution of Two Sociology Departments 2022")
+legend("topleft", c("Radboud", "Utrecht University", "Male", "Female"), pch = c(21,21,15,20), col = "#777777", pt.bg = c("red", "gold"), pt.cex = 2,
+       cex = 0.8, bty = "n", ncol = 1)
+
+```
+
+##### Better Contrast
+```{r, fig.width = 8}
+#---- Wave 2 ----
+set.seed(234544)
+l_w2 <- layout_nicely(graph_w2)
+
+plot(graph_w2, layout = l_w2,
+     vertex.color = ifelse(df_ego$Universiteit1.24 == "RU", "navy", "darkorange"), #now, I can use actor attributes for plotting. 
+     vertex.shape = ifelse(df_ego$plot_gen == "Male", "square", "circle"),
+     vertex.label = NA,
+     edge.width = 2,
+     edge.curved = 0.5,
+     edge.arrow.size =0.2,
+     main = "Gender Distribution of Two Sociology Departments 2022")
+legend("topleft", c("Radboud", "Utrecht University", "Male", "Female"), pch = c(21,21,15,20), col = "#777777", pt.bg = c("navy", "darkorange"), pt.cex = 2,
+       cex = 0.8, bty = "n", ncol = 1)
+
+```
+
+<br>
+
+---------------------------------------------------------------------------------------------------- 
+

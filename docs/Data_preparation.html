@@ -89,42 +89,46 @@ pre.numberSource code > span > a:first-child::before
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
     padding: 0 4px; width: 4em;
-    color: #aaaaaa;
+    background-color: #ffffff;
+    color: #a0a0a0;
   }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #a0a0a0;  padding-left: 4px; }
 div.sourceCode
-  {  background-color: #f8f8f8; }
+  { color: #1f1c1b; background-color: #ffffff; }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.al { color: #ef2929; } /* Alert */
-code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #204a87; } /* Attribute */
-code span.bn { color: #0000cf; } /* BaseN */
-code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4e9a06; } /* Char */
-code span.cn { color: #8f5902; } /* Constant */
-code span.co { color: #8f5902; font-style: italic; } /* Comment */
-code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
-code span.dt { color: #204a87; } /* DataType */
-code span.dv { color: #0000cf; } /* DecVal */
-code span.er { color: #a40000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #0000cf; } /* Float */
-code span.fu { color: #204a87; font-weight: bold; } /* Function */
-code span.im { } /* Import */
-code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
-code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
-code span.ot { color: #8f5902; } /* Other */
-code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
-code span.sc { color: #ce5c00; font-weight: bold; } /* SpecialChar */
-code span.ss { color: #4e9a06; } /* SpecialString */
-code span.st { color: #4e9a06; } /* String */
-code span.va { color: #000000; } /* Variable */
-code span.vs { color: #4e9a06; } /* VerbatimString */
-code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+code span { color: #1f1c1b; } /* Normal */
+code span.al { color: #bf0303; background-color: #f7e6e6; font-weight: bold; } /* Alert */
+code span.an { color: #ca60ca; } /* Annotation */
+code span.at { color: #0057ae; } /* Attribute */
+code span.bn { color: #b08000; } /* BaseN */
+code span.bu { color: #644a9b; font-weight: bold; } /* BuiltIn */
+code span.cf { color: #1f1c1b; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #924c9d; } /* Char */
+code span.cn { color: #aa5500; } /* Constant */
+code span.co { color: #898887; } /* Comment */
+code span.cv { color: #0095ff; } /* CommentVar */
+code span.do { color: #607880; } /* Documentation */
+code span.dt { color: #0057ae; } /* DataType */
+code span.dv { color: #b08000; } /* DecVal */
+code span.er { color: #bf0303; text-decoration: underline; } /* Error */
+code span.ex { color: #0095ff; font-weight: bold; } /* Extension */
+code span.fl { color: #b08000; } /* Float */
+code span.fu { color: #644a9b; } /* Function */
+code span.im { color: #ff5500; } /* Import */
+code span.in { color: #b08000; } /* Information */
+code span.kw { color: #1f1c1b; font-weight: bold; } /* Keyword */
+code span.op { color: #1f1c1b; } /* Operator */
+code span.ot { color: #006e28; } /* Other */
+code span.pp { color: #006e28; } /* Preprocessor */
+code span.re { color: #0057ae; background-color: #e0e9f8; } /* RegionMarker */
+code span.sc { color: #3daee9; } /* SpecialChar */
+code span.ss { color: #ff5500; } /* SpecialString */
+code span.st { color: #bf0303; } /* String */
+code span.va { color: #0057ae; } /* Variable */
+code span.vs { color: #bf0303; } /* VerbatimString */
+code span.wa { color: #bf0303; } /* Warning */
 
 .sourceCode .row {
   width: 100%;
@@ -442,7 +446,7 @@ div.tocify {
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    My journal
+    Journal
      
     <span class="caret"></span>
   </a>
@@ -478,13 +482,17 @@ div.tocify {
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    My paper
+    Paper
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
       <a href="Introduction.html">Introduction</a>
+    </li>
+    <li class="dropdown-header">Theory</li>
+    <li>
+      <a href="Data.html">Data</a>
     </li>
   </ul>
 </li>
@@ -544,13 +552,29 @@ class="sourceCode r test"><code class="sourceCode r"><span id="cb1-1"><a href="#
 <span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a><span class="fu">library</span>(xml2)</span>
 <span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a><span class="co"># install.packages(&#39;rvest&#39;)</span></span>
 <span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a><span class="fu">library</span>(rvest)</span></code></pre></div>
+<div id="functions" class="section level2" number="1.1">
+<h2><span class="header-section-number">1.1</span> Functions</h2>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>colorize <span class="ot">&lt;-</span> <span class="cf">function</span>(x, color) {</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>    <span class="fu">sprintf</span>(<span class="st">&quot;&lt;span style=&#39;color: %s;&#39;&gt;%s&lt;/span&gt;&quot;</span>, color, x)</span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>}</span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>fsave <span class="ot">&lt;-</span> <span class="cf">function</span>(x, file, <span class="at">location =</span> <span class="st">&quot;./data/processed/&quot;</span>, ...) {</span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>    <span class="cf">if</span> (<span class="sc">!</span><span class="fu">dir.exists</span>(location))</span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a>        <span class="fu">dir.create</span>(location)</span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a>    datename <span class="ot">&lt;-</span> <span class="fu">substr</span>(<span class="fu">gsub</span>(<span class="st">&quot;[:-]&quot;</span>, <span class="st">&quot;&quot;</span>, <span class="fu">Sys.time</span>()), <span class="dv">1</span>, <span class="dv">8</span>)</span>
+<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a>    totalname <span class="ot">&lt;-</span> <span class="fu">paste</span>(location, datename, file, <span class="at">sep =</span> <span class="st">&quot;&quot;</span>)</span>
+<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a>    <span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">&quot;SAVED: &quot;</span>, totalname, <span class="at">sep =</span> <span class="st">&quot;&quot;</span>))</span>
+<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a>    <span class="fu">save</span>(x, <span class="at">file =</span> totalname)</span>
+<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a>}</span></code></pre></div>
+</div>
 </div>
 <div id="load-data" class="section level1" number="2">
 <h1><span class="header-section-number">2</span> Load data</h1>
-<div class="sourceCode" id="cb2"><pre
-class="sourceCode r test"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;data/scholars_20240924.rda&quot;</span>)</span>
-<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>scholars <span class="ot">&lt;-</span> x</span>
-<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a><span class="fu">rm</span>(x)</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;data/scholars_20240924.rda&quot;</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>scholars <span class="ot">&lt;-</span> x</span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="fu">rm</span>(x)</span></code></pre></div>
 <div id="user-function-for-network-data-creation" class="section level2"
 number="2.1">
 <h2><span class="header-section-number">2.1</span> User function for
@@ -570,85 +594,85 @@ all authors</p>
 <li><p>$nets: array of nomination networks.</p></li>
 <li><p>$data: sample of data (scholars)</p></li>
 </ul>
-<div class="sourceCode" id="cb3"><pre
-class="sourceCode r test"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>fcolnet <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">data =</span> scholars, <span class="at">university =</span> <span class="st">&quot;RU&quot;</span>, <span class="at">discipline =</span> <span class="st">&quot;sociology&quot;</span>, <span class="at">waves =</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="dv">2015</span>,</span>
-<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>    <span class="dv">2018</span>), <span class="fu">c</span>(<span class="dv">2019</span>, <span class="dv">2023</span>)), <span class="at">type =</span> <span class="fu">c</span>(<span class="st">&quot;first&quot;</span>)) {</span>
-<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a></span>
-<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>    <span class="co"># step 1</span></span>
-<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>    demographics <span class="ot">&lt;-</span> <span class="fu">do.call</span>(rbind.data.frame, data<span class="sc">$</span>demographics)</span>
-<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a>    demographics <span class="ot">&lt;-</span> demographics <span class="sc">%&gt;%</span></span>
-<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a>        <span class="fu">mutate</span>(<span class="at">Universiteit1.22 =</span> <span class="fu">replace</span>(Universiteit1<span class="fl">.22</span>, <span class="fu">is.na</span>(Universiteit1<span class="fl">.22</span>), <span class="st">&quot;&quot;</span>), <span class="at">Universiteit2.22 =</span> <span class="fu">replace</span>(Universiteit2<span class="fl">.22</span>,</span>
-<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a>            <span class="fu">is.na</span>(Universiteit2<span class="fl">.22</span>), <span class="st">&quot;&quot;</span>), <span class="at">Universiteit1.24 =</span> <span class="fu">replace</span>(Universiteit1<span class="fl">.24</span>, <span class="fu">is.na</span>(Universiteit1<span class="fl">.24</span>),</span>
-<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a>            <span class="st">&quot;&quot;</span>), <span class="at">Universiteit2.24 =</span> <span class="fu">replace</span>(Universiteit2<span class="fl">.24</span>, <span class="fu">is.na</span>(Universiteit2<span class="fl">.24</span>), <span class="st">&quot;&quot;</span>), <span class="at">discipline.22 =</span> <span class="fu">replace</span>(discipline<span class="fl">.22</span>,</span>
-<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a>            <span class="fu">is.na</span>(discipline<span class="fl">.22</span>), <span class="st">&quot;&quot;</span>), <span class="at">discipline.24 =</span> <span class="fu">replace</span>(discipline<span class="fl">.24</span>, <span class="fu">is.na</span>(discipline<span class="fl">.24</span>), <span class="st">&quot;&quot;</span>))</span>
-<span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a></span>
-<span id="cb3-12"><a href="#cb3-12" tabindex="-1"></a>    sample <span class="ot">&lt;-</span> <span class="fu">which</span>((demographics<span class="sc">$</span>Universiteit1<span class="fl">.22</span> <span class="sc">%in%</span> university <span class="sc">|</span> demographics<span class="sc">$</span>Universiteit2<span class="fl">.22</span> <span class="sc">%in%</span></span>
-<span id="cb3-13"><a href="#cb3-13" tabindex="-1"></a>        university <span class="sc">|</span> demographics<span class="sc">$</span>Universiteit1<span class="fl">.24</span> <span class="sc">%in%</span> university <span class="sc">|</span> demographics<span class="sc">$</span>Universiteit2<span class="fl">.24</span> <span class="sc">%in%</span></span>
-<span id="cb3-14"><a href="#cb3-14" tabindex="-1"></a>        university) <span class="sc">&amp;</span> (demographics<span class="sc">$</span>discipline<span class="fl">.22</span> <span class="sc">%in%</span> discipline <span class="sc">|</span> demographics<span class="sc">$</span>discipline<span class="fl">.24</span> <span class="sc">%in%</span> discipline))</span>
-<span id="cb3-15"><a href="#cb3-15" tabindex="-1"></a></span>
-<span id="cb3-16"><a href="#cb3-16" tabindex="-1"></a>    demographics_soc <span class="ot">&lt;-</span> demographics[sample, ]</span>
-<span id="cb3-17"><a href="#cb3-17" tabindex="-1"></a>    scholars_sel <span class="ot">&lt;-</span> <span class="fu">lapply</span>(scholars, <span class="st">&quot;[&quot;</span>, sample)</span>
-<span id="cb3-18"><a href="#cb3-18" tabindex="-1"></a></span>
-<span id="cb3-19"><a href="#cb3-19" tabindex="-1"></a>    <span class="co"># step 2</span></span>
-<span id="cb3-20"><a href="#cb3-20" tabindex="-1"></a>    ids <span class="ot">&lt;-</span> demographics_soc<span class="sc">$</span>au_id</span>
-<span id="cb3-21"><a href="#cb3-21" tabindex="-1"></a>    nwaves <span class="ot">&lt;-</span> <span class="fu">length</span>(waves)</span>
-<span id="cb3-22"><a href="#cb3-22" tabindex="-1"></a>    nets <span class="ot">&lt;-</span> <span class="fu">array</span>(<span class="dv">0</span>, <span class="at">dim =</span> <span class="fu">c</span>(nwaves, <span class="fu">length</span>(ids), <span class="fu">length</span>(ids)), <span class="at">dimnames =</span> <span class="fu">list</span>(<span class="at">wave =</span> <span class="dv">1</span><span class="sc">:</span>nwaves, ids,</span>
-<span id="cb3-23"><a href="#cb3-23" tabindex="-1"></a>        ids))</span>
-<span id="cb3-24"><a href="#cb3-24" tabindex="-1"></a>    <span class="fu">dimnames</span>(nets)</span>
-<span id="cb3-25"><a href="#cb3-25" tabindex="-1"></a></span>
-<span id="cb3-26"><a href="#cb3-26" tabindex="-1"></a>    <span class="co"># step 3</span></span>
-<span id="cb3-27"><a href="#cb3-27" tabindex="-1"></a>    df_works <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">works_id =</span> <span class="fu">unlist</span>(<span class="fu">lapply</span>(scholars_sel<span class="sc">$</span>work, <span class="cf">function</span>(l) l<span class="sc">$</span>id)), <span class="at">works_author =</span> <span class="fu">unlist</span>(<span class="fu">lapply</span>(scholars_sel<span class="sc">$</span>work,</span>
-<span id="cb3-28"><a href="#cb3-28" tabindex="-1"></a>        <span class="cf">function</span>(l) l<span class="sc">$</span>author), <span class="at">recursive =</span> <span class="cn">FALSE</span>), <span class="at">works_year =</span> <span class="fu">unlist</span>(<span class="fu">lapply</span>(scholars_sel<span class="sc">$</span>work, <span class="cf">function</span>(l) l<span class="sc">$</span>publication_year),</span>
-<span id="cb3-29"><a href="#cb3-29" tabindex="-1"></a>        <span class="at">recursive =</span> <span class="cn">FALSE</span>))</span>
-<span id="cb3-30"><a href="#cb3-30" tabindex="-1"></a></span>
-<span id="cb3-31"><a href="#cb3-31" tabindex="-1"></a>    df_works <span class="ot">&lt;-</span> df_works[<span class="sc">!</span><span class="fu">duplicated</span>(df_works), ]</span>
-<span id="cb3-32"><a href="#cb3-32" tabindex="-1"></a></span>
-<span id="cb3-33"><a href="#cb3-33" tabindex="-1"></a>    <span class="co"># step 4</span></span>
-<span id="cb3-34"><a href="#cb3-34" tabindex="-1"></a>    <span class="cf">if</span> (type <span class="sc">==</span> <span class="st">&quot;first&quot;</span>) {</span>
-<span id="cb3-35"><a href="#cb3-35" tabindex="-1"></a>        <span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nwaves) {</span>
-<span id="cb3-36"><a href="#cb3-36" tabindex="-1"></a>            df_works_w <span class="ot">&lt;-</span> df_works[df_works<span class="sc">$</span>works_year <span class="sc">&gt;=</span> waves[[j]][<span class="dv">1</span>] <span class="sc">&amp;</span> df_works<span class="sc">$</span>works_year <span class="sc">&lt;=</span> waves[[j]][<span class="dv">2</span>],</span>
-<span id="cb3-37"><a href="#cb3-37" tabindex="-1"></a>                ]</span>
-<span id="cb3-38"><a href="#cb3-38" tabindex="-1"></a>            <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(df_works_w)) {</span>
-<span id="cb3-39"><a href="#cb3-39" tabindex="-1"></a>                ego <span class="ot">&lt;-</span> df_works_w<span class="sc">$</span>works_author[i][[<span class="dv">1</span>]]<span class="sc">$</span>au_id[<span class="dv">1</span>]</span>
-<span id="cb3-40"><a href="#cb3-40" tabindex="-1"></a>                alters <span class="ot">&lt;-</span> df_works_w<span class="sc">$</span>works_author[i][[<span class="dv">1</span>]]<span class="sc">$</span>au_id[<span class="sc">-</span><span class="dv">1</span>]</span>
-<span id="cb3-41"><a href="#cb3-41" tabindex="-1"></a>                <span class="cf">if</span> (<span class="fu">sum</span>(ids <span class="sc">%in%</span> ego) <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">&amp;</span> <span class="fu">sum</span>(ids <span class="sc">%in%</span> alters) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
-<span id="cb3-42"><a href="#cb3-42" tabindex="-1"></a>                  nets[j, <span class="fu">which</span>(ids <span class="sc">%in%</span> ego), <span class="fu">which</span>(ids <span class="sc">%in%</span> alters)] <span class="ot">&lt;-</span> <span class="dv">1</span></span>
-<span id="cb3-43"><a href="#cb3-43" tabindex="-1"></a>                }</span>
-<span id="cb3-44"><a href="#cb3-44" tabindex="-1"></a>            }</span>
-<span id="cb3-45"><a href="#cb3-45" tabindex="-1"></a>        }</span>
-<span id="cb3-46"><a href="#cb3-46" tabindex="-1"></a>    }</span>
-<span id="cb3-47"><a href="#cb3-47" tabindex="-1"></a></span>
-<span id="cb3-48"><a href="#cb3-48" tabindex="-1"></a>    <span class="cf">if</span> (type <span class="sc">==</span> <span class="st">&quot;last&quot;</span>) {</span>
-<span id="cb3-49"><a href="#cb3-49" tabindex="-1"></a>        <span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nwaves) {</span>
-<span id="cb3-50"><a href="#cb3-50" tabindex="-1"></a>            df_works_w <span class="ot">&lt;-</span> df_works[df_works<span class="sc">$</span>works_year <span class="sc">&gt;=</span> waves[[j]][<span class="dv">1</span>] <span class="sc">&amp;</span> df_works<span class="sc">$</span>works_year <span class="sc">&lt;=</span> waves[[j]][<span class="dv">2</span>],</span>
-<span id="cb3-51"><a href="#cb3-51" tabindex="-1"></a>                ]</span>
-<span id="cb3-52"><a href="#cb3-52" tabindex="-1"></a>            <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(df_works_w)) {</span>
-<span id="cb3-53"><a href="#cb3-53" tabindex="-1"></a>                ego <span class="ot">&lt;-</span> <span class="fu">rev</span>(df_works_w<span class="sc">$</span>works_author[i][[<span class="dv">1</span>]]<span class="sc">$</span>au_id)[<span class="dv">1</span>]</span>
-<span id="cb3-54"><a href="#cb3-54" tabindex="-1"></a>                alters <span class="ot">&lt;-</span> <span class="fu">rev</span>(df_works_w<span class="sc">$</span>works_author[i][[<span class="dv">1</span>]]<span class="sc">$</span>au_id)[<span class="sc">-</span><span class="dv">1</span>]</span>
-<span id="cb3-55"><a href="#cb3-55" tabindex="-1"></a>                <span class="cf">if</span> (<span class="fu">sum</span>(ids <span class="sc">%in%</span> ego) <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">&amp;</span> <span class="fu">sum</span>(ids <span class="sc">%in%</span> alters) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
-<span id="cb3-56"><a href="#cb3-56" tabindex="-1"></a>                  nets[j, <span class="fu">which</span>(ids <span class="sc">%in%</span> ego), <span class="fu">which</span>(ids <span class="sc">%in%</span> alters)] <span class="ot">&lt;-</span> <span class="dv">1</span></span>
-<span id="cb3-57"><a href="#cb3-57" tabindex="-1"></a>                }</span>
-<span id="cb3-58"><a href="#cb3-58" tabindex="-1"></a>            }</span>
-<span id="cb3-59"><a href="#cb3-59" tabindex="-1"></a>        }</span>
-<span id="cb3-60"><a href="#cb3-60" tabindex="-1"></a>    }</span>
-<span id="cb3-61"><a href="#cb3-61" tabindex="-1"></a></span>
-<span id="cb3-62"><a href="#cb3-62" tabindex="-1"></a>    <span class="cf">if</span> (type <span class="sc">==</span> <span class="st">&quot;all&quot;</span>) {</span>
-<span id="cb3-63"><a href="#cb3-63" tabindex="-1"></a>        <span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nwaves) {</span>
-<span id="cb3-64"><a href="#cb3-64" tabindex="-1"></a>            df_works_w <span class="ot">&lt;-</span> df_works[df_works<span class="sc">$</span>works_year <span class="sc">&gt;=</span> waves[[j]][<span class="dv">1</span>] <span class="sc">&amp;</span> df_works<span class="sc">$</span>works_year <span class="sc">&lt;=</span> waves[[j]][<span class="dv">2</span>],</span>
-<span id="cb3-65"><a href="#cb3-65" tabindex="-1"></a>                ]</span>
-<span id="cb3-66"><a href="#cb3-66" tabindex="-1"></a>            <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(df_works_w)) {</span>
-<span id="cb3-67"><a href="#cb3-67" tabindex="-1"></a>                egos <span class="ot">&lt;-</span> df_works_w<span class="sc">$</span>works_author[i][[<span class="dv">1</span>]]<span class="sc">$</span>au_id</span>
-<span id="cb3-68"><a href="#cb3-68" tabindex="-1"></a>                <span class="cf">if</span> (<span class="fu">sum</span>(ids <span class="sc">%in%</span> egos) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
-<span id="cb3-69"><a href="#cb3-69" tabindex="-1"></a>                  nets[j, <span class="fu">which</span>(ids <span class="sc">%in%</span> egos), <span class="fu">which</span>(ids <span class="sc">%in%</span> egos)] <span class="ot">&lt;-</span> <span class="dv">1</span></span>
-<span id="cb3-70"><a href="#cb3-70" tabindex="-1"></a>                }</span>
-<span id="cb3-71"><a href="#cb3-71" tabindex="-1"></a>            }</span>
-<span id="cb3-72"><a href="#cb3-72" tabindex="-1"></a>        }</span>
-<span id="cb3-73"><a href="#cb3-73" tabindex="-1"></a>    }</span>
-<span id="cb3-74"><a href="#cb3-74" tabindex="-1"></a>    output <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
-<span id="cb3-75"><a href="#cb3-75" tabindex="-1"></a>    output<span class="sc">$</span>data <span class="ot">&lt;-</span> scholars_sel</span>
-<span id="cb3-76"><a href="#cb3-76" tabindex="-1"></a>    output<span class="sc">$</span>nets <span class="ot">&lt;-</span> nets</span>
-<span id="cb3-77"><a href="#cb3-77" tabindex="-1"></a>    <span class="fu">return</span>(output)</span>
-<span id="cb3-78"><a href="#cb3-78" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>fcolnet <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">data =</span> scholars, <span class="at">university =</span> <span class="st">&quot;RU&quot;</span>, <span class="at">discipline =</span> <span class="st">&quot;sociology&quot;</span>, <span class="at">waves =</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="dv">2015</span>,</span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>    <span class="dv">2018</span>), <span class="fu">c</span>(<span class="dv">2019</span>, <span class="dv">2023</span>)), <span class="at">type =</span> <span class="fu">c</span>(<span class="st">&quot;first&quot;</span>)) {</span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>    <span class="co"># step 1</span></span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a>    demographics <span class="ot">&lt;-</span> <span class="fu">do.call</span>(rbind.data.frame, data<span class="sc">$</span>demographics)</span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a>    demographics <span class="ot">&lt;-</span> demographics <span class="sc">%&gt;%</span></span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a>        <span class="fu">mutate</span>(<span class="at">Universiteit1.22 =</span> <span class="fu">replace</span>(Universiteit1<span class="fl">.22</span>, <span class="fu">is.na</span>(Universiteit1<span class="fl">.22</span>), <span class="st">&quot;&quot;</span>), <span class="at">Universiteit2.22 =</span> <span class="fu">replace</span>(Universiteit2<span class="fl">.22</span>,</span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a>            <span class="fu">is.na</span>(Universiteit2<span class="fl">.22</span>), <span class="st">&quot;&quot;</span>), <span class="at">Universiteit1.24 =</span> <span class="fu">replace</span>(Universiteit1<span class="fl">.24</span>, <span class="fu">is.na</span>(Universiteit1<span class="fl">.24</span>),</span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a>            <span class="st">&quot;&quot;</span>), <span class="at">Universiteit2.24 =</span> <span class="fu">replace</span>(Universiteit2<span class="fl">.24</span>, <span class="fu">is.na</span>(Universiteit2<span class="fl">.24</span>), <span class="st">&quot;&quot;</span>), <span class="at">discipline.22 =</span> <span class="fu">replace</span>(discipline<span class="fl">.22</span>,</span>
+<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a>            <span class="fu">is.na</span>(discipline<span class="fl">.22</span>), <span class="st">&quot;&quot;</span>), <span class="at">discipline.24 =</span> <span class="fu">replace</span>(discipline<span class="fl">.24</span>, <span class="fu">is.na</span>(discipline<span class="fl">.24</span>), <span class="st">&quot;&quot;</span>))</span>
+<span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a></span>
+<span id="cb4-12"><a href="#cb4-12" tabindex="-1"></a>    sample <span class="ot">&lt;-</span> <span class="fu">which</span>((demographics<span class="sc">$</span>Universiteit1<span class="fl">.22</span> <span class="sc">%in%</span> university <span class="sc">|</span> demographics<span class="sc">$</span>Universiteit2<span class="fl">.22</span> <span class="sc">%in%</span></span>
+<span id="cb4-13"><a href="#cb4-13" tabindex="-1"></a>        university <span class="sc">|</span> demographics<span class="sc">$</span>Universiteit1<span class="fl">.24</span> <span class="sc">%in%</span> university <span class="sc">|</span> demographics<span class="sc">$</span>Universiteit2<span class="fl">.24</span> <span class="sc">%in%</span></span>
+<span id="cb4-14"><a href="#cb4-14" tabindex="-1"></a>        university) <span class="sc">&amp;</span> (demographics<span class="sc">$</span>discipline<span class="fl">.22</span> <span class="sc">%in%</span> discipline <span class="sc">|</span> demographics<span class="sc">$</span>discipline<span class="fl">.24</span> <span class="sc">%in%</span> discipline))</span>
+<span id="cb4-15"><a href="#cb4-15" tabindex="-1"></a></span>
+<span id="cb4-16"><a href="#cb4-16" tabindex="-1"></a>    demographics_soc <span class="ot">&lt;-</span> demographics[sample, ]</span>
+<span id="cb4-17"><a href="#cb4-17" tabindex="-1"></a>    scholars_sel <span class="ot">&lt;-</span> <span class="fu">lapply</span>(scholars, <span class="st">&quot;[&quot;</span>, sample)</span>
+<span id="cb4-18"><a href="#cb4-18" tabindex="-1"></a></span>
+<span id="cb4-19"><a href="#cb4-19" tabindex="-1"></a>    <span class="co"># step 2</span></span>
+<span id="cb4-20"><a href="#cb4-20" tabindex="-1"></a>    ids <span class="ot">&lt;-</span> demographics_soc<span class="sc">$</span>au_id</span>
+<span id="cb4-21"><a href="#cb4-21" tabindex="-1"></a>    nwaves <span class="ot">&lt;-</span> <span class="fu">length</span>(waves)</span>
+<span id="cb4-22"><a href="#cb4-22" tabindex="-1"></a>    nets <span class="ot">&lt;-</span> <span class="fu">array</span>(<span class="dv">0</span>, <span class="at">dim =</span> <span class="fu">c</span>(nwaves, <span class="fu">length</span>(ids), <span class="fu">length</span>(ids)), <span class="at">dimnames =</span> <span class="fu">list</span>(<span class="at">wave =</span> <span class="dv">1</span><span class="sc">:</span>nwaves, ids,</span>
+<span id="cb4-23"><a href="#cb4-23" tabindex="-1"></a>        ids))</span>
+<span id="cb4-24"><a href="#cb4-24" tabindex="-1"></a>    <span class="fu">dimnames</span>(nets)</span>
+<span id="cb4-25"><a href="#cb4-25" tabindex="-1"></a></span>
+<span id="cb4-26"><a href="#cb4-26" tabindex="-1"></a>    <span class="co"># step 3</span></span>
+<span id="cb4-27"><a href="#cb4-27" tabindex="-1"></a>    df_works <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">works_id =</span> <span class="fu">unlist</span>(<span class="fu">lapply</span>(scholars_sel<span class="sc">$</span>work, <span class="cf">function</span>(l) l<span class="sc">$</span>id)), <span class="at">works_author =</span> <span class="fu">unlist</span>(<span class="fu">lapply</span>(scholars_sel<span class="sc">$</span>work,</span>
+<span id="cb4-28"><a href="#cb4-28" tabindex="-1"></a>        <span class="cf">function</span>(l) l<span class="sc">$</span>author), <span class="at">recursive =</span> <span class="cn">FALSE</span>), <span class="at">works_year =</span> <span class="fu">unlist</span>(<span class="fu">lapply</span>(scholars_sel<span class="sc">$</span>work, <span class="cf">function</span>(l) l<span class="sc">$</span>publication_year),</span>
+<span id="cb4-29"><a href="#cb4-29" tabindex="-1"></a>        <span class="at">recursive =</span> <span class="cn">FALSE</span>))</span>
+<span id="cb4-30"><a href="#cb4-30" tabindex="-1"></a></span>
+<span id="cb4-31"><a href="#cb4-31" tabindex="-1"></a>    df_works <span class="ot">&lt;-</span> df_works[<span class="sc">!</span><span class="fu">duplicated</span>(df_works), ]</span>
+<span id="cb4-32"><a href="#cb4-32" tabindex="-1"></a></span>
+<span id="cb4-33"><a href="#cb4-33" tabindex="-1"></a>    <span class="co"># step 4</span></span>
+<span id="cb4-34"><a href="#cb4-34" tabindex="-1"></a>    <span class="cf">if</span> (type <span class="sc">==</span> <span class="st">&quot;first&quot;</span>) {</span>
+<span id="cb4-35"><a href="#cb4-35" tabindex="-1"></a>        <span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nwaves) {</span>
+<span id="cb4-36"><a href="#cb4-36" tabindex="-1"></a>            df_works_w <span class="ot">&lt;-</span> df_works[df_works<span class="sc">$</span>works_year <span class="sc">&gt;=</span> waves[[j]][<span class="dv">1</span>] <span class="sc">&amp;</span> df_works<span class="sc">$</span>works_year <span class="sc">&lt;=</span> waves[[j]][<span class="dv">2</span>],</span>
+<span id="cb4-37"><a href="#cb4-37" tabindex="-1"></a>                ]</span>
+<span id="cb4-38"><a href="#cb4-38" tabindex="-1"></a>            <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(df_works_w)) {</span>
+<span id="cb4-39"><a href="#cb4-39" tabindex="-1"></a>                ego <span class="ot">&lt;-</span> df_works_w<span class="sc">$</span>works_author[i][[<span class="dv">1</span>]]<span class="sc">$</span>au_id[<span class="dv">1</span>]</span>
+<span id="cb4-40"><a href="#cb4-40" tabindex="-1"></a>                alters <span class="ot">&lt;-</span> df_works_w<span class="sc">$</span>works_author[i][[<span class="dv">1</span>]]<span class="sc">$</span>au_id[<span class="sc">-</span><span class="dv">1</span>]</span>
+<span id="cb4-41"><a href="#cb4-41" tabindex="-1"></a>                <span class="cf">if</span> (<span class="fu">sum</span>(ids <span class="sc">%in%</span> ego) <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">&amp;</span> <span class="fu">sum</span>(ids <span class="sc">%in%</span> alters) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb4-42"><a href="#cb4-42" tabindex="-1"></a>                  nets[j, <span class="fu">which</span>(ids <span class="sc">%in%</span> ego), <span class="fu">which</span>(ids <span class="sc">%in%</span> alters)] <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb4-43"><a href="#cb4-43" tabindex="-1"></a>                }</span>
+<span id="cb4-44"><a href="#cb4-44" tabindex="-1"></a>            }</span>
+<span id="cb4-45"><a href="#cb4-45" tabindex="-1"></a>        }</span>
+<span id="cb4-46"><a href="#cb4-46" tabindex="-1"></a>    }</span>
+<span id="cb4-47"><a href="#cb4-47" tabindex="-1"></a></span>
+<span id="cb4-48"><a href="#cb4-48" tabindex="-1"></a>    <span class="cf">if</span> (type <span class="sc">==</span> <span class="st">&quot;last&quot;</span>) {</span>
+<span id="cb4-49"><a href="#cb4-49" tabindex="-1"></a>        <span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nwaves) {</span>
+<span id="cb4-50"><a href="#cb4-50" tabindex="-1"></a>            df_works_w <span class="ot">&lt;-</span> df_works[df_works<span class="sc">$</span>works_year <span class="sc">&gt;=</span> waves[[j]][<span class="dv">1</span>] <span class="sc">&amp;</span> df_works<span class="sc">$</span>works_year <span class="sc">&lt;=</span> waves[[j]][<span class="dv">2</span>],</span>
+<span id="cb4-51"><a href="#cb4-51" tabindex="-1"></a>                ]</span>
+<span id="cb4-52"><a href="#cb4-52" tabindex="-1"></a>            <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(df_works_w)) {</span>
+<span id="cb4-53"><a href="#cb4-53" tabindex="-1"></a>                ego <span class="ot">&lt;-</span> <span class="fu">rev</span>(df_works_w<span class="sc">$</span>works_author[i][[<span class="dv">1</span>]]<span class="sc">$</span>au_id)[<span class="dv">1</span>]</span>
+<span id="cb4-54"><a href="#cb4-54" tabindex="-1"></a>                alters <span class="ot">&lt;-</span> <span class="fu">rev</span>(df_works_w<span class="sc">$</span>works_author[i][[<span class="dv">1</span>]]<span class="sc">$</span>au_id)[<span class="sc">-</span><span class="dv">1</span>]</span>
+<span id="cb4-55"><a href="#cb4-55" tabindex="-1"></a>                <span class="cf">if</span> (<span class="fu">sum</span>(ids <span class="sc">%in%</span> ego) <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">&amp;</span> <span class="fu">sum</span>(ids <span class="sc">%in%</span> alters) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb4-56"><a href="#cb4-56" tabindex="-1"></a>                  nets[j, <span class="fu">which</span>(ids <span class="sc">%in%</span> ego), <span class="fu">which</span>(ids <span class="sc">%in%</span> alters)] <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb4-57"><a href="#cb4-57" tabindex="-1"></a>                }</span>
+<span id="cb4-58"><a href="#cb4-58" tabindex="-1"></a>            }</span>
+<span id="cb4-59"><a href="#cb4-59" tabindex="-1"></a>        }</span>
+<span id="cb4-60"><a href="#cb4-60" tabindex="-1"></a>    }</span>
+<span id="cb4-61"><a href="#cb4-61" tabindex="-1"></a></span>
+<span id="cb4-62"><a href="#cb4-62" tabindex="-1"></a>    <span class="cf">if</span> (type <span class="sc">==</span> <span class="st">&quot;all&quot;</span>) {</span>
+<span id="cb4-63"><a href="#cb4-63" tabindex="-1"></a>        <span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nwaves) {</span>
+<span id="cb4-64"><a href="#cb4-64" tabindex="-1"></a>            df_works_w <span class="ot">&lt;-</span> df_works[df_works<span class="sc">$</span>works_year <span class="sc">&gt;=</span> waves[[j]][<span class="dv">1</span>] <span class="sc">&amp;</span> df_works<span class="sc">$</span>works_year <span class="sc">&lt;=</span> waves[[j]][<span class="dv">2</span>],</span>
+<span id="cb4-65"><a href="#cb4-65" tabindex="-1"></a>                ]</span>
+<span id="cb4-66"><a href="#cb4-66" tabindex="-1"></a>            <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(df_works_w)) {</span>
+<span id="cb4-67"><a href="#cb4-67" tabindex="-1"></a>                egos <span class="ot">&lt;-</span> df_works_w<span class="sc">$</span>works_author[i][[<span class="dv">1</span>]]<span class="sc">$</span>au_id</span>
+<span id="cb4-68"><a href="#cb4-68" tabindex="-1"></a>                <span class="cf">if</span> (<span class="fu">sum</span>(ids <span class="sc">%in%</span> egos) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb4-69"><a href="#cb4-69" tabindex="-1"></a>                  nets[j, <span class="fu">which</span>(ids <span class="sc">%in%</span> egos), <span class="fu">which</span>(ids <span class="sc">%in%</span> egos)] <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb4-70"><a href="#cb4-70" tabindex="-1"></a>                }</span>
+<span id="cb4-71"><a href="#cb4-71" tabindex="-1"></a>            }</span>
+<span id="cb4-72"><a href="#cb4-72" tabindex="-1"></a>        }</span>
+<span id="cb4-73"><a href="#cb4-73" tabindex="-1"></a>    }</span>
+<span id="cb4-74"><a href="#cb4-74" tabindex="-1"></a>    output <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
+<span id="cb4-75"><a href="#cb4-75" tabindex="-1"></a>    output<span class="sc">$</span>data <span class="ot">&lt;-</span> scholars_sel</span>
+<span id="cb4-76"><a href="#cb4-76" tabindex="-1"></a>    output<span class="sc">$</span>nets <span class="ot">&lt;-</span> nets</span>
+<span id="cb4-77"><a href="#cb4-77" tabindex="-1"></a>    <span class="fu">return</span>(output)</span>
+<span id="cb4-78"><a href="#cb4-78" tabindex="-1"></a>}</span></code></pre></div>
 </div>
 </div>
 <div id="data-manipulation" class="section level1" number="3">
@@ -657,14 +681,15 @@ class="sourceCode r test"><code class="sourceCode r"><span id="cb3-1"><a href="#
 <h2><span class="header-section-number">3.1</span> Subset relevant
 data</h2>
 <p>I want to study the Sociology departments</p>
-<div class="sourceCode" id="cb4"><pre
-class="sourceCode r test"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>soc_data <span class="ot">&lt;-</span> <span class="fu">fcolnet</span>(<span class="at">data =</span> scholars, <span class="at">university =</span> <span class="fu">c</span>(<span class="st">&quot;RU&quot;</span>, <span class="st">&quot;UU&quot;</span>), <span class="at">discipline =</span> <span class="fu">c</span>(<span class="st">&quot;sociology&quot;</span>), <span class="at">waves =</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="dv">2015</span>,</span>
-<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>    <span class="dv">2019</span>), <span class="fu">c</span>(<span class="dv">2020</span>, <span class="dv">2024</span>)), <span class="at">type =</span> <span class="fu">c</span>(<span class="st">&quot;first&quot;</span>))</span>
-<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a></span>
-<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>df <span class="ot">&lt;-</span> soc_data<span class="sc">$</span>data</span>
-<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a>df_ego <span class="ot">&lt;-</span> <span class="fu">do.call</span>(rbind.data.frame, df<span class="sc">$</span>demographics)</span>
-<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a></span>
-<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a><span class="co"># soc_data$nets[2,,] # How to call a specific network</span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>soc_data <span class="ot">&lt;-</span> <span class="fu">fcolnet</span>(<span class="at">data =</span> scholars, <span class="at">university =</span> <span class="fu">c</span>(<span class="st">&quot;RU&quot;</span>, <span class="st">&quot;UU&quot;</span>), <span class="at">discipline =</span> <span class="fu">c</span>(<span class="st">&quot;sociology&quot;</span>), <span class="at">waves =</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="dv">2015</span>,</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>    <span class="dv">2019</span>), <span class="fu">c</span>(<span class="dv">2020</span>, <span class="dv">2024</span>)), <span class="at">type =</span> <span class="fu">c</span>(<span class="st">&quot;first&quot;</span>))</span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>df <span class="ot">&lt;-</span> soc_data<span class="sc">$</span>data</span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a>df_ego <span class="ot">&lt;-</span> <span class="fu">do.call</span>(rbind.data.frame, df<span class="sc">$</span>demographics)</span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a><span class="co"># soc_data$nets[2,,] # How to call a specific network</span></span></code></pre></div>
 </div>
 <div id="create-the-gender-variable" class="section level2"
 number="3.2">
@@ -676,26 +701,26 @@ first names of all authors in our network</p>
 number="3.2.1">
 <h3><span class="header-section-number">3.2.1</span> Screwing around
 with strings</h3>
-<div class="sourceCode" id="cb5"><pre
-class="sourceCode r test"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>vect <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Now this string is not split&quot;</span>, <span class="st">&quot;It is a nice Picture&quot;</span>, <span class="st">&quot;Is it ready&quot;</span>, <span class="st">&quot;Split Screen&quot;</span>)</span>
-<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a></span>
-<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>vect</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>vect <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Now this string is not split&quot;</span>, <span class="st">&quot;It is a nice Picture&quot;</span>, <span class="st">&quot;Is it ready&quot;</span>, <span class="st">&quot;Split Screen&quot;</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>vect</span></code></pre></div>
 <pre class="test2"><code>#&gt; [1] &quot;Now this string is not split&quot; &quot;It is a nice Picture&quot;         &quot;Is it ready&quot;                 
 #&gt; [4] &quot;Split Screen&quot;</code></pre>
-<div class="sourceCode" id="cb7"><pre
-class="sourceCode r test"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="co"># ?nchar()</span></span>
-<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a></span>
-<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>testje <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">string =</span> vect, <span class="at">job =</span> <span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">TRUE</span>, <span class="cn">TRUE</span>, <span class="cn">FALSE</span>))</span>
-<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a></span>
-<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>testje</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="co"># ?nchar()</span></span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a>testje <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">string =</span> vect, <span class="at">job =</span> <span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">TRUE</span>, <span class="cn">TRUE</span>, <span class="cn">FALSE</span>))</span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a>testje</span></code></pre></div>
 <pre class="test2"><code>#&gt;                         string   job
 #&gt; 1 Now this string is not split  TRUE
 #&gt; 2         It is a nice Picture  TRUE
 #&gt; 3                  Is it ready  TRUE
 #&gt; 4                 Split Screen FALSE</code></pre>
-<div class="sourceCode" id="cb9"><pre
-class="sourceCode r test"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a>testje<span class="sc">$</span>first_el <span class="ot">&lt;-</span> <span class="fu">sapply</span>(<span class="fu">strsplit</span>(vect, <span class="st">&quot; &quot;</span>), <span class="st">`</span><span class="at">[</span><span class="st">`</span>, <span class="dv">1</span>)  <span class="co"># This code should work as a way to extract first names from the ego characteristics dataset</span></span>
-<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>testje</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>testje<span class="sc">$</span>first_el <span class="ot">&lt;-</span> <span class="fu">sapply</span>(<span class="fu">strsplit</span>(vect, <span class="st">&quot; &quot;</span>), <span class="st">`</span><span class="at">[</span><span class="st">`</span>, <span class="dv">1</span>)  <span class="co"># This code should work as a way to extract first names from the ego characteristics dataset</span></span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>testje</span></code></pre></div>
 <pre class="test2"><code>#&gt;                         string   job first_el
 #&gt; 1 Now this string is not split  TRUE      Now
 #&gt; 2         It is a nice Picture  TRUE       It
@@ -705,16 +730,16 @@ class="sourceCode r test"><code class="sourceCode r"><span id="cb9-1"><a href="#
 <div id="extract-first-names" class="section level3" number="3.2.2">
 <h3><span class="header-section-number">3.2.2</span> Extract first
 names</h3>
-<div class="sourceCode" id="cb11"><pre
-class="sourceCode r test"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Naam =</span> df_ego<span class="sc">$</span>Naam)</span>
-<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a></span>
-<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a>first_name <span class="ot">&lt;-</span> <span class="fu">sapply</span>(<span class="fu">strsplit</span>(x<span class="sc">$</span>Naam, <span class="st">&quot; &quot;</span>), <span class="st">`</span><span class="at">[</span><span class="st">`</span>, <span class="dv">1</span>)  <span class="co"># This code should work as a way to extract first names from the ego characteristics dataset</span></span>
-<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a></span>
-<span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a></span>
-<span id="cb11-6"><a href="#cb11-6" tabindex="-1"></a></span>
-<span id="cb11-7"><a href="#cb11-7" tabindex="-1"></a>df_names <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(x, first_name, <span class="at">male =</span> <span class="cn">NA</span>, <span class="at">female =</span> <span class="cn">NA</span>)  <span class="co"># seem to have worked</span></span>
-<span id="cb11-8"><a href="#cb11-8" tabindex="-1"></a></span>
-<span id="cb11-9"><a href="#cb11-9" tabindex="-1"></a><span class="fu">head</span>(df_names)</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Naam =</span> df_ego<span class="sc">$</span>Naam)</span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a>first_name <span class="ot">&lt;-</span> <span class="fu">sapply</span>(<span class="fu">strsplit</span>(x<span class="sc">$</span>Naam, <span class="st">&quot; &quot;</span>), <span class="st">`</span><span class="at">[</span><span class="st">`</span>, <span class="dv">1</span>)  <span class="co"># This code should work as a way to extract first names from the ego characteristics dataset</span></span>
+<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a></span>
+<span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a></span>
+<span id="cb12-6"><a href="#cb12-6" tabindex="-1"></a></span>
+<span id="cb12-7"><a href="#cb12-7" tabindex="-1"></a>df_names <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(x, first_name, <span class="at">male =</span> <span class="cn">NA</span>, <span class="at">female =</span> <span class="cn">NA</span>)  <span class="co"># seem to have worked</span></span>
+<span id="cb12-8"><a href="#cb12-8" tabindex="-1"></a></span>
+<span id="cb12-9"><a href="#cb12-9" tabindex="-1"></a><span class="fu">head</span>(df_names)</span></code></pre></div>
 <pre class="test2"><code>#&gt;                        Naam first_name male female
 #&gt; 1                  Ece Arat        Ece   NA     NA
 #&gt; 2          Marcel Van Assen     Marcel   NA     NA
@@ -740,85 +765,412 @@ NA value for the gender of that respondent. The final step is creating a
 scaled (0/1) variable ‘<u><em>perc_female</em></u>’, which represents
 the likelihood that a name corresponds with the female gender (1 = 100%
 female, 0 = 100% male).</p>
-<div class="sourceCode" id="cb13"><pre
-class="sourceCode r test"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="co"># df_names &lt;- df_names[1:5,] # take first elements to try out</span></span>
-<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a></span>
-<span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a>i <span class="ot">&lt;-</span> <span class="dv">1</span></span>
-<span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a>df_names<span class="sc">$</span>first_name[i]</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a><span class="co"># df_names &lt;- df_names[1:5,] # take first elements to try out</span></span>
+<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a>i <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb14-4"><a href="#cb14-4" tabindex="-1"></a>df_names<span class="sc">$</span>first_name[i]</span></code></pre></div>
 <pre class="test2"><code>#&gt; [1] &quot;Ece&quot;</code></pre>
-<div class="sourceCode" id="cb15"><pre
-class="sourceCode r test"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a>gender_scraper.NV <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">names =</span> <span class="st">&quot;names element&quot;</span>, <span class="at">web_page =</span> <span class="st">&quot;https://nvb.meertens.knaw.nl/naam/is/&quot;</span>) {</span>
-<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a></span>
-<span id="cb15-3"><a href="#cb15-3" tabindex="-1"></a>    names<span class="sc">$</span>first_name <span class="ot">&lt;-</span> <span class="fu">sapply</span>(<span class="fu">strsplit</span>(names<span class="sc">$</span>Naam, <span class="st">&quot; &quot;</span>), <span class="st">`</span><span class="at">[</span><span class="st">`</span>, <span class="dv">1</span>)  <span class="co"># This code should work as a way to extract first names from the ego characteristics dataset</span></span>
-<span id="cb15-4"><a href="#cb15-4" tabindex="-1"></a>    names<span class="sc">$</span>male <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
-<span id="cb15-5"><a href="#cb15-5" tabindex="-1"></a>    names<span class="sc">$</span>female <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
-<span id="cb15-6"><a href="#cb15-6" tabindex="-1"></a></span>
-<span id="cb15-7"><a href="#cb15-7" tabindex="-1"></a>    <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(names)) {</span>
-<span id="cb15-8"><a href="#cb15-8" tabindex="-1"></a></span>
-<span id="cb15-9"><a href="#cb15-9" tabindex="-1"></a>        <span class="co"># print(names$first_name[i])</span></span>
-<span id="cb15-10"><a href="#cb15-10" tabindex="-1"></a></span>
-<span id="cb15-11"><a href="#cb15-11" tabindex="-1"></a>        web_page <span class="ot">&lt;-</span> <span class="fu">read_html</span>(<span class="fu">paste0</span>(<span class="st">&quot;https://nvb.meertens.knaw.nl/naam/is/&quot;</span>, names<span class="sc">$</span>first_name[i]))</span>
-<span id="cb15-12"><a href="#cb15-12" tabindex="-1"></a></span>
-<span id="cb15-13"><a href="#cb15-13" tabindex="-1"></a>        table <span class="ot">&lt;-</span> web_page <span class="sc">%&gt;%</span></span>
-<span id="cb15-14"><a href="#cb15-14" tabindex="-1"></a>            rvest<span class="sc">::</span><span class="fu">html_elements</span>(<span class="st">&quot;body&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb15-15"><a href="#cb15-15" tabindex="-1"></a>            rvest<span class="sc">::</span><span class="fu">html_elements</span>(<span class="st">&quot;table&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb15-16"><a href="#cb15-16" tabindex="-1"></a>            rvest<span class="sc">::</span><span class="fu">html_table</span>()</span>
-<span id="cb15-17"><a href="#cb15-17" tabindex="-1"></a></span>
-<span id="cb15-18"><a href="#cb15-18" tabindex="-1"></a>        <span class="cf">if</span> (<span class="fu">length</span>(table) <span class="sc">==</span> <span class="dv">0</span>) {</span>
-<span id="cb15-19"><a href="#cb15-19" tabindex="-1"></a></span>
-<span id="cb15-20"><a href="#cb15-20" tabindex="-1"></a>            <span class="fu">print</span>(<span class="fu">length</span>(table))</span>
-<span id="cb15-21"><a href="#cb15-21" tabindex="-1"></a></span>
-<span id="cb15-22"><a href="#cb15-22" tabindex="-1"></a>            names<span class="sc">$</span>male[i] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
-<span id="cb15-23"><a href="#cb15-23" tabindex="-1"></a>            names<span class="sc">$</span>female[i] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
-<span id="cb15-24"><a href="#cb15-24" tabindex="-1"></a></span>
-<span id="cb15-25"><a href="#cb15-25" tabindex="-1"></a>        } <span class="cf">else</span> {</span>
-<span id="cb15-26"><a href="#cb15-26" tabindex="-1"></a></span>
-<span id="cb15-27"><a href="#cb15-27" tabindex="-1"></a>            <span class="co"># print(table) print(table[[1]][[2,3]]) # Check if values for male are coherent and</span></span>
-<span id="cb15-28"><a href="#cb15-28" tabindex="-1"></a>            <span class="co"># accurate print(table[[1]][[6,3]]) # Check if values for female are coherent and</span></span>
-<span id="cb15-29"><a href="#cb15-29" tabindex="-1"></a>            <span class="co"># accurate</span></span>
-<span id="cb15-30"><a href="#cb15-30" tabindex="-1"></a></span>
-<span id="cb15-31"><a href="#cb15-31" tabindex="-1"></a>            names<span class="sc">$</span>male[i] <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">ifelse</span>(table[[<span class="dv">1</span>]][[<span class="dv">2</span>, <span class="dv">3</span>]] <span class="sc">==</span> <span class="st">&quot;--&quot;</span>, <span class="dv">0</span>, table[[<span class="dv">1</span>]][[<span class="dv">2</span>, <span class="dv">3</span>]]))  <span class="co"># Make sure non-occurences are not registered as &#39;--&#39;</span></span>
-<span id="cb15-32"><a href="#cb15-32" tabindex="-1"></a>            names<span class="sc">$</span>female[i] <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">ifelse</span>(table[[<span class="dv">1</span>]][[<span class="dv">6</span>, <span class="dv">3</span>]] <span class="sc">==</span> <span class="st">&quot;--&quot;</span>, <span class="dv">0</span>, table[[<span class="dv">1</span>]][[<span class="dv">6</span>, <span class="dv">3</span>]]))  <span class="co"># Make sure non-occurences are not registered as &#39;--&#39;</span></span>
-<span id="cb15-33"><a href="#cb15-33" tabindex="-1"></a></span>
-<span id="cb15-34"><a href="#cb15-34" tabindex="-1"></a>        }</span>
-<span id="cb15-35"><a href="#cb15-35" tabindex="-1"></a></span>
-<span id="cb15-36"><a href="#cb15-36" tabindex="-1"></a>    }  <span class="co"># end forloop</span></span>
-<span id="cb15-37"><a href="#cb15-37" tabindex="-1"></a></span>
-<span id="cb15-38"><a href="#cb15-38" tabindex="-1"></a>    names <span class="ot">&lt;-</span> names <span class="sc">%&gt;%</span></span>
-<span id="cb15-39"><a href="#cb15-39" tabindex="-1"></a>        <span class="fu">mutate</span>(<span class="at">perc_female =</span> <span class="fu">case_when</span>(<span class="fu">is.na</span>(female <span class="sc">==</span> <span class="cn">TRUE</span>) <span class="sc">&amp;</span> <span class="fu">is.na</span>(male) <span class="sc">==</span> <span class="cn">TRUE</span> <span class="sc">~</span> <span class="cn">NA</span>, <span class="fu">is.na</span>(female) <span class="sc">==</span></span>
-<span id="cb15-40"><a href="#cb15-40" tabindex="-1"></a>            <span class="cn">TRUE</span> <span class="sc">~</span> <span class="dv">0</span>, <span class="fu">is.na</span>(male <span class="sc">==</span> <span class="cn">TRUE</span>) <span class="sc">~</span> <span class="dv">1</span>, <span class="at">.default =</span> <span class="fu">round</span>((female<span class="sc">/</span>(male <span class="sc">+</span> female)), <span class="dv">2</span>))) <span class="sc">%&gt;%</span></span>
-<span id="cb15-41"><a href="#cb15-41" tabindex="-1"></a>        <span class="fu">select</span>(<span class="sc">!</span><span class="fu">c</span>(male, female, first_name))</span>
-<span id="cb15-42"><a href="#cb15-42" tabindex="-1"></a></span>
-<span id="cb15-43"><a href="#cb15-43" tabindex="-1"></a>    <span class="fu">return</span>(names)</span>
-<span id="cb15-44"><a href="#cb15-44" tabindex="-1"></a></span>
-<span id="cb15-45"><a href="#cb15-45" tabindex="-1"></a></span>
-<span id="cb15-46"><a href="#cb15-46" tabindex="-1"></a>}  <span class="co"># end function</span></span>
-<span id="cb15-47"><a href="#cb15-47" tabindex="-1"></a></span>
-<span id="cb15-48"><a href="#cb15-48" tabindex="-1"></a><span class="co"># ?mutate() ?case_when</span></span>
-<span id="cb15-49"><a href="#cb15-49" tabindex="-1"></a>testing <span class="ot">&lt;-</span> <span class="fu">gender_scraper.NV</span>(<span class="at">names =</span> df_ego, <span class="at">web_page =</span> <span class="st">&quot;https://nvb.meertens.knaw.nl/naam/is/&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a>gender_scraper.NV <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">names =</span> <span class="st">&quot;names element&quot;</span>, <span class="at">web_page =</span> <span class="st">&quot;https://nvb.meertens.knaw.nl/naam/is/&quot;</span>) {</span>
+<span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="#cb16-3" tabindex="-1"></a>    names<span class="sc">$</span>first_name <span class="ot">&lt;-</span> <span class="fu">sapply</span>(<span class="fu">strsplit</span>(names<span class="sc">$</span>Naam, <span class="st">&quot; &quot;</span>), <span class="st">`</span><span class="at">[</span><span class="st">`</span>, <span class="dv">1</span>)  <span class="co"># This code should work as a way to extract first names from the ego characteristics dataset</span></span>
+<span id="cb16-4"><a href="#cb16-4" tabindex="-1"></a>    names<span class="sc">$</span>male <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb16-5"><a href="#cb16-5" tabindex="-1"></a>    names<span class="sc">$</span>female <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb16-6"><a href="#cb16-6" tabindex="-1"></a></span>
+<span id="cb16-7"><a href="#cb16-7" tabindex="-1"></a>    <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(names)) {</span>
+<span id="cb16-8"><a href="#cb16-8" tabindex="-1"></a></span>
+<span id="cb16-9"><a href="#cb16-9" tabindex="-1"></a>        <span class="co"># print(names$first_name[i])</span></span>
+<span id="cb16-10"><a href="#cb16-10" tabindex="-1"></a></span>
+<span id="cb16-11"><a href="#cb16-11" tabindex="-1"></a>        web_page <span class="ot">&lt;-</span> <span class="fu">read_html</span>(<span class="fu">paste0</span>(<span class="st">&quot;https://nvb.meertens.knaw.nl/naam/is/&quot;</span>, names<span class="sc">$</span>first_name[i]))</span>
+<span id="cb16-12"><a href="#cb16-12" tabindex="-1"></a></span>
+<span id="cb16-13"><a href="#cb16-13" tabindex="-1"></a>        table <span class="ot">&lt;-</span> web_page <span class="sc">%&gt;%</span></span>
+<span id="cb16-14"><a href="#cb16-14" tabindex="-1"></a>            rvest<span class="sc">::</span><span class="fu">html_elements</span>(<span class="st">&quot;body&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb16-15"><a href="#cb16-15" tabindex="-1"></a>            rvest<span class="sc">::</span><span class="fu">html_elements</span>(<span class="st">&quot;table&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb16-16"><a href="#cb16-16" tabindex="-1"></a>            rvest<span class="sc">::</span><span class="fu">html_table</span>()</span>
+<span id="cb16-17"><a href="#cb16-17" tabindex="-1"></a></span>
+<span id="cb16-18"><a href="#cb16-18" tabindex="-1"></a>        <span class="cf">if</span> (<span class="fu">length</span>(table) <span class="sc">==</span> <span class="dv">0</span>) {</span>
+<span id="cb16-19"><a href="#cb16-19" tabindex="-1"></a></span>
+<span id="cb16-20"><a href="#cb16-20" tabindex="-1"></a>            <span class="fu">print</span>(<span class="fu">length</span>(table))</span>
+<span id="cb16-21"><a href="#cb16-21" tabindex="-1"></a></span>
+<span id="cb16-22"><a href="#cb16-22" tabindex="-1"></a>            names<span class="sc">$</span>male[i] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb16-23"><a href="#cb16-23" tabindex="-1"></a>            names<span class="sc">$</span>female[i] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb16-24"><a href="#cb16-24" tabindex="-1"></a></span>
+<span id="cb16-25"><a href="#cb16-25" tabindex="-1"></a>        } <span class="cf">else</span> {</span>
+<span id="cb16-26"><a href="#cb16-26" tabindex="-1"></a></span>
+<span id="cb16-27"><a href="#cb16-27" tabindex="-1"></a>            <span class="co"># print(table) print(table[[1]][[2,3]]) # Check if values for male are coherent and</span></span>
+<span id="cb16-28"><a href="#cb16-28" tabindex="-1"></a>            <span class="co"># accurate print(table[[1]][[6,3]]) # Check if values for female are coherent and</span></span>
+<span id="cb16-29"><a href="#cb16-29" tabindex="-1"></a>            <span class="co"># accurate</span></span>
+<span id="cb16-30"><a href="#cb16-30" tabindex="-1"></a></span>
+<span id="cb16-31"><a href="#cb16-31" tabindex="-1"></a>            names<span class="sc">$</span>male[i] <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">ifelse</span>(table[[<span class="dv">1</span>]][[<span class="dv">2</span>, <span class="dv">3</span>]] <span class="sc">==</span> <span class="st">&quot;--&quot;</span>, <span class="dv">0</span>, table[[<span class="dv">1</span>]][[<span class="dv">2</span>, <span class="dv">3</span>]]))  <span class="co"># Make sure non-occurences are not registered as &#39;--&#39;</span></span>
+<span id="cb16-32"><a href="#cb16-32" tabindex="-1"></a>            names<span class="sc">$</span>female[i] <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">ifelse</span>(table[[<span class="dv">1</span>]][[<span class="dv">6</span>, <span class="dv">3</span>]] <span class="sc">==</span> <span class="st">&quot;--&quot;</span>, <span class="dv">0</span>, table[[<span class="dv">1</span>]][[<span class="dv">6</span>, <span class="dv">3</span>]]))  <span class="co"># Make sure non-occurences are not registered as &#39;--&#39;</span></span>
+<span id="cb16-33"><a href="#cb16-33" tabindex="-1"></a></span>
+<span id="cb16-34"><a href="#cb16-34" tabindex="-1"></a>        }</span>
+<span id="cb16-35"><a href="#cb16-35" tabindex="-1"></a></span>
+<span id="cb16-36"><a href="#cb16-36" tabindex="-1"></a>    }  <span class="co"># end forloop</span></span>
+<span id="cb16-37"><a href="#cb16-37" tabindex="-1"></a></span>
+<span id="cb16-38"><a href="#cb16-38" tabindex="-1"></a>    names <span class="ot">&lt;-</span> names <span class="sc">%&gt;%</span></span>
+<span id="cb16-39"><a href="#cb16-39" tabindex="-1"></a>        <span class="fu">mutate</span>(<span class="at">perc_female =</span> <span class="fu">case_when</span>(<span class="fu">is.na</span>(female <span class="sc">==</span> <span class="cn">TRUE</span>) <span class="sc">&amp;</span> <span class="fu">is.na</span>(male) <span class="sc">==</span> <span class="cn">TRUE</span> <span class="sc">~</span> <span class="cn">NA</span>, <span class="fu">is.na</span>(female) <span class="sc">==</span></span>
+<span id="cb16-40"><a href="#cb16-40" tabindex="-1"></a>            <span class="cn">TRUE</span> <span class="sc">~</span> <span class="dv">0</span>, <span class="fu">is.na</span>(male <span class="sc">==</span> <span class="cn">TRUE</span>) <span class="sc">~</span> <span class="dv">1</span>, <span class="at">.default =</span> <span class="fu">round</span>((female<span class="sc">/</span>(male <span class="sc">+</span> female)), <span class="dv">2</span>))) <span class="sc">%&gt;%</span></span>
+<span id="cb16-41"><a href="#cb16-41" tabindex="-1"></a>        <span class="fu">select</span>(<span class="sc">!</span><span class="fu">c</span>(male, female, first_name))</span>
+<span id="cb16-42"><a href="#cb16-42" tabindex="-1"></a></span>
+<span id="cb16-43"><a href="#cb16-43" tabindex="-1"></a>    <span class="fu">return</span>(names)</span>
+<span id="cb16-44"><a href="#cb16-44" tabindex="-1"></a></span>
+<span id="cb16-45"><a href="#cb16-45" tabindex="-1"></a></span>
+<span id="cb16-46"><a href="#cb16-46" tabindex="-1"></a>}  <span class="co"># end function</span></span>
+<span id="cb16-47"><a href="#cb16-47" tabindex="-1"></a></span>
+<span id="cb16-48"><a href="#cb16-48" tabindex="-1"></a><span class="co"># ?mutate() ?case_when</span></span>
+<span id="cb16-49"><a href="#cb16-49" tabindex="-1"></a>df_ego <span class="ot">&lt;-</span> <span class="fu">gender_scraper.NV</span>(<span class="at">names =</span> df_ego, <span class="at">web_page =</span> <span class="st">&quot;https://nvb.meertens.knaw.nl/naam/is/&quot;</span>)</span></code></pre></div>
 <pre class="test2"><code>#&gt; [1] 0</code></pre>
-<div class="sourceCode" id="cb17"><pre
-class="sourceCode r test"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a><span class="co"># paste0(&#39;https://nvb.meertens.knaw.nl/naam/is/&#39;, &#39;name&#39;) # This will eventually be used for</span></span>
-<span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a><span class="co"># automating the scraping process</span></span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a><span class="co"># paste0(&#39;https://nvb.meertens.knaw.nl/naam/is/&#39;, &#39;name&#39;) # This will eventually be used for</span></span>
+<span id="cb18-2"><a href="#cb18-2" tabindex="-1"></a><span class="co"># automating the scraping process</span></span></code></pre></div>
 </div>
 <div id="check-results" class="section level3" number="3.2.4">
 <h3><span class="header-section-number">3.2.4</span> Check results</h3>
-<div class="sourceCode" id="cb18"><pre
-class="sourceCode r test"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a>check <span class="ot">&lt;-</span> testing <span class="sc">%&gt;%</span></span>
-<span id="cb18-2"><a href="#cb18-2" tabindex="-1"></a>    <span class="fu">count</span>(perc_female)</span>
-<span id="cb18-3"><a href="#cb18-3" tabindex="-1"></a></span>
-<span id="cb18-4"><a href="#cb18-4" tabindex="-1"></a><span class="fu">plot</span>(check<span class="sc">$</span>perc_female, check<span class="sc">$</span>n)</span></code></pre></div>
-<p><img src="Data_preparation_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
 <div class="sourceCode" id="cb19"><pre
-class="sourceCode r test"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a><span class="co"># net_w2 &lt;- igraph::graph_from_adjacency_matrix(soc_data$nets[2,,], #now, I take the second wave</span></span>
-<span id="cb19-2"><a href="#cb19-2" tabindex="-1"></a><span class="co"># mode = c(&#39;directed&#39;), weighted = NULL,diag = FALSE,add.colnames = NULL)</span></span></code></pre></div>
+class="sourceCode r test"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a>check <span class="ot">&lt;-</span> df_ego <span class="sc">%&gt;%</span></span>
+<span id="cb19-2"><a href="#cb19-2" tabindex="-1"></a>    <span class="fu">count</span>(perc_female)</span>
+<span id="cb19-3"><a href="#cb19-3" tabindex="-1"></a></span>
+<span id="cb19-4"><a href="#cb19-4" tabindex="-1"></a><span class="fu">plot</span>(check<span class="sc">$</span>perc_female, check<span class="sc">$</span>n)</span></code></pre></div>
+<p><img src="Data_preparation_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+</div>
+</div>
+<div id="journal-rankings" class="section level2" number="3.3">
+<h2><span class="header-section-number">3.3</span> Journal Rankings</h2>
+<div id="extract-works-and-check-journals" class="section level3"
+number="3.3.1">
+<h3><span class="header-section-number">3.3.1</span> Extract works and
+check journals</h3>
+<div class="sourceCode" id="cb20"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a>df_works <span class="ot">&lt;-</span> <span class="fu">do.call</span>(rbind.data.frame, df<span class="sc">$</span>works)  <span class="co"># put works in dataframe</span></span>
+<span id="cb20-2"><a href="#cb20-2" tabindex="-1"></a><span class="fu">head</span>(df_works)</span></code></pre></div>
+<pre class="test2"><code>#&gt; # A tibble: 6 × 38
+#&gt;   id     title display_name author ab    publication_date so    so_id host_organization issn_l url  
+#&gt;   &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;        &lt;list&gt; &lt;chr&gt; &lt;chr&gt;            &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;             &lt;chr&gt;  &lt;chr&gt;
+#&gt; 1 https… Pare… Parental in… &lt;df&gt;   Abst… 2021-12-24       Jour… http… Wiley             0022-… http…
+#&gt; 2 https… Dive… Diverse Ste… &lt;df&gt;   This… 2024-01-17       &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;              &lt;NA&gt;   http…
+#&gt; 3 https… Tran… Transnation… &lt;df&gt;   Perc… 2021-06-28       Fron… http… Frontiers Media   2297-… http…
+#&gt; 4 https… Inte… Interdepend… &lt;df&gt;   This… 2023-06-27       Jour… http… SAGE Publishing   0265-… http…
+#&gt; 5 https… Corr… Corrigendum… &lt;df&gt;   [Thi… 2022-02-14       Fron… http… Frontiers Media   2297-… http…
+#&gt; 6 https… Fina… Financial c… &lt;df&gt;   Abst… 2023-06-26       Fami… http… Wiley             0197-… http…
+#&gt; # ℹ 27 more variables: pdf_url &lt;chr&gt;, license &lt;chr&gt;, version &lt;chr&gt;, first_page &lt;chr&gt;,
+#&gt; #   last_page &lt;chr&gt;, volume &lt;chr&gt;, issue &lt;chr&gt;, is_oa &lt;lgl&gt;, is_oa_anywhere &lt;lgl&gt;, oa_status &lt;chr&gt;,
+#&gt; #   oa_url &lt;chr&gt;, any_repository_has_fulltext &lt;lgl&gt;, language &lt;chr&gt;, grants &lt;list&gt;,
+#&gt; #   cited_by_count &lt;int&gt;, counts_by_year &lt;list&gt;, publication_year &lt;int&gt;, cited_by_api_url &lt;chr&gt;,
+#&gt; #   ids &lt;list&gt;, doi &lt;chr&gt;, type &lt;chr&gt;, referenced_works &lt;list&gt;, related_works &lt;list&gt;,
+#&gt; #   is_paratext &lt;lgl&gt;, is_retracted &lt;lgl&gt;, concepts &lt;list&gt;, topics &lt;list&gt;</code></pre>
+<div class="sourceCode" id="cb22"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" tabindex="-1"></a><span class="co"># test1 &lt;- df_works %&gt;% select(id, so, issn_l, author) # test the works</span></span></code></pre></div>
+</div>
+<div id="load-journal-ranking-data" class="section level3"
+number="3.3.2">
+<h3><span class="header-section-number">3.3.2</span> Load journal
+ranking data</h3>
+<div class="sourceCode" id="cb23"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">read_csv2</span>(<span class="st">&quot;data/scimagojr_23_journals_all.csv&quot;</span>)</span>
+<span id="cb23-2"><a href="#cb23-2" tabindex="-1"></a><span class="fu">head</span>(dat)</span></code></pre></div>
+<pre class="test2"><code>#&gt; # A tibble: 6 × 24
+#&gt;    Rank    Sourceid Title       Type  Issn    SJR `SJR Best Quartile` `H index` `Total Docs. (2023)`
+#&gt;   &lt;dbl&gt;       &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt;                   &lt;dbl&gt;                &lt;dbl&gt;
+#&gt; 1     1       28773 Ca-A Cance… jour… 1542… 106.  Q1                        211                   49
+#&gt; 2     2 19300156903 Foundation… jour… 1935…  37.0 Q1                         39                    3
+#&gt; 3     3       20315 Nature Rev… jour… 1471…  35.9 Q1                        508                  123
+#&gt; 4     4       29431 Quarterly … jour… 0033…  30.4 Q1                        306                   47
+#&gt; 5     5       12464 Nature Rev… jour… 1474…  26.8 Q1                        505                  105
+#&gt; 6     6       18434 Cell        jour… 0092…  24.3 Q1                        892                  439
+#&gt; # ℹ 15 more variables: `Total Docs. (3years)` &lt;dbl&gt;, `Total Refs.` &lt;dbl&gt;,
+#&gt; #   `Total Cites (3years)` &lt;dbl&gt;, `Citable Docs. (3years)` &lt;dbl&gt;, `Cites / Doc. (2years)` &lt;dbl&gt;,
+#&gt; #   `Ref. / Doc.` &lt;dbl&gt;, `%Female` &lt;dbl&gt;, Overton &lt;dbl&gt;, SDG &lt;dbl&gt;, Country &lt;chr&gt;, Region &lt;chr&gt;,
+#&gt; #   Publisher &lt;chr&gt;, Coverage &lt;chr&gt;, Categories &lt;chr&gt;, Areas &lt;chr&gt;</code></pre>
+</div>
+<div id="split-the-issn-codes-if-2-are-available" class="section level3"
+number="3.3.3">
+<h3><span class="header-section-number">3.3.3</span> Split the ISSN
+codes if 2 are available</h3>
+<div class="sourceCode" id="cb25"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" tabindex="-1"></a>dat<span class="sc">$</span>Issn_1 <span class="ot">&lt;-</span> <span class="fu">sapply</span>(<span class="fu">strsplit</span>(dat<span class="sc">$</span>Issn, <span class="st">&quot;, &quot;</span>), <span class="st">`</span><span class="at">[</span><span class="st">`</span>, <span class="dv">1</span>)  <span class="co"># This code should work as a way to split the two issn codes</span></span>
+<span id="cb25-2"><a href="#cb25-2" tabindex="-1"></a>dat<span class="sc">$</span>Issn_2 <span class="ot">&lt;-</span> <span class="fu">sapply</span>(<span class="fu">strsplit</span>(dat<span class="sc">$</span>Issn, <span class="st">&quot;, &quot;</span>), <span class="st">`</span><span class="at">[</span><span class="st">`</span>, <span class="dv">2</span>)</span>
+<span id="cb25-3"><a href="#cb25-3" tabindex="-1"></a></span>
+<span id="cb25-4"><a href="#cb25-4" tabindex="-1"></a><span class="co"># dat$Issn_1[1] str_length(dat$Issn_1[1])</span></span>
+<span id="cb25-5"><a href="#cb25-5" tabindex="-1"></a></span>
+<span id="cb25-6"><a href="#cb25-6" tabindex="-1"></a>dat<span class="sc">$</span>Issn_1 <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="fu">substr</span>(dat<span class="sc">$</span>Issn_1, <span class="dv">1</span>, <span class="dv">4</span>), <span class="st">&quot;-&quot;</span>, <span class="fu">substr</span>(dat<span class="sc">$</span>Issn_1, <span class="dv">5</span>, <span class="dv">8</span>))  <span class="co"># Hyphenate the codes to match the target df </span></span>
+<span id="cb25-7"><a href="#cb25-7" tabindex="-1"></a>dat<span class="sc">$</span>Issn_2 <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(<span class="fu">is.na</span>(dat<span class="sc">$</span>Issn_2) <span class="sc">==</span> <span class="cn">TRUE</span>, <span class="cn">NA</span>, <span class="fu">paste0</span>(<span class="fu">substr</span>(dat<span class="sc">$</span>Issn_2, <span class="dv">1</span>, <span class="dv">4</span>), <span class="st">&quot;-&quot;</span>, <span class="fu">substr</span>(dat<span class="sc">$</span>Issn_2,</span>
+<span id="cb25-8"><a href="#cb25-8" tabindex="-1"></a>    <span class="dv">5</span>, <span class="dv">8</span>)))  <span class="co"># Hyphenate the codes, but make non-existing second codes NA</span></span>
+<span id="cb25-9"><a href="#cb25-9" tabindex="-1"></a></span>
+<span id="cb25-10"><a href="#cb25-10" tabindex="-1"></a>df_pres <span class="ot">&lt;-</span> dat <span class="sc">%&gt;%</span></span>
+<span id="cb25-11"><a href="#cb25-11" tabindex="-1"></a>    <span class="fu">select</span>(Rank, Title, Issn_1, Issn_2, SJR, <span class="st">`</span><span class="at">SJR Best Quartile</span><span class="st">`</span>, <span class="st">`</span><span class="at">H index</span><span class="st">`</span>, <span class="st">`</span><span class="at">%Female</span><span class="st">`</span>)  <span class="co"># Make a set that will be joined with df_works</span></span></code></pre></div>
+</div>
+<div id="check-compatability" class="section level3" number="3.3.4">
+<h3><span class="header-section-number">3.3.4</span> check
+compatability</h3>
+<div class="sourceCode" id="cb26"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" tabindex="-1"></a>df_works <span class="sc">%&gt;%</span></span>
+<span id="cb26-2"><a href="#cb26-2" tabindex="-1"></a>    <span class="fu">select</span>(issn_l)</span></code></pre></div>
+<pre class="test2"><code>#&gt; # A tibble: 6,408 × 1
+#&gt;    issn_l   
+#&gt;    &lt;chr&gt;    
+#&gt;  1 0022-2445
+#&gt;  2 &lt;NA&gt;     
+#&gt;  3 2297-7775
+#&gt;  4 0265-4075
+#&gt;  5 2297-7775
+#&gt;  6 0197-6664
+#&gt;  7 &lt;NA&gt;     
+#&gt;  8 1525-8610
+#&gt;  9 1664-1078
+#&gt; 10 1554-351X
+#&gt; # ℹ 6,398 more rows</code></pre>
+<div class="sourceCode" id="cb28"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" tabindex="-1"></a>df_pres <span class="sc">%&gt;%</span></span>
+<span id="cb28-2"><a href="#cb28-2" tabindex="-1"></a>    <span class="fu">select</span>(Issn_1, Issn_2)</span></code></pre></div>
+<pre class="test2"><code>#&gt; # A tibble: 29,165 × 2
+#&gt;    Issn_1    Issn_2   
+#&gt;    &lt;chr&gt;     &lt;chr&gt;    
+#&gt;  1 1542-4863 0007-9235
+#&gt;  2 1935-8245 1935-8237
+#&gt;  3 1471-0072 1471-0080
+#&gt;  4 0033-5533 1531-4650
+#&gt;  5 1474-175X 1474-1768
+#&gt;  6 0092-8674 1097-4172
+#&gt;  7 1474-1784 1474-1776
+#&gt;  8 1944-7981 0002-8282
+#&gt;  9 2058-8437 &lt;NA&gt;     
+#&gt; 10 1759-4782 1759-4774
+#&gt; # ℹ 29,155 more rows</code></pre>
+<div class="sourceCode" id="cb30"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" tabindex="-1"></a>df_works<span class="sc">$</span>check <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(df_works<span class="sc">$</span>issn_l <span class="sc">%in%</span> df_pres<span class="sc">$</span>Issn_1 <span class="sc">|</span> df_works<span class="sc">$</span>issn_l <span class="sc">%in%</span> df_pres<span class="sc">$</span>Issn_2, <span class="dv">1</span>,</span>
+<span id="cb30-2"><a href="#cb30-2" tabindex="-1"></a>    <span class="dv">0</span>)</span>
+<span id="cb30-3"><a href="#cb30-3" tabindex="-1"></a></span>
+<span id="cb30-4"><a href="#cb30-4" tabindex="-1"></a>mis_journal <span class="ot">&lt;-</span> df_works <span class="sc">%&gt;%</span></span>
+<span id="cb30-5"><a href="#cb30-5" tabindex="-1"></a>    <span class="fu">filter</span>(check <span class="sc">==</span> <span class="dv">0</span>)</span>
+<span id="cb30-6"><a href="#cb30-6" tabindex="-1"></a></span>
+<span id="cb30-7"><a href="#cb30-7" tabindex="-1"></a><span class="fu">as.data.frame</span>(<span class="fu">unique</span>(mis_journal<span class="sc">$</span>so))  <span class="co"># Still left with 166 missing journals</span></span></code></pre></div>
+<pre class="test2"><code>#&gt;                                                                                                                  unique(mis_journal$so)
+#&gt; 1                                                                                                                            PNAS Nexus
+#&gt; 2                                                                                     International Journal of Agile Management Systems
+#&gt; 3                                                                                                           Research Ideas and Outcomes
+#&gt; 4                                                                                                    Research Integrity and Peer Review
+#&gt; 5                                                                                                   Tijdschrift voor ouderengeneeskunde
+#&gt; 6                                                    Developments in marketing science: proceedings of the Academy of Marketing Science
+#&gt; 7                                                                                                               SSRN Electronic Journal
+#&gt; 8                                                                                                                         Verpleegkunde
+#&gt; 9                                                                                                                                 Geron
+#&gt; 10                                                                                                           Journal of Family Research
+#&gt; 11                                                                                                     Advances in Life Course Research
+#&gt; 12                                     Zhurnal Sotsiologii i Sotsialnoy Antropologii (The Journal of Sociology and Social Anthropology)
+#&gt; 13                                                                                                        Tijdschrift voor Criminologie
+#&gt; 14                                                                                                                  PLOS Digital Health
+#&gt; 15                                                                                                                       ProtoSociology
+#&gt; 16                                                                                                                          Connections
+#&gt; 17                                                                                                                           Sociologie
+#&gt; 18                                                                                                            Work Aging and Retirement
+#&gt; 19                                                                                                                 Tijdschrift voor HRM
+#&gt; 20                                                                                                    Academy of Management Proceedings
+#&gt; 21                                                                                                                    Der Unfallchirurg
+#&gt; 22                                                                                                              3D Printing in Medicine
+#&gt; 23                                                                                                                  The Surgery Journal
+#&gt; 24                                                                                                              Orthopaedic Proceedings
+#&gt; 25                                                                                                     Annals of Translational Medicine
+#&gt; 26                                                                                                             Journal of Wrist Surgery
+#&gt; 27                                                                                                                         Books Abroad
+#&gt; 28                                                                       Journal of Communication Disorders Deaf Studies &amp; Hearing Aids
+#&gt; 29                                                                                               Revista Brasileira de Ensino de Física
+#&gt; 30                                                                                                       Journal of GLBT Family Studies
+#&gt; 31                                                                                                 Tijdschrift voor Arbeidsvraagstukken
+#&gt; 32                                                                                                                    Physical Review C
+#&gt; 33  Physical review. D. Particles, fields, gravitation, and cosmology/Physical review. D, Particles, fields, gravitation, and cosmology
+#&gt; 34                                                                                                             Zeitschrift für Physik C
+#&gt; 35                           Physical review. D. Particles, fields, gravitation, and cosmology/Physical review. D. Particles and fields
+#&gt; 36                                                                                                                     Il Nuovo Cimento
+#&gt; 37                                                                                                                      Physics Letters
+#&gt; 38                                                                                  Nuclear Instruments and Methods in Physics Research
+#&gt; 39                                                                                               Zeitschrift für Physik A Atomic Nuclei
+#&gt; 40                                                                                          Nuclear Physics B - Proceedings Supplements
+#&gt; 41                                                                                          Acta Physica Hungarica A) Heavy Ion Physics
+#&gt; 42                                                                                                               EPJ Web of Conferences
+#&gt; 43                                                                                                                           EPJ direct
+#&gt; 44                                                   Lettere al nuovo cimento della societa italiana di fisica/Lettere al nuovo cimento
+#&gt; 45                                                                                                          Tijdschrift voor Sociologie
+#&gt; 46                                                                                            Bulletin of the American Physical Society
+#&gt; 47                                                                                                             Lecture notes in physics
+#&gt; 48                                                                                                     Journal of Sociological Research
+#&gt; 49                                                                                                                      Familie &amp; Recht
+#&gt; 50                                                                                                               Beleid en Maatschappij
+#&gt; 51                                                                                                       Tijdschrift voor Genderstudies
+#&gt; 52                                                                                                                          Res Publica
+#&gt; 53                                                                                                                           Sociologos
+#&gt; 54                                                                                                  Jurnal Pengabdian Masyarakat Bangsa
+#&gt; 55                                                                                      TSG - Tijdschrift voor gezondheidswetenschappen
+#&gt; 56                                                                                                  Journal of Experimental Criminology
+#&gt; 57                                                                                               European Journal for Security Research
+#&gt; 58                                                                                                         Police Practice and Research
+#&gt; 59                                                                                                            International Criminology
+#&gt; 60                                                                                               The Howard Journal of Criminal Justice
+#&gt; 61                                                                                                                         Family &amp; Law
+#&gt; 62                                                                                                       European studies of population
+#&gt; 63                                                                                                          Tijdschrift voor Veiligheid
+#&gt; 64                                                                                                                   Kind en adolescent
+#&gt; 65                                                                                                       The Journal of Socio-Economics
+#&gt; 66                                                                                                      Rationality, markets and morals
+#&gt; 67                                                                                           Handbooks of sociology and social research
+#&gt; 68                                                                  Kölner Zeitschrift für Soziologie und Sozialpsychologie. Sonderheft
+#&gt; 69                                                                                                                    Netzwerkforschung
+#&gt; 70                                                                                                              Heidelberger Jahrbücher
+#&gt; 71                                                                                                                     Homo Oeconomicus
+#&gt; 72                                                                                                                                 Bone
+#&gt; 73                                                                                                                      BoneKEy Reports
+#&gt; 74                                                                                                                The Open Bone Journal
+#&gt; 75                                                                                     Zeitschrift für Orthopädie und ihre Grenzgebiete
+#&gt; 76                                                                              IOP Conference Series Materials Science and Engineering
+#&gt; 77                                                                                                                        Der Radiologe
+#&gt; 78                                                                     Journal für Mineralstoffwechsel &amp; Muskuloskelettale Erkrankungen
+#&gt; 79                                                                                                                  Transfusion Science
+#&gt; 80                                                                            The Proceedings of the Materials and Mechanics Conference
+#&gt; 81                                                                                                 European Journal of Echocardiography
+#&gt; 82                                                                                            Schweizerische medizinische Wochenschrift
+#&gt; 83                                                                                                     European Journal of Biochemistry
+#&gt; 84                                                                                           Journal of Molecular Catalysis B Enzymatic
+#&gt; 85                                                   International Journal of Advanced Research in Science Communication and Technology
+#&gt; 86                                                                                             International Journal of Health Sciences
+#&gt; 87                                                     International Journal for Research in Applied Science and Engineering Technology
+#&gt; 88                                                                                                                The Creative Launcher
+#&gt; 89                                                                                                               Arthritis &amp; Rheumatism
+#&gt; 90                                                                                                         European Urology Supplements
+#&gt; 91                                                                                                                           Pedagogiek
+#&gt; 92                                                                                                                Oxford Open Economics
+#&gt; 93                                                                                                    Городские исследования и практики
+#&gt; 94                                                                                          Journal of Threat Assessment and Management
+#&gt; 95                                                                                                             Stata technical bulletin
+#&gt; 96                                                                              Journal of the Chemical Society. Perkin transactions II
+#&gt; 97                                                                                                        Chemischer Informationsdienst
+#&gt; 98                                                                                                                  Procedia Technology
+#&gt; 99                                                                                                                WIRTSCHAFTSINFORMATIK
+#&gt; 100                                                                                                  Journal of Hospital Administration
+#&gt; 101                                                                                               Lecture Notes on Software Engineering
+#&gt; 102                                                                                       International Journal of Corporate Governance
+#&gt; 103                                                                                     Journal of Management &amp; Marketing in Healthcare
+#&gt; 104                                                                                                                      Progress in IS
+#&gt; 105                                                                      International Journal of Organisational Design and Engineering
+#&gt; 106                                                                                       \u0098The \u009centerprise engineering series
+#&gt; 107                                                                  Advances in medical technologies and clinical practice book series
+#&gt; 108                                                                                      Maandblad Voor Accountancy en Bedrijfseconomie
+#&gt; 109                                                                                                          Communications of the IIMA
+#&gt; 110                                                                                                 International Journal of Healthcare
+#&gt; 111                                                                                                                                TvPO
+#&gt; 112                                                                                                   Zeitschrift für Familienforschung
+#&gt; 113                                                                                               HNO-Informationen (Kongressabstracts)
+#&gt; 114                                                                                                                      Sociaal Bestek
+#&gt; 115                                                                                                       Arbeidsrechtelijke Annotaties
+#&gt; 116                                                                                                                  Sociologische gids
+#&gt; 117                                                                                                               Religie &amp; Samenleving
+#&gt; 118                                                                   International Journal of Nonprofit and Voluntary Sector Marketing
+#&gt; 119                                                                                                    Netherlands journal of sociology
+#&gt; 120                                                                                                              Urban Studies Research
+#&gt; 121                                                                                                          Contributions to economics
+#&gt; 122                                                                                  Journal of Social Intervention Theory and Practice
+#&gt; 123                                                                                                       Politics of the Low Countries
+#&gt; 124                                                                                                                 Gender and politics
+#&gt; 125                                                                                             Sports economics, management and policy
+#&gt; 126                                                                                                                  Bevolking en gezin
+#&gt; 127                                                                                          The Hungarian Educational Research Journal
+#&gt; 128                                                   Advances in human resources management and organizational development book series
+#&gt; 129                                                                                                        Gazette (Leiden Netherlands)
+#&gt; 130                                                                                           Procedia - Social and Behavioral Sciences
+#&gt; 131                                                                                                               Politics and Religion
+#&gt; 132                                                                                                                         Publizistik
+#&gt; 133                                                                                                                      Communications
+#&gt; 134                                                                                                            International Psychiatry
+#&gt; 135                                                                                            Tijdschrift voor Religie Recht en Beleid
+#&gt; 136                                                                                                             Justitiële verkenningen
+#&gt; 137                                                                                             International Journal of Celiac Disease
+#&gt; 138                                                                                                                       INTAMS review
+#&gt; 139                                                                                                      Religionspädagogische Beiträge
+#&gt; 140                                                                                                                      Gender studies
+#&gt; 141                                                                                                        \u0098The \u009cPolice chief
+#&gt; 142                                                                                           International Journal of Digital Curation
+#&gt; 143                                                                                                               Bestuurswetenschappen
+#&gt; 144                                                                                                                  Expertise en Recht
+#&gt; 145                                                                                                            Archiv für Hydrobiologie
+#&gt; 146                                                                                 Journal of the North American Benthological Society
+#&gt; 147                                                                                               Nederlandse faunistische mededelingen
+#&gt; 148                                                                                                    The Sociological Review Magazine
+#&gt; 149                                                                                                            Ask Research and Methods
+#&gt; 150                                                                                       TVZ - Verpleegkunde in praktijk en wetenschap
+#&gt; 151                                                                                       Advances in intelligent systems and computing
+#&gt; 152                                                                                        Advances in education and educational trends
+#&gt; 153                                                                                                           Religion and human rights
+#&gt; 154                                                                                     International Journal of Education and Religion
+#&gt; 155                                                                                              Al-Izzah Jurnal Hasil-Hasil Penelitian
+#&gt; 156                                                                                                             Jurnal Penelitian Agama
+#&gt; 157                                                                                                        Jurnal Masyarakat dan Budaya
+#&gt; 158                                                                                                   Studia Philosophica et Theologica
+#&gt; 159                                                                                 Journal of Philosophy Culture and Political Science
+#&gt; 160                                                                                          Yearbook for Ritual and Liturgical Studies
+#&gt; 161                                                                                                                           Bijdragen
+#&gt; 162                                                                                 Electroencephalography and Clinical Neurophysiology
+#&gt; 163                                                           Nederlands Archief voor Kerkgeschiedenis / Dutch Review of Church History
+#&gt; 164                                                                                                              Tijdschrift Sociologie
+#&gt; 165                                                                                                      Politics Groups and Identities
+#&gt; 166                                                                                                                          Sociopedia</code></pre>
+</div>
+<div id="create-id-variable" class="section level3" number="3.3.5">
+<h3><span class="header-section-number">3.3.5</span> Create ID
+variable</h3>
+<div class="sourceCode" id="cb32"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" tabindex="-1"></a>df_pres <span class="ot">&lt;-</span> df_pres <span class="sc">%&gt;%</span></span>
+<span id="cb32-2"><a href="#cb32-2" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">issn_l =</span> <span class="fu">case_when</span>(Issn_1 <span class="sc">%in%</span> df_works<span class="sc">$</span>issn_l <span class="sc">==</span> <span class="cn">TRUE</span> <span class="sc">~</span> Issn_1, Issn_2 <span class="sc">%in%</span> df_works<span class="sc">$</span>issn_l <span class="sc">==</span></span>
+<span id="cb32-3"><a href="#cb32-3" tabindex="-1"></a>        <span class="cn">TRUE</span> <span class="sc">~</span> Issn_2, <span class="at">.default =</span> <span class="cn">NA</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb32-4"><a href="#cb32-4" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(issn_l))</span></code></pre></div>
+</div>
+<div id="join-prestige-measures-and-works-together"
+class="section level3" number="3.3.6">
+<h3><span class="header-section-number">3.3.6</span> Join prestige
+measures and works together</h3>
+<div class="sourceCode" id="cb33"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" tabindex="-1"></a><span class="co"># ?left_join()</span></span>
+<span id="cb33-2"><a href="#cb33-2" tabindex="-1"></a>df_works <span class="ot">&lt;-</span> df_works <span class="sc">%&gt;%</span></span>
+<span id="cb33-3"><a href="#cb33-3" tabindex="-1"></a>    <span class="fu">left_join</span>(df_pres, <span class="at">by =</span> <span class="st">&quot;issn_l&quot;</span>, <span class="at">multiple =</span> <span class="st">&quot;all&quot;</span>)</span>
+<span id="cb33-4"><a href="#cb33-4" tabindex="-1"></a></span>
+<span id="cb33-5"><a href="#cb33-5" tabindex="-1"></a><span class="fu">head</span>(df_works)</span></code></pre></div>
+<pre class="test2"><code>#&gt; # A tibble: 6 × 47
+#&gt;   id     title display_name author ab    publication_date so    so_id host_organization issn_l url  
+#&gt;   &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;        &lt;list&gt; &lt;chr&gt; &lt;chr&gt;            &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;             &lt;chr&gt;  &lt;chr&gt;
+#&gt; 1 https… Pare… Parental in… &lt;df&gt;   Abst… 2021-12-24       Jour… http… Wiley             0022-… http…
+#&gt; 2 https… Dive… Diverse Ste… &lt;df&gt;   This… 2024-01-17       &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;              &lt;NA&gt;   http…
+#&gt; 3 https… Tran… Transnation… &lt;df&gt;   Perc… 2021-06-28       Fron… http… Frontiers Media   2297-… http…
+#&gt; 4 https… Inte… Interdepend… &lt;df&gt;   This… 2023-06-27       Jour… http… SAGE Publishing   0265-… http…
+#&gt; 5 https… Corr… Corrigendum… &lt;df&gt;   [Thi… 2022-02-14       Fron… http… Frontiers Media   2297-… http…
+#&gt; 6 https… Fina… Financial c… &lt;df&gt;   Abst… 2023-06-26       Fami… http… Wiley             0197-… http…
+#&gt; # ℹ 36 more variables: pdf_url &lt;chr&gt;, license &lt;chr&gt;, version &lt;chr&gt;, first_page &lt;chr&gt;,
+#&gt; #   last_page &lt;chr&gt;, volume &lt;chr&gt;, issue &lt;chr&gt;, is_oa &lt;lgl&gt;, is_oa_anywhere &lt;lgl&gt;, oa_status &lt;chr&gt;,
+#&gt; #   oa_url &lt;chr&gt;, any_repository_has_fulltext &lt;lgl&gt;, language &lt;chr&gt;, grants &lt;list&gt;,
+#&gt; #   cited_by_count &lt;int&gt;, counts_by_year &lt;list&gt;, publication_year &lt;int&gt;, cited_by_api_url &lt;chr&gt;,
+#&gt; #   ids &lt;list&gt;, doi &lt;chr&gt;, type &lt;chr&gt;, referenced_works &lt;list&gt;, related_works &lt;list&gt;,
+#&gt; #   is_paratext &lt;lgl&gt;, is_retracted &lt;lgl&gt;, concepts &lt;list&gt;, topics &lt;list&gt;, check &lt;dbl&gt;, Rank &lt;dbl&gt;,
+#&gt; #   Title &lt;chr&gt;, Issn_1 &lt;chr&gt;, Issn_2 &lt;chr&gt;, SJR &lt;dbl&gt;, `SJR Best Quartile` &lt;chr&gt;, …</code></pre>
+</div>
+</div>
+</div>
+<div id="save-datasets" class="section level1" number="4">
+<h1><span class="header-section-number">4</span> Save datasets</h1>
+<div class="sourceCode" id="cb35"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" tabindex="-1"></a><span class="co"># Save the raw sociology data for RU and UU</span></span>
+<span id="cb35-2"><a href="#cb35-2" tabindex="-1"></a><span class="fu">save</span>(soc_data, <span class="at">file =</span> <span class="st">&quot;data/processed/soc_data_raw.RData&quot;</span>)</span>
+<span id="cb35-3"><a href="#cb35-3" tabindex="-1"></a></span>
+<span id="cb35-4"><a href="#cb35-4" tabindex="-1"></a><span class="co"># Save the ego data for RU and UU sociologists</span></span>
+<span id="cb35-5"><a href="#cb35-5" tabindex="-1"></a><span class="fu">save</span>(df_ego, <span class="at">file =</span> <span class="st">&quot;data/processed/RU_UU_ego.RData&quot;</span>)</span>
+<span id="cb35-6"><a href="#cb35-6" tabindex="-1"></a></span>
+<span id="cb35-7"><a href="#cb35-7" tabindex="-1"></a><span class="co"># Save the works for RU and UU sociologists</span></span>
+<span id="cb35-8"><a href="#cb35-8" tabindex="-1"></a><span class="fu">save</span>(df_works, <span class="at">file =</span> <span class="st">&quot;data/processed/RU_UU_works.RData&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb36"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" tabindex="-1"></a><span class="co"># net_w2 &lt;- igraph::graph_from_adjacency_matrix(soc_data$nets[2,,], #now, I take the second wave</span></span>
+<span id="cb36-2"><a href="#cb36-2" tabindex="-1"></a><span class="co"># mode = c(&#39;directed&#39;), weighted = NULL,diag = FALSE,add.colnames = NULL)</span></span></code></pre></div>
 <p><br></p>
 <hr />
 </div>
-</div>
-</div>
 
-<div id="rmd-source-code">LS0tDQp0aXRsZTogIkRhdGEgcHJlcGFyYXRpb24iDQojYmlibGlvZ3JhcGh5OiByZWZlcmVuY2VzLmJpYg0KYXV0aG9yOiAiTmllbHMgVnVsbGluZ3MiDQpiaWJsaW9ncmFwaHk6IHJlZmVyZW5jZXMuYmliDQotLS0NCg0KYGBgez1odG1sfQ0KPHN0eWxlPg0KYm9keSB7DQp0ZXh0LWFsaWduOiBqdXN0aWZ5fQ0KPC9zdHlsZT4NCmBgYA0KDQpgYGB7ciwgZ2xvYmFsc2V0dGluZ3MsIGVjaG89RkFMU0UsIHdhcm5pbmc9RkFMU0UsIHJlc3VsdHM9J2hpZGUnfQ0KbGlicmFyeShrbml0cikNCg0Ka25pdHI6Om9wdHNfY2h1bmskc2V0KGVjaG8gPSBUUlVFKQ0Kb3B0c19jaHVuayRzZXQodGlkeS5vcHRzPWxpc3Qod2lkdGguY3V0b2ZmPTEwMCksdGlkeT1UUlVFLCB3YXJuaW5nID0gRkFMU0UsIG1lc3NhZ2UgPSBGQUxTRSxjb21tZW50ID0gIiM+IiwgY2FjaGU9VFJVRSwgY2xhc3Muc291cmNlPWMoInRlc3QiKSwgY2xhc3Mub3V0cHV0PWMoInRlc3QyIikpDQpvcHRpb25zKHdpZHRoID0gMTAwKQ0KcmdsOjpzZXR1cEtuaXRyKCkNCg0KDQoNCmNvbG9yaXplIDwtIGZ1bmN0aW9uKHgsIGNvbG9yKSB7c3ByaW50ZigiPHNwYW4gc3R5bGU9J2NvbG9yOiAlczsnPiVzPC9zcGFuPiIsIGNvbG9yLCB4KSB9DQoNCmBgYA0KDQpgYGB7ciBrbGlwcHksIGVjaG89RkFMU0UsIGluY2x1ZGU9VFJVRX0NCmtsaXBweTo6a2xpcHB5KHBvc2l0aW9uID0gYygndG9wJywgJ3JpZ2h0JykpDQojIGtsaXBweTo6a2xpcHB5KGNvbG9yID0gJ2RhcmtncmVlbicpDQoja2xpcHB5OjprbGlwcHkodG9vbHRpcF9tZXNzYWdlID0gJ0NsaWNrIHRvIGNvcHknLCB0b29sdGlwX3N1Y2Nlc3MgPSAnRG9uZScpDQpgYGANCg0KTGFzdCBjb21waWxlZCBvbiBgciBmb3JtYXQoU3lzLnRpbWUoKSwgJyVCLCAlWScpYA0KDQo8YnI+DQoNCi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQ0KDQojIFNldCB1cA0KDQpgYGB7cn0NCnJtKGxpc3QgPSBscygpKQ0KDQojIExpYnJhcmllcw0KbGlicmFyeShkYXRhLnRhYmxlKSAgIyBtYWlubHkgZm9yIGZhc3RlciBkYXRhIGhhbmRsaW5nDQpsaWJyYXJ5KHRpZHl2ZXJzZSkgICMgSSBhc3N1bWUgeW91IGFscmVhZHkgaW5zdGFsbGVkIHRoaXMgb25lIQ0KIyBpbnN0YWxsLnBhY2thZ2VzKCdodHRyJykgIyB3ZSBkb24ndCBuZWVkIHRoaXMgZm9yIG5vdyByZXF1aXJlKGh0dHIpDQojIGluc3RhbGwucGFja2FnZXMoInhtbDIiKQ0KbGlicmFyeSh4bWwyKQ0KIyBpbnN0YWxsLnBhY2thZ2VzKCJydmVzdCIpDQpsaWJyYXJ5KHJ2ZXN0KQ0KDQpgYGANCg0KIyBMb2FkIGRhdGENCg0KYGBge3J9DQpsb2FkKCJkYXRhL3NjaG9sYXJzXzIwMjQwOTI0LnJkYSIpDQpzY2hvbGFycyA8LSB4DQpybSh4KQ0KDQpgYGANCg0KIyMgVXNlciBmdW5jdGlvbiBmb3IgTmV0d29yayBkYXRhIGNyZWF0aW9uDQoNCkFib3V0IHRoZSBwYXJhbWV0ZXJzOg0KDQpkYXRhOiBvdXIgc2Nob2xhcnMgZmlsZSB1bml2ZXJzaXR5OiBDaGFyYWN0ZXIgdmVjdG9yIHdpdGggbmFtZXMgb2YgdW5pdmVyc2l0aWVzLiBXZSBoYXZlIHNldmVyYWwgdW5pdmVyc2l0aWVzIGluIHRoZSBOZXRoZXJsYW5kcy4gU2VlIGFib3ZlIGZvciByZWxldmFudCBuYW1lcy4NCg0KZGlzY2lwbGluZTogQ2hhcmFjdGVyIHZlY3RvciwgZWl0aGVyIHNvY2lvbG9neSBvciBwb2xpdGljYWwgc2NpZW5jZSBvciBib3RoLiB3YXZlczogYSBsaXN0IG9mIG51bWVyaWMgdmVjdG9ycyB3aXRoIHN0YXJ0IGFuZCBlbmQgeWVhciBvZiB3YXZlLg0KDQp0eXBlOiAiZmlyc3QiOiBkaXJlY3RlZDogZmlyc3QgYXV0aG9yIHNlbmRpbmcgdG8gb3RoZXJzICJsYXN0IjogZGlyZWN0ZWQ6IGxhc3QgYXV0aG9yIHNlbmRpbmcgdG8gb3RoZXJzICJhbGwiOiB1bmRpcmVjdGVkOiB0aWVzIGJldHdlZW4gYWxsIGF1dGhvcnMNCg0KT3V0cHV0OiBhIGxpc3QNCg0KLSAgIFwkbmV0czogYXJyYXkgb2Ygbm9taW5hdGlvbiBuZXR3b3Jrcy4NCg0KLSAgIFwkZGF0YTogc2FtcGxlIG9mIGRhdGEgKHNjaG9sYXJzKQ0KDQpgYGB7cn0NCmZjb2xuZXQgPC0gZnVuY3Rpb24oZGF0YSA9IHNjaG9sYXJzLCB1bml2ZXJzaXR5ID0gIlJVIiwgZGlzY2lwbGluZSA9ICJzb2Npb2xvZ3kiLCB3YXZlcyA9IGxpc3QoYygyMDE1LA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDIwMTgpLCBjKDIwMTksIDIwMjMpKSwgdHlwZSA9IGMoImZpcnN0IikpIHsNCiAgDQogICMgc3RlcCAxDQogIGRlbW9ncmFwaGljcyA8LSBkby5jYWxsKHJiaW5kLmRhdGEuZnJhbWUsIGRhdGEkZGVtb2dyYXBoaWNzKQ0KICBkZW1vZ3JhcGhpY3MgPC0gZGVtb2dyYXBoaWNzICU+JQ0KICAgIG11dGF0ZShVbml2ZXJzaXRlaXQxLjIyID0gcmVwbGFjZShVbml2ZXJzaXRlaXQxLjIyLCBpcy5uYShVbml2ZXJzaXRlaXQxLjIyKSwgIiIpLCBVbml2ZXJzaXRlaXQyLjIyID0gcmVwbGFjZShVbml2ZXJzaXRlaXQyLjIyLA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBpcy5uYShVbml2ZXJzaXRlaXQyLjIyKSwgIiIpLCBVbml2ZXJzaXRlaXQxLjI0ID0gcmVwbGFjZShVbml2ZXJzaXRlaXQxLjI0LCBpcy5uYShVbml2ZXJzaXRlaXQxLjI0KSwNCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIiIpLCBVbml2ZXJzaXRlaXQyLjI0ID0gcmVwbGFjZShVbml2ZXJzaXRlaXQyLjI0LCBpcy5uYShVbml2ZXJzaXRlaXQyLjI0KSwgIiIpLCBkaXNjaXBsaW5lLjIyID0gcmVwbGFjZShkaXNjaXBsaW5lLjIyLA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIGlzLm5hKGRpc2NpcGxpbmUuMjIpLCAiIiksIGRpc2NpcGxpbmUuMjQgPSByZXBsYWNlKGRpc2NpcGxpbmUuMjQsIGlzLm5hKGRpc2NpcGxpbmUuMjQpLCAiIikpDQogIA0KICBzYW1wbGUgPC0gd2hpY2goKGRlbW9ncmFwaGljcyRVbml2ZXJzaXRlaXQxLjIyICVpbiUgdW5pdmVyc2l0eSB8IGRlbW9ncmFwaGljcyRVbml2ZXJzaXRlaXQyLjIyICVpbiUNCiAgICAgICAgICAgICAgICAgICAgIHVuaXZlcnNpdHkgfCBkZW1vZ3JhcGhpY3MkVW5pdmVyc2l0ZWl0MS4yNCAlaW4lIHVuaXZlcnNpdHkgfCBkZW1vZ3JhcGhpY3MkVW5pdmVyc2l0ZWl0Mi4yNCAlaW4lDQogICAgICAgICAgICAgICAgICAgICB1bml2ZXJzaXR5KSAmIChkZW1vZ3JhcGhpY3MkZGlzY2lwbGluZS4yMiAlaW4lIGRpc2NpcGxpbmUgfCBkZW1vZ3JhcGhpY3MkZGlzY2lwbGluZS4yNCAlaW4lIGRpc2NpcGxpbmUpKQ0KICANCiAgZGVtb2dyYXBoaWNzX3NvYyA8LSBkZW1vZ3JhcGhpY3Nbc2FtcGxlLCBdDQogIHNjaG9sYXJzX3NlbCA8LSBsYXBwbHkoc2Nob2xhcnMsICJbIiwgc2FtcGxlKQ0KICANCiAgIyBzdGVwIDINCiAgaWRzIDwtIGRlbW9ncmFwaGljc19zb2MkYXVfaWQNCiAgbndhdmVzIDwtIGxlbmd0aCh3YXZlcykNCiAgbmV0cyA8LSBhcnJheSgwLCBkaW0gPSBjKG53YXZlcywgbGVuZ3RoKGlkcyksIGxlbmd0aChpZHMpKSwgZGltbmFtZXMgPSBsaXN0KHdhdmUgPSAxOm53YXZlcywgaWRzLA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgaWRzKSkNCiAgZGltbmFtZXMobmV0cykNCiAgDQogICMgc3RlcCAzDQogIGRmX3dvcmtzIDwtIHRpYmJsZSh3b3Jrc19pZCA9IHVubGlzdChsYXBwbHkoc2Nob2xhcnNfc2VsJHdvcmssIGZ1bmN0aW9uKGwpIGwkaWQpKSwgd29ya3NfYXV0aG9yID0gdW5saXN0KGxhcHBseShzY2hvbGFyc19zZWwkd29yaywNCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIGZ1bmN0aW9uKGwpIGwkYXV0aG9yKSwgcmVjdXJzaXZlID0gRkFMU0UpLCB3b3Jrc195ZWFyID0gdW5saXN0KGxhcHBseShzY2hvbGFyc19zZWwkd29yaywgZnVuY3Rpb24obCkgbCRwdWJsaWNhdGlvbl95ZWFyKSwNCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHJlY3Vyc2l2ZSA9IEZBTFNFKSkNCiAgDQogIGRmX3dvcmtzIDwtIGRmX3dvcmtzWyFkdXBsaWNhdGVkKGRmX3dvcmtzKSwgXQ0KICANCiAgIyBzdGVwIDQNCiAgaWYgKHR5cGUgPT0gImZpcnN0Iikgew0KICAgIGZvciAoaiBpbiAxOm53YXZlcykgew0KICAgICAgZGZfd29ya3NfdyA8LSBkZl93b3Jrc1tkZl93b3JrcyR3b3Jrc195ZWFyID49IHdhdmVzW1tqXV1bMV0gJiBkZl93b3JrcyR3b3Jrc195ZWFyIDw9IHdhdmVzW1tqXV1bMl0sDQogICAgICBdDQogICAgICBmb3IgKGkgaW4gMTpucm93KGRmX3dvcmtzX3cpKSB7DQogICAgICAgIGVnbyA8LSBkZl93b3Jrc193JHdvcmtzX2F1dGhvcltpXVtbMV1dJGF1X2lkWzFdDQogICAgICAgIGFsdGVycyA8LSBkZl93b3Jrc193JHdvcmtzX2F1dGhvcltpXVtbMV1dJGF1X2lkWy0xXQ0KICAgICAgICBpZiAoc3VtKGlkcyAlaW4lIGVnbykgPiAwICYgc3VtKGlkcyAlaW4lIGFsdGVycykgPiAwKSB7DQogICAgICAgICAgbmV0c1tqLCB3aGljaChpZHMgJWluJSBlZ28pLCB3aGljaChpZHMgJWluJSBhbHRlcnMpXSA8LSAxDQogICAgICAgIH0NCiAgICAgIH0NCiAgICB9DQogIH0NCiAgDQogIGlmICh0eXBlID09ICJsYXN0Iikgew0KICAgIGZvciAoaiBpbiAxOm53YXZlcykgew0KICAgICAgZGZfd29ya3NfdyA8LSBkZl93b3Jrc1tkZl93b3JrcyR3b3Jrc195ZWFyID49IHdhdmVzW1tqXV1bMV0gJiBkZl93b3JrcyR3b3Jrc195ZWFyIDw9IHdhdmVzW1tqXV1bMl0sDQogICAgICBdDQogICAgICBmb3IgKGkgaW4gMTpucm93KGRmX3dvcmtzX3cpKSB7DQogICAgICAgIGVnbyA8LSByZXYoZGZfd29ya3NfdyR3b3Jrc19hdXRob3JbaV1bWzFdXSRhdV9pZClbMV0NCiAgICAgICAgYWx0ZXJzIDwtIHJldihkZl93b3Jrc193JHdvcmtzX2F1dGhvcltpXVtbMV1dJGF1X2lkKVstMV0NCiAgICAgICAgaWYgKHN1bShpZHMgJWluJSBlZ28pID4gMCAmIHN1bShpZHMgJWluJSBhbHRlcnMpID4gMCkgew0KICAgICAgICAgIG5ldHNbaiwgd2hpY2goaWRzICVpbiUgZWdvKSwgd2hpY2goaWRzICVpbiUgYWx0ZXJzKV0gPC0gMQ0KICAgICAgICB9DQogICAgICB9DQogICAgfQ0KICB9DQogIA0KICBpZiAodHlwZSA9PSAiYWxsIikgew0KICAgIGZvciAoaiBpbiAxOm53YXZlcykgew0KICAgICAgZGZfd29ya3NfdyA8LSBkZl93b3Jrc1tkZl93b3JrcyR3b3Jrc195ZWFyID49IHdhdmVzW1tqXV1bMV0gJiBkZl93b3JrcyR3b3Jrc195ZWFyIDw9IHdhdmVzW1tqXV1bMl0sDQogICAgICBdDQogICAgICBmb3IgKGkgaW4gMTpucm93KGRmX3dvcmtzX3cpKSB7DQogICAgICAgIGVnb3MgPC0gZGZfd29ya3NfdyR3b3Jrc19hdXRob3JbaV1bWzFdXSRhdV9pZA0KICAgICAgICBpZiAoc3VtKGlkcyAlaW4lIGVnb3MpID4gMCkgew0KICAgICAgICAgIG5ldHNbaiwgd2hpY2goaWRzICVpbiUgZWdvcyksIHdoaWNoKGlkcyAlaW4lIGVnb3MpXSA8LSAxDQogICAgICAgIH0NCiAgICAgIH0NCiAgICB9DQogIH0NCiAgb3V0cHV0IDwtIGxpc3QoKQ0KICBvdXRwdXQkZGF0YSA8LSBzY2hvbGFyc19zZWwNCiAgb3V0cHV0JG5ldHMgPC0gbmV0cw0KICByZXR1cm4ob3V0cHV0KQ0KfQ0KYGBgDQoNCiMgRGF0YSBNYW5pcHVsYXRpb24NCg0KIyMgU3Vic2V0IHJlbGV2YW50IGRhdGENCg0KSSB3YW50IHRvIHN0dWR5IHRoZSBTb2Npb2xvZ3kgZGVwYXJ0bWVudHMNCg0KYGBge3J9DQoNCnNvY19kYXRhIDwtIGZjb2xuZXQoZGF0YSA9IHNjaG9sYXJzLCANCiAgICAgICAgICAgICAgICAgICAgdW5pdmVyc2l0eSA9IGMoIlJVIiwgIlVVIiksIA0KICAgICAgICAgICAgICAgICAgICBkaXNjaXBsaW5lID0gYygic29jaW9sb2d5IiksIA0KICAgICAgICAgICAgICAgICAgICB3YXZlcyA9IGxpc3QoYygyMDE1LCAyMDE5KSwgYygyMDIwLCAyMDI0KSksIA0KICAgICAgICAgICAgICAgICAgICB0eXBlID0gYygiZmlyc3QiKSkNCg0KZGYgPC0gc29jX2RhdGEkZGF0YQ0KZGZfZWdvIDwtIGRvLmNhbGwocmJpbmQuZGF0YS5mcmFtZSwgZGYkZGVtb2dyYXBoaWNzKQ0KDQojIHNvY19kYXRhJG5ldHNbMiwsXSAjIEhvdyB0byBjYWxsIGEgc3BlY2lmaWMgbmV0d29yaw0KDQpgYGANCg0KIyMgQ3JlYXRlIHRoZSBnZW5kZXIgdmFyaWFibGUNCg0KSW4gb3JkZXIgdG8gZ2V0IHVzZSBzY3JhcGUgZmlyc3QgbmFtZXMsIHdlIGZpcnN0IG5lZWQgdG8gaGF2ZSB0aGUgZmlyc3QgbmFtZXMgb2YgYWxsIGF1dGhvcnMgaW4gb3VyIG5ldHdvcmsNCg0KIyMjIFNjcmV3aW5nIGFyb3VuZCB3aXRoIHN0cmluZ3MNCmBgYHtyfQ0KdmVjdCA8LSBjKCJOb3cgdGhpcyBzdHJpbmcgaXMgbm90IHNwbGl0IiwgIkl0IGlzIGEgbmljZSBQaWN0dXJlIiwgIklzIGl0IHJlYWR5IiwgIlNwbGl0IFNjcmVlbiIpDQoNCnZlY3QNCiMgP25jaGFyKCkNCg0KdGVzdGplIDwtIGRhdGEuZnJhbWUoc3RyaW5nID0gdmVjdCwgam9iID0gYyhUUlVFLFRSVUUsVFJVRSxGQUxTRSkpDQoNCnRlc3RqZQ0KDQp0ZXN0amUkZmlyc3RfZWwgPC0gc2FwcGx5KHN0cnNwbGl0KHZlY3QsICIgIiksIGBbYCwgMSkgIyBUaGlzIGNvZGUgc2hvdWxkIHdvcmsgYXMgYSB3YXkgdG8gZXh0cmFjdCBmaXJzdCBuYW1lcyBmcm9tIHRoZSBlZ28gY2hhcmFjdGVyaXN0aWNzIGRhdGFzZXQNCnRlc3RqZQ0KDQpgYGANCg0KIyMjIEV4dHJhY3QgZmlyc3QgbmFtZXMNCg0KYGBge3J9DQoNCnggPC0gZGF0YS5mcmFtZShOYWFtID0gZGZfZWdvJE5hYW0pDQoNCmZpcnN0X25hbWUgPC0gc2FwcGx5KHN0cnNwbGl0KHgkTmFhbSwgIiAiKSwgYFtgLCAxKSAjIFRoaXMgY29kZSBzaG91bGQgd29yayBhcyBhIHdheSB0byBleHRyYWN0IGZpcnN0IG5hbWVzIGZyb20gdGhlIGVnbyBjaGFyYWN0ZXJpc3RpY3MgZGF0YXNldA0KDQoNCg0KZGZfbmFtZXMgPC0gZGF0YS5mcmFtZSh4LGZpcnN0X25hbWUsIG1hbGUgPSBOQSwgZmVtYWxlID0gTkEpICMgc2VlbSB0byBoYXZlIHdvcmtlZA0KDQpoZWFkKGRmX25hbWVzKQ0KYGBgDQoNCiMjIyBHZW5kZXIgU2NyYXBlcg0KDQpUaGUgZnVuY3Rpb24gZ2VuZGVyX3NjcmFwZXIgdXNlcyBIVE1MLXNjcmFwaW5nIHdpdGggcnZlc3QgdG8gZXh0cmFjdCBmaXJzdCBuYW1lcyBmcm9tIGEgc3RyaW5nIHdpdGggb25lJ3MgZnVsbCBuYW1lLiBJbnB1dCBjYW4gYmUgYW55IGRhdGFmcmFtZSB0aGF0IGNvbnRhaW5zIG5hbWVzLCBidXQgdGhpcyBvbmUgaXMgc3BlY2lmaWNhbGx5IG1hZGUgdG8gYmUgY29tcGF0aWJsZSB3aXRoIHRoZSAnKmZjb2xuZXQqJyBmdW5jdGlvbiBieSBKb2NoZW0gVG9sc21hLiBUaGUgZnVuY3Rpb24gZmlyc3QgZXh0cmFjdHMgdGhlIGZpcnN0IGVsZW1lbnQgb2YgYSBzdHJpbmcgYW5kIHNhdmVzIGl0IGluIHZhcmlhYmxlIGZpcnN0X25hbWUuIEkgdGhlbiBsb29wIG92ZXIgZXZlcnkgZmlyc3QgbmFtZSBpbiB0aGUgZGF0YWZyYW1lLCB3aXRoIGVhY2ggZmlyc3QgbmFtZSBzZXJ2aW5nIGFzIG5ldyBpbnB1dCBmb3IgdGhlICJ2b29ybmFtZW5iYW5rIiA8aHR0cHM6Ly9udmIubWVlcnRlbnMua25hdy5ubC8+LiBJZiB0aGUgbmFtZSBpcyBpbiB0aGUgZGF0YWJhc2UsIHRoZSBmdW5jdGlvbiB3aWxsIGV4dHJhY3QgdGhlIG9jY3VyZW5jZXMgb2YgdGhlIG5hbWUgYnkgZ2VuZGVyLiBJZiB0aGUgbmFtZSBpcyBub3QgaW4gdGhlIGRhdGFiYXNlLCB0aGUgZnVuY3Rpb24gd2lsbCByZXR1cm4gYSBOQSB2YWx1ZSBmb3IgdGhlIGdlbmRlciBvZiB0aGF0IHJlc3BvbmRlbnQuIFRoZSBmaW5hbCBzdGVwIGlzIGNyZWF0aW5nIGEgc2NhbGVkICgwLzEpIHZhcmlhYmxlICdbKnBlcmNfZmVtYWxlKl17LnVuZGVybGluZX0nLCB3aGljaCByZXByZXNlbnRzIHRoZSBsaWtlbGlob29kIHRoYXQgYSBuYW1lIGNvcnJlc3BvbmRzIHdpdGggdGhlIGZlbWFsZSBnZW5kZXIgKDEgPSAxMDAlIGZlbWFsZSwgMCA9IDEwMCUgbWFsZSkuDQoNCmBgYHtyfQ0KIyBkZl9uYW1lcyA8LSBkZl9uYW1lc1sxOjUsXSAjIHRha2UgZmlyc3QgZWxlbWVudHMgdG8gdHJ5IG91dA0KDQppIDwtIDENCmRmX25hbWVzJGZpcnN0X25hbWVbaV0NCg0KDQpnZW5kZXJfc2NyYXBlci5OViA8LSBmdW5jdGlvbihuYW1lcyA9ICJuYW1lcyBlbGVtZW50Iiwgd2ViX3BhZ2UgPSAiaHR0cHM6Ly9udmIubWVlcnRlbnMua25hdy5ubC9uYWFtL2lzLyIpew0KICANCiAgDQogIG5hbWVzJGZpcnN0X25hbWUgPC0gc2FwcGx5KHN0cnNwbGl0KG5hbWVzJE5hYW0sICIgIiksIGBbYCwgMSkgIyBUaGlzIGNvZGUgc2hvdWxkIHdvcmsgYXMgYSB3YXkgdG8gZXh0cmFjdCBmaXJzdCBuYW1lcyBmcm9tIHRoZSBlZ28gY2hhcmFjdGVyaXN0aWNzIGRhdGFzZXQNCiAgbmFtZXMkbWFsZSA8LSBOQQ0KICBuYW1lcyRmZW1hbGUgPC0gTkENCiAgDQogIGZvcihpIGluIDE6bnJvdyhuYW1lcykpew0KICAgIA0KICAgICMgcHJpbnQobmFtZXMkZmlyc3RfbmFtZVtpXSkNCiAgICANCiAgICB3ZWJfcGFnZSA8LSByZWFkX2h0bWwocGFzdGUwKCJodHRwczovL252Yi5tZWVydGVucy5rbmF3Lm5sL25hYW0vaXMvIiwgbmFtZXMkZmlyc3RfbmFtZVtpXSkpDQogICAgDQogICAgdGFibGUgPC0gd2ViX3BhZ2UgJT4lIA0KICAgICAgcnZlc3Q6Omh0bWxfZWxlbWVudHMoImJvZHkiKSAlPiUgDQogICAgICBydmVzdDo6aHRtbF9lbGVtZW50cygidGFibGUiKSAlPiUgDQogICAgICBydmVzdDo6aHRtbF90YWJsZSgpDQogICAgDQogICAgaWYobGVuZ3RoKHRhYmxlKSA9PSAwKXsNCiAgICAgIA0KICAgICAgcHJpbnQobGVuZ3RoKHRhYmxlKSkNCiAgICAgIA0KICAgICAgbmFtZXMkbWFsZVtpXSA8LSBOQQ0KICAgICAgbmFtZXMkZmVtYWxlW2ldIDwtIE5BDQogICAgICANCiAgICB9IGVsc2V7DQogICAgICANCiAgICAgICMgcHJpbnQodGFibGUpDQogICAgICAjIHByaW50KHRhYmxlW1sxXV1bWzIsM11dKSAjIENoZWNrIGlmIHZhbHVlcyBmb3IgbWFsZSBhcmUgY29oZXJlbnQgYW5kIGFjY3VyYXRlDQogICAgICAjIHByaW50KHRhYmxlW1sxXV1bWzYsM11dKSAjIENoZWNrIGlmIHZhbHVlcyBmb3IgZmVtYWxlIGFyZSBjb2hlcmVudCBhbmQgYWNjdXJhdGUNCiAgICAgIA0KICAgICAgbmFtZXMkbWFsZVtpXSA8LSBhcy5udW1lcmljKGlmZWxzZSh0YWJsZVtbMV1dW1syLDNdXSA9PSAiLS0iLCAwLCB0YWJsZVtbMV1dW1syLDNdXSkpICMgTWFrZSBzdXJlIG5vbi1vY2N1cmVuY2VzIGFyZSBub3QgcmVnaXN0ZXJlZCBhcyAiLS0iDQogICAgICBuYW1lcyRmZW1hbGVbaV0gPC0gYXMubnVtZXJpYyhpZmVsc2UodGFibGVbWzFdXVtbNiwzXV0gPT0gIi0tIiwgMCwgdGFibGVbWzFdXVtbNiwzXV0pKSAjIE1ha2Ugc3VyZSBub24tb2NjdXJlbmNlcyBhcmUgbm90IHJlZ2lzdGVyZWQgYXMgIi0tIg0KICAgICAgDQogICAgICANCiAgICB9DQogICAgDQogIH0gIyBlbmQgZm9ybG9vcA0KICANCiAgbmFtZXMgPC0gbmFtZXMgJT4lIG11dGF0ZShwZXJjX2ZlbWFsZSA9IGNhc2Vfd2hlbihpcy5uYShmZW1hbGUgPT0gVFJVRSkgJiBpcy5uYShtYWxlKSA9PSBUUlVFIH4gTkEsDQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgaXMubmEoZmVtYWxlKSA9PSBUUlVFIH4gMCwNCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBpcy5uYShtYWxlID09IFRSVUUpIH4gMSwNCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAuZGVmYXVsdCA9IHJvdW5kKChmZW1hbGUvKG1hbGUgKyBmZW1hbGUpKSwyKSkpICU+JSANCiAgICBzZWxlY3QoIWMobWFsZSxmZW1hbGUsIGZpcnN0X25hbWUpKQ0KICANCiAgcmV0dXJuKG5hbWVzKQ0KICANCiAgDQp9ICMgZW5kIGZ1bmN0aW9uDQoNCiMgP211dGF0ZSgpDQojID9jYXNlX3doZW4NCnRlc3RpbmcgPC0gZ2VuZGVyX3NjcmFwZXIuTlYobmFtZXMgPSBkZl9lZ28sIHdlYl9wYWdlID0gImh0dHBzOi8vbnZiLm1lZXJ0ZW5zLmtuYXcubmwvbmFhbS9pcy8iKQ0KDQoNCiMgcGFzdGUwKCJodHRwczovL252Yi5tZWVydGVucy5rbmF3Lm5sL25hYW0vaXMvIiwgIm5hbWUiKSAjIFRoaXMgd2lsbCBldmVudHVhbGx5IGJlIHVzZWQgZm9yIGF1dG9tYXRpbmcgdGhlIHNjcmFwaW5nIHByb2Nlc3MNCg0KYGBgDQojIyMgQ2hlY2sgcmVzdWx0cw0KYGBge3J9DQpjaGVjayA8LSB0ZXN0aW5nICU+JSBjb3VudChwZXJjX2ZlbWFsZSkNCg0KcGxvdChjaGVjayRwZXJjX2ZlbWFsZSwgY2hlY2skbikNCmBgYA0KDQoNCmBgYHtyfQ0KIyBuZXRfdzIgPC0gaWdyYXBoOjpncmFwaF9mcm9tX2FkamFjZW5jeV9tYXRyaXgoc29jX2RhdGEkbmV0c1syLCxdLCAjbm93LCBJIHRha2UgdGhlIHNlY29uZCB3YXZlDQojICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBtb2RlID0gYygiZGlyZWN0ZWQiKSwNCiMgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHdlaWdodGVkID0gTlVMTCxkaWFnID0gRkFMU0UsYWRkLmNvbG5hbWVzID0gTlVMTCkNCg0KYGBgDQoNCjxicj4NCg0KLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tDQo=</div>
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIkRhdGEgcHJlcGFyYXRpb24iDQojYmlibGlvZ3JhcGh5OiByZWZlcmVuY2VzLmJpYg0KYXV0aG9yOiAiTmllbHMgVnVsbGluZ3MiDQpiaWJsaW9ncmFwaHk6IHJlZmVyZW5jZXMuYmliDQotLS0NCg0KYGBgez1odG1sfQ0KPHN0eWxlPg0KYm9keSB7DQp0ZXh0LWFsaWduOiBqdXN0aWZ5fQ0KPC9zdHlsZT4NCmBgYA0KDQpgYGB7ciwgZ2xvYmFsc2V0dGluZ3MsIGVjaG89RkFMU0UsIHdhcm5pbmc9RkFMU0UsIHJlc3VsdHM9J2hpZGUnfQ0KbGlicmFyeShrbml0cikNCg0Ka25pdHI6Om9wdHNfY2h1bmskc2V0KGVjaG8gPSBUUlVFKQ0Kb3B0c19jaHVuayRzZXQodGlkeS5vcHRzPWxpc3Qod2lkdGguY3V0b2ZmPTEwMCksdGlkeT1UUlVFLCB3YXJuaW5nID0gRkFMU0UsIG1lc3NhZ2UgPSBGQUxTRSxjb21tZW50ID0gIiM+IiwgY2FjaGU9VFJVRSwgY2xhc3Muc291cmNlPWMoInRlc3QiKSwgY2xhc3Mub3V0cHV0PWMoInRlc3QyIikpDQpvcHRpb25zKHdpZHRoID0gMTAwKQ0KcmdsOjpzZXR1cEtuaXRyKCkNCg0KYGBgDQoNCmBgYHtyIGtsaXBweSwgZWNobz1GQUxTRSwgaW5jbHVkZT1UUlVFfQ0Ka2xpcHB5OjprbGlwcHkocG9zaXRpb24gPSBjKCd0b3AnLCAncmlnaHQnKSkNCiMga2xpcHB5OjprbGlwcHkoY29sb3IgPSAnZGFya2dyZWVuJykNCiNrbGlwcHk6OmtsaXBweSh0b29sdGlwX21lc3NhZ2UgPSAnQ2xpY2sgdG8gY29weScsIHRvb2x0aXBfc3VjY2VzcyA9ICdEb25lJykNCmBgYA0KDQpMYXN0IGNvbXBpbGVkIG9uIGByIGZvcm1hdChTeXMudGltZSgpLCAnJUIsICVZJylgDQoNCjxicj4NCg0KLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tDQoNCiMgU2V0IHVwDQoNCmBgYHtyfQ0Kcm0obGlzdCA9IGxzKCkpDQoNCiMgTGlicmFyaWVzDQpsaWJyYXJ5KGRhdGEudGFibGUpICAjIG1haW5seSBmb3IgZmFzdGVyIGRhdGEgaGFuZGxpbmcNCmxpYnJhcnkodGlkeXZlcnNlKSAgIyBJIGFzc3VtZSB5b3UgYWxyZWFkeSBpbnN0YWxsZWQgdGhpcyBvbmUhDQojIGluc3RhbGwucGFja2FnZXMoJ2h0dHInKSAjIHdlIGRvbid0IG5lZWQgdGhpcyBmb3Igbm93IHJlcXVpcmUoaHR0cikNCiMgaW5zdGFsbC5wYWNrYWdlcygieG1sMiIpDQpsaWJyYXJ5KHhtbDIpDQojIGluc3RhbGwucGFja2FnZXMoInJ2ZXN0IikNCmxpYnJhcnkocnZlc3QpDQoNCmBgYA0KDQojIyBGdW5jdGlvbnMNCmBgYHtyfQ0KY29sb3JpemUgPC0gZnVuY3Rpb24oeCwgY29sb3IpIHtzcHJpbnRmKCI8c3BhbiBzdHlsZT0nY29sb3I6ICVzOyc+JXM8L3NwYW4+IiwgY29sb3IsIHgpIH0NCg0KZnNhdmUgPC0gZnVuY3Rpb24oeCwgZmlsZSwgbG9jYXRpb24gPSAiLi9kYXRhL3Byb2Nlc3NlZC8iLCAuLi4pIHsNCiAgICBpZiAoIWRpci5leGlzdHMobG9jYXRpb24pKQ0KICAgICAgICBkaXIuY3JlYXRlKGxvY2F0aW9uKQ0KICAgIGRhdGVuYW1lIDwtIHN1YnN0cihnc3ViKCJbOi1dIiwgIiIsIFN5cy50aW1lKCkpLCAxLCA4KQ0KICAgIHRvdGFsbmFtZSA8LSBwYXN0ZShsb2NhdGlvbiwgZGF0ZW5hbWUsIGZpbGUsIHNlcCA9ICIiKQ0KICAgIHByaW50KHBhc3RlKCJTQVZFRDogIiwgdG90YWxuYW1lLCBzZXAgPSAiIikpDQogICAgc2F2ZSh4LCBmaWxlID0gdG90YWxuYW1lKQ0KfQ0KYGBgDQoNCg0KIyBMb2FkIGRhdGENCg0KYGBge3J9DQpsb2FkKCJkYXRhL3NjaG9sYXJzXzIwMjQwOTI0LnJkYSIpDQpzY2hvbGFycyA8LSB4DQpybSh4KQ0KDQpgYGANCg0KIyMgVXNlciBmdW5jdGlvbiBmb3IgTmV0d29yayBkYXRhIGNyZWF0aW9uDQoNCkFib3V0IHRoZSBwYXJhbWV0ZXJzOg0KDQpkYXRhOiBvdXIgc2Nob2xhcnMgZmlsZSB1bml2ZXJzaXR5OiBDaGFyYWN0ZXIgdmVjdG9yIHdpdGggbmFtZXMgb2YgdW5pdmVyc2l0aWVzLiBXZSBoYXZlIHNldmVyYWwgdW5pdmVyc2l0aWVzIGluIHRoZSBOZXRoZXJsYW5kcy4gU2VlIGFib3ZlIGZvciByZWxldmFudCBuYW1lcy4NCg0KZGlzY2lwbGluZTogQ2hhcmFjdGVyIHZlY3RvciwgZWl0aGVyIHNvY2lvbG9neSBvciBwb2xpdGljYWwgc2NpZW5jZSBvciBib3RoLiB3YXZlczogYSBsaXN0IG9mIG51bWVyaWMgdmVjdG9ycyB3aXRoIHN0YXJ0IGFuZCBlbmQgeWVhciBvZiB3YXZlLg0KDQp0eXBlOiAiZmlyc3QiOiBkaXJlY3RlZDogZmlyc3QgYXV0aG9yIHNlbmRpbmcgdG8gb3RoZXJzICJsYXN0IjogZGlyZWN0ZWQ6IGxhc3QgYXV0aG9yIHNlbmRpbmcgdG8gb3RoZXJzICJhbGwiOiB1bmRpcmVjdGVkOiB0aWVzIGJldHdlZW4gYWxsIGF1dGhvcnMNCg0KT3V0cHV0OiBhIGxpc3QNCg0KLSAgIFwkbmV0czogYXJyYXkgb2Ygbm9taW5hdGlvbiBuZXR3b3Jrcy4NCg0KLSAgIFwkZGF0YTogc2FtcGxlIG9mIGRhdGEgKHNjaG9sYXJzKQ0KDQpgYGB7cn0NCmZjb2xuZXQgPC0gZnVuY3Rpb24oZGF0YSA9IHNjaG9sYXJzLCB1bml2ZXJzaXR5ID0gIlJVIiwgZGlzY2lwbGluZSA9ICJzb2Npb2xvZ3kiLCB3YXZlcyA9IGxpc3QoYygyMDE1LA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDIwMTgpLCBjKDIwMTksIDIwMjMpKSwgdHlwZSA9IGMoImZpcnN0IikpIHsNCiAgDQogICMgc3RlcCAxDQogIGRlbW9ncmFwaGljcyA8LSBkby5jYWxsKHJiaW5kLmRhdGEuZnJhbWUsIGRhdGEkZGVtb2dyYXBoaWNzKQ0KICBkZW1vZ3JhcGhpY3MgPC0gZGVtb2dyYXBoaWNzICU+JQ0KICAgIG11dGF0ZShVbml2ZXJzaXRlaXQxLjIyID0gcmVwbGFjZShVbml2ZXJzaXRlaXQxLjIyLCBpcy5uYShVbml2ZXJzaXRlaXQxLjIyKSwgIiIpLCBVbml2ZXJzaXRlaXQyLjIyID0gcmVwbGFjZShVbml2ZXJzaXRlaXQyLjIyLA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBpcy5uYShVbml2ZXJzaXRlaXQyLjIyKSwgIiIpLCBVbml2ZXJzaXRlaXQxLjI0ID0gcmVwbGFjZShVbml2ZXJzaXRlaXQxLjI0LCBpcy5uYShVbml2ZXJzaXRlaXQxLjI0KSwNCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIiIpLCBVbml2ZXJzaXRlaXQyLjI0ID0gcmVwbGFjZShVbml2ZXJzaXRlaXQyLjI0LCBpcy5uYShVbml2ZXJzaXRlaXQyLjI0KSwgIiIpLCBkaXNjaXBsaW5lLjIyID0gcmVwbGFjZShkaXNjaXBsaW5lLjIyLA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIGlzLm5hKGRpc2NpcGxpbmUuMjIpLCAiIiksIGRpc2NpcGxpbmUuMjQgPSByZXBsYWNlKGRpc2NpcGxpbmUuMjQsIGlzLm5hKGRpc2NpcGxpbmUuMjQpLCAiIikpDQogIA0KICBzYW1wbGUgPC0gd2hpY2goKGRlbW9ncmFwaGljcyRVbml2ZXJzaXRlaXQxLjIyICVpbiUgdW5pdmVyc2l0eSB8IGRlbW9ncmFwaGljcyRVbml2ZXJzaXRlaXQyLjIyICVpbiUNCiAgICAgICAgICAgICAgICAgICAgIHVuaXZlcnNpdHkgfCBkZW1vZ3JhcGhpY3MkVW5pdmVyc2l0ZWl0MS4yNCAlaW4lIHVuaXZlcnNpdHkgfCBkZW1vZ3JhcGhpY3MkVW5pdmVyc2l0ZWl0Mi4yNCAlaW4lDQogICAgICAgICAgICAgICAgICAgICB1bml2ZXJzaXR5KSAmIChkZW1vZ3JhcGhpY3MkZGlzY2lwbGluZS4yMiAlaW4lIGRpc2NpcGxpbmUgfCBkZW1vZ3JhcGhpY3MkZGlzY2lwbGluZS4yNCAlaW4lIGRpc2NpcGxpbmUpKQ0KICANCiAgZGVtb2dyYXBoaWNzX3NvYyA8LSBkZW1vZ3JhcGhpY3Nbc2FtcGxlLCBdDQogIHNjaG9sYXJzX3NlbCA8LSBsYXBwbHkoc2Nob2xhcnMsICJbIiwgc2FtcGxlKQ0KICANCiAgIyBzdGVwIDINCiAgaWRzIDwtIGRlbW9ncmFwaGljc19zb2MkYXVfaWQNCiAgbndhdmVzIDwtIGxlbmd0aCh3YXZlcykNCiAgbmV0cyA8LSBhcnJheSgwLCBkaW0gPSBjKG53YXZlcywgbGVuZ3RoKGlkcyksIGxlbmd0aChpZHMpKSwgZGltbmFtZXMgPSBsaXN0KHdhdmUgPSAxOm53YXZlcywgaWRzLA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgaWRzKSkNCiAgZGltbmFtZXMobmV0cykNCiAgDQogICMgc3RlcCAzDQogIGRmX3dvcmtzIDwtIHRpYmJsZSh3b3Jrc19pZCA9IHVubGlzdChsYXBwbHkoc2Nob2xhcnNfc2VsJHdvcmssIGZ1bmN0aW9uKGwpIGwkaWQpKSwgd29ya3NfYXV0aG9yID0gdW5saXN0KGxhcHBseShzY2hvbGFyc19zZWwkd29yaywNCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIGZ1bmN0aW9uKGwpIGwkYXV0aG9yKSwgcmVjdXJzaXZlID0gRkFMU0UpLCB3b3Jrc195ZWFyID0gdW5saXN0KGxhcHBseShzY2hvbGFyc19zZWwkd29yaywgZnVuY3Rpb24obCkgbCRwdWJsaWNhdGlvbl95ZWFyKSwNCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHJlY3Vyc2l2ZSA9IEZBTFNFKSkNCiAgDQogIGRmX3dvcmtzIDwtIGRmX3dvcmtzWyFkdXBsaWNhdGVkKGRmX3dvcmtzKSwgXQ0KICANCiAgIyBzdGVwIDQNCiAgaWYgKHR5cGUgPT0gImZpcnN0Iikgew0KICAgIGZvciAoaiBpbiAxOm53YXZlcykgew0KICAgICAgZGZfd29ya3NfdyA8LSBkZl93b3Jrc1tkZl93b3JrcyR3b3Jrc195ZWFyID49IHdhdmVzW1tqXV1bMV0gJiBkZl93b3JrcyR3b3Jrc195ZWFyIDw9IHdhdmVzW1tqXV1bMl0sDQogICAgICBdDQogICAgICBmb3IgKGkgaW4gMTpucm93KGRmX3dvcmtzX3cpKSB7DQogICAgICAgIGVnbyA8LSBkZl93b3Jrc193JHdvcmtzX2F1dGhvcltpXVtbMV1dJGF1X2lkWzFdDQogICAgICAgIGFsdGVycyA8LSBkZl93b3Jrc193JHdvcmtzX2F1dGhvcltpXVtbMV1dJGF1X2lkWy0xXQ0KICAgICAgICBpZiAoc3VtKGlkcyAlaW4lIGVnbykgPiAwICYgc3VtKGlkcyAlaW4lIGFsdGVycykgPiAwKSB7DQogICAgICAgICAgbmV0c1tqLCB3aGljaChpZHMgJWluJSBlZ28pLCB3aGljaChpZHMgJWluJSBhbHRlcnMpXSA8LSAxDQogICAgICAgIH0NCiAgICAgIH0NCiAgICB9DQogIH0NCiAgDQogIGlmICh0eXBlID09ICJsYXN0Iikgew0KICAgIGZvciAoaiBpbiAxOm53YXZlcykgew0KICAgICAgZGZfd29ya3NfdyA8LSBkZl93b3Jrc1tkZl93b3JrcyR3b3Jrc195ZWFyID49IHdhdmVzW1tqXV1bMV0gJiBkZl93b3JrcyR3b3Jrc195ZWFyIDw9IHdhdmVzW1tqXV1bMl0sDQogICAgICBdDQogICAgICBmb3IgKGkgaW4gMTpucm93KGRmX3dvcmtzX3cpKSB7DQogICAgICAgIGVnbyA8LSByZXYoZGZfd29ya3NfdyR3b3Jrc19hdXRob3JbaV1bWzFdXSRhdV9pZClbMV0NCiAgICAgICAgYWx0ZXJzIDwtIHJldihkZl93b3Jrc193JHdvcmtzX2F1dGhvcltpXVtbMV1dJGF1X2lkKVstMV0NCiAgICAgICAgaWYgKHN1bShpZHMgJWluJSBlZ28pID4gMCAmIHN1bShpZHMgJWluJSBhbHRlcnMpID4gMCkgew0KICAgICAgICAgIG5ldHNbaiwgd2hpY2goaWRzICVpbiUgZWdvKSwgd2hpY2goaWRzICVpbiUgYWx0ZXJzKV0gPC0gMQ0KICAgICAgICB9DQogICAgICB9DQogICAgfQ0KICB9DQogIA0KICBpZiAodHlwZSA9PSAiYWxsIikgew0KICAgIGZvciAoaiBpbiAxOm53YXZlcykgew0KICAgICAgZGZfd29ya3NfdyA8LSBkZl93b3Jrc1tkZl93b3JrcyR3b3Jrc195ZWFyID49IHdhdmVzW1tqXV1bMV0gJiBkZl93b3JrcyR3b3Jrc195ZWFyIDw9IHdhdmVzW1tqXV1bMl0sDQogICAgICBdDQogICAgICBmb3IgKGkgaW4gMTpucm93KGRmX3dvcmtzX3cpKSB7DQogICAgICAgIGVnb3MgPC0gZGZfd29ya3NfdyR3b3Jrc19hdXRob3JbaV1bWzFdXSRhdV9pZA0KICAgICAgICBpZiAoc3VtKGlkcyAlaW4lIGVnb3MpID4gMCkgew0KICAgICAgICAgIG5ldHNbaiwgd2hpY2goaWRzICVpbiUgZWdvcyksIHdoaWNoKGlkcyAlaW4lIGVnb3MpXSA8LSAxDQogICAgICAgIH0NCiAgICAgIH0NCiAgICB9DQogIH0NCiAgb3V0cHV0IDwtIGxpc3QoKQ0KICBvdXRwdXQkZGF0YSA8LSBzY2hvbGFyc19zZWwNCiAgb3V0cHV0JG5ldHMgPC0gbmV0cw0KICByZXR1cm4ob3V0cHV0KQ0KfQ0KYGBgDQoNCiMgRGF0YSBNYW5pcHVsYXRpb24NCg0KIyMgU3Vic2V0IHJlbGV2YW50IGRhdGENCg0KSSB3YW50IHRvIHN0dWR5IHRoZSBTb2Npb2xvZ3kgZGVwYXJ0bWVudHMNCg0KYGBge3J9DQoNCnNvY19kYXRhIDwtIGZjb2xuZXQoZGF0YSA9IHNjaG9sYXJzLCANCiAgICAgICAgICAgICAgICAgICAgdW5pdmVyc2l0eSA9IGMoIlJVIiwgIlVVIiksIA0KICAgICAgICAgICAgICAgICAgICBkaXNjaXBsaW5lID0gYygic29jaW9sb2d5IiksIA0KICAgICAgICAgICAgICAgICAgICB3YXZlcyA9IGxpc3QoYygyMDE1LCAyMDE5KSwgYygyMDIwLCAyMDI0KSksIA0KICAgICAgICAgICAgICAgICAgICB0eXBlID0gYygiZmlyc3QiKSkNCg0KZGYgPC0gc29jX2RhdGEkZGF0YQ0KZGZfZWdvIDwtIGRvLmNhbGwocmJpbmQuZGF0YS5mcmFtZSwgZGYkZGVtb2dyYXBoaWNzKQ0KDQoNCiMgc29jX2RhdGEkbmV0c1syLCxdICMgSG93IHRvIGNhbGwgYSBzcGVjaWZpYyBuZXR3b3JrDQoNCmBgYA0KDQojIyBDcmVhdGUgdGhlIGdlbmRlciB2YXJpYWJsZQ0KDQpJbiBvcmRlciB0byBnZXQgdXNlIHNjcmFwZSBmaXJzdCBuYW1lcywgd2UgZmlyc3QgbmVlZCB0byBoYXZlIHRoZSBmaXJzdCBuYW1lcyBvZiBhbGwgYXV0aG9ycyBpbiBvdXIgbmV0d29yaw0KDQojIyMgU2NyZXdpbmcgYXJvdW5kIHdpdGggc3RyaW5ncw0KYGBge3J9DQp2ZWN0IDwtIGMoIk5vdyB0aGlzIHN0cmluZyBpcyBub3Qgc3BsaXQiLCAiSXQgaXMgYSBuaWNlIFBpY3R1cmUiLCAiSXMgaXQgcmVhZHkiLCAiU3BsaXQgU2NyZWVuIikNCg0KdmVjdA0KIyA/bmNoYXIoKQ0KDQp0ZXN0amUgPC0gZGF0YS5mcmFtZShzdHJpbmcgPSB2ZWN0LCBqb2IgPSBjKFRSVUUsVFJVRSxUUlVFLEZBTFNFKSkNCg0KdGVzdGplDQoNCnRlc3RqZSRmaXJzdF9lbCA8LSBzYXBwbHkoc3Ryc3BsaXQodmVjdCwgIiAiKSwgYFtgLCAxKSAjIFRoaXMgY29kZSBzaG91bGQgd29yayBhcyBhIHdheSB0byBleHRyYWN0IGZpcnN0IG5hbWVzIGZyb20gdGhlIGVnbyBjaGFyYWN0ZXJpc3RpY3MgZGF0YXNldA0KdGVzdGplDQoNCmBgYA0KDQojIyMgRXh0cmFjdCBmaXJzdCBuYW1lcw0KDQpgYGB7cn0NCg0KeCA8LSBkYXRhLmZyYW1lKE5hYW0gPSBkZl9lZ28kTmFhbSkNCg0KZmlyc3RfbmFtZSA8LSBzYXBwbHkoc3Ryc3BsaXQoeCROYWFtLCAiICIpLCBgW2AsIDEpICMgVGhpcyBjb2RlIHNob3VsZCB3b3JrIGFzIGEgd2F5IHRvIGV4dHJhY3QgZmlyc3QgbmFtZXMgZnJvbSB0aGUgZWdvIGNoYXJhY3RlcmlzdGljcyBkYXRhc2V0DQoNCg0KDQpkZl9uYW1lcyA8LSBkYXRhLmZyYW1lKHgsZmlyc3RfbmFtZSwgbWFsZSA9IE5BLCBmZW1hbGUgPSBOQSkgIyBzZWVtIHRvIGhhdmUgd29ya2VkDQoNCmhlYWQoZGZfbmFtZXMpDQpgYGANCg0KIyMjIEdlbmRlciBTY3JhcGVyDQoNClRoZSBmdW5jdGlvbiBnZW5kZXJfc2NyYXBlciB1c2VzIEhUTUwtc2NyYXBpbmcgd2l0aCBydmVzdCB0byBleHRyYWN0IGZpcnN0IG5hbWVzIGZyb20gYSBzdHJpbmcgd2l0aCBvbmUncyBmdWxsIG5hbWUuIElucHV0IGNhbiBiZSBhbnkgZGF0YWZyYW1lIHRoYXQgY29udGFpbnMgbmFtZXMsIGJ1dCB0aGlzIG9uZSBpcyBzcGVjaWZpY2FsbHkgbWFkZSB0byBiZSBjb21wYXRpYmxlIHdpdGggdGhlICcqZmNvbG5ldConIGZ1bmN0aW9uIGJ5IEpvY2hlbSBUb2xzbWEuIFRoZSBmdW5jdGlvbiBmaXJzdCBleHRyYWN0cyB0aGUgZmlyc3QgZWxlbWVudCBvZiBhIHN0cmluZyBhbmQgc2F2ZXMgaXQgaW4gdmFyaWFibGUgZmlyc3RfbmFtZS4gSSB0aGVuIGxvb3Agb3ZlciBldmVyeSBmaXJzdCBuYW1lIGluIHRoZSBkYXRhZnJhbWUsIHdpdGggZWFjaCBmaXJzdCBuYW1lIHNlcnZpbmcgYXMgbmV3IGlucHV0IGZvciB0aGUgInZvb3JuYW1lbmJhbmsiIDxodHRwczovL252Yi5tZWVydGVucy5rbmF3Lm5sLz4uIElmIHRoZSBuYW1lIGlzIGluIHRoZSBkYXRhYmFzZSwgdGhlIGZ1bmN0aW9uIHdpbGwgZXh0cmFjdCB0aGUgb2NjdXJlbmNlcyBvZiB0aGUgbmFtZSBieSBnZW5kZXIuIElmIHRoZSBuYW1lIGlzIG5vdCBpbiB0aGUgZGF0YWJhc2UsIHRoZSBmdW5jdGlvbiB3aWxsIHJldHVybiBhIE5BIHZhbHVlIGZvciB0aGUgZ2VuZGVyIG9mIHRoYXQgcmVzcG9uZGVudC4gVGhlIGZpbmFsIHN0ZXAgaXMgY3JlYXRpbmcgYSBzY2FsZWQgKDAvMSkgdmFyaWFibGUgJ1sqcGVyY19mZW1hbGUqXXsudW5kZXJsaW5lfScsIHdoaWNoIHJlcHJlc2VudHMgdGhlIGxpa2VsaWhvb2QgdGhhdCBhIG5hbWUgY29ycmVzcG9uZHMgd2l0aCB0aGUgZmVtYWxlIGdlbmRlciAoMSA9IDEwMCUgZmVtYWxlLCAwID0gMTAwJSBtYWxlKS4NCg0KYGBge3J9DQojIGRmX25hbWVzIDwtIGRmX25hbWVzWzE6NSxdICMgdGFrZSBmaXJzdCBlbGVtZW50cyB0byB0cnkgb3V0DQoNCmkgPC0gMQ0KZGZfbmFtZXMkZmlyc3RfbmFtZVtpXQ0KDQoNCmdlbmRlcl9zY3JhcGVyLk5WIDwtIGZ1bmN0aW9uKG5hbWVzID0gIm5hbWVzIGVsZW1lbnQiLCB3ZWJfcGFnZSA9ICJodHRwczovL252Yi5tZWVydGVucy5rbmF3Lm5sL25hYW0vaXMvIil7DQogIA0KICANCiAgbmFtZXMkZmlyc3RfbmFtZSA8LSBzYXBwbHkoc3Ryc3BsaXQobmFtZXMkTmFhbSwgIiAiKSwgYFtgLCAxKSAjIFRoaXMgY29kZSBzaG91bGQgd29yayBhcyBhIHdheSB0byBleHRyYWN0IGZpcnN0IG5hbWVzIGZyb20gdGhlIGVnbyBjaGFyYWN0ZXJpc3RpY3MgZGF0YXNldA0KICBuYW1lcyRtYWxlIDwtIE5BDQogIG5hbWVzJGZlbWFsZSA8LSBOQQ0KICANCiAgZm9yKGkgaW4gMTpucm93KG5hbWVzKSl7DQogICAgDQogICAgIyBwcmludChuYW1lcyRmaXJzdF9uYW1lW2ldKQ0KICAgIA0KICAgIHdlYl9wYWdlIDwtIHJlYWRfaHRtbChwYXN0ZTAoImh0dHBzOi8vbnZiLm1lZXJ0ZW5zLmtuYXcubmwvbmFhbS9pcy8iLCBuYW1lcyRmaXJzdF9uYW1lW2ldKSkNCiAgICANCiAgICB0YWJsZSA8LSB3ZWJfcGFnZSAlPiUgDQogICAgICBydmVzdDo6aHRtbF9lbGVtZW50cygiYm9keSIpICU+JSANCiAgICAgIHJ2ZXN0OjpodG1sX2VsZW1lbnRzKCJ0YWJsZSIpICU+JSANCiAgICAgIHJ2ZXN0OjpodG1sX3RhYmxlKCkNCiAgICANCiAgICBpZihsZW5ndGgodGFibGUpID09IDApew0KICAgICAgDQogICAgICBwcmludChsZW5ndGgodGFibGUpKQ0KICAgICAgDQogICAgICBuYW1lcyRtYWxlW2ldIDwtIE5BDQogICAgICBuYW1lcyRmZW1hbGVbaV0gPC0gTkENCiAgICAgIA0KICAgIH0gZWxzZXsNCiAgICAgIA0KICAgICAgIyBwcmludCh0YWJsZSkNCiAgICAgICMgcHJpbnQodGFibGVbWzFdXVtbMiwzXV0pICMgQ2hlY2sgaWYgdmFsdWVzIGZvciBtYWxlIGFyZSBjb2hlcmVudCBhbmQgYWNjdXJhdGUNCiAgICAgICMgcHJpbnQodGFibGVbWzFdXVtbNiwzXV0pICMgQ2hlY2sgaWYgdmFsdWVzIGZvciBmZW1hbGUgYXJlIGNvaGVyZW50IGFuZCBhY2N1cmF0ZQ0KICAgICAgDQogICAgICBuYW1lcyRtYWxlW2ldIDwtIGFzLm51bWVyaWMoaWZlbHNlKHRhYmxlW1sxXV1bWzIsM11dID09ICItLSIsIDAsIHRhYmxlW1sxXV1bWzIsM11dKSkgIyBNYWtlIHN1cmUgbm9uLW9jY3VyZW5jZXMgYXJlIG5vdCByZWdpc3RlcmVkIGFzICItLSINCiAgICAgIG5hbWVzJGZlbWFsZVtpXSA8LSBhcy5udW1lcmljKGlmZWxzZSh0YWJsZVtbMV1dW1s2LDNdXSA9PSAiLS0iLCAwLCB0YWJsZVtbMV1dW1s2LDNdXSkpICMgTWFrZSBzdXJlIG5vbi1vY2N1cmVuY2VzIGFyZSBub3QgcmVnaXN0ZXJlZCBhcyAiLS0iDQogICAgICANCiAgICAgIA0KICAgIH0NCiAgICANCiAgfSAjIGVuZCBmb3Jsb29wDQogIA0KICBuYW1lcyA8LSBuYW1lcyAlPiUgbXV0YXRlKHBlcmNfZmVtYWxlID0gY2FzZV93aGVuKGlzLm5hKGZlbWFsZSA9PSBUUlVFKSAmIGlzLm5hKG1hbGUpID09IFRSVUUgfiBOQSwNCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBpcy5uYShmZW1hbGUpID09IFRSVUUgfiAwLA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIGlzLm5hKG1hbGUgPT0gVFJVRSkgfiAxLA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIC5kZWZhdWx0ID0gcm91bmQoKGZlbWFsZS8obWFsZSArIGZlbWFsZSkpLDIpKSkgJT4lIA0KICAgIHNlbGVjdCghYyhtYWxlLGZlbWFsZSwgZmlyc3RfbmFtZSkpDQogIA0KICByZXR1cm4obmFtZXMpDQogIA0KICANCn0gIyBlbmQgZnVuY3Rpb24NCg0KIyA/bXV0YXRlKCkNCiMgP2Nhc2Vfd2hlbg0KZGZfZWdvIDwtIGdlbmRlcl9zY3JhcGVyLk5WKG5hbWVzID0gZGZfZWdvLCB3ZWJfcGFnZSA9ICJodHRwczovL252Yi5tZWVydGVucy5rbmF3Lm5sL25hYW0vaXMvIikNCg0KDQojIHBhc3RlMCgiaHR0cHM6Ly9udmIubWVlcnRlbnMua25hdy5ubC9uYWFtL2lzLyIsICJuYW1lIikgIyBUaGlzIHdpbGwgZXZlbnR1YWxseSBiZSB1c2VkIGZvciBhdXRvbWF0aW5nIHRoZSBzY3JhcGluZyBwcm9jZXNzDQoNCmBgYA0KIyMjIENoZWNrIHJlc3VsdHMNCmBgYHtyfQ0KY2hlY2sgPC0gZGZfZWdvICU+JSBjb3VudChwZXJjX2ZlbWFsZSkNCg0KcGxvdChjaGVjayRwZXJjX2ZlbWFsZSwgY2hlY2skbikNCmBgYA0KDQojIyBKb3VybmFsIFJhbmtpbmdzDQojIyMgRXh0cmFjdCB3b3JrcyBhbmQgY2hlY2sgam91cm5hbHMNCmBgYHtyfQ0KDQpkZl93b3JrcyA8LSBkby5jYWxsKHJiaW5kLmRhdGEuZnJhbWUsIGRmJHdvcmtzKSAjIHB1dCB3b3JrcyBpbiBkYXRhZnJhbWUNCmhlYWQoZGZfd29ya3MpDQoNCiMgdGVzdDEgPC0gZGZfd29ya3MgJT4lIHNlbGVjdChpZCwgc28sIGlzc25fbCwgYXV0aG9yKSAjIHRlc3QgdGhlIHdvcmtzDQoNCmBgYA0KDQojIyMgTG9hZCBqb3VybmFsIHJhbmtpbmcgZGF0YQ0KDQpgYGB7cn0NCmRhdCA8LSByZWFkX2NzdjIoImRhdGEvc2NpbWFnb2pyXzIzX2pvdXJuYWxzX2FsbC5jc3YiKQ0KaGVhZChkYXQpDQoNCmBgYA0KIyMjIFNwbGl0IHRoZSBJU1NOIGNvZGVzIGlmIDIgYXJlIGF2YWlsYWJsZQ0KYGBge3J9DQpkYXQkSXNzbl8xIDwtIHNhcHBseShzdHJzcGxpdChkYXQkSXNzbiwgIiwgIiksIGBbYCwgMSkgIyBUaGlzIGNvZGUgc2hvdWxkIHdvcmsgYXMgYSB3YXkgdG8gc3BsaXQgdGhlIHR3byBpc3NuIGNvZGVzDQpkYXQkSXNzbl8yIDwtIHNhcHBseShzdHJzcGxpdChkYXQkSXNzbiwgIiwgIiksIGBbYCwgMikNCg0KIyBkYXQkSXNzbl8xWzFdDQojIHN0cl9sZW5ndGgoZGF0JElzc25fMVsxXSkNCg0KZGF0JElzc25fMSA8LSBwYXN0ZTAoc3Vic3RyKGRhdCRJc3NuXzEsIDEsNCksICItIiwgc3Vic3RyKGRhdCRJc3NuXzEsIDUsOCkpICMgSHlwaGVuYXRlIHRoZSBjb2RlcyB0byBtYXRjaCB0aGUgdGFyZ2V0IGRmIA0KZGF0JElzc25fMiA8LSBpZmVsc2UoaXMubmEoZGF0JElzc25fMikgPT0gVFJVRSwgTkEsIHBhc3RlMChzdWJzdHIoZGF0JElzc25fMiwgMSw0KSwgIi0iLCBzdWJzdHIoZGF0JElzc25fMiwgNSw4KSkpICMgSHlwaGVuYXRlIHRoZSBjb2RlcywgYnV0IG1ha2Ugbm9uLWV4aXN0aW5nIHNlY29uZCBjb2RlcyBOQQ0KDQpkZl9wcmVzIDwtIGRhdCAlPiUgc2VsZWN0KFJhbmssIFRpdGxlLCBJc3NuXzEsIElzc25fMiwgU0pSLCBgU0pSIEJlc3QgUXVhcnRpbGVgLCBgSCBpbmRleGAsIGAlRmVtYWxlYCkgIyBNYWtlIGEgc2V0IHRoYXQgd2lsbCBiZSBqb2luZWQgd2l0aCBkZl93b3Jrcw0KDQpgYGANCg0KIyMjIGNoZWNrIGNvbXBhdGFiaWxpdHkNCmBgYHtyfQ0KDQpkZl93b3JrcyAlPiUgc2VsZWN0KGlzc25fbCkNCmRmX3ByZXMgJT4lIHNlbGVjdChJc3NuXzEsIElzc25fMikNCmRmX3dvcmtzJGNoZWNrIDwtIGlmZWxzZShkZl93b3JrcyRpc3NuX2wgJWluJSBkZl9wcmVzJElzc25fMSB8IGRmX3dvcmtzJGlzc25fbCAlaW4lIGRmX3ByZXMkSXNzbl8yLCAxLDApDQoNCm1pc19qb3VybmFsIDwtIGRmX3dvcmtzICU+JSBmaWx0ZXIoY2hlY2sgPT0gMCkNCg0KYXMuZGF0YS5mcmFtZSh1bmlxdWUobWlzX2pvdXJuYWwkc28pKSAjIFN0aWxsIGxlZnQgd2l0aCAxNjYgbWlzc2luZyBqb3VybmFscw0KDQpgYGANCiMjIyBDcmVhdGUgSUQgdmFyaWFibGUNCmBgYHtyfQ0KZGZfcHJlcyA8LSBkZl9wcmVzICU+JSBtdXRhdGUoaXNzbl9sID0gY2FzZV93aGVuKElzc25fMSAlaW4lIGRmX3dvcmtzJGlzc25fbCA9PSBUUlVFIH4gSXNzbl8xLA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIElzc25fMiAlaW4lIGRmX3dvcmtzJGlzc25fbCA9PSBUUlVFIH4gSXNzbl8yLA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIC5kZWZhdWx0ID0gTkEpKSAlPiUgZmlsdGVyKCFpcy5uYShpc3NuX2wpKQ0KDQpgYGANCiMjIyBKb2luIHByZXN0aWdlIG1lYXN1cmVzIGFuZCB3b3JrcyB0b2dldGhlcg0KYGBge3J9DQojID9sZWZ0X2pvaW4oKQ0KZGZfd29ya3MgPC0gZGZfd29ya3MgJT4lIGxlZnRfam9pbihkZl9wcmVzLCBieSA9ICJpc3NuX2wiLCBtdWx0aXBsZSA9ICJhbGwiKQ0KDQpoZWFkKGRmX3dvcmtzKQ0KYGBgDQojIFNhdmUgZGF0YXNldHMgDQpgYGB7cn0NCiMgU2F2ZSB0aGUgcmF3IHNvY2lvbG9neSBkYXRhIGZvciBSVSBhbmQgVVUNCnNhdmUoc29jX2RhdGEsIGZpbGUgPSAiZGF0YS9wcm9jZXNzZWQvc29jX2RhdGFfcmF3LlJEYXRhIikNCg0KIyBTYXZlIHRoZSBlZ28gZGF0YSBmb3IgUlUgYW5kIFVVIHNvY2lvbG9naXN0cw0Kc2F2ZShkZl9lZ28sIGZpbGUgPSAiZGF0YS9wcm9jZXNzZWQvUlVfVVVfZWdvLlJEYXRhIikNCg0KIyBTYXZlIHRoZSB3b3JrcyBmb3IgUlUgYW5kIFVVIHNvY2lvbG9naXN0cw0Kc2F2ZShkZl93b3JrcywgZmlsZSA9ICJkYXRhL3Byb2Nlc3NlZC9SVV9VVV93b3Jrcy5SRGF0YSIpDQoNCg0KYGBgDQoNCg0KDQoNCg0KYGBge3J9DQojIG5ldF93MiA8LSBpZ3JhcGg6OmdyYXBoX2Zyb21fYWRqYWNlbmN5X21hdHJpeChzb2NfZGF0YSRuZXRzWzIsLF0sICNub3csIEkgdGFrZSB0aGUgc2Vjb25kIHdhdmUNCiMgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIG1vZGUgPSBjKCJkaXJlY3RlZCIpLA0KIyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgd2VpZ2h0ZWQgPSBOVUxMLGRpYWcgPSBGQUxTRSxhZGQuY29sbmFtZXMgPSBOVUxMKQ0KDQpgYGANCg0KPGJyPg0KDQotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0NCg==</div>
 
 
 </div>
