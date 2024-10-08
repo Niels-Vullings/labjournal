@@ -20,6 +20,12 @@ navbar:
         href: Week3-webscraping.html
       - text: "Week 4"
         href: Week4.html
+      - text: "Week 5"
+        menu: 
+          - text: "Logic of SAOM"
+            href: Week5.html
+          - text: "RSiena"
+            href: Week5_RSiena.html
     - text: "Data Preparation"
       menu:
       - text: "Data Exploration"

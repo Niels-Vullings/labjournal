@@ -1,0 +1,1208 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Niels Vullings" />
+
+
+<title>Journal - Week 5 (RSiena)</title>
+
+<script src="site_libs/header-attrs-2.18/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+<script src="site_libs/navigation-1.1/sourceembed.js"></script>
+<script src="site_libs/clipboard-1.7.1/clipboard.min.js"></script>
+<link href="site_libs/primer-tooltips-1.4.0/build.css" rel="stylesheet" />
+<link href="site_libs/klippy-0.0.0.9500/css/klippy.min.css" rel="stylesheet" />
+<script src="site_libs/klippy-0.0.0.9500/js/klippy.min.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    background-color: #ffffff;
+    color: #a0a0a0;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #a0a0a0;  padding-left: 4px; }
+div.sourceCode
+  { color: #1f1c1b; background-color: #ffffff; }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span { color: #1f1c1b; } /* Normal */
+code span.al { color: #bf0303; background-color: #f7e6e6; font-weight: bold; } /* Alert */
+code span.an { color: #ca60ca; } /* Annotation */
+code span.at { color: #0057ae; } /* Attribute */
+code span.bn { color: #b08000; } /* BaseN */
+code span.bu { color: #644a9b; font-weight: bold; } /* BuiltIn */
+code span.cf { color: #1f1c1b; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #924c9d; } /* Char */
+code span.cn { color: #aa5500; } /* Constant */
+code span.co { color: #898887; } /* Comment */
+code span.cv { color: #0095ff; } /* CommentVar */
+code span.do { color: #607880; } /* Documentation */
+code span.dt { color: #0057ae; } /* DataType */
+code span.dv { color: #b08000; } /* DecVal */
+code span.er { color: #bf0303; text-decoration: underline; } /* Error */
+code span.ex { color: #0095ff; font-weight: bold; } /* Extension */
+code span.fl { color: #b08000; } /* Float */
+code span.fu { color: #644a9b; } /* Function */
+code span.im { color: #ff5500; } /* Import */
+code span.in { color: #b08000; } /* Information */
+code span.kw { color: #1f1c1b; font-weight: bold; } /* Keyword */
+code span.op { color: #1f1c1b; } /* Operator */
+code span.ot { color: #006e28; } /* Other */
+code span.pp { color: #006e28; } /* Preprocessor */
+code span.re { color: #0057ae; background-color: #e0e9f8; } /* RegionMarker */
+code span.sc { color: #3daee9; } /* SpecialChar */
+code span.ss { color: #ff5500; } /* SpecialString */
+code span.st { color: #bf0303; } /* String */
+code span.va { color: #0057ae; } /* Variable */
+code span.vs { color: #bf0303; } /* VerbatimString */
+code span.wa { color: #bf0303; } /* Warning */
+
+.sourceCode .row {
+  width: 100%;
+}
+.sourceCode {
+  overflow-x: auto;
+}
+.code-folding-btn {
+  margin-right: -30px;
+}
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+<style type="text/css">
+#rmd-source-code {
+  display: none;
+}
+</style>
+
+
+<link rel="stylesheet" href="tweaks.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html"></a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">
+    <span class="fa fa-home"></span>
+     
+  </a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Journal
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="Week1.html">Week 1</a>
+    </li>
+    <li>
+      <a href="Week2.html">Week 2</a>
+    </li>
+    <li>
+      <a href="Week3-webscraping.html">Week 3</a>
+    </li>
+    <li>
+      <a href="Week4.html">Week 4</a>
+    </li>
+    <li class="dropdown-submenu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Week 5</a>
+      <ul class="dropdown-menu" role="menu">
+        <li>
+          <a></a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Data Preparation
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="Data_exploration.html">Data Exploration</a>
+    </li>
+    <li>
+      <a href="Data_preparation.html">Data Manipulation</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Paper
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="Introduction.html">Introduction</a>
+    </li>
+    <li class="dropdown-header">Theory</li>
+    <li>
+      <a href="Data.html">Data</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://github.com/Niels-Vullings/labjournal">
+    <span class="fab fa-github"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+<li role="separator" class="divider"></li>
+<li><a id="rmd-download-source" href="#">Download Rmd</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore">Journal - Week 5 (RSiena)</h1>
+<h4 class="author">Niels Vullings</h4>
+
+</div>
+
+
+<style>
+body {
+text-align: justify}
+</style>
+<script>
+  addClassKlippyTo("pre.r, pre.markdown");
+  addKlippy('right', 'top', 'auto', '1', 'Copy code', 'Copied!');
+</script>
+<p>Last compiled on oktober, 2024</p>
+<p><br></p>
+<hr />
+<div id="set-up" class="section level1" number="1">
+<h1><span class="header-section-number">1</span> Set up</h1>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="co"># start with clean workspace</span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>())</span></code></pre></div>
+</div>
+<div id="udf" class="section level1" number="2">
+<h1><span class="header-section-number">2</span> UDF</h1>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>fpackage.check <span class="ot">&lt;-</span> <span class="cf">function</span>(packages) {</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>    <span class="fu">lapply</span>(packages, <span class="at">FUN =</span> <span class="cf">function</span>(x) {</span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>        <span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(x, <span class="at">character.only =</span> <span class="cn">TRUE</span>)) {</span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>            <span class="fu">install.packages</span>(x, <span class="at">dependencies =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>            <span class="fu">library</span>(x, <span class="at">character.only =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>        }</span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a>    })</span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a>}</span>
+<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a>fsave <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">file =</span> <span class="cn">NULL</span>, <span class="at">location =</span> <span class="st">&quot;./data/processed/&quot;</span>) {</span>
+<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a>    <span class="fu">ifelse</span>(<span class="sc">!</span><span class="fu">dir.exists</span>(<span class="st">&quot;data&quot;</span>), <span class="fu">dir.create</span>(<span class="st">&quot;data&quot;</span>), <span class="cn">FALSE</span>)</span>
+<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a>    <span class="fu">ifelse</span>(<span class="sc">!</span><span class="fu">dir.exists</span>(<span class="st">&quot;data/processed&quot;</span>), <span class="fu">dir.create</span>(<span class="st">&quot;data/processed&quot;</span>), <span class="cn">FALSE</span>)</span>
+<span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">is.null</span>(file))</span>
+<span id="cb2-14"><a href="#cb2-14" tabindex="-1"></a>        file <span class="ot">=</span> <span class="fu">deparse</span>(<span class="fu">substitute</span>(x))</span>
+<span id="cb2-15"><a href="#cb2-15" tabindex="-1"></a>    datename <span class="ot">&lt;-</span> <span class="fu">substr</span>(<span class="fu">gsub</span>(<span class="st">&quot;[:-]&quot;</span>, <span class="st">&quot;&quot;</span>, <span class="fu">Sys.time</span>()), <span class="dv">1</span>, <span class="dv">8</span>)</span>
+<span id="cb2-16"><a href="#cb2-16" tabindex="-1"></a>    totalname <span class="ot">&lt;-</span> <span class="fu">paste</span>(location, datename, file, <span class="st">&quot;.rda&quot;</span>, <span class="at">sep =</span> <span class="st">&quot;&quot;</span>)</span>
+<span id="cb2-17"><a href="#cb2-17" tabindex="-1"></a>    <span class="fu">save</span>(x, <span class="at">file =</span> totalname)  <span class="co">#need to fix if file is reloaded as input name, not as x. </span></span>
+<span id="cb2-18"><a href="#cb2-18" tabindex="-1"></a>}</span>
+<span id="cb2-19"><a href="#cb2-19" tabindex="-1"></a></span>
+<span id="cb2-20"><a href="#cb2-20" tabindex="-1"></a>fload <span class="ot">&lt;-</span> <span class="cf">function</span>(filename) {</span>
+<span id="cb2-21"><a href="#cb2-21" tabindex="-1"></a>    <span class="fu">load</span>(filename)</span>
+<span id="cb2-22"><a href="#cb2-22" tabindex="-1"></a>    <span class="fu">get</span>(<span class="fu">ls</span>()[<span class="fu">ls</span>() <span class="sc">!=</span> <span class="st">&quot;filename&quot;</span>])</span>
+<span id="cb2-23"><a href="#cb2-23" tabindex="-1"></a>}</span>
+<span id="cb2-24"><a href="#cb2-24" tabindex="-1"></a></span>
+<span id="cb2-25"><a href="#cb2-25" tabindex="-1"></a>fshowdf <span class="ot">&lt;-</span> <span class="cf">function</span>(x, ...) {</span>
+<span id="cb2-26"><a href="#cb2-26" tabindex="-1"></a>    knitr<span class="sc">::</span><span class="fu">kable</span>(x, <span class="at">digits =</span> <span class="dv">2</span>, <span class="st">&quot;html&quot;</span>, ...) <span class="sc">%&gt;%</span></span>
+<span id="cb2-27"><a href="#cb2-27" tabindex="-1"></a>        kableExtra<span class="sc">::</span><span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="fu">c</span>(<span class="st">&quot;striped&quot;</span>, <span class="st">&quot;hover&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb2-28"><a href="#cb2-28" tabindex="-1"></a>        kableExtra<span class="sc">::</span><span class="fu">scroll_box</span>(<span class="at">width =</span> <span class="st">&quot;100%&quot;</span>, <span class="at">height =</span> <span class="st">&quot;300px&quot;</span>)</span>
+<span id="cb2-29"><a href="#cb2-29" tabindex="-1"></a>}</span>
+<span id="cb2-30"><a href="#cb2-30" tabindex="-1"></a></span>
+<span id="cb2-31"><a href="#cb2-31" tabindex="-1"></a></span>
+<span id="cb2-32"><a href="#cb2-32" tabindex="-1"></a>fcolnet <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">data =</span> scholars, <span class="at">university =</span> <span class="st">&quot;RU&quot;</span>, <span class="at">discipline =</span> <span class="st">&quot;sociology&quot;</span>, <span class="at">waves =</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="dv">2015</span>,</span>
+<span id="cb2-33"><a href="#cb2-33" tabindex="-1"></a>    <span class="dv">2018</span>), <span class="fu">c</span>(<span class="dv">2019</span>, <span class="dv">2023</span>)), <span class="at">type =</span> <span class="fu">c</span>(<span class="st">&quot;first&quot;</span>)) {</span>
+<span id="cb2-34"><a href="#cb2-34" tabindex="-1"></a></span>
+<span id="cb2-35"><a href="#cb2-35" tabindex="-1"></a>    <span class="co"># step 1</span></span>
+<span id="cb2-36"><a href="#cb2-36" tabindex="-1"></a>    demographics <span class="ot">&lt;-</span> <span class="fu">do.call</span>(rbind.data.frame, data<span class="sc">$</span>demographics)</span>
+<span id="cb2-37"><a href="#cb2-37" tabindex="-1"></a>    demographics <span class="ot">&lt;-</span> demographics <span class="sc">%&gt;%</span></span>
+<span id="cb2-38"><a href="#cb2-38" tabindex="-1"></a>        <span class="fu">mutate</span>(<span class="at">Universiteit1.22 =</span> <span class="fu">replace</span>(Universiteit1<span class="fl">.22</span>, <span class="fu">is.na</span>(Universiteit1<span class="fl">.22</span>), <span class="st">&quot;&quot;</span>), <span class="at">Universiteit2.22 =</span> <span class="fu">replace</span>(Universiteit2<span class="fl">.22</span>,</span>
+<span id="cb2-39"><a href="#cb2-39" tabindex="-1"></a>            <span class="fu">is.na</span>(Universiteit2<span class="fl">.22</span>), <span class="st">&quot;&quot;</span>), <span class="at">Universiteit1.24 =</span> <span class="fu">replace</span>(Universiteit1<span class="fl">.24</span>, <span class="fu">is.na</span>(Universiteit1<span class="fl">.24</span>),</span>
+<span id="cb2-40"><a href="#cb2-40" tabindex="-1"></a>            <span class="st">&quot;&quot;</span>), <span class="at">Universiteit2.24 =</span> <span class="fu">replace</span>(Universiteit2<span class="fl">.24</span>, <span class="fu">is.na</span>(Universiteit2<span class="fl">.24</span>), <span class="st">&quot;&quot;</span>), <span class="at">discipline.22 =</span> <span class="fu">replace</span>(discipline<span class="fl">.22</span>,</span>
+<span id="cb2-41"><a href="#cb2-41" tabindex="-1"></a>            <span class="fu">is.na</span>(discipline<span class="fl">.22</span>), <span class="st">&quot;&quot;</span>), <span class="at">discipline.24 =</span> <span class="fu">replace</span>(discipline<span class="fl">.24</span>, <span class="fu">is.na</span>(discipline<span class="fl">.24</span>), <span class="st">&quot;&quot;</span>))</span>
+<span id="cb2-42"><a href="#cb2-42" tabindex="-1"></a></span>
+<span id="cb2-43"><a href="#cb2-43" tabindex="-1"></a>    sample <span class="ot">&lt;-</span> <span class="fu">which</span>((demographics<span class="sc">$</span>Universiteit1<span class="fl">.22</span> <span class="sc">%in%</span> university <span class="sc">|</span> demographics<span class="sc">$</span>Universiteit2<span class="fl">.22</span> <span class="sc">%in%</span></span>
+<span id="cb2-44"><a href="#cb2-44" tabindex="-1"></a>        university <span class="sc">|</span> demographics<span class="sc">$</span>Universiteit1<span class="fl">.24</span> <span class="sc">%in%</span> university <span class="sc">|</span> demographics<span class="sc">$</span>Universiteit2<span class="fl">.24</span> <span class="sc">%in%</span></span>
+<span id="cb2-45"><a href="#cb2-45" tabindex="-1"></a>        university) <span class="sc">&amp;</span> (demographics<span class="sc">$</span>discipline<span class="fl">.22</span> <span class="sc">%in%</span> discipline <span class="sc">|</span> demographics<span class="sc">$</span>discipline<span class="fl">.24</span> <span class="sc">%in%</span> discipline))</span>
+<span id="cb2-46"><a href="#cb2-46" tabindex="-1"></a></span>
+<span id="cb2-47"><a href="#cb2-47" tabindex="-1"></a>    demographics_soc <span class="ot">&lt;-</span> demographics[sample, ]</span>
+<span id="cb2-48"><a href="#cb2-48" tabindex="-1"></a>    scholars_sel <span class="ot">&lt;-</span> <span class="fu">lapply</span>(scholars, <span class="st">&quot;[&quot;</span>, sample)</span>
+<span id="cb2-49"><a href="#cb2-49" tabindex="-1"></a></span>
+<span id="cb2-50"><a href="#cb2-50" tabindex="-1"></a>    <span class="co"># step 2</span></span>
+<span id="cb2-51"><a href="#cb2-51" tabindex="-1"></a>    ids <span class="ot">&lt;-</span> demographics_soc<span class="sc">$</span>au_id</span>
+<span id="cb2-52"><a href="#cb2-52" tabindex="-1"></a>    nwaves <span class="ot">&lt;-</span> <span class="fu">length</span>(waves)</span>
+<span id="cb2-53"><a href="#cb2-53" tabindex="-1"></a>    nets <span class="ot">&lt;-</span> <span class="fu">array</span>(<span class="dv">0</span>, <span class="at">dim =</span> <span class="fu">c</span>(nwaves, <span class="fu">length</span>(ids), <span class="fu">length</span>(ids)), <span class="at">dimnames =</span> <span class="fu">list</span>(<span class="at">wave =</span> <span class="dv">1</span><span class="sc">:</span>nwaves, ids,</span>
+<span id="cb2-54"><a href="#cb2-54" tabindex="-1"></a>        ids))</span>
+<span id="cb2-55"><a href="#cb2-55" tabindex="-1"></a>    <span class="fu">dimnames</span>(nets)</span>
+<span id="cb2-56"><a href="#cb2-56" tabindex="-1"></a></span>
+<span id="cb2-57"><a href="#cb2-57" tabindex="-1"></a>    <span class="co"># step 3</span></span>
+<span id="cb2-58"><a href="#cb2-58" tabindex="-1"></a>    df_works <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">works_id =</span> <span class="fu">unlist</span>(<span class="fu">lapply</span>(scholars_sel<span class="sc">$</span>work, <span class="cf">function</span>(l) l<span class="sc">$</span>id)), <span class="at">works_author =</span> <span class="fu">unlist</span>(<span class="fu">lapply</span>(scholars_sel<span class="sc">$</span>work,</span>
+<span id="cb2-59"><a href="#cb2-59" tabindex="-1"></a>        <span class="cf">function</span>(l) l<span class="sc">$</span>author), <span class="at">recursive =</span> <span class="cn">FALSE</span>), <span class="at">works_year =</span> <span class="fu">unlist</span>(<span class="fu">lapply</span>(scholars_sel<span class="sc">$</span>work, <span class="cf">function</span>(l) l<span class="sc">$</span>publication_year),</span>
+<span id="cb2-60"><a href="#cb2-60" tabindex="-1"></a>        <span class="at">recursive =</span> <span class="cn">FALSE</span>))</span>
+<span id="cb2-61"><a href="#cb2-61" tabindex="-1"></a></span>
+<span id="cb2-62"><a href="#cb2-62" tabindex="-1"></a>    df_works <span class="ot">&lt;-</span> df_works[<span class="sc">!</span><span class="fu">duplicated</span>(df_works), ]</span>
+<span id="cb2-63"><a href="#cb2-63" tabindex="-1"></a></span>
+<span id="cb2-64"><a href="#cb2-64" tabindex="-1"></a>    <span class="co"># step 4</span></span>
+<span id="cb2-65"><a href="#cb2-65" tabindex="-1"></a>    <span class="cf">if</span> (type <span class="sc">==</span> <span class="st">&quot;first&quot;</span>) {</span>
+<span id="cb2-66"><a href="#cb2-66" tabindex="-1"></a>        <span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nwaves) {</span>
+<span id="cb2-67"><a href="#cb2-67" tabindex="-1"></a>            df_works_w <span class="ot">&lt;-</span> df_works[df_works<span class="sc">$</span>works_year <span class="sc">&gt;=</span> waves[[j]][<span class="dv">1</span>] <span class="sc">&amp;</span> df_works<span class="sc">$</span>works_year <span class="sc">&lt;=</span> waves[[j]][<span class="dv">2</span>],</span>
+<span id="cb2-68"><a href="#cb2-68" tabindex="-1"></a>                ]</span>
+<span id="cb2-69"><a href="#cb2-69" tabindex="-1"></a>            <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(df_works_w)) {</span>
+<span id="cb2-70"><a href="#cb2-70" tabindex="-1"></a>                ego <span class="ot">&lt;-</span> df_works_w<span class="sc">$</span>works_author[i][[<span class="dv">1</span>]]<span class="sc">$</span>au_id[<span class="dv">1</span>]</span>
+<span id="cb2-71"><a href="#cb2-71" tabindex="-1"></a>                alters <span class="ot">&lt;-</span> df_works_w<span class="sc">$</span>works_author[i][[<span class="dv">1</span>]]<span class="sc">$</span>au_id[<span class="sc">-</span><span class="dv">1</span>]</span>
+<span id="cb2-72"><a href="#cb2-72" tabindex="-1"></a>                <span class="cf">if</span> (<span class="fu">sum</span>(ids <span class="sc">%in%</span> ego) <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">&amp;</span> <span class="fu">sum</span>(ids <span class="sc">%in%</span> alters) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb2-73"><a href="#cb2-73" tabindex="-1"></a>                  nets[j, <span class="fu">which</span>(ids <span class="sc">%in%</span> ego), <span class="fu">which</span>(ids <span class="sc">%in%</span> alters)] <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb2-74"><a href="#cb2-74" tabindex="-1"></a>                }</span>
+<span id="cb2-75"><a href="#cb2-75" tabindex="-1"></a>            }</span>
+<span id="cb2-76"><a href="#cb2-76" tabindex="-1"></a>        }</span>
+<span id="cb2-77"><a href="#cb2-77" tabindex="-1"></a>    }</span>
+<span id="cb2-78"><a href="#cb2-78" tabindex="-1"></a></span>
+<span id="cb2-79"><a href="#cb2-79" tabindex="-1"></a>    <span class="cf">if</span> (type <span class="sc">==</span> <span class="st">&quot;last&quot;</span>) {</span>
+<span id="cb2-80"><a href="#cb2-80" tabindex="-1"></a>        <span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nwaves) {</span>
+<span id="cb2-81"><a href="#cb2-81" tabindex="-1"></a>            df_works_w <span class="ot">&lt;-</span> df_works[df_works<span class="sc">$</span>works_year <span class="sc">&gt;=</span> waves[[j]][<span class="dv">1</span>] <span class="sc">&amp;</span> df_works<span class="sc">$</span>works_year <span class="sc">&lt;=</span> waves[[j]][<span class="dv">2</span>],</span>
+<span id="cb2-82"><a href="#cb2-82" tabindex="-1"></a>                ]</span>
+<span id="cb2-83"><a href="#cb2-83" tabindex="-1"></a>            <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(df_works_w)) {</span>
+<span id="cb2-84"><a href="#cb2-84" tabindex="-1"></a>                ego <span class="ot">&lt;-</span> <span class="fu">rev</span>(df_works_w<span class="sc">$</span>works_author[i][[<span class="dv">1</span>]]<span class="sc">$</span>au_id)[<span class="dv">1</span>]</span>
+<span id="cb2-85"><a href="#cb2-85" tabindex="-1"></a>                alters <span class="ot">&lt;-</span> <span class="fu">rev</span>(df_works_w<span class="sc">$</span>works_author[i][[<span class="dv">1</span>]]<span class="sc">$</span>au_id)[<span class="sc">-</span><span class="dv">1</span>]</span>
+<span id="cb2-86"><a href="#cb2-86" tabindex="-1"></a>                <span class="cf">if</span> (<span class="fu">sum</span>(ids <span class="sc">%in%</span> ego) <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">&amp;</span> <span class="fu">sum</span>(ids <span class="sc">%in%</span> alters) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb2-87"><a href="#cb2-87" tabindex="-1"></a>                  nets[j, <span class="fu">which</span>(ids <span class="sc">%in%</span> ego), <span class="fu">which</span>(ids <span class="sc">%in%</span> alters)] <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb2-88"><a href="#cb2-88" tabindex="-1"></a>                }</span>
+<span id="cb2-89"><a href="#cb2-89" tabindex="-1"></a>            }</span>
+<span id="cb2-90"><a href="#cb2-90" tabindex="-1"></a>        }</span>
+<span id="cb2-91"><a href="#cb2-91" tabindex="-1"></a>    }</span>
+<span id="cb2-92"><a href="#cb2-92" tabindex="-1"></a></span>
+<span id="cb2-93"><a href="#cb2-93" tabindex="-1"></a>    <span class="cf">if</span> (type <span class="sc">==</span> <span class="st">&quot;all&quot;</span>) {</span>
+<span id="cb2-94"><a href="#cb2-94" tabindex="-1"></a>        <span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nwaves) {</span>
+<span id="cb2-95"><a href="#cb2-95" tabindex="-1"></a>            df_works_w <span class="ot">&lt;-</span> df_works[df_works<span class="sc">$</span>works_year <span class="sc">&gt;=</span> waves[[j]][<span class="dv">1</span>] <span class="sc">&amp;</span> df_works<span class="sc">$</span>works_year <span class="sc">&lt;=</span> waves[[j]][<span class="dv">2</span>],</span>
+<span id="cb2-96"><a href="#cb2-96" tabindex="-1"></a>                ]</span>
+<span id="cb2-97"><a href="#cb2-97" tabindex="-1"></a>            <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(df_works_w)) {</span>
+<span id="cb2-98"><a href="#cb2-98" tabindex="-1"></a>                egos <span class="ot">&lt;-</span> df_works_w<span class="sc">$</span>works_author[i][[<span class="dv">1</span>]]<span class="sc">$</span>au_id</span>
+<span id="cb2-99"><a href="#cb2-99" tabindex="-1"></a>                <span class="cf">if</span> (<span class="fu">sum</span>(ids <span class="sc">%in%</span> egos) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb2-100"><a href="#cb2-100" tabindex="-1"></a>                  nets[j, <span class="fu">which</span>(ids <span class="sc">%in%</span> egos), <span class="fu">which</span>(ids <span class="sc">%in%</span> egos)] <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb2-101"><a href="#cb2-101" tabindex="-1"></a>                }</span>
+<span id="cb2-102"><a href="#cb2-102" tabindex="-1"></a>            }</span>
+<span id="cb2-103"><a href="#cb2-103" tabindex="-1"></a>        }</span>
+<span id="cb2-104"><a href="#cb2-104" tabindex="-1"></a>    }</span>
+<span id="cb2-105"><a href="#cb2-105" tabindex="-1"></a>    output <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
+<span id="cb2-106"><a href="#cb2-106" tabindex="-1"></a>    output<span class="sc">$</span>data <span class="ot">&lt;-</span> scholars_sel</span>
+<span id="cb2-107"><a href="#cb2-107" tabindex="-1"></a>    output<span class="sc">$</span>nets <span class="ot">&lt;-</span> nets</span>
+<span id="cb2-108"><a href="#cb2-108" tabindex="-1"></a>    <span class="fu">return</span>(output)</span>
+<span id="cb2-109"><a href="#cb2-109" tabindex="-1"></a>}</span></code></pre></div>
+</div>
+<div id="packages" class="section level1" number="3">
+<h1><span class="header-section-number">3</span> Packages</h1>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>packages <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&quot;RSiena&quot;</span>, <span class="st">&quot;RsienaTwoStep&quot;</span>, <span class="st">&quot;igraph&quot;</span>, <span class="st">&quot;tidyverse&quot;</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="co"># fpackage.check(packages) # devtools::install_github(&#39;JochemTolsma/RsienaTwoStep&#39;,</span></span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="co"># build_vignettes=TRUE) packages = c(&#39;RsienaTwoStep&#39;)</span></span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a><span class="fu">fpackage.check</span>(packages)</span></code></pre></div>
+<pre class="test2"><code>#&gt; [[1]]
+#&gt; NULL
+#&gt; 
+#&gt; [[2]]
+#&gt; NULL
+#&gt; 
+#&gt; [[3]]
+#&gt; NULL
+#&gt; 
+#&gt; [[4]]
+#&gt; NULL</code></pre>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;data/scholars_20240924.rda&quot;</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>scholars <span class="ot">&lt;-</span> x</span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a><span class="fu">rm</span>(x)</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="co">#save the output of your function</span></span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>test <span class="ot">&lt;-</span> <span class="fu">fcolnet</span>(<span class="at">data =</span> scholars, </span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>                <span class="at">university =</span> <span class="st">&quot;RU&quot;</span>, </span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>                <span class="at">discipline =</span> <span class="st">&quot;sociology&quot;</span>, </span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a>                <span class="at">waves =</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="dv">2015</span>, <span class="dv">2018</span>), <span class="fu">c</span>(<span class="dv">2019</span>, <span class="dv">2023</span>)), </span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a>                <span class="at">type =</span> <span class="fu">c</span>(<span class="st">&quot;first&quot;</span>))</span>
+<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a></span>
+<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a></span>
+<span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a>test_w1 <span class="ot">&lt;-</span> igraph<span class="sc">::</span><span class="fu">graph_from_adjacency_matrix</span>(</span>
+<span id="cb6-10"><a href="#cb6-10" tabindex="-1"></a>  test<span class="sc">$</span>nets[<span class="dv">1</span>,,], <span class="co">#for this example I take the first wave of data. (thus I select the array of networks and take the first matrix)</span></span>
+<span id="cb6-11"><a href="#cb6-11" tabindex="-1"></a>  <span class="at">mode =</span> <span class="fu">c</span>(<span class="st">&quot;directed&quot;</span>),</span>
+<span id="cb6-12"><a href="#cb6-12" tabindex="-1"></a>  <span class="at">weighted =</span> <span class="cn">NULL</span>,</span>
+<span id="cb6-13"><a href="#cb6-13" tabindex="-1"></a>  <span class="at">diag =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb6-14"><a href="#cb6-14" tabindex="-1"></a>  <span class="at">add.colnames =</span> <span class="cn">NULL</span>,</span>
+<span id="cb6-15"><a href="#cb6-15" tabindex="-1"></a>  <span class="at">add.rownames =</span> <span class="cn">NULL</span></span>
+<span id="cb6-16"><a href="#cb6-16" tabindex="-1"></a>)</span>
+<span id="cb6-17"><a href="#cb6-17" tabindex="-1"></a></span>
+<span id="cb6-18"><a href="#cb6-18" tabindex="-1"></a><span class="fu">plot</span>(test_w1,</span>
+<span id="cb6-19"><a href="#cb6-19" tabindex="-1"></a>  <span class="at">vertex.label =</span> <span class="cn">NA</span>,</span>
+<span id="cb6-20"><a href="#cb6-20" tabindex="-1"></a>  <span class="at">edge.width =</span> <span class="fl">0.2</span>,</span>
+<span id="cb6-21"><a href="#cb6-21" tabindex="-1"></a>  <span class="at">edge.arrow.size =</span><span class="fl">0.2</span>)</span></code></pre></div>
+<p><img src="Week5_RSiena_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>df_soc <span class="ot">&lt;-</span> test<span class="sc">$</span>data</span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>df_network <span class="ot">&lt;-</span> test<span class="sc">$</span>nets</span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a><span class="fu">length</span>(df_network)</span></code></pre></div>
+<pre class="test2"><code>#&gt; [1] 5000</code></pre>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="fu">dim</span>(df_network)[<span class="dv">1</span>]</span></code></pre></div>
+<pre class="test2"><code>#&gt; [1] 2</code></pre>
+<div class="sourceCode" id="cb11"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a>wave_1 <span class="ot">&lt;-</span> df_network[<span class="dv">1</span>, , ]</span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a><span class="fu">diag</span>(wave_1) <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a>wave_2 <span class="ot">&lt;-</span> df_network[<span class="dv">2</span>, , ]</span>
+<span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a><span class="fu">diag</span>(wave_2) <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb11-6"><a href="#cb11-6" tabindex="-1"></a></span>
+<span id="cb11-7"><a href="#cb11-7" tabindex="-1"></a>net_soc_array <span class="ot">&lt;-</span> <span class="fu">array</span>(<span class="at">data =</span> <span class="fu">c</span>(wave_1, wave_2), <span class="at">dim =</span> <span class="fu">c</span>(<span class="fu">dim</span>(wave_1), <span class="dv">2</span>))</span>
+<span id="cb11-8"><a href="#cb11-8" tabindex="-1"></a></span>
+<span id="cb11-9"><a href="#cb11-9" tabindex="-1"></a><span class="co"># Dependent</span></span>
+<span id="cb11-10"><a href="#cb11-10" tabindex="-1"></a>net <span class="ot">&lt;-</span> <span class="fu">sienaDependent</span>(net_soc_array)</span></code></pre></div>
+</div>
+<div id="ego-data" class="section level1" number="4">
+<h1><span class="header-section-number">4</span> Ego data</h1>
+<div class="sourceCode" id="cb12"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a>df_ego <span class="ot">&lt;-</span> <span class="fu">do.call</span>(rbind.data.frame, df_soc<span class="sc">$</span>demographics)</span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a><span class="co"># Function</span></span>
+<span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a>function_ru <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">as_factor</span>(df_ego<span class="sc">$</span>Functie<span class="fl">.22</span>))</span>
+<span id="cb12-6"><a href="#cb12-6" tabindex="-1"></a><span class="co"># func_ru &lt;- as.numeric(df_ego$Functie.22 == &#39;Hoogleraar&#39;)</span></span>
+<span id="cb12-7"><a href="#cb12-7" tabindex="-1"></a>ru_function <span class="ot">&lt;-</span> <span class="fu">coCovar</span>(function_ru)</span></code></pre></div>
+</div>
+<div id="make-siena-data" class="section level1" number="5">
+<h1><span class="header-section-number">5</span> Make Siena Data</h1>
+<div class="sourceCode" id="cb13"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a>mydata <span class="ot">&lt;-</span> <span class="fu">sienaDataCreate</span>(net, ru_function)</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a>myeff <span class="ot">&lt;-</span> <span class="fu">getEffects</span>(mydata)</span>
+<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a><span class="fu">effectsDocumentation</span>(myeff)</span></code></pre></div>
+<pre class="test2"><code>#&gt; Effects documentation written to file myeff.html .</code></pre>
+<div class="sourceCode" id="cb16"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a><span class="fu">ifelse</span>(<span class="sc">!</span><span class="fu">dir.exists</span>(<span class="st">&quot;results&quot;</span>), <span class="fu">dir.create</span>(<span class="st">&quot;results&quot;</span>), <span class="cn">FALSE</span>)</span></code></pre></div>
+<pre class="test2"><code>#&gt; [1] FALSE</code></pre>
+<div class="sourceCode" id="cb18"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a><span class="fu">print01Report</span>(mydata, <span class="at">modelname =</span> <span class="st">&quot;./results/soc_init&quot;</span>)</span></code></pre></div>
+<div id="estimate" class="section level2" number="5.1">
+<h2><span class="header-section-number">5.1</span> Estimate</h2>
+<div class="sourceCode" id="cb19"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a>myAlgorithm <span class="ot">&lt;-</span> <span class="fu">sienaAlgorithmCreate</span>(<span class="at">projname =</span> <span class="st">&quot;soc_init&quot;</span>)</span></code></pre></div>
+<pre class="test2"><code>#&gt; If you use this algorithm object, siena07 will create/use an output file soc_init.txt .</code></pre>
+<div class="sourceCode" id="cb21"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" tabindex="-1"></a>ansM1 <span class="ot">&lt;-</span> <span class="fu">siena07</span>(myAlgorithm, <span class="at">data =</span> mydata, <span class="at">effects =</span> myeff, <span class="at">returnDeps =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb21-2"><a href="#cb21-2" tabindex="-1"></a><span class="co"># if necessary estimate again!  ansM1 &lt;- siena07(myAlgorithm, data = mydata, effects = myeff,</span></span>
+<span id="cb21-3"><a href="#cb21-3" tabindex="-1"></a><span class="co"># prevAns = ansM1, returnDeps=TRUE)</span></span>
+<span id="cb21-4"><a href="#cb21-4" tabindex="-1"></a>ansM1</span></code></pre></div>
+<pre class="test2"><code>#&gt; Estimates, standard errors and convergence t-ratios
+#&gt; 
+#&gt;                               Estimate   Standard   Convergence 
+#&gt;                                            Error      t-ratio   
+#&gt; 
+#&gt; Rate parameters: 
+#&gt;   0       Rate parameter       3.0536  ( 0.5099   )             
+#&gt; 
+#&gt; Other parameters: 
+#&gt;   1. eval outdegree (density) -1.8464  ( 0.1322   )   0.0541    
+#&gt;   2. eval reciprocity          1.1746  ( 0.4069   )   0.0167    
+#&gt; 
+#&gt; Overall maximum convergence ratio:    0.0544 
+#&gt; 
+#&gt; 
+#&gt; Total of 1747 iteration steps.</code></pre>
+</div>
+</div>
+<div id="screw-around-with-rsiena-models" class="section level1"
+number="6">
+<h1><span class="header-section-number">6</span> Screw around with
+RSiena Models</h1>
+<div class="sourceCode" id="cb23"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>())</span></code></pre></div>
+<div id="udf-1" class="section level2" number="6.1">
+<h2><span class="header-section-number">6.1</span> UDF</h2>
+<div class="sourceCode" id="cb24"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" tabindex="-1"></a>fpackage.check <span class="ot">&lt;-</span> <span class="cf">function</span>(packages) {</span>
+<span id="cb24-2"><a href="#cb24-2" tabindex="-1"></a>    <span class="fu">lapply</span>(packages, <span class="at">FUN =</span> <span class="cf">function</span>(x) {</span>
+<span id="cb24-3"><a href="#cb24-3" tabindex="-1"></a>        <span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(x, <span class="at">character.only =</span> <span class="cn">TRUE</span>)) {</span>
+<span id="cb24-4"><a href="#cb24-4" tabindex="-1"></a>            <span class="fu">install.packages</span>(x, <span class="at">dependencies =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb24-5"><a href="#cb24-5" tabindex="-1"></a>            <span class="fu">library</span>(x, <span class="at">character.only =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb24-6"><a href="#cb24-6" tabindex="-1"></a>        }</span>
+<span id="cb24-7"><a href="#cb24-7" tabindex="-1"></a>    })</span>
+<span id="cb24-8"><a href="#cb24-8" tabindex="-1"></a>}</span>
+<span id="cb24-9"><a href="#cb24-9" tabindex="-1"></a></span>
+<span id="cb24-10"><a href="#cb24-10" tabindex="-1"></a>fsave <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">file =</span> <span class="cn">NULL</span>, <span class="at">location =</span> <span class="st">&quot;./data/processed/&quot;</span>) {</span>
+<span id="cb24-11"><a href="#cb24-11" tabindex="-1"></a>    <span class="fu">ifelse</span>(<span class="sc">!</span><span class="fu">dir.exists</span>(<span class="st">&quot;data&quot;</span>), <span class="fu">dir.create</span>(<span class="st">&quot;data&quot;</span>), <span class="cn">FALSE</span>)</span>
+<span id="cb24-12"><a href="#cb24-12" tabindex="-1"></a>    <span class="fu">ifelse</span>(<span class="sc">!</span><span class="fu">dir.exists</span>(<span class="st">&quot;data/processed&quot;</span>), <span class="fu">dir.create</span>(<span class="st">&quot;data/processed&quot;</span>), <span class="cn">FALSE</span>)</span>
+<span id="cb24-13"><a href="#cb24-13" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">is.null</span>(file))</span>
+<span id="cb24-14"><a href="#cb24-14" tabindex="-1"></a>        file <span class="ot">=</span> <span class="fu">deparse</span>(<span class="fu">substitute</span>(x))</span>
+<span id="cb24-15"><a href="#cb24-15" tabindex="-1"></a>    datename <span class="ot">&lt;-</span> <span class="fu">substr</span>(<span class="fu">gsub</span>(<span class="st">&quot;[:-]&quot;</span>, <span class="st">&quot;&quot;</span>, <span class="fu">Sys.time</span>()), <span class="dv">1</span>, <span class="dv">8</span>)</span>
+<span id="cb24-16"><a href="#cb24-16" tabindex="-1"></a>    totalname <span class="ot">&lt;-</span> <span class="fu">paste</span>(location, datename, file, <span class="st">&quot;.rda&quot;</span>, <span class="at">sep =</span> <span class="st">&quot;&quot;</span>)</span>
+<span id="cb24-17"><a href="#cb24-17" tabindex="-1"></a>    <span class="fu">save</span>(x, <span class="at">file =</span> totalname)  <span class="co">#need to fix if file is reloaded as input name, not as x. </span></span>
+<span id="cb24-18"><a href="#cb24-18" tabindex="-1"></a>}</span>
+<span id="cb24-19"><a href="#cb24-19" tabindex="-1"></a></span>
+<span id="cb24-20"><a href="#cb24-20" tabindex="-1"></a>fload <span class="ot">&lt;-</span> <span class="cf">function</span>(filename) {</span>
+<span id="cb24-21"><a href="#cb24-21" tabindex="-1"></a>    <span class="fu">load</span>(filename)</span>
+<span id="cb24-22"><a href="#cb24-22" tabindex="-1"></a>    <span class="fu">get</span>(<span class="fu">ls</span>()[<span class="fu">ls</span>() <span class="sc">!=</span> <span class="st">&quot;filename&quot;</span>])</span>
+<span id="cb24-23"><a href="#cb24-23" tabindex="-1"></a>}</span>
+<span id="cb24-24"><a href="#cb24-24" tabindex="-1"></a></span>
+<span id="cb24-25"><a href="#cb24-25" tabindex="-1"></a>fshowdf <span class="ot">&lt;-</span> <span class="cf">function</span>(x, ...) {</span>
+<span id="cb24-26"><a href="#cb24-26" tabindex="-1"></a>    knitr<span class="sc">::</span><span class="fu">kable</span>(x, <span class="at">digits =</span> <span class="dv">2</span>, <span class="st">&quot;html&quot;</span>, ...) <span class="sc">%&gt;%</span></span>
+<span id="cb24-27"><a href="#cb24-27" tabindex="-1"></a>        kableExtra<span class="sc">::</span><span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="fu">c</span>(<span class="st">&quot;striped&quot;</span>, <span class="st">&quot;hover&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb24-28"><a href="#cb24-28" tabindex="-1"></a>        kableExtra<span class="sc">::</span><span class="fu">scroll_box</span>(<span class="at">width =</span> <span class="st">&quot;100%&quot;</span>, <span class="at">height =</span> <span class="st">&quot;300px&quot;</span>)</span>
+<span id="cb24-29"><a href="#cb24-29" tabindex="-1"></a>}</span>
+<span id="cb24-30"><a href="#cb24-30" tabindex="-1"></a></span>
+<span id="cb24-31"><a href="#cb24-31" tabindex="-1"></a></span>
+<span id="cb24-32"><a href="#cb24-32" tabindex="-1"></a>fcolnet <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">data =</span> scholars, <span class="at">university =</span> <span class="st">&quot;RU&quot;</span>, <span class="at">discipline =</span> <span class="st">&quot;sociology&quot;</span>, <span class="at">waves =</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="dv">2015</span>,</span>
+<span id="cb24-33"><a href="#cb24-33" tabindex="-1"></a>    <span class="dv">2018</span>), <span class="fu">c</span>(<span class="dv">2019</span>, <span class="dv">2023</span>)), <span class="at">type =</span> <span class="fu">c</span>(<span class="st">&quot;first&quot;</span>)) {</span>
+<span id="cb24-34"><a href="#cb24-34" tabindex="-1"></a></span>
+<span id="cb24-35"><a href="#cb24-35" tabindex="-1"></a>    <span class="co"># step 1</span></span>
+<span id="cb24-36"><a href="#cb24-36" tabindex="-1"></a>    demographics <span class="ot">&lt;-</span> <span class="fu">do.call</span>(rbind.data.frame, data<span class="sc">$</span>demographics)</span>
+<span id="cb24-37"><a href="#cb24-37" tabindex="-1"></a>    demographics <span class="ot">&lt;-</span> demographics <span class="sc">%&gt;%</span></span>
+<span id="cb24-38"><a href="#cb24-38" tabindex="-1"></a>        <span class="fu">mutate</span>(<span class="at">Universiteit1.22 =</span> <span class="fu">replace</span>(Universiteit1<span class="fl">.22</span>, <span class="fu">is.na</span>(Universiteit1<span class="fl">.22</span>), <span class="st">&quot;&quot;</span>), <span class="at">Universiteit2.22 =</span> <span class="fu">replace</span>(Universiteit2<span class="fl">.22</span>,</span>
+<span id="cb24-39"><a href="#cb24-39" tabindex="-1"></a>            <span class="fu">is.na</span>(Universiteit2<span class="fl">.22</span>), <span class="st">&quot;&quot;</span>), <span class="at">Universiteit1.24 =</span> <span class="fu">replace</span>(Universiteit1<span class="fl">.24</span>, <span class="fu">is.na</span>(Universiteit1<span class="fl">.24</span>),</span>
+<span id="cb24-40"><a href="#cb24-40" tabindex="-1"></a>            <span class="st">&quot;&quot;</span>), <span class="at">Universiteit2.24 =</span> <span class="fu">replace</span>(Universiteit2<span class="fl">.24</span>, <span class="fu">is.na</span>(Universiteit2<span class="fl">.24</span>), <span class="st">&quot;&quot;</span>), <span class="at">discipline.22 =</span> <span class="fu">replace</span>(discipline<span class="fl">.22</span>,</span>
+<span id="cb24-41"><a href="#cb24-41" tabindex="-1"></a>            <span class="fu">is.na</span>(discipline<span class="fl">.22</span>), <span class="st">&quot;&quot;</span>), <span class="at">discipline.24 =</span> <span class="fu">replace</span>(discipline<span class="fl">.24</span>, <span class="fu">is.na</span>(discipline<span class="fl">.24</span>), <span class="st">&quot;&quot;</span>))</span>
+<span id="cb24-42"><a href="#cb24-42" tabindex="-1"></a></span>
+<span id="cb24-43"><a href="#cb24-43" tabindex="-1"></a>    sample <span class="ot">&lt;-</span> <span class="fu">which</span>((demographics<span class="sc">$</span>Universiteit1<span class="fl">.22</span> <span class="sc">%in%</span> university <span class="sc">|</span> demographics<span class="sc">$</span>Universiteit2<span class="fl">.22</span> <span class="sc">%in%</span></span>
+<span id="cb24-44"><a href="#cb24-44" tabindex="-1"></a>        university <span class="sc">|</span> demographics<span class="sc">$</span>Universiteit1<span class="fl">.24</span> <span class="sc">%in%</span> university <span class="sc">|</span> demographics<span class="sc">$</span>Universiteit2<span class="fl">.24</span> <span class="sc">%in%</span></span>
+<span id="cb24-45"><a href="#cb24-45" tabindex="-1"></a>        university) <span class="sc">&amp;</span> (demographics<span class="sc">$</span>discipline<span class="fl">.22</span> <span class="sc">%in%</span> discipline <span class="sc">|</span> demographics<span class="sc">$</span>discipline<span class="fl">.24</span> <span class="sc">%in%</span> discipline))</span>
+<span id="cb24-46"><a href="#cb24-46" tabindex="-1"></a></span>
+<span id="cb24-47"><a href="#cb24-47" tabindex="-1"></a>    demographics_soc <span class="ot">&lt;-</span> demographics[sample, ]</span>
+<span id="cb24-48"><a href="#cb24-48" tabindex="-1"></a>    scholars_sel <span class="ot">&lt;-</span> <span class="fu">lapply</span>(scholars, <span class="st">&quot;[&quot;</span>, sample)</span>
+<span id="cb24-49"><a href="#cb24-49" tabindex="-1"></a></span>
+<span id="cb24-50"><a href="#cb24-50" tabindex="-1"></a>    <span class="co"># step 2</span></span>
+<span id="cb24-51"><a href="#cb24-51" tabindex="-1"></a>    ids <span class="ot">&lt;-</span> demographics_soc<span class="sc">$</span>au_id</span>
+<span id="cb24-52"><a href="#cb24-52" tabindex="-1"></a>    nwaves <span class="ot">&lt;-</span> <span class="fu">length</span>(waves)</span>
+<span id="cb24-53"><a href="#cb24-53" tabindex="-1"></a>    nets <span class="ot">&lt;-</span> <span class="fu">array</span>(<span class="dv">0</span>, <span class="at">dim =</span> <span class="fu">c</span>(nwaves, <span class="fu">length</span>(ids), <span class="fu">length</span>(ids)), <span class="at">dimnames =</span> <span class="fu">list</span>(<span class="at">wave =</span> <span class="dv">1</span><span class="sc">:</span>nwaves, ids,</span>
+<span id="cb24-54"><a href="#cb24-54" tabindex="-1"></a>        ids))</span>
+<span id="cb24-55"><a href="#cb24-55" tabindex="-1"></a>    <span class="fu">dimnames</span>(nets)</span>
+<span id="cb24-56"><a href="#cb24-56" tabindex="-1"></a></span>
+<span id="cb24-57"><a href="#cb24-57" tabindex="-1"></a>    <span class="co"># step 3</span></span>
+<span id="cb24-58"><a href="#cb24-58" tabindex="-1"></a>    df_works <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">works_id =</span> <span class="fu">unlist</span>(<span class="fu">lapply</span>(scholars_sel<span class="sc">$</span>work, <span class="cf">function</span>(l) l<span class="sc">$</span>id)), <span class="at">works_author =</span> <span class="fu">unlist</span>(<span class="fu">lapply</span>(scholars_sel<span class="sc">$</span>work,</span>
+<span id="cb24-59"><a href="#cb24-59" tabindex="-1"></a>        <span class="cf">function</span>(l) l<span class="sc">$</span>author), <span class="at">recursive =</span> <span class="cn">FALSE</span>), <span class="at">works_year =</span> <span class="fu">unlist</span>(<span class="fu">lapply</span>(scholars_sel<span class="sc">$</span>work, <span class="cf">function</span>(l) l<span class="sc">$</span>publication_year),</span>
+<span id="cb24-60"><a href="#cb24-60" tabindex="-1"></a>        <span class="at">recursive =</span> <span class="cn">FALSE</span>))</span>
+<span id="cb24-61"><a href="#cb24-61" tabindex="-1"></a></span>
+<span id="cb24-62"><a href="#cb24-62" tabindex="-1"></a>    df_works <span class="ot">&lt;-</span> df_works[<span class="sc">!</span><span class="fu">duplicated</span>(df_works), ]</span>
+<span id="cb24-63"><a href="#cb24-63" tabindex="-1"></a></span>
+<span id="cb24-64"><a href="#cb24-64" tabindex="-1"></a>    <span class="co"># step 4</span></span>
+<span id="cb24-65"><a href="#cb24-65" tabindex="-1"></a>    <span class="cf">if</span> (type <span class="sc">==</span> <span class="st">&quot;first&quot;</span>) {</span>
+<span id="cb24-66"><a href="#cb24-66" tabindex="-1"></a>        <span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nwaves) {</span>
+<span id="cb24-67"><a href="#cb24-67" tabindex="-1"></a>            df_works_w <span class="ot">&lt;-</span> df_works[df_works<span class="sc">$</span>works_year <span class="sc">&gt;=</span> waves[[j]][<span class="dv">1</span>] <span class="sc">&amp;</span> df_works<span class="sc">$</span>works_year <span class="sc">&lt;=</span> waves[[j]][<span class="dv">2</span>],</span>
+<span id="cb24-68"><a href="#cb24-68" tabindex="-1"></a>                ]</span>
+<span id="cb24-69"><a href="#cb24-69" tabindex="-1"></a>            <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(df_works_w)) {</span>
+<span id="cb24-70"><a href="#cb24-70" tabindex="-1"></a>                ego <span class="ot">&lt;-</span> df_works_w<span class="sc">$</span>works_author[i][[<span class="dv">1</span>]]<span class="sc">$</span>au_id[<span class="dv">1</span>]</span>
+<span id="cb24-71"><a href="#cb24-71" tabindex="-1"></a>                alters <span class="ot">&lt;-</span> df_works_w<span class="sc">$</span>works_author[i][[<span class="dv">1</span>]]<span class="sc">$</span>au_id[<span class="sc">-</span><span class="dv">1</span>]</span>
+<span id="cb24-72"><a href="#cb24-72" tabindex="-1"></a>                <span class="cf">if</span> (<span class="fu">sum</span>(ids <span class="sc">%in%</span> ego) <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">&amp;</span> <span class="fu">sum</span>(ids <span class="sc">%in%</span> alters) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb24-73"><a href="#cb24-73" tabindex="-1"></a>                  nets[j, <span class="fu">which</span>(ids <span class="sc">%in%</span> ego), <span class="fu">which</span>(ids <span class="sc">%in%</span> alters)] <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb24-74"><a href="#cb24-74" tabindex="-1"></a>                }</span>
+<span id="cb24-75"><a href="#cb24-75" tabindex="-1"></a>            }</span>
+<span id="cb24-76"><a href="#cb24-76" tabindex="-1"></a>        }</span>
+<span id="cb24-77"><a href="#cb24-77" tabindex="-1"></a>    }</span>
+<span id="cb24-78"><a href="#cb24-78" tabindex="-1"></a></span>
+<span id="cb24-79"><a href="#cb24-79" tabindex="-1"></a>    <span class="cf">if</span> (type <span class="sc">==</span> <span class="st">&quot;last&quot;</span>) {</span>
+<span id="cb24-80"><a href="#cb24-80" tabindex="-1"></a>        <span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nwaves) {</span>
+<span id="cb24-81"><a href="#cb24-81" tabindex="-1"></a>            df_works_w <span class="ot">&lt;-</span> df_works[df_works<span class="sc">$</span>works_year <span class="sc">&gt;=</span> waves[[j]][<span class="dv">1</span>] <span class="sc">&amp;</span> df_works<span class="sc">$</span>works_year <span class="sc">&lt;=</span> waves[[j]][<span class="dv">2</span>],</span>
+<span id="cb24-82"><a href="#cb24-82" tabindex="-1"></a>                ]</span>
+<span id="cb24-83"><a href="#cb24-83" tabindex="-1"></a>            <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(df_works_w)) {</span>
+<span id="cb24-84"><a href="#cb24-84" tabindex="-1"></a>                ego <span class="ot">&lt;-</span> <span class="fu">rev</span>(df_works_w<span class="sc">$</span>works_author[i][[<span class="dv">1</span>]]<span class="sc">$</span>au_id)[<span class="dv">1</span>]</span>
+<span id="cb24-85"><a href="#cb24-85" tabindex="-1"></a>                alters <span class="ot">&lt;-</span> <span class="fu">rev</span>(df_works_w<span class="sc">$</span>works_author[i][[<span class="dv">1</span>]]<span class="sc">$</span>au_id)[<span class="sc">-</span><span class="dv">1</span>]</span>
+<span id="cb24-86"><a href="#cb24-86" tabindex="-1"></a>                <span class="cf">if</span> (<span class="fu">sum</span>(ids <span class="sc">%in%</span> ego) <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">&amp;</span> <span class="fu">sum</span>(ids <span class="sc">%in%</span> alters) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb24-87"><a href="#cb24-87" tabindex="-1"></a>                  nets[j, <span class="fu">which</span>(ids <span class="sc">%in%</span> ego), <span class="fu">which</span>(ids <span class="sc">%in%</span> alters)] <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb24-88"><a href="#cb24-88" tabindex="-1"></a>                }</span>
+<span id="cb24-89"><a href="#cb24-89" tabindex="-1"></a>            }</span>
+<span id="cb24-90"><a href="#cb24-90" tabindex="-1"></a>        }</span>
+<span id="cb24-91"><a href="#cb24-91" tabindex="-1"></a>    }</span>
+<span id="cb24-92"><a href="#cb24-92" tabindex="-1"></a></span>
+<span id="cb24-93"><a href="#cb24-93" tabindex="-1"></a>    <span class="cf">if</span> (type <span class="sc">==</span> <span class="st">&quot;all&quot;</span>) {</span>
+<span id="cb24-94"><a href="#cb24-94" tabindex="-1"></a>        <span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nwaves) {</span>
+<span id="cb24-95"><a href="#cb24-95" tabindex="-1"></a>            df_works_w <span class="ot">&lt;-</span> df_works[df_works<span class="sc">$</span>works_year <span class="sc">&gt;=</span> waves[[j]][<span class="dv">1</span>] <span class="sc">&amp;</span> df_works<span class="sc">$</span>works_year <span class="sc">&lt;=</span> waves[[j]][<span class="dv">2</span>],</span>
+<span id="cb24-96"><a href="#cb24-96" tabindex="-1"></a>                ]</span>
+<span id="cb24-97"><a href="#cb24-97" tabindex="-1"></a>            <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(df_works_w)) {</span>
+<span id="cb24-98"><a href="#cb24-98" tabindex="-1"></a>                egos <span class="ot">&lt;-</span> df_works_w<span class="sc">$</span>works_author[i][[<span class="dv">1</span>]]<span class="sc">$</span>au_id</span>
+<span id="cb24-99"><a href="#cb24-99" tabindex="-1"></a>                <span class="cf">if</span> (<span class="fu">sum</span>(ids <span class="sc">%in%</span> egos) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb24-100"><a href="#cb24-100" tabindex="-1"></a>                  nets[j, <span class="fu">which</span>(ids <span class="sc">%in%</span> egos), <span class="fu">which</span>(ids <span class="sc">%in%</span> egos)] <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb24-101"><a href="#cb24-101" tabindex="-1"></a>                }</span>
+<span id="cb24-102"><a href="#cb24-102" tabindex="-1"></a>            }</span>
+<span id="cb24-103"><a href="#cb24-103" tabindex="-1"></a>        }</span>
+<span id="cb24-104"><a href="#cb24-104" tabindex="-1"></a>    }</span>
+<span id="cb24-105"><a href="#cb24-105" tabindex="-1"></a>    output <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
+<span id="cb24-106"><a href="#cb24-106" tabindex="-1"></a>    output<span class="sc">$</span>data <span class="ot">&lt;-</span> scholars_sel</span>
+<span id="cb24-107"><a href="#cb24-107" tabindex="-1"></a>    output<span class="sc">$</span>nets <span class="ot">&lt;-</span> nets</span>
+<span id="cb24-108"><a href="#cb24-108" tabindex="-1"></a>    <span class="fu">return</span>(output)</span>
+<span id="cb24-109"><a href="#cb24-109" tabindex="-1"></a>}</span></code></pre></div>
+</div>
+<div id="packages-1" class="section level2" number="6.2">
+<h2><span class="header-section-number">6.2</span> Packages</h2>
+<div class="sourceCode" id="cb25"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" tabindex="-1"></a>packages <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&quot;RSiena&quot;</span>, <span class="st">&quot;RsienaTwoStep&quot;</span>, <span class="st">&quot;igraph&quot;</span>, <span class="st">&quot;tidyverse&quot;</span>, <span class="st">&quot;foreach&quot;</span>, <span class="st">&quot;iterators&quot;</span>, <span class="st">&quot;doParallel&quot;</span>)</span>
+<span id="cb25-2"><a href="#cb25-2" tabindex="-1"></a><span class="co"># fpackage.check(packages) # devtools::install_github(&#39;JochemTolsma/RsienaTwoStep&#39;,</span></span>
+<span id="cb25-3"><a href="#cb25-3" tabindex="-1"></a><span class="co"># build_vignettes=TRUE) packages = c(&#39;RsienaTwoStep&#39;)</span></span>
+<span id="cb25-4"><a href="#cb25-4" tabindex="-1"></a><span class="fu">fpackage.check</span>(packages)</span></code></pre></div>
+<pre class="test2"><code>#&gt; [[1]]
+#&gt; NULL
+#&gt; 
+#&gt; [[2]]
+#&gt; NULL
+#&gt; 
+#&gt; [[3]]
+#&gt; NULL
+#&gt; 
+#&gt; [[4]]
+#&gt; NULL
+#&gt; 
+#&gt; [[5]]
+#&gt; NULL
+#&gt; 
+#&gt; [[6]]
+#&gt; NULL
+#&gt; 
+#&gt; [[7]]
+#&gt; NULL</code></pre>
+</div>
+</div>
+<div id="parallel-cluster" class="section level1" number="7">
+<h1><span class="header-section-number">7</span> Parallel Cluster</h1>
+<div class="sourceCode" id="cb27"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" tabindex="-1"></a>no_cores <span class="ot">&lt;-</span> <span class="fu">detectCores</span>() <span class="sc">-</span> <span class="dv">1</span></span>
+<span id="cb27-2"><a href="#cb27-2" tabindex="-1"></a>mycl <span class="ot">&lt;-</span> <span class="fu">makeCluster</span>(<span class="fu">rep</span>(<span class="st">&quot;localhost&quot;</span>, no_cores))</span>
+<span id="cb27-3"><a href="#cb27-3" tabindex="-1"></a><span class="fu">clusterEvalQ</span>(mycl, <span class="fu">library</span>(RsienaTwoStep))</span></code></pre></div>
+<pre class="test2"><code>#&gt; [[1]]
+#&gt; [1] &quot;RsienaTwoStep&quot; &quot;foreach&quot;       &quot;stats&quot;         &quot;graphics&quot;      &quot;grDevices&quot;     &quot;utils&quot;        
+#&gt; [7] &quot;datasets&quot;      &quot;methods&quot;       &quot;base&quot;         
+#&gt; 
+#&gt; [[2]]
+#&gt; [1] &quot;RsienaTwoStep&quot; &quot;foreach&quot;       &quot;stats&quot;         &quot;graphics&quot;      &quot;grDevices&quot;     &quot;utils&quot;        
+#&gt; [7] &quot;datasets&quot;      &quot;methods&quot;       &quot;base&quot;         
+#&gt; 
+#&gt; [[3]]
+#&gt; [1] &quot;RsienaTwoStep&quot; &quot;foreach&quot;       &quot;stats&quot;         &quot;graphics&quot;      &quot;grDevices&quot;     &quot;utils&quot;        
+#&gt; [7] &quot;datasets&quot;      &quot;methods&quot;       &quot;base&quot;         
+#&gt; 
+#&gt; [[4]]
+#&gt; [1] &quot;RsienaTwoStep&quot; &quot;foreach&quot;       &quot;stats&quot;         &quot;graphics&quot;      &quot;grDevices&quot;     &quot;utils&quot;        
+#&gt; [7] &quot;datasets&quot;      &quot;methods&quot;       &quot;base&quot;         
+#&gt; 
+#&gt; [[5]]
+#&gt; [1] &quot;RsienaTwoStep&quot; &quot;foreach&quot;       &quot;stats&quot;         &quot;graphics&quot;      &quot;grDevices&quot;     &quot;utils&quot;        
+#&gt; [7] &quot;datasets&quot;      &quot;methods&quot;       &quot;base&quot;         
+#&gt; 
+#&gt; [[6]]
+#&gt; [1] &quot;RsienaTwoStep&quot; &quot;foreach&quot;       &quot;stats&quot;         &quot;graphics&quot;      &quot;grDevices&quot;     &quot;utils&quot;        
+#&gt; [7] &quot;datasets&quot;      &quot;methods&quot;       &quot;base&quot;         
+#&gt; 
+#&gt; [[7]]
+#&gt; [1] &quot;RsienaTwoStep&quot; &quot;foreach&quot;       &quot;stats&quot;         &quot;graphics&quot;      &quot;grDevices&quot;     &quot;utils&quot;        
+#&gt; [7] &quot;datasets&quot;      &quot;methods&quot;       &quot;base&quot;         
+#&gt; 
+#&gt; [[8]]
+#&gt; [1] &quot;RsienaTwoStep&quot; &quot;foreach&quot;       &quot;stats&quot;         &quot;graphics&quot;      &quot;grDevices&quot;     &quot;utils&quot;        
+#&gt; [7] &quot;datasets&quot;      &quot;methods&quot;       &quot;base&quot;         
+#&gt; 
+#&gt; [[9]]
+#&gt; [1] &quot;RsienaTwoStep&quot; &quot;foreach&quot;       &quot;stats&quot;         &quot;graphics&quot;      &quot;grDevices&quot;     &quot;utils&quot;        
+#&gt; [7] &quot;datasets&quot;      &quot;methods&quot;       &quot;base&quot;         
+#&gt; 
+#&gt; [[10]]
+#&gt; [1] &quot;RsienaTwoStep&quot; &quot;foreach&quot;       &quot;stats&quot;         &quot;graphics&quot;      &quot;grDevices&quot;     &quot;utils&quot;        
+#&gt; [7] &quot;datasets&quot;      &quot;methods&quot;       &quot;base&quot;         
+#&gt; 
+#&gt; [[11]]
+#&gt; [1] &quot;RsienaTwoStep&quot; &quot;foreach&quot;       &quot;stats&quot;         &quot;graphics&quot;      &quot;grDevices&quot;     &quot;utils&quot;        
+#&gt; [7] &quot;datasets&quot;      &quot;methods&quot;       &quot;base&quot;         
+#&gt; 
+#&gt; [[12]]
+#&gt; [1] &quot;RsienaTwoStep&quot; &quot;foreach&quot;       &quot;stats&quot;         &quot;graphics&quot;      &quot;grDevices&quot;     &quot;utils&quot;        
+#&gt; [7] &quot;datasets&quot;      &quot;methods&quot;       &quot;base&quot;         
+#&gt; 
+#&gt; [[13]]
+#&gt; [1] &quot;RsienaTwoStep&quot; &quot;foreach&quot;       &quot;stats&quot;         &quot;graphics&quot;      &quot;grDevices&quot;     &quot;utils&quot;        
+#&gt; [7] &quot;datasets&quot;      &quot;methods&quot;       &quot;base&quot;         
+#&gt; 
+#&gt; [[14]]
+#&gt; [1] &quot;RsienaTwoStep&quot; &quot;foreach&quot;       &quot;stats&quot;         &quot;graphics&quot;      &quot;grDevices&quot;     &quot;utils&quot;        
+#&gt; [7] &quot;datasets&quot;      &quot;methods&quot;       &quot;base&quot;         
+#&gt; 
+#&gt; [[15]]
+#&gt; [1] &quot;RsienaTwoStep&quot; &quot;foreach&quot;       &quot;stats&quot;         &quot;graphics&quot;      &quot;grDevices&quot;     &quot;utils&quot;        
+#&gt; [7] &quot;datasets&quot;      &quot;methods&quot;       &quot;base&quot;</code></pre>
+<div class="sourceCode" id="cb29"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" tabindex="-1"></a><span class="fu">registerDoParallel</span>(mycl)</span>
+<span id="cb29-2"><a href="#cb29-2" tabindex="-1"></a><span class="co"># stopCluster(mycl)</span></span></code></pre></div>
+<div class="sourceCode" id="cb30"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" tabindex="-1"></a><span class="co"># Load Ego data</span></span>
+<span id="cb30-2"><a href="#cb30-2" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;data/processed/RU_UU_ego.RData&quot;</span>)</span>
+<span id="cb30-3"><a href="#cb30-3" tabindex="-1"></a></span>
+<span id="cb30-4"><a href="#cb30-4" tabindex="-1"></a><span class="co"># Load Works data</span></span>
+<span id="cb30-5"><a href="#cb30-5" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;data/processed/RU_UU_works.RData&quot;</span>)</span>
+<span id="cb30-6"><a href="#cb30-6" tabindex="-1"></a></span>
+<span id="cb30-7"><a href="#cb30-7" tabindex="-1"></a><span class="co"># Load raw data for networks</span></span>
+<span id="cb30-8"><a href="#cb30-8" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;data/processed/soc_data_raw.RData&quot;</span>)</span></code></pre></div>
+<div id="step-1" class="section level2" number="7.1">
+<h2><span class="header-section-number">7.1</span> Step 1</h2>
+<div class="sourceCode" id="cb31"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" tabindex="-1"></a><span class="fu">dim</span>(soc_data<span class="sc">$</span>nets)</span></code></pre></div>
+<pre class="test2"><code>#&gt; [1]   2 100 100</code></pre>
+<div class="sourceCode" id="cb33"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" tabindex="-1"></a>wave_1 <span class="ot">&lt;-</span> soc_data<span class="sc">$</span>nets[<span class="dv">1</span>, , ]</span>
+<span id="cb33-2"><a href="#cb33-2" tabindex="-1"></a><span class="fu">diag</span>(wave_1) <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb33-3"><a href="#cb33-3" tabindex="-1"></a></span>
+<span id="cb33-4"><a href="#cb33-4" tabindex="-1"></a>wave_2 <span class="ot">&lt;-</span> soc_data<span class="sc">$</span>nets[<span class="dv">2</span>, , ]</span>
+<span id="cb33-5"><a href="#cb33-5" tabindex="-1"></a><span class="fu">diag</span>(wave_2) <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb33-6"><a href="#cb33-6" tabindex="-1"></a></span>
+<span id="cb33-7"><a href="#cb33-7" tabindex="-1"></a>net_soc_array <span class="ot">&lt;-</span> <span class="fu">array</span>(<span class="at">data =</span> <span class="fu">c</span>(wave_1, wave_2), <span class="at">dim =</span> <span class="fu">c</span>(<span class="fu">dim</span>(wave_1), <span class="dv">2</span>))</span>
+<span id="cb33-8"><a href="#cb33-8" tabindex="-1"></a><span class="fu">dim</span>(net_soc_array)</span></code></pre></div>
+<pre class="test2"><code>#&gt; [1] 100 100   2</code></pre>
+<div class="sourceCode" id="cb35"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" tabindex="-1"></a><span class="co">#---- Dependent ----</span></span>
+<span id="cb35-2"><a href="#cb35-2" tabindex="-1"></a>net <span class="ot">&lt;-</span> <span class="fu">sienaDependent</span>(net_soc_array)</span>
+<span id="cb35-3"><a href="#cb35-3" tabindex="-1"></a></span>
+<span id="cb35-4"><a href="#cb35-4" tabindex="-1"></a><span class="co">#---- Independent ----</span></span>
+<span id="cb35-5"><a href="#cb35-5" tabindex="-1"></a>gender <span class="ot">&lt;-</span> df_ego<span class="sc">$</span>perc_female</span>
+<span id="cb35-6"><a href="#cb35-6" tabindex="-1"></a></span>
+<span id="cb35-7"><a href="#cb35-7" tabindex="-1"></a>gender <span class="ot">&lt;-</span> <span class="fu">coCovar</span>(gender)</span>
+<span id="cb35-8"><a href="#cb35-8" tabindex="-1"></a></span>
+<span id="cb35-9"><a href="#cb35-9" tabindex="-1"></a><span class="co">#---- Make Siena df ----</span></span>
+<span id="cb35-10"><a href="#cb35-10" tabindex="-1"></a>mydata <span class="ot">&lt;-</span> <span class="fu">sienaDataCreate</span>(net, gender)</span></code></pre></div>
+</div>
+<div id="step-2" class="section level2" number="7.2">
+<h2><span class="header-section-number">7.2</span> Step 2</h2>
+<div class="sourceCode" id="cb36"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" tabindex="-1"></a>myeff <span class="ot">&lt;-</span> <span class="fu">getEffects</span>(mydata)</span>
+<span id="cb36-2"><a href="#cb36-2" tabindex="-1"></a><span class="fu">print01Report</span>(mydata, <span class="at">modelname =</span> <span class="st">&quot;./results/soc_init_test&quot;</span>)</span>
+<span id="cb36-3"><a href="#cb36-3" tabindex="-1"></a></span>
+<span id="cb36-4"><a href="#cb36-4" tabindex="-1"></a><span class="co"># ts_dyads_evo(sims = wave_2, net1 = wave_1, forplot = TRUE) ts_triads_evo(sims = wave_2, net1 =</span></span>
+<span id="cb36-5"><a href="#cb36-5" tabindex="-1"></a><span class="co"># wave_1, forplot = TRUE)</span></span></code></pre></div>
+</div>
+<div id="step-3" class="section level2" number="7.3">
+<h2><span class="header-section-number">7.3</span> Step 3</h2>
+<div class="sourceCode" id="cb37"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" tabindex="-1"></a>myeff <span class="ot">&lt;-</span> <span class="fu">includeEffects</span>(myeff, isolateNet, inPop, outAct)</span></code></pre></div>
+<pre class="test2"><code>#&gt;   effectName            include fix   test  initialValue parm
+#&gt; 1 indegree - popularity TRUE    FALSE FALSE          0   0   
+#&gt; 2 outdegree - activity  TRUE    FALSE FALSE          0   0   
+#&gt; 3 network-isolate       TRUE    FALSE FALSE          0   0</code></pre>
+<div class="sourceCode" id="cb39"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" tabindex="-1"></a>myeff <span class="ot">&lt;-</span> <span class="fu">includeEffects</span>(myeff, sameX, egoX, altX, <span class="at">interaction1 =</span> <span class="st">&quot;gender&quot;</span>)</span></code></pre></div>
+<pre class="test2"><code>#&gt;   effectName   include fix   test  initialValue parm
+#&gt; 1 gender alter TRUE    FALSE FALSE          0   0   
+#&gt; 2 gender ego   TRUE    FALSE FALSE          0   0   
+#&gt; 3 same gender  TRUE    FALSE FALSE          0   0</code></pre>
+</div>
+<div id="section" class="section level2" number="7.4">
+<h2><span class="header-section-number">7.4</span> </h2>
+<div class="sourceCode" id="cb41"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" tabindex="-1"></a>myAlgorithm <span class="ot">&lt;-</span> <span class="fu">sienaAlgorithmCreate</span>(<span class="at">projname =</span> <span class="st">&quot;soc_init_test&quot;</span>)</span></code></pre></div>
+<pre class="test2"><code>#&gt; If you use this algorithm object, siena07 will create/use an output file soc_init_test.txt .</code></pre>
+<div class="sourceCode" id="cb43"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" tabindex="-1"></a>ansM1 <span class="ot">&lt;-</span> <span class="fu">siena07</span>(myAlgorithm, <span class="at">data =</span> mydata, <span class="at">effects =</span> myeff, <span class="at">returnDeps =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb43-2"><a href="#cb43-2" tabindex="-1"></a>ansM1</span></code></pre></div>
+<pre class="test2"><code>#&gt; Estimates, standard errors and convergence t-ratios
+#&gt; 
+#&gt;                                 Estimate   Standard   Convergence 
+#&gt;                                              Error      t-ratio   
+#&gt; 
+#&gt; Rate parameters: 
+#&gt;   0       Rate parameter         4.5588  ( 0.7479   )             
+#&gt; 
+#&gt; Other parameters: 
+#&gt;   1. eval outdegree (density)   -2.0445  ( 0.7367   )    0.1981   
+#&gt;   2. eval reciprocity            2.0352  ( 0.2956   )   -0.0843   
+#&gt;   3. eval indegree - popularity  0.2076  ( 0.0312   )    0.2585   
+#&gt;   4. eval outdegree - activity  -0.1815  ( 0.1551   )    0.1365   
+#&gt;   5. eval network-isolate        3.8392  ( 1.3338   )   -0.1650   
+#&gt;   6. eval gender alter           0.0150  ( 0.1756   )   -0.1918   
+#&gt;   7. eval gender ego             0.8588  ( 0.3875   )   -0.1257   
+#&gt;   8. eval same gender            0.2854  ( 0.1876   )   -0.0278   
+#&gt; 
+#&gt; Overall maximum convergence ratio:    0.2700 
+#&gt; 
+#&gt; 
+#&gt; Total of 2803 iteration steps.</code></pre>
+<div class="sourceCode" id="cb45"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" tabindex="-1"></a><span class="co"># if necessary estimate again!</span></span>
+<span id="cb45-2"><a href="#cb45-2" tabindex="-1"></a>ansM1_2 <span class="ot">&lt;-</span> <span class="fu">siena07</span>(myAlgorithm, <span class="at">data =</span> mydata, <span class="at">effects =</span> myeff, <span class="at">prevAns =</span> ansM1, <span class="at">returnDeps =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb45-3"><a href="#cb45-3" tabindex="-1"></a>ansM1_2</span></code></pre></div>
+<pre class="test2"><code>#&gt; Estimates, standard errors and convergence t-ratios
+#&gt; 
+#&gt;                                 Estimate   Standard   Convergence 
+#&gt;                                              Error      t-ratio   
+#&gt; 
+#&gt; Rate parameters: 
+#&gt;   0       Rate parameter         4.7242  ( 0.7533   )             
+#&gt; 
+#&gt; Other parameters: 
+#&gt;   1. eval outdegree (density)   -1.9518  ( 0.7827   )   -0.0986   
+#&gt;   2. eval reciprocity            2.0230  ( 0.2862   )   -0.0347   
+#&gt;   3. eval indegree - popularity  0.1956  ( 0.0390   )   -0.0741   
+#&gt;   4. eval outdegree - activity  -0.1914  ( 0.1600   )   -0.0717   
+#&gt;   5. eval network-isolate        4.0326  ( 1.5704   )    0.0705   
+#&gt;   6. eval gender alter          -0.0030  ( 0.1780   )    0.0380   
+#&gt;   7. eval gender ego             0.9008  ( 0.3544   )    0.0273   
+#&gt;   8. eval same gender            0.2988  ( 0.1660   )   -0.0302   
+#&gt; 
+#&gt; Overall maximum convergence ratio:    0.1197 
+#&gt; 
+#&gt; 
+#&gt; Total of 2594 iteration steps.</code></pre>
+</div>
+</div>
+
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIkpvdXJuYWwgLSBXZWVrIDUgKFJTaWVuYSkiDQojYmlibGlvZ3JhcGh5OiByZWZlcmVuY2VzLmJpYg0KYXV0aG9yOiAiTmllbHMgVnVsbGluZ3MiDQpiaWJsaW9ncmFwaHk6IHJlZmVyZW5jZXMuYmliDQpvdXRwdXQ6IA0KICBodG1sX2RvY3VtZW50OiANCiAgICBkZl9wcmludDogdGliYmxlDQotLS0NCg0KYGBgez1odG1sfQ0KPHN0eWxlPg0KYm9keSB7DQp0ZXh0LWFsaWduOiBqdXN0aWZ5fQ0KPC9zdHlsZT4NCmBgYA0KDQpgYGB7ciwgZ2xvYmFsc2V0dGluZ3MsIGVjaG89RkFMU0UsIHdhcm5pbmc9RkFMU0UsIHJlc3VsdHM9J2hpZGUnfQ0KbGlicmFyeShrbml0cikNCg0Ka25pdHI6Om9wdHNfY2h1bmskc2V0KGVjaG8gPSBUUlVFKQ0Kb3B0c19jaHVuayRzZXQodGlkeS5vcHRzPWxpc3Qod2lkdGguY3V0b2ZmPTEwMCksdGlkeT1UUlVFLCB3YXJuaW5nID0gRkFMU0UsIG1lc3NhZ2UgPSBGQUxTRSxjb21tZW50ID0gIiM+IiwgY2FjaGU9VFJVRSwgY2xhc3Muc291cmNlPWMoInRlc3QiKSwgY2xhc3Mub3V0cHV0PWMoInRlc3QyIikpDQpvcHRpb25zKHdpZHRoID0gMTAwKQ0KcmdsOjpzZXR1cEtuaXRyKCkNCg0KDQoNCmNvbG9yaXplIDwtIGZ1bmN0aW9uKHgsIGNvbG9yKSB7c3ByaW50ZigiPHNwYW4gc3R5bGU9J2NvbG9yOiAlczsnPiVzPC9zcGFuPiIsIGNvbG9yLCB4KSB9DQoNCmBgYA0KDQpgYGB7ciBrbGlwcHksIGVjaG89RkFMU0UsIGluY2x1ZGU9VFJVRX0NCmtsaXBweTo6a2xpcHB5KHBvc2l0aW9uID0gYygndG9wJywgJ3JpZ2h0JykpDQojIGtsaXBweTo6a2xpcHB5KGNvbG9yID0gJ2RhcmtncmVlbicpDQoja2xpcHB5OjprbGlwcHkodG9vbHRpcF9tZXNzYWdlID0gJ0NsaWNrIHRvIGNvcHknLCB0b29sdGlwX3N1Y2Nlc3MgPSAnRG9uZScpDQpgYGANCg0KTGFzdCBjb21waWxlZCBvbiBgciBmb3JtYXQoU3lzLnRpbWUoKSwgJyVCLCAlWScpYA0KDQo8YnI+DQoNCi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQ0KDQojIFNldCB1cA0KYGBge3J9DQojIHN0YXJ0IHdpdGggY2xlYW4gd29ya3NwYWNlDQpybShsaXN0ID0gbHMoKSkNCg0KYGBgDQojIFVERg0KYGBge3J9DQpmcGFja2FnZS5jaGVjayA8LSBmdW5jdGlvbihwYWNrYWdlcykgew0KICAgIGxhcHBseShwYWNrYWdlcywgRlVOID0gZnVuY3Rpb24oeCkgew0KICAgICAgICBpZiAoIXJlcXVpcmUoeCwgY2hhcmFjdGVyLm9ubHkgPSBUUlVFKSkgew0KICAgICAgICAgICAgaW5zdGFsbC5wYWNrYWdlcyh4LCBkZXBlbmRlbmNpZXMgPSBUUlVFKQ0KICAgICAgICAgICAgbGlicmFyeSh4LCBjaGFyYWN0ZXIub25seSA9IFRSVUUpDQogICAgICAgIH0NCiAgICB9KQ0KfQ0KDQpmc2F2ZSA8LSBmdW5jdGlvbih4LCBmaWxlID0gTlVMTCwgbG9jYXRpb24gPSAiLi9kYXRhL3Byb2Nlc3NlZC8iKSB7DQogICAgaWZlbHNlKCFkaXIuZXhpc3RzKCJkYXRhIiksIGRpci5jcmVhdGUoImRhdGEiKSwgRkFMU0UpDQogICAgaWZlbHNlKCFkaXIuZXhpc3RzKCJkYXRhL3Byb2Nlc3NlZCIpLCBkaXIuY3JlYXRlKCJkYXRhL3Byb2Nlc3NlZCIpLCBGQUxTRSkNCiAgICBpZiAoaXMubnVsbChmaWxlKSkNCiAgICAgICAgZmlsZSA9IGRlcGFyc2Uoc3Vic3RpdHV0ZSh4KSkNCiAgICBkYXRlbmFtZSA8LSBzdWJzdHIoZ3N1YigiWzotXSIsICIiLCBTeXMudGltZSgpKSwgMSwgOCkNCiAgICB0b3RhbG5hbWUgPC0gcGFzdGUobG9jYXRpb24sIGRhdGVuYW1lLCBmaWxlLCAiLnJkYSIsIHNlcCA9ICIiKQ0KICAgIHNhdmUoeCwgZmlsZSA9IHRvdGFsbmFtZSkgICNuZWVkIHRvIGZpeCBpZiBmaWxlIGlzIHJlbG9hZGVkIGFzIGlucHV0IG5hbWUsIG5vdCBhcyB4LiANCn0NCg0KZmxvYWQgPC0gZnVuY3Rpb24oZmlsZW5hbWUpIHsNCiAgICBsb2FkKGZpbGVuYW1lKQ0KICAgIGdldChscygpW2xzKCkgIT0gImZpbGVuYW1lIl0pDQp9DQoNCmZzaG93ZGYgPC0gZnVuY3Rpb24oeCwgLi4uKSB7DQogICAga25pdHI6OmthYmxlKHgsIGRpZ2l0cyA9IDIsICJodG1sIiwgLi4uKSAlPiUNCiAgICAgICAga2FibGVFeHRyYTo6a2FibGVfc3R5bGluZyhib290c3RyYXBfb3B0aW9ucyA9IGMoInN0cmlwZWQiLCAiaG92ZXIiKSkgJT4lDQogICAgICAgIGthYmxlRXh0cmE6OnNjcm9sbF9ib3god2lkdGggPSAiMTAwJSIsIGhlaWdodCA9ICIzMDBweCIpDQp9DQoNCg0KZmNvbG5ldCA8LSBmdW5jdGlvbihkYXRhID0gc2Nob2xhcnMsIHVuaXZlcnNpdHkgPSAiUlUiLCBkaXNjaXBsaW5lID0gInNvY2lvbG9neSIsIHdhdmVzID0gbGlzdChjKDIwMTUsDQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgMjAxOCksIGMoMjAxOSwgMjAyMykpLCB0eXBlID0gYygiZmlyc3QiKSkgew0KICANCiAgIyBzdGVwIDENCiAgZGVtb2dyYXBoaWNzIDwtIGRvLmNhbGwocmJpbmQuZGF0YS5mcmFtZSwgZGF0YSRkZW1vZ3JhcGhpY3MpDQogIGRlbW9ncmFwaGljcyA8LSBkZW1vZ3JhcGhpY3MgJT4lDQogICAgbXV0YXRlKFVuaXZlcnNpdGVpdDEuMjIgPSByZXBsYWNlKFVuaXZlcnNpdGVpdDEuMjIsIGlzLm5hKFVuaXZlcnNpdGVpdDEuMjIpLCAiIiksIFVuaXZlcnNpdGVpdDIuMjIgPSByZXBsYWNlKFVuaXZlcnNpdGVpdDIuMjIsDQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIGlzLm5hKFVuaXZlcnNpdGVpdDIuMjIpLCAiIiksIFVuaXZlcnNpdGVpdDEuMjQgPSByZXBsYWNlKFVuaXZlcnNpdGVpdDEuMjQsIGlzLm5hKFVuaXZlcnNpdGVpdDEuMjQpLA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiIiksIFVuaXZlcnNpdGVpdDIuMjQgPSByZXBsYWNlKFVuaXZlcnNpdGVpdDIuMjQsIGlzLm5hKFVuaXZlcnNpdGVpdDIuMjQpLCAiIiksIGRpc2NpcGxpbmUuMjIgPSByZXBsYWNlKGRpc2NpcGxpbmUuMjIsDQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgaXMubmEoZGlzY2lwbGluZS4yMiksICIiKSwgZGlzY2lwbGluZS4yNCA9IHJlcGxhY2UoZGlzY2lwbGluZS4yNCwgaXMubmEoZGlzY2lwbGluZS4yNCksICIiKSkNCiAgDQogIHNhbXBsZSA8LSB3aGljaCgoZGVtb2dyYXBoaWNzJFVuaXZlcnNpdGVpdDEuMjIgJWluJSB1bml2ZXJzaXR5IHwgZGVtb2dyYXBoaWNzJFVuaXZlcnNpdGVpdDIuMjIgJWluJQ0KICAgICAgICAgICAgICAgICAgICAgdW5pdmVyc2l0eSB8IGRlbW9ncmFwaGljcyRVbml2ZXJzaXRlaXQxLjI0ICVpbiUgdW5pdmVyc2l0eSB8IGRlbW9ncmFwaGljcyRVbml2ZXJzaXRlaXQyLjI0ICVpbiUNCiAgICAgICAgICAgICAgICAgICAgIHVuaXZlcnNpdHkpICYgKGRlbW9ncmFwaGljcyRkaXNjaXBsaW5lLjIyICVpbiUgZGlzY2lwbGluZSB8IGRlbW9ncmFwaGljcyRkaXNjaXBsaW5lLjI0ICVpbiUgZGlzY2lwbGluZSkpDQogIA0KICBkZW1vZ3JhcGhpY3Nfc29jIDwtIGRlbW9ncmFwaGljc1tzYW1wbGUsIF0NCiAgc2Nob2xhcnNfc2VsIDwtIGxhcHBseShzY2hvbGFycywgIlsiLCBzYW1wbGUpDQogIA0KICAjIHN0ZXAgMg0KICBpZHMgPC0gZGVtb2dyYXBoaWNzX3NvYyRhdV9pZA0KICBud2F2ZXMgPC0gbGVuZ3RoKHdhdmVzKQ0KICBuZXRzIDwtIGFycmF5KDAsIGRpbSA9IGMobndhdmVzLCBsZW5ndGgoaWRzKSwgbGVuZ3RoKGlkcykpLCBkaW1uYW1lcyA9IGxpc3Qod2F2ZSA9IDE6bndhdmVzLCBpZHMsDQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBpZHMpKQ0KICBkaW1uYW1lcyhuZXRzKQ0KICANCiAgIyBzdGVwIDMNCiAgZGZfd29ya3MgPC0gdGliYmxlKHdvcmtzX2lkID0gdW5saXN0KGxhcHBseShzY2hvbGFyc19zZWwkd29yaywgZnVuY3Rpb24obCkgbCRpZCkpLCB3b3Jrc19hdXRob3IgPSB1bmxpc3QobGFwcGx5KHNjaG9sYXJzX3NlbCR3b3JrLA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgZnVuY3Rpb24obCkgbCRhdXRob3IpLCByZWN1cnNpdmUgPSBGQUxTRSksIHdvcmtzX3llYXIgPSB1bmxpc3QobGFwcGx5KHNjaG9sYXJzX3NlbCR3b3JrLCBmdW5jdGlvbihsKSBsJHB1YmxpY2F0aW9uX3llYXIpLA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgcmVjdXJzaXZlID0gRkFMU0UpKQ0KICANCiAgZGZfd29ya3MgPC0gZGZfd29ya3NbIWR1cGxpY2F0ZWQoZGZfd29ya3MpLCBdDQogIA0KICAjIHN0ZXAgNA0KICBpZiAodHlwZSA9PSAiZmlyc3QiKSB7DQogICAgZm9yIChqIGluIDE6bndhdmVzKSB7DQogICAgICBkZl93b3Jrc193IDwtIGRmX3dvcmtzW2RmX3dvcmtzJHdvcmtzX3llYXIgPj0gd2F2ZXNbW2pdXVsxXSAmIGRmX3dvcmtzJHdvcmtzX3llYXIgPD0gd2F2ZXNbW2pdXVsyXSwNCiAgICAgIF0NCiAgICAgIGZvciAoaSBpbiAxOm5yb3coZGZfd29ya3NfdykpIHsNCiAgICAgICAgZWdvIDwtIGRmX3dvcmtzX3ckd29ya3NfYXV0aG9yW2ldW1sxXV0kYXVfaWRbMV0NCiAgICAgICAgYWx0ZXJzIDwtIGRmX3dvcmtzX3ckd29ya3NfYXV0aG9yW2ldW1sxXV0kYXVfaWRbLTFdDQogICAgICAgIGlmIChzdW0oaWRzICVpbiUgZWdvKSA+IDAgJiBzdW0oaWRzICVpbiUgYWx0ZXJzKSA+IDApIHsNCiAgICAgICAgICBuZXRzW2osIHdoaWNoKGlkcyAlaW4lIGVnbyksIHdoaWNoKGlkcyAlaW4lIGFsdGVycyldIDwtIDENCiAgICAgICAgfQ0KICAgICAgfQ0KICAgIH0NCiAgfQ0KICANCiAgaWYgKHR5cGUgPT0gImxhc3QiKSB7DQogICAgZm9yIChqIGluIDE6bndhdmVzKSB7DQogICAgICBkZl93b3Jrc193IDwtIGRmX3dvcmtzW2RmX3dvcmtzJHdvcmtzX3llYXIgPj0gd2F2ZXNbW2pdXVsxXSAmIGRmX3dvcmtzJHdvcmtzX3llYXIgPD0gd2F2ZXNbW2pdXVsyXSwNCiAgICAgIF0NCiAgICAgIGZvciAoaSBpbiAxOm5yb3coZGZfd29ya3NfdykpIHsNCiAgICAgICAgZWdvIDwtIHJldihkZl93b3Jrc193JHdvcmtzX2F1dGhvcltpXVtbMV1dJGF1X2lkKVsxXQ0KICAgICAgICBhbHRlcnMgPC0gcmV2KGRmX3dvcmtzX3ckd29ya3NfYXV0aG9yW2ldW1sxXV0kYXVfaWQpWy0xXQ0KICAgICAgICBpZiAoc3VtKGlkcyAlaW4lIGVnbykgPiAwICYgc3VtKGlkcyAlaW4lIGFsdGVycykgPiAwKSB7DQogICAgICAgICAgbmV0c1tqLCB3aGljaChpZHMgJWluJSBlZ28pLCB3aGljaChpZHMgJWluJSBhbHRlcnMpXSA8LSAxDQogICAgICAgIH0NCiAgICAgIH0NCiAgICB9DQogIH0NCiAgDQogIGlmICh0eXBlID09ICJhbGwiKSB7DQogICAgZm9yIChqIGluIDE6bndhdmVzKSB7DQogICAgICBkZl93b3Jrc193IDwtIGRmX3dvcmtzW2RmX3dvcmtzJHdvcmtzX3llYXIgPj0gd2F2ZXNbW2pdXVsxXSAmIGRmX3dvcmtzJHdvcmtzX3llYXIgPD0gd2F2ZXNbW2pdXVsyXSwNCiAgICAgIF0NCiAgICAgIGZvciAoaSBpbiAxOm5yb3coZGZfd29ya3NfdykpIHsNCiAgICAgICAgZWdvcyA8LSBkZl93b3Jrc193JHdvcmtzX2F1dGhvcltpXVtbMV1dJGF1X2lkDQogICAgICAgIGlmIChzdW0oaWRzICVpbiUgZWdvcykgPiAwKSB7DQogICAgICAgICAgbmV0c1tqLCB3aGljaChpZHMgJWluJSBlZ29zKSwgd2hpY2goaWRzICVpbiUgZWdvcyldIDwtIDENCiAgICAgICAgfQ0KICAgICAgfQ0KICAgIH0NCiAgfQ0KICBvdXRwdXQgPC0gbGlzdCgpDQogIG91dHB1dCRkYXRhIDwtIHNjaG9sYXJzX3NlbA0KICBvdXRwdXQkbmV0cyA8LSBuZXRzDQogIHJldHVybihvdXRwdXQpDQp9DQpgYGANCg0KIyBQYWNrYWdlcw0KYGBge3J9DQpwYWNrYWdlcyA9IGMoIlJTaWVuYSIsICJSc2llbmFUd29TdGVwIiwgImlncmFwaCIsICJ0aWR5dmVyc2UiKQ0KIyBmcGFja2FnZS5jaGVjayhwYWNrYWdlcykNCiMgIyBkZXZ0b29sczo6aW5zdGFsbF9naXRodWIoJ0pvY2hlbVRvbHNtYS9Sc2llbmFUd29TdGVwJywgYnVpbGRfdmlnbmV0dGVzPVRSVUUpDQojIHBhY2thZ2VzID0gYygiUnNpZW5hVHdvU3RlcCIpDQpmcGFja2FnZS5jaGVjayhwYWNrYWdlcykNCmBgYA0KDQpgYGB7cn0NCmxvYWQoImRhdGEvc2Nob2xhcnNfMjAyNDA5MjQucmRhIikNCnNjaG9sYXJzIDwtIHgNCnJtKHgpDQoNCmBgYA0KDQoNCmBgYHtyfQ0KI3NhdmUgdGhlIG91dHB1dCBvZiB5b3VyIGZ1bmN0aW9uDQp0ZXN0IDwtIGZjb2xuZXQoZGF0YSA9IHNjaG9sYXJzLCANCiAgICAgICAgICAgICAgICB1bml2ZXJzaXR5ID0gIlJVIiwgDQogICAgICAgICAgICAgICAgZGlzY2lwbGluZSA9ICJzb2Npb2xvZ3kiLCANCiAgICAgICAgICAgICAgICB3YXZlcyA9IGxpc3QoYygyMDE1LCAyMDE4KSwgYygyMDE5LCAyMDIzKSksIA0KICAgICAgICAgICAgICAgIHR5cGUgPSBjKCJmaXJzdCIpKQ0KDQoNCnRlc3RfdzEgPC0gaWdyYXBoOjpncmFwaF9mcm9tX2FkamFjZW5jeV9tYXRyaXgoDQogIHRlc3QkbmV0c1sxLCxdLCAjZm9yIHRoaXMgZXhhbXBsZSBJIHRha2UgdGhlIGZpcnN0IHdhdmUgb2YgZGF0YS4gKHRodXMgSSBzZWxlY3QgdGhlIGFycmF5IG9mIG5ldHdvcmtzIGFuZCB0YWtlIHRoZSBmaXJzdCBtYXRyaXgpDQogIG1vZGUgPSBjKCJkaXJlY3RlZCIpLA0KICB3ZWlnaHRlZCA9IE5VTEwsDQogIGRpYWcgPSBGQUxTRSwNCiAgYWRkLmNvbG5hbWVzID0gTlVMTCwNCiAgYWRkLnJvd25hbWVzID0gTlVMTA0KKQ0KDQpwbG90KHRlc3RfdzEsDQogIHZlcnRleC5sYWJlbCA9IE5BLA0KICBlZGdlLndpZHRoID0gMC4yLA0KICBlZGdlLmFycm93LnNpemUgPTAuMikNCmBgYA0KYGBge3J9DQpkZl9zb2MgPC0gdGVzdCRkYXRhDQpkZl9uZXR3b3JrIDwtIHRlc3QkbmV0cw0KDQpsZW5ndGgoZGZfbmV0d29yaykNCg0KZGltKGRmX25ldHdvcmspWzFdDQpgYGANCg0KYGBge3J9DQp3YXZlXzEgPC0gZGZfbmV0d29ya1sxLCxdDQpkaWFnKHdhdmVfMSkgPC0gMA0KDQp3YXZlXzIgPC0gZGZfbmV0d29ya1syLCxdDQpkaWFnKHdhdmVfMikgPC0gMA0KDQpuZXRfc29jX2FycmF5IDwtIGFycmF5KGRhdGEgPSBjKHdhdmVfMSwgd2F2ZV8yKSwgZGltID0gYyhkaW0od2F2ZV8xKSwgMikpDQoNCiMgRGVwZW5kZW50DQpuZXQgPC0gc2llbmFEZXBlbmRlbnQobmV0X3NvY19hcnJheSkNCmBgYA0KDQojIEVnbyBkYXRhDQpgYGB7cn0NCmRmX2VnbyA8LSBkby5jYWxsKHJiaW5kLmRhdGEuZnJhbWUsIGRmX3NvYyRkZW1vZ3JhcGhpY3MpDQoNCg0KIyBGdW5jdGlvbg0KZnVuY3Rpb25fcnUgPC0gYXMubnVtZXJpYyhhc19mYWN0b3IoZGZfZWdvJEZ1bmN0aWUuMjIpKQ0KIyBmdW5jX3J1IDwtIGFzLm51bWVyaWMoZGZfZWdvJEZ1bmN0aWUuMjIgPT0gIkhvb2dsZXJhYXIiKQ0KcnVfZnVuY3Rpb24gPC0gY29Db3ZhcihmdW5jdGlvbl9ydSkNCg0KDQpgYGANCiMgTWFrZSBTaWVuYSBEYXRhDQpgYGB7cn0NCm15ZGF0YSA8LSBzaWVuYURhdGFDcmVhdGUobmV0LCBydV9mdW5jdGlvbikNCmBgYA0KDQpgYGB7cn0NCm15ZWZmIDwtIGdldEVmZmVjdHMobXlkYXRhKQ0KDQplZmZlY3RzRG9jdW1lbnRhdGlvbihteWVmZikNCmBgYA0KDQpgYGB7cn0NCmlmZWxzZSghZGlyLmV4aXN0cygicmVzdWx0cyIpLCBkaXIuY3JlYXRlKCJyZXN1bHRzIiksIEZBTFNFKQ0KYGBgDQoNCmBgYHtyfQ0KcHJpbnQwMVJlcG9ydChteWRhdGEsIG1vZGVsbmFtZSA9ICIuL3Jlc3VsdHMvc29jX2luaXQiKQ0KYGBgDQoNCiMjIEVzdGltYXRlDQpgYGB7cn0NCm15QWxnb3JpdGhtIDwtIHNpZW5hQWxnb3JpdGhtQ3JlYXRlKHByb2puYW1lID0gInNvY19pbml0IikNCmFuc00xIDwtIHNpZW5hMDcobXlBbGdvcml0aG0sIGRhdGEgPSBteWRhdGEsIGVmZmVjdHMgPSBteWVmZiwgcmV0dXJuRGVwcyA9IFRSVUUpDQojIGlmIG5lY2Vzc2FyeSBlc3RpbWF0ZSBhZ2FpbiEgIGFuc00xIDwtIHNpZW5hMDcobXlBbGdvcml0aG0sIGRhdGEgPSBteWRhdGEsIGVmZmVjdHMgPSBteWVmZiwNCiMgcHJldkFucyA9IGFuc00xLCByZXR1cm5EZXBzPVRSVUUpDQphbnNNMQ0KYGBgDQojIFNjcmV3IGFyb3VuZCB3aXRoIFJTaWVuYSBNb2RlbHMNCmBgYHtyfQ0Kcm0obGlzdCA9IGxzKCkpDQpgYGANCg0KIyMgVURGDQpgYGB7cn0NCmZwYWNrYWdlLmNoZWNrIDwtIGZ1bmN0aW9uKHBhY2thZ2VzKSB7DQogICAgbGFwcGx5KHBhY2thZ2VzLCBGVU4gPSBmdW5jdGlvbih4KSB7DQogICAgICAgIGlmICghcmVxdWlyZSh4LCBjaGFyYWN0ZXIub25seSA9IFRSVUUpKSB7DQogICAgICAgICAgICBpbnN0YWxsLnBhY2thZ2VzKHgsIGRlcGVuZGVuY2llcyA9IFRSVUUpDQogICAgICAgICAgICBsaWJyYXJ5KHgsIGNoYXJhY3Rlci5vbmx5ID0gVFJVRSkNCiAgICAgICAgfQ0KICAgIH0pDQp9DQoNCmZzYXZlIDwtIGZ1bmN0aW9uKHgsIGZpbGUgPSBOVUxMLCBsb2NhdGlvbiA9ICIuL2RhdGEvcHJvY2Vzc2VkLyIpIHsNCiAgICBpZmVsc2UoIWRpci5leGlzdHMoImRhdGEiKSwgZGlyLmNyZWF0ZSgiZGF0YSIpLCBGQUxTRSkNCiAgICBpZmVsc2UoIWRpci5leGlzdHMoImRhdGEvcHJvY2Vzc2VkIiksIGRpci5jcmVhdGUoImRhdGEvcHJvY2Vzc2VkIiksIEZBTFNFKQ0KICAgIGlmIChpcy5udWxsKGZpbGUpKQ0KICAgICAgICBmaWxlID0gZGVwYXJzZShzdWJzdGl0dXRlKHgpKQ0KICAgIGRhdGVuYW1lIDwtIHN1YnN0cihnc3ViKCJbOi1dIiwgIiIsIFN5cy50aW1lKCkpLCAxLCA4KQ0KICAgIHRvdGFsbmFtZSA8LSBwYXN0ZShsb2NhdGlvbiwgZGF0ZW5hbWUsIGZpbGUsICIucmRhIiwgc2VwID0gIiIpDQogICAgc2F2ZSh4LCBmaWxlID0gdG90YWxuYW1lKSAgI25lZWQgdG8gZml4IGlmIGZpbGUgaXMgcmVsb2FkZWQgYXMgaW5wdXQgbmFtZSwgbm90IGFzIHguIA0KfQ0KDQpmbG9hZCA8LSBmdW5jdGlvbihmaWxlbmFtZSkgew0KICAgIGxvYWQoZmlsZW5hbWUpDQogICAgZ2V0KGxzKClbbHMoKSAhPSAiZmlsZW5hbWUiXSkNCn0NCg0KZnNob3dkZiA8LSBmdW5jdGlvbih4LCAuLi4pIHsNCiAgICBrbml0cjo6a2FibGUoeCwgZGlnaXRzID0gMiwgImh0bWwiLCAuLi4pICU+JQ0KICAgICAgICBrYWJsZUV4dHJhOjprYWJsZV9zdHlsaW5nKGJvb3RzdHJhcF9vcHRpb25zID0gYygic3RyaXBlZCIsICJob3ZlciIpKSAlPiUNCiAgICAgICAga2FibGVFeHRyYTo6c2Nyb2xsX2JveCh3aWR0aCA9ICIxMDAlIiwgaGVpZ2h0ID0gIjMwMHB4IikNCn0NCg0KDQpmY29sbmV0IDwtIGZ1bmN0aW9uKGRhdGEgPSBzY2hvbGFycywgdW5pdmVyc2l0eSA9ICJSVSIsIGRpc2NpcGxpbmUgPSAic29jaW9sb2d5Iiwgd2F2ZXMgPSBsaXN0KGMoMjAxNSwNCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAyMDE4KSwgYygyMDE5LCAyMDIzKSksIHR5cGUgPSBjKCJmaXJzdCIpKSB7DQogIA0KICAjIHN0ZXAgMQ0KICBkZW1vZ3JhcGhpY3MgPC0gZG8uY2FsbChyYmluZC5kYXRhLmZyYW1lLCBkYXRhJGRlbW9ncmFwaGljcykNCiAgZGVtb2dyYXBoaWNzIDwtIGRlbW9ncmFwaGljcyAlPiUNCiAgICBtdXRhdGUoVW5pdmVyc2l0ZWl0MS4yMiA9IHJlcGxhY2UoVW5pdmVyc2l0ZWl0MS4yMiwgaXMubmEoVW5pdmVyc2l0ZWl0MS4yMiksICIiKSwgVW5pdmVyc2l0ZWl0Mi4yMiA9IHJlcGxhY2UoVW5pdmVyc2l0ZWl0Mi4yMiwNCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgaXMubmEoVW5pdmVyc2l0ZWl0Mi4yMiksICIiKSwgVW5pdmVyc2l0ZWl0MS4yNCA9IHJlcGxhY2UoVW5pdmVyc2l0ZWl0MS4yNCwgaXMubmEoVW5pdmVyc2l0ZWl0MS4yNCksDQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICIiKSwgVW5pdmVyc2l0ZWl0Mi4yNCA9IHJlcGxhY2UoVW5pdmVyc2l0ZWl0Mi4yNCwgaXMubmEoVW5pdmVyc2l0ZWl0Mi4yNCksICIiKSwgZGlzY2lwbGluZS4yMiA9IHJlcGxhY2UoZGlzY2lwbGluZS4yMiwNCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBpcy5uYShkaXNjaXBsaW5lLjIyKSwgIiIpLCBkaXNjaXBsaW5lLjI0ID0gcmVwbGFjZShkaXNjaXBsaW5lLjI0LCBpcy5uYShkaXNjaXBsaW5lLjI0KSwgIiIpKQ0KICANCiAgc2FtcGxlIDwtIHdoaWNoKChkZW1vZ3JhcGhpY3MkVW5pdmVyc2l0ZWl0MS4yMiAlaW4lIHVuaXZlcnNpdHkgfCBkZW1vZ3JhcGhpY3MkVW5pdmVyc2l0ZWl0Mi4yMiAlaW4lDQogICAgICAgICAgICAgICAgICAgICB1bml2ZXJzaXR5IHwgZGVtb2dyYXBoaWNzJFVuaXZlcnNpdGVpdDEuMjQgJWluJSB1bml2ZXJzaXR5IHwgZGVtb2dyYXBoaWNzJFVuaXZlcnNpdGVpdDIuMjQgJWluJQ0KICAgICAgICAgICAgICAgICAgICAgdW5pdmVyc2l0eSkgJiAoZGVtb2dyYXBoaWNzJGRpc2NpcGxpbmUuMjIgJWluJSBkaXNjaXBsaW5lIHwgZGVtb2dyYXBoaWNzJGRpc2NpcGxpbmUuMjQgJWluJSBkaXNjaXBsaW5lKSkNCiAgDQogIGRlbW9ncmFwaGljc19zb2MgPC0gZGVtb2dyYXBoaWNzW3NhbXBsZSwgXQ0KICBzY2hvbGFyc19zZWwgPC0gbGFwcGx5KHNjaG9sYXJzLCAiWyIsIHNhbXBsZSkNCiAgDQogICMgc3RlcCAyDQogIGlkcyA8LSBkZW1vZ3JhcGhpY3Nfc29jJGF1X2lkDQogIG53YXZlcyA8LSBsZW5ndGgod2F2ZXMpDQogIG5ldHMgPC0gYXJyYXkoMCwgZGltID0gYyhud2F2ZXMsIGxlbmd0aChpZHMpLCBsZW5ndGgoaWRzKSksIGRpbW5hbWVzID0gbGlzdCh3YXZlID0gMTpud2F2ZXMsIGlkcywNCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIGlkcykpDQogIGRpbW5hbWVzKG5ldHMpDQogIA0KICAjIHN0ZXAgMw0KICBkZl93b3JrcyA8LSB0aWJibGUod29ya3NfaWQgPSB1bmxpc3QobGFwcGx5KHNjaG9sYXJzX3NlbCR3b3JrLCBmdW5jdGlvbihsKSBsJGlkKSksIHdvcmtzX2F1dGhvciA9IHVubGlzdChsYXBwbHkoc2Nob2xhcnNfc2VsJHdvcmssDQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBmdW5jdGlvbihsKSBsJGF1dGhvciksIHJlY3Vyc2l2ZSA9IEZBTFNFKSwgd29ya3NfeWVhciA9IHVubGlzdChsYXBwbHkoc2Nob2xhcnNfc2VsJHdvcmssIGZ1bmN0aW9uKGwpIGwkcHVibGljYXRpb25feWVhciksDQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICByZWN1cnNpdmUgPSBGQUxTRSkpDQogIA0KICBkZl93b3JrcyA8LSBkZl93b3Jrc1shZHVwbGljYXRlZChkZl93b3JrcyksIF0NCiAgDQogICMgc3RlcCA0DQogIGlmICh0eXBlID09ICJmaXJzdCIpIHsNCiAgICBmb3IgKGogaW4gMTpud2F2ZXMpIHsNCiAgICAgIGRmX3dvcmtzX3cgPC0gZGZfd29ya3NbZGZfd29ya3Mkd29ya3NfeWVhciA+PSB3YXZlc1tbal1dWzFdICYgZGZfd29ya3Mkd29ya3NfeWVhciA8PSB3YXZlc1tbal1dWzJdLA0KICAgICAgXQ0KICAgICAgZm9yIChpIGluIDE6bnJvdyhkZl93b3Jrc193KSkgew0KICAgICAgICBlZ28gPC0gZGZfd29ya3NfdyR3b3Jrc19hdXRob3JbaV1bWzFdXSRhdV9pZFsxXQ0KICAgICAgICBhbHRlcnMgPC0gZGZfd29ya3NfdyR3b3Jrc19hdXRob3JbaV1bWzFdXSRhdV9pZFstMV0NCiAgICAgICAgaWYgKHN1bShpZHMgJWluJSBlZ28pID4gMCAmIHN1bShpZHMgJWluJSBhbHRlcnMpID4gMCkgew0KICAgICAgICAgIG5ldHNbaiwgd2hpY2goaWRzICVpbiUgZWdvKSwgd2hpY2goaWRzICVpbiUgYWx0ZXJzKV0gPC0gMQ0KICAgICAgICB9DQogICAgICB9DQogICAgfQ0KICB9DQogIA0KICBpZiAodHlwZSA9PSAibGFzdCIpIHsNCiAgICBmb3IgKGogaW4gMTpud2F2ZXMpIHsNCiAgICAgIGRmX3dvcmtzX3cgPC0gZGZfd29ya3NbZGZfd29ya3Mkd29ya3NfeWVhciA+PSB3YXZlc1tbal1dWzFdICYgZGZfd29ya3Mkd29ya3NfeWVhciA8PSB3YXZlc1tbal1dWzJdLA0KICAgICAgXQ0KICAgICAgZm9yIChpIGluIDE6bnJvdyhkZl93b3Jrc193KSkgew0KICAgICAgICBlZ28gPC0gcmV2KGRmX3dvcmtzX3ckd29ya3NfYXV0aG9yW2ldW1sxXV0kYXVfaWQpWzFdDQogICAgICAgIGFsdGVycyA8LSByZXYoZGZfd29ya3NfdyR3b3Jrc19hdXRob3JbaV1bWzFdXSRhdV9pZClbLTFdDQogICAgICAgIGlmIChzdW0oaWRzICVpbiUgZWdvKSA+IDAgJiBzdW0oaWRzICVpbiUgYWx0ZXJzKSA+IDApIHsNCiAgICAgICAgICBuZXRzW2osIHdoaWNoKGlkcyAlaW4lIGVnbyksIHdoaWNoKGlkcyAlaW4lIGFsdGVycyldIDwtIDENCiAgICAgICAgfQ0KICAgICAgfQ0KICAgIH0NCiAgfQ0KICANCiAgaWYgKHR5cGUgPT0gImFsbCIpIHsNCiAgICBmb3IgKGogaW4gMTpud2F2ZXMpIHsNCiAgICAgIGRmX3dvcmtzX3cgPC0gZGZfd29ya3NbZGZfd29ya3Mkd29ya3NfeWVhciA+PSB3YXZlc1tbal1dWzFdICYgZGZfd29ya3Mkd29ya3NfeWVhciA8PSB3YXZlc1tbal1dWzJdLA0KICAgICAgXQ0KICAgICAgZm9yIChpIGluIDE6bnJvdyhkZl93b3Jrc193KSkgew0KICAgICAgICBlZ29zIDwtIGRmX3dvcmtzX3ckd29ya3NfYXV0aG9yW2ldW1sxXV0kYXVfaWQNCiAgICAgICAgaWYgKHN1bShpZHMgJWluJSBlZ29zKSA+IDApIHsNCiAgICAgICAgICBuZXRzW2osIHdoaWNoKGlkcyAlaW4lIGVnb3MpLCB3aGljaChpZHMgJWluJSBlZ29zKV0gPC0gMQ0KICAgICAgICB9DQogICAgICB9DQogICAgfQ0KICB9DQogIG91dHB1dCA8LSBsaXN0KCkNCiAgb3V0cHV0JGRhdGEgPC0gc2Nob2xhcnNfc2VsDQogIG91dHB1dCRuZXRzIDwtIG5ldHMNCiAgcmV0dXJuKG91dHB1dCkNCn0NCmBgYA0KDQojIyBQYWNrYWdlcw0KYGBge3J9DQpwYWNrYWdlcyA9IGMoIlJTaWVuYSIsICJSc2llbmFUd29TdGVwIiwgImlncmFwaCIsICJ0aWR5dmVyc2UiLCAiZm9yZWFjaCIsICJpdGVyYXRvcnMiLCAiZG9QYXJhbGxlbCIpDQojIGZwYWNrYWdlLmNoZWNrKHBhY2thZ2VzKQ0KIyAjIGRldnRvb2xzOjppbnN0YWxsX2dpdGh1YignSm9jaGVtVG9sc21hL1JzaWVuYVR3b1N0ZXAnLCBidWlsZF92aWduZXR0ZXM9VFJVRSkNCiMgcGFja2FnZXMgPSBjKCJSc2llbmFUd29TdGVwIikNCmZwYWNrYWdlLmNoZWNrKHBhY2thZ2VzKQ0KYGBgDQojIFBhcmFsbGVsIENsdXN0ZXINCmBgYHtyfQ0Kbm9fY29yZXMgPC0gZGV0ZWN0Q29yZXMoKSAtIDENCm15Y2wgPC0gbWFrZUNsdXN0ZXIocmVwKCJsb2NhbGhvc3QiLCBub19jb3JlcykpDQpjbHVzdGVyRXZhbFEobXljbCwgbGlicmFyeShSc2llbmFUd29TdGVwKSkNCnJlZ2lzdGVyRG9QYXJhbGxlbChteWNsKQ0KIyBzdG9wQ2x1c3RlcihteWNsKQ0KYGBgDQoNCmBgYHtyfQ0KIyBMb2FkIEVnbyBkYXRhDQpsb2FkKCJkYXRhL3Byb2Nlc3NlZC9SVV9VVV9lZ28uUkRhdGEiKQ0KDQojIExvYWQgV29ya3MgZGF0YQ0KbG9hZCgiZGF0YS9wcm9jZXNzZWQvUlVfVVVfd29ya3MuUkRhdGEiKQ0KDQojIExvYWQgcmF3IGRhdGEgZm9yIG5ldHdvcmtzDQpsb2FkKCJkYXRhL3Byb2Nlc3NlZC9zb2NfZGF0YV9yYXcuUkRhdGEiKQ0KYGBgDQoNCiMjIFN0ZXAgMQ0KYGBge3J9DQpkaW0oc29jX2RhdGEkbmV0cykNCg0Kd2F2ZV8xIDwtIHNvY19kYXRhJG5ldHNbMSwsXQ0KZGlhZyh3YXZlXzEpIDwtIDANCg0Kd2F2ZV8yIDwtIHNvY19kYXRhJG5ldHNbMiwsXQ0KZGlhZyh3YXZlXzIpIDwtIDANCg0KbmV0X3NvY19hcnJheSA8LSBhcnJheShkYXRhID0gYyh3YXZlXzEsIHdhdmVfMiksIGRpbSA9IGMoZGltKHdhdmVfMSksIDIpKQ0KZGltKG5ldF9zb2NfYXJyYXkpDQoNCg0KIy0tLS0gRGVwZW5kZW50IC0tLS0NCm5ldCA8LSBzaWVuYURlcGVuZGVudChuZXRfc29jX2FycmF5KQ0KDQojLS0tLSBJbmRlcGVuZGVudCAtLS0tDQpnZW5kZXIgPC0gZGZfZWdvJHBlcmNfZmVtYWxlDQoNCmdlbmRlciA8LSBjb0NvdmFyKGdlbmRlcikNCg0KIy0tLS0gTWFrZSBTaWVuYSBkZiAtLS0tDQpteWRhdGEgPC0gc2llbmFEYXRhQ3JlYXRlKG5ldCwgZ2VuZGVyKQ0KYGBgDQoNCiMjIFN0ZXAgMg0KYGBge3J9DQpteWVmZiA8LSBnZXRFZmZlY3RzKG15ZGF0YSkNCnByaW50MDFSZXBvcnQobXlkYXRhLCBtb2RlbG5hbWUgPSAiLi9yZXN1bHRzL3NvY19pbml0X3Rlc3QiKQ0KDQojIHRzX2R5YWRzX2V2byhzaW1zID0gd2F2ZV8yLCBuZXQxID0gd2F2ZV8xLCBmb3JwbG90ID0gVFJVRSkNCiMgdHNfdHJpYWRzX2V2byhzaW1zID0gd2F2ZV8yLCBuZXQxID0gd2F2ZV8xLCBmb3JwbG90ID0gVFJVRSkNCg0KYGBgDQojIyBTdGVwIDMNCmBgYHtyfQ0KbXllZmYgPC0gaW5jbHVkZUVmZmVjdHMobXllZmYsIGlzb2xhdGVOZXQsIGluUG9wLCBvdXRBY3QpDQpgYGANCmBgYHtyfQ0KbXllZmYgPC0gaW5jbHVkZUVmZmVjdHMobXllZmYsIHNhbWVYLCBlZ29YLCBhbHRYLCBpbnRlcmFjdGlvbjEgPSAiZ2VuZGVyIikNCmBgYA0KIyMNCmBgYHtyfQ0KbXlBbGdvcml0aG0gPC0gc2llbmFBbGdvcml0aG1DcmVhdGUocHJvam5hbWUgPSAic29jX2luaXRfdGVzdCIpDQphbnNNMSA8LSBzaWVuYTA3KG15QWxnb3JpdGhtLCBkYXRhID0gbXlkYXRhLCBlZmZlY3RzID0gbXllZmYsIHJldHVybkRlcHMgPSBUUlVFKQ0KYW5zTTENCg0KIyBpZiBuZWNlc3NhcnkgZXN0aW1hdGUgYWdhaW4hICANCmFuc00xXzIgPC0gc2llbmEwNyhteUFsZ29yaXRobSwgZGF0YSA9IG15ZGF0YSwgZWZmZWN0cyA9IG15ZWZmLCBwcmV2QW5zID0gYW5zTTEsIHJldHVybkRlcHM9VFJVRSkNCmFuc00xXzINCmBgYA0KDQoNCg0KDQoNCg0KDQoNCg0KDQoNCg0KDQoNCg0KDQo=</div>
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeSourceEmbed("Week5_RSiena.Rmd");
+  window.initializeCodeFolding("show" === "show");
+});
+</script>
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

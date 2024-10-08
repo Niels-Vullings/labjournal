@@ -11,7 +11,6 @@ body {
 text-align: justify}
 </style>
 ```
-
 ```{r, globalsettings, echo=FALSE, warning=FALSE, results='hide'}
 library(knitr)
 
@@ -51,19 +50,19 @@ library(rvest)
 ```
 
 ## Functions
+
 ```{r}
 colorize <- function(x, color) {sprintf("<span style='color: %s;'>%s</span>", color, x) }
 
 fsave <- function(x, file, location = "./data/processed/", ...) {
-    if (!dir.exists(location))
-        dir.create(location)
-    datename <- substr(gsub("[:-]", "", Sys.time()), 1, 8)
-    totalname <- paste(location, datename, file, sep = "")
-    print(paste("SAVED: ", totalname, sep = ""))
-    save(x, file = totalname)
+  if (!dir.exists(location))
+    dir.create(location)
+  datename <- substr(gsub("[:-]", "", Sys.time()), 1, 8)
+  totalname <- paste(location, datename, file, sep = "")
+  print(paste("SAVED: ", totalname, sep = ""))
+  save(x, file = totalname)
 }
 ```
-
 
 # Load data
 
@@ -199,6 +198,7 @@ df_ego <- do.call(rbind.data.frame, df$demographics)
 In order to get use scrape first names, we first need to have the first names of all authors in our network
 
 ### Screwing around with strings
+
 ```{r}
 vect <- c("Now this string is not split", "It is a nice Picture", "Is it ready", "Split Screen")
 
@@ -298,7 +298,9 @@ df_ego <- gender_scraper.NV(names = df_ego, web_page = "https://nvb.meertens.kna
 # paste0("https://nvb.meertens.knaw.nl/naam/is/", "name") # This will eventually be used for automating the scraping process
 
 ```
+
 ### Check results
+
 ```{r}
 check <- df_ego %>% count(perc_female)
 
@@ -306,7 +308,9 @@ plot(check$perc_female, check$n)
 ```
 
 ## Journal Rankings
+
 ### Extract works and check journals
+
 ```{r}
 
 df_works <- do.call(rbind.data.frame, df$works) # put works in dataframe
@@ -323,7 +327,9 @@ dat <- read_csv2("data/scimagojr_23_journals_all.csv")
 head(dat)
 
 ```
+
 ### Split the ISSN codes if 2 are available
+
 ```{r}
 dat$Issn_1 <- sapply(strsplit(dat$Issn, ", "), `[`, 1) # This code should work as a way to split the two issn codes
 dat$Issn_2 <- sapply(strsplit(dat$Issn, ", "), `[`, 2)
@@ -339,6 +345,7 @@ df_pres <- dat %>% select(Rank, Title, Issn_1, Issn_2, SJR, `SJR Best Quartile`,
 ```
 
 ### check compatability
+
 ```{r}
 
 df_works %>% select(issn_l)
@@ -350,21 +357,51 @@ mis_journal <- df_works %>% filter(check == 0)
 as.data.frame(unique(mis_journal$so)) # Still left with 166 missing journals
 
 ```
+
 ### Create ID variable
+
 ```{r}
 df_pres <- df_pres %>% mutate(issn_l = case_when(Issn_1 %in% df_works$issn_l == TRUE ~ Issn_1,
                                                  Issn_2 %in% df_works$issn_l == TRUE ~ Issn_2,
                                                  .default = NA)) %>% filter(!is.na(issn_l))
 
 ```
+
 ### Join prestige measures and works together
+
 ```{r}
 # ?left_join()
 df_works <- df_works %>% left_join(df_pres, by = "issn_l", multiple = "all")
 
-head(df_works)
+df_works$`SJR Best Quartile` <- ifelse(is.na(df_works$`SJR Best Quartile`) | df_works$`SJR Best Quartile` == "-", "Q4", df_works$`SJR Best Quartile`)
+# df_works %>% count(`SJR Best Quartile`)
+
+
+df_works_unnest <- df_works %>% group_by(id) %>% 
+  unnest(author)
+
+df_prestige <- df_works_unnest %>% 
+  select(id:author_position,
+         so:publication_year,
+         check:`%Female`) %>% mutate(rel_au = case_when(au_id %in% df_ego$au_id ~ TRUE,
+                                                        .default = FALSE)) %>% filter(rel_au == TRUE)
+  
+df_prestige %>% count(rel_au)
+
+
+  
+
+df_prestige %>% group_by(au_display_name) %>% count(`SJR Best Quartile`) %>% pivot_wider(names_from = `SJR Best Quartile`,
+                                                                                         values_from = n)
+
 ```
-# Save datasets 
+
+### TBD
+
+-   Make a variable that
+
+# Save datasets
+
 ```{r}
 # Save the raw sociology data for RU and UU
 save(soc_data, file = "data/processed/soc_data_raw.RData")
@@ -377,10 +414,6 @@ save(df_works, file = "data/processed/RU_UU_works.RData")
 
 
 ```
-
-
-
-
 
 ```{r}
 # net_w2 <- igraph::graph_from_adjacency_matrix(soc_data$nets[2,,], #now, I take the second wave

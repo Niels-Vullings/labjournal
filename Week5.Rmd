@@ -1,0 +1,186 @@
+---
+title: "Journal - Week 5 (Intro to RSiena)"
+#bibliography: references.bib
+author: "Niels Vullings"
+bibliography: references.bib
+output: 
+  html_document: 
+    df_print: tibble
+---
+
+```{=html}
+<style>
+body {
+text-align: justify}
+</style>
+```
+
+```{r, globalsettings, echo=FALSE, warning=FALSE, results='hide'}
+library(knitr)
+
+knitr::opts_chunk$set(echo = TRUE)
+opts_chunk$set(tidy.opts=list(width.cutoff=100),tidy=TRUE, warning = FALSE, message = FALSE,comment = "#>", cache=TRUE, class.source=c("test"), class.output=c("test2"))
+options(width = 100)
+rgl::setupKnitr()
+
+
+
+colorize <- function(x, color) {sprintf("<span style='color: %s;'>%s</span>", color, x) }
+
+```
+
+```{r klippy, echo=FALSE, include=TRUE}
+klippy::klippy(position = c('top', 'right'))
+# klippy::klippy(color = 'darkgreen')
+#klippy::klippy(tooltip_message = 'Click to copy', tooltip_success = 'Done')
+```
+
+Last compiled on `r format(Sys.time(), '%B, %Y')`
+
+<br>
+
+------------------------------------------------------------------------
+
+# Set up
+```{r}
+# start with clean workspace
+rm(list = ls())
+
+```
+# UDF
+```{r}
+fpackage.check <- function(packages) {
+    lapply(packages, FUN = function(x) {
+        if (!require(x, character.only = TRUE)) {
+            install.packages(x, dependencies = TRUE)
+            library(x, character.only = TRUE)
+        }
+    })
+}
+
+fsave <- function(x, file = NULL, location = "./data/processed/") {
+    ifelse(!dir.exists("data"), dir.create("data"), FALSE)
+    ifelse(!dir.exists("data/processed"), dir.create("data/processed"), FALSE)
+    if (is.null(file))
+        file = deparse(substitute(x))
+    datename <- substr(gsub("[:-]", "", Sys.time()), 1, 8)
+    totalname <- paste(location, datename, file, ".rda", sep = "")
+    save(x, file = totalname)  #need to fix if file is reloaded as input name, not as x. 
+}
+
+fload <- function(filename) {
+    load(filename)
+    get(ls()[ls() != "filename"])
+}
+
+fshowdf <- function(x, ...) {
+    knitr::kable(x, digits = 2, "html", ...) %>%
+        kableExtra::kable_styling(bootstrap_options = c("striped", "hover")) %>%
+        kableExtra::scroll_box(width = "100%", height = "300px")
+}
+```
+
+# Packages
+```{r}
+packages = c("RSiena", "RsienaTwoStep", "igraph")
+# fpackage.check(packages)
+# # devtools::install_github('JochemTolsma/RsienaTwoStep', build_vignettes=TRUE)
+# packages = c("RsienaTwoStep")
+fpackage.check(packages)
+```
+# Modeling Logic
+```{r}
+ts_net1
+
+net1g <- graph_from_adjacency_matrix(ts_net1, mode = "directed")
+coords <- layout_(net1g, nicely())  #let us keep the layout
+par(mar = c(0.1, 0.1, 0.1, 0.1))
+{
+    plot.igraph(net1g, layout = coords)
+    graphics::box()
+}
+```
+```{r}
+set.seed(24553253)
+ego <- ts_select(net = ts_net1, steps = 1)  #in rsienatwostep two actors may make a change together but here not
+ego
+```
+```{r}
+options <- ts_alternatives_ministep(net = ts_net1, ego = ego)
+# options
+plots <- lapply(options, graph_from_adjacency_matrix, mode = "directed")
+par(mar = c(0, 0, 0, 0) + 0.1)
+par(mfrow = c(1, 2))
+
+fplot <- function(x) {
+    plot.igraph(x, layout = coords, margin = 0)
+    graphics::box()
+}
+
+lapply(plots, fplot)
+```
+
+```{r}
+# ts_degree(net = options[[1]], ego = ego)
+# or for all options
+lapply(options, ts_degree, ego = ego)
+```
+```{r}
+lapply(options, ts_recip, ego = ego)
+```
+# Evaluation Function
+Calculate the probability of ego 4 and option 4
+```{r}
+option <- 4
+ts_degree(options[[option]], ego = ego) * -1 + ts_recip(options[[option]], ego = ego) * 1.5
+#This is the value of ego 4 and option 4
+```
+```{r}
+eval <- ts_eval(net = options[[option]], ego = ego, statistics = list(ts_degree, ts_recip), parameters = c(-1,
+    1.5))
+eval
+```
+```{r}
+eval <- sapply(options, FUN = ts_eval, ego = ego, statistics = list(ts_degree, ts_recip), parameters = c(-1,
+    1.5))
+eval
+print("network with maximum evaluation score:")
+which.max(eval)
+```
+```{r}
+# p <- sapply(eval, exp)/sum(eval)
+
+
+choice <- sample(1:length(eval), size = 1, prob = exp(eval)/sum(exp(eval)))
+print("choice:")
+choice
+# print('network:') 
+# options[[choice]]
+```
+# Stopping Rule
+```{r}
+rate <- 2
+degree <- -1
+recip <- 1.5
+ts_sims(nsims = 1, net = ts_net1, startvalues = c(rate, degree, recip), statistics = list(ts_degree,
+    ts_recip), p2step = c(1, 0, 0), chain = FALSE)  #not that rate parameter is automatically included. 
+```
+```{r}
+# we do not calculate SE for now.
+# ans <- ts_estim(net1 = s501, net2 = s502, startvalues = c(rate, degree, recip), statistics = list(ts_degree, ts_recip), p2step = c(1, 0, 0),
+#     conv = 0.01, phase3 = TRUE, itef3 = 50, verbose = TRUE)
+```
+```{r}
+ts_targets(net1 = s501, net2 = s502, statistics = list(ts_degree, ts_recip))
+
+?ts_estim
+```
+# First Siena Models
+```{r}
+
+```
+
+
+
+
+
