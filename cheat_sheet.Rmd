@@ -1,0 +1,52 @@
+---
+title: "Introduction (draft)"
+#bibliography: references.bib
+author: "Niels Vullings"
+bibliography: references.bib
+---
+
+# Html text stuff
+## Justify my text files
+Who doesn't want their text files to be justified!
+```{r}
+
+# ```{=html}
+# <style>
+# body {
+# text-align: justify}
+# </style>
+# ```
+
+```
+
+## Tabs galore
+For when the start of a paragraph just needs a little nudge 
+```{r}
+ 
+# &nbsp; # Wow it is a single space
+# &ensp; # My god there are two
+# &emsp; # Here we have 4 a.k.a a tab
+# &nbsp; *4 # apparently does something different than emsp
+
+```
+
+## Writing texts
+Use Visual mode instead of source mode (ctrl + shift + F4 | just click it in the visual button below the save button)
+
+# Basic knitting stuff
+```{r, globalsettings, echo=FALSE, warning=FALSE, results='hide'}
+library(knitr)
+
+knitr::opts_chunk$set(echo = TRUE)
+opts_chunk$set(tidy.opts=list(width.cutoff=100),tidy=TRUE, warning = FALSE, message = FALSE,comment = "#>", cache=TRUE, class.source=c("test"), class.output=c("test2"))
+options(width = 100)
+rgl::setupKnitr()
+```
+
+# Klippy code to copy code chunks
+```{r klippy, echo=TRUE, include=TRUE}
+klippy::klippy(position = c('top', 'right'))
+# klippy::klippy(color = 'darkgreen')
+#klippy::klippy(tooltip_message = 'Click to copy', tooltip_success = 'Done')
+```
+

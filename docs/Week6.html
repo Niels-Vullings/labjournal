@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Niels Vullings" />
+
+
+<title>Journal - Week 6</title>
+
+<script src="site_libs/header-attrs-2.18/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+<script src="site_libs/navigation-1.1/sourceembed.js"></script>
+<script src="site_libs/clipboard-1.7.1/clipboard.min.js"></script>
+<link href="site_libs/primer-tooltips-1.4.0/build.css" rel="stylesheet" />
+<link href="site_libs/klippy-0.0.0.9500/css/klippy.min.css" rel="stylesheet" />
+<script src="site_libs/klippy-0.0.0.9500/js/klippy.min.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    background-color: #ffffff;
+    color: #a0a0a0;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #a0a0a0;  padding-left: 4px; }
+div.sourceCode
+  { color: #1f1c1b; background-color: #ffffff; }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span { color: #1f1c1b; } /* Normal */
+code span.al { color: #bf0303; background-color: #f7e6e6; font-weight: bold; } /* Alert */
+code span.an { color: #ca60ca; } /* Annotation */
+code span.at { color: #0057ae; } /* Attribute */
+code span.bn { color: #b08000; } /* BaseN */
+code span.bu { color: #644a9b; font-weight: bold; } /* BuiltIn */
+code span.cf { color: #1f1c1b; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #924c9d; } /* Char */
+code span.cn { color: #aa5500; } /* Constant */
+code span.co { color: #898887; } /* Comment */
+code span.cv { color: #0095ff; } /* CommentVar */
+code span.do { color: #607880; } /* Documentation */
+code span.dt { color: #0057ae; } /* DataType */
+code span.dv { color: #b08000; } /* DecVal */
+code span.er { color: #bf0303; text-decoration: underline; } /* Error */
+code span.ex { color: #0095ff; font-weight: bold; } /* Extension */
+code span.fl { color: #b08000; } /* Float */
+code span.fu { color: #644a9b; } /* Function */
+code span.im { color: #ff5500; } /* Import */
+code span.in { color: #b08000; } /* Information */
+code span.kw { color: #1f1c1b; font-weight: bold; } /* Keyword */
+code span.op { color: #1f1c1b; } /* Operator */
+code span.ot { color: #006e28; } /* Other */
+code span.pp { color: #006e28; } /* Preprocessor */
+code span.re { color: #0057ae; background-color: #e0e9f8; } /* RegionMarker */
+code span.sc { color: #3daee9; } /* SpecialChar */
+code span.ss { color: #ff5500; } /* SpecialString */
+code span.st { color: #bf0303; } /* String */
+code span.va { color: #0057ae; } /* Variable */
+code span.vs { color: #bf0303; } /* VerbatimString */
+code span.wa { color: #bf0303; } /* Warning */
+
+.sourceCode .row {
+  width: 100%;
+}
+.sourceCode {
+  overflow-x: auto;
+}
+.code-folding-btn {
+  margin-right: -30px;
+}
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+<style type="text/css">
+#rmd-source-code {
+  display: none;
+}
+</style>
+
+
+<link rel="stylesheet" href="tweaks.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html"></a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">
+    <span class="fa fa-home"></span>
+     
+  </a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Journal
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="cheat_sheet.html">Buddy's first markdown file</a>
+    </li>
+    <li>
+      <a href="Week1.html">Week 1</a>
+    </li>
+    <li>
+      <a href="Week2.html">Week 2</a>
+    </li>
+    <li>
+      <a href="Week3-webscraping.html">Week 3</a>
+    </li>
+    <li>
+      <a href="Week4.html">Week 4</a>
+    </li>
+    <li class="dropdown-submenu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Week 5</a>
+      <ul class="dropdown-menu" role="menu">
+        <li>
+          <a href="Week5.html">Logic of SAOM</a>
+        </li>
+        <li>
+          <a href="Week5_RSiena.html">RSiena</a>
+        </li>
+      </ul>
+    </li>
+    <li>
+      <a href="Week6.html">Week 6</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Data Preparation
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="Data_exploration.html">Data Exploration</a>
+    </li>
+    <li class="dropdown-submenu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Data Manipulation</a>
+      <ul class="dropdown-menu" role="menu">
+        <li>
+          <a href="Data_preparation.html">Data Prep (Old)</a>
+        </li>
+        <li>
+          <a href="Data_preparation_2.html">Data Prep (New)</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Paper
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="Introduction2.html">Introduction</a>
+    </li>
+    <li>
+      <a href="Theory.html">Theory</a>
+    </li>
+    <li>
+      <a href="Data.html">Data</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://github.com/Niels-Vullings/labjournal">
+    <span class="fab fa-github"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+<li role="separator" class="divider"></li>
+<li><a id="rmd-download-source" href="#">Download Rmd</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore">Journal - Week 6</h1>
+<h4 class="author">Niels Vullings</h4>
+
+</div>
+
+
+<style>
+body {
+text-align: justify}
+</style>
+<script>
+  addClassKlippyTo("pre.r, pre.markdown");
+  addKlippy('right', 'top', 'auto', '1', 'Copy code', 'Copied!');
+</script>
+<p>Last compiled on oktober, 2024</p>
+<p><br></p>
+<hr />
+<div id="week-6" class="section level1" number="1">
+<h1><span class="header-section-number">1</span> Week 6</h1>
+<p>This week I mostly spend on updating my models and fixing my
+data.</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>())</span></code></pre></div>
+</div>
+<div id="gof" class="section level1" number="2">
+<h1><span class="header-section-number">2</span> GOF</h1>
+<div id="udf" class="section level2" number="2.1">
+<h2><span class="header-section-number">2.1</span> UDF</h2>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>fpackage.check <span class="ot">&lt;-</span> <span class="cf">function</span>(packages) {</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>    <span class="fu">lapply</span>(packages, <span class="at">FUN =</span> <span class="cf">function</span>(x) {</span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>        <span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(x, <span class="at">character.only =</span> <span class="cn">TRUE</span>)) {</span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>            <span class="fu">install.packages</span>(x, <span class="at">dependencies =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>            <span class="fu">library</span>(x, <span class="at">character.only =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>        }</span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a>    })</span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a>}</span>
+<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a>fsave <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">file =</span> <span class="cn">NULL</span>, <span class="at">location =</span> <span class="st">&quot;./data/processed/&quot;</span>) {</span>
+<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a>    <span class="fu">ifelse</span>(<span class="sc">!</span><span class="fu">dir.exists</span>(<span class="st">&quot;data&quot;</span>), <span class="fu">dir.create</span>(<span class="st">&quot;data&quot;</span>), <span class="cn">FALSE</span>)</span>
+<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a>    <span class="fu">ifelse</span>(<span class="sc">!</span><span class="fu">dir.exists</span>(<span class="st">&quot;data/processed&quot;</span>), <span class="fu">dir.create</span>(<span class="st">&quot;data/processed&quot;</span>), <span class="cn">FALSE</span>)</span>
+<span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">is.null</span>(file))</span>
+<span id="cb2-14"><a href="#cb2-14" tabindex="-1"></a>        file <span class="ot">=</span> <span class="fu">deparse</span>(<span class="fu">substitute</span>(x))</span>
+<span id="cb2-15"><a href="#cb2-15" tabindex="-1"></a>    datename <span class="ot">&lt;-</span> <span class="fu">substr</span>(<span class="fu">gsub</span>(<span class="st">&quot;[:-]&quot;</span>, <span class="st">&quot;&quot;</span>, <span class="fu">Sys.time</span>()), <span class="dv">1</span>, <span class="dv">8</span>)</span>
+<span id="cb2-16"><a href="#cb2-16" tabindex="-1"></a>    totalname <span class="ot">&lt;-</span> <span class="fu">paste</span>(location, datename, file, <span class="st">&quot;.rda&quot;</span>, <span class="at">sep =</span> <span class="st">&quot;&quot;</span>)</span>
+<span id="cb2-17"><a href="#cb2-17" tabindex="-1"></a>    <span class="fu">save</span>(x, <span class="at">file =</span> totalname)  <span class="co">#need to fix if file is reloaded as input name, not as x. </span></span>
+<span id="cb2-18"><a href="#cb2-18" tabindex="-1"></a>}</span>
+<span id="cb2-19"><a href="#cb2-19" tabindex="-1"></a></span>
+<span id="cb2-20"><a href="#cb2-20" tabindex="-1"></a>fload <span class="ot">&lt;-</span> <span class="cf">function</span>(filename) {</span>
+<span id="cb2-21"><a href="#cb2-21" tabindex="-1"></a>    <span class="fu">load</span>(filename)</span>
+<span id="cb2-22"><a href="#cb2-22" tabindex="-1"></a>    <span class="fu">get</span>(<span class="fu">ls</span>()[<span class="fu">ls</span>() <span class="sc">!=</span> <span class="st">&quot;filename&quot;</span>])</span>
+<span id="cb2-23"><a href="#cb2-23" tabindex="-1"></a>}</span>
+<span id="cb2-24"><a href="#cb2-24" tabindex="-1"></a></span>
+<span id="cb2-25"><a href="#cb2-25" tabindex="-1"></a>fshowdf <span class="ot">&lt;-</span> <span class="cf">function</span>(x, ...) {</span>
+<span id="cb2-26"><a href="#cb2-26" tabindex="-1"></a>    knitr<span class="sc">::</span><span class="fu">kable</span>(x, <span class="at">digits =</span> <span class="dv">2</span>, <span class="st">&quot;html&quot;</span>, ...) <span class="sc">%&gt;%</span></span>
+<span id="cb2-27"><a href="#cb2-27" tabindex="-1"></a>        kableExtra<span class="sc">::</span><span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="fu">c</span>(<span class="st">&quot;striped&quot;</span>, <span class="st">&quot;hover&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb2-28"><a href="#cb2-28" tabindex="-1"></a>        kableExtra<span class="sc">::</span><span class="fu">scroll_box</span>(<span class="at">width =</span> <span class="st">&quot;100%&quot;</span>, <span class="at">height =</span> <span class="st">&quot;300px&quot;</span>)</span>
+<span id="cb2-29"><a href="#cb2-29" tabindex="-1"></a>}</span>
+<span id="cb2-30"><a href="#cb2-30" tabindex="-1"></a></span>
+<span id="cb2-31"><a href="#cb2-31" tabindex="-1"></a></span>
+<span id="cb2-32"><a href="#cb2-32" tabindex="-1"></a>fcolnet <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">data =</span> scholars, <span class="at">university =</span> <span class="st">&quot;RU&quot;</span>, <span class="at">discipline =</span> <span class="st">&quot;sociology&quot;</span>, <span class="at">waves =</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="dv">2015</span>,</span>
+<span id="cb2-33"><a href="#cb2-33" tabindex="-1"></a>    <span class="dv">2018</span>), <span class="fu">c</span>(<span class="dv">2019</span>, <span class="dv">2023</span>)), <span class="at">type =</span> <span class="fu">c</span>(<span class="st">&quot;first&quot;</span>)) {</span>
+<span id="cb2-34"><a href="#cb2-34" tabindex="-1"></a></span>
+<span id="cb2-35"><a href="#cb2-35" tabindex="-1"></a>    <span class="co"># step 1</span></span>
+<span id="cb2-36"><a href="#cb2-36" tabindex="-1"></a>    demographics <span class="ot">&lt;-</span> <span class="fu">do.call</span>(rbind.data.frame, data<span class="sc">$</span>demographics)</span>
+<span id="cb2-37"><a href="#cb2-37" tabindex="-1"></a>    demographics <span class="ot">&lt;-</span> demographics <span class="sc">%&gt;%</span></span>
+<span id="cb2-38"><a href="#cb2-38" tabindex="-1"></a>        <span class="fu">mutate</span>(<span class="at">Universiteit1.22 =</span> <span class="fu">replace</span>(Universiteit1<span class="fl">.22</span>, <span class="fu">is.na</span>(Universiteit1<span class="fl">.22</span>), <span class="st">&quot;&quot;</span>), <span class="at">Universiteit2.22 =</span> <span class="fu">replace</span>(Universiteit2<span class="fl">.22</span>,</span>
+<span id="cb2-39"><a href="#cb2-39" tabindex="-1"></a>            <span class="fu">is.na</span>(Universiteit2<span class="fl">.22</span>), <span class="st">&quot;&quot;</span>), <span class="at">Universiteit1.24 =</span> <span class="fu">replace</span>(Universiteit1<span class="fl">.24</span>, <span class="fu">is.na</span>(Universiteit1<span class="fl">.24</span>),</span>
+<span id="cb2-40"><a href="#cb2-40" tabindex="-1"></a>            <span class="st">&quot;&quot;</span>), <span class="at">Universiteit2.24 =</span> <span class="fu">replace</span>(Universiteit2<span class="fl">.24</span>, <span class="fu">is.na</span>(Universiteit2<span class="fl">.24</span>), <span class="st">&quot;&quot;</span>), <span class="at">discipline.22 =</span> <span class="fu">replace</span>(discipline<span class="fl">.22</span>,</span>
+<span id="cb2-41"><a href="#cb2-41" tabindex="-1"></a>            <span class="fu">is.na</span>(discipline<span class="fl">.22</span>), <span class="st">&quot;&quot;</span>), <span class="at">discipline.24 =</span> <span class="fu">replace</span>(discipline<span class="fl">.24</span>, <span class="fu">is.na</span>(discipline<span class="fl">.24</span>), <span class="st">&quot;&quot;</span>))</span>
+<span id="cb2-42"><a href="#cb2-42" tabindex="-1"></a></span>
+<span id="cb2-43"><a href="#cb2-43" tabindex="-1"></a>    sample <span class="ot">&lt;-</span> <span class="fu">which</span>((demographics<span class="sc">$</span>Universiteit1<span class="fl">.22</span> <span class="sc">%in%</span> university <span class="sc">|</span> demographics<span class="sc">$</span>Universiteit2<span class="fl">.22</span> <span class="sc">%in%</span></span>
+<span id="cb2-44"><a href="#cb2-44" tabindex="-1"></a>        university <span class="sc">|</span> demographics<span class="sc">$</span>Universiteit1<span class="fl">.24</span> <span class="sc">%in%</span> university <span class="sc">|</span> demographics<span class="sc">$</span>Universiteit2<span class="fl">.24</span> <span class="sc">%in%</span></span>
+<span id="cb2-45"><a href="#cb2-45" tabindex="-1"></a>        university) <span class="sc">&amp;</span> (demographics<span class="sc">$</span>discipline<span class="fl">.22</span> <span class="sc">%in%</span> discipline <span class="sc">|</span> demographics<span class="sc">$</span>discipline<span class="fl">.24</span> <span class="sc">%in%</span> discipline))</span>
+<span id="cb2-46"><a href="#cb2-46" tabindex="-1"></a></span>
+<span id="cb2-47"><a href="#cb2-47" tabindex="-1"></a>    demographics_soc <span class="ot">&lt;-</span> demographics[sample, ]</span>
+<span id="cb2-48"><a href="#cb2-48" tabindex="-1"></a>    scholars_sel <span class="ot">&lt;-</span> <span class="fu">lapply</span>(scholars, <span class="st">&quot;[&quot;</span>, sample)</span>
+<span id="cb2-49"><a href="#cb2-49" tabindex="-1"></a></span>
+<span id="cb2-50"><a href="#cb2-50" tabindex="-1"></a>    <span class="co"># step 2</span></span>
+<span id="cb2-51"><a href="#cb2-51" tabindex="-1"></a>    ids <span class="ot">&lt;-</span> demographics_soc<span class="sc">$</span>au_id</span>
+<span id="cb2-52"><a href="#cb2-52" tabindex="-1"></a>    nwaves <span class="ot">&lt;-</span> <span class="fu">length</span>(waves)</span>
+<span id="cb2-53"><a href="#cb2-53" tabindex="-1"></a>    nets <span class="ot">&lt;-</span> <span class="fu">array</span>(<span class="dv">0</span>, <span class="at">dim =</span> <span class="fu">c</span>(nwaves, <span class="fu">length</span>(ids), <span class="fu">length</span>(ids)), <span class="at">dimnames =</span> <span class="fu">list</span>(<span class="at">wave =</span> <span class="dv">1</span><span class="sc">:</span>nwaves, ids,</span>
+<span id="cb2-54"><a href="#cb2-54" tabindex="-1"></a>        ids))</span>
+<span id="cb2-55"><a href="#cb2-55" tabindex="-1"></a>    <span class="fu">dimnames</span>(nets)</span>
+<span id="cb2-56"><a href="#cb2-56" tabindex="-1"></a></span>
+<span id="cb2-57"><a href="#cb2-57" tabindex="-1"></a>    <span class="co"># step 3</span></span>
+<span id="cb2-58"><a href="#cb2-58" tabindex="-1"></a>    df_works <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">works_id =</span> <span class="fu">unlist</span>(<span class="fu">lapply</span>(scholars_sel<span class="sc">$</span>work, <span class="cf">function</span>(l) l<span class="sc">$</span>id)), <span class="at">works_author =</span> <span class="fu">unlist</span>(<span class="fu">lapply</span>(scholars_sel<span class="sc">$</span>work,</span>
+<span id="cb2-59"><a href="#cb2-59" tabindex="-1"></a>        <span class="cf">function</span>(l) l<span class="sc">$</span>author), <span class="at">recursive =</span> <span class="cn">FALSE</span>), <span class="at">works_year =</span> <span class="fu">unlist</span>(<span class="fu">lapply</span>(scholars_sel<span class="sc">$</span>work, <span class="cf">function</span>(l) l<span class="sc">$</span>publication_year),</span>
+<span id="cb2-60"><a href="#cb2-60" tabindex="-1"></a>        <span class="at">recursive =</span> <span class="cn">FALSE</span>))</span>
+<span id="cb2-61"><a href="#cb2-61" tabindex="-1"></a></span>
+<span id="cb2-62"><a href="#cb2-62" tabindex="-1"></a>    df_works <span class="ot">&lt;-</span> df_works[<span class="sc">!</span><span class="fu">duplicated</span>(df_works), ]</span>
+<span id="cb2-63"><a href="#cb2-63" tabindex="-1"></a></span>
+<span id="cb2-64"><a href="#cb2-64" tabindex="-1"></a>    <span class="co"># step 4</span></span>
+<span id="cb2-65"><a href="#cb2-65" tabindex="-1"></a>    <span class="cf">if</span> (type <span class="sc">==</span> <span class="st">&quot;first&quot;</span>) {</span>
+<span id="cb2-66"><a href="#cb2-66" tabindex="-1"></a>        <span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nwaves) {</span>
+<span id="cb2-67"><a href="#cb2-67" tabindex="-1"></a>            df_works_w <span class="ot">&lt;-</span> df_works[df_works<span class="sc">$</span>works_year <span class="sc">&gt;=</span> waves[[j]][<span class="dv">1</span>] <span class="sc">&amp;</span> df_works<span class="sc">$</span>works_year <span class="sc">&lt;=</span> waves[[j]][<span class="dv">2</span>],</span>
+<span id="cb2-68"><a href="#cb2-68" tabindex="-1"></a>                ]</span>
+<span id="cb2-69"><a href="#cb2-69" tabindex="-1"></a>            <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(df_works_w)) {</span>
+<span id="cb2-70"><a href="#cb2-70" tabindex="-1"></a>                ego <span class="ot">&lt;-</span> df_works_w<span class="sc">$</span>works_author[i][[<span class="dv">1</span>]]<span class="sc">$</span>au_id[<span class="dv">1</span>]</span>
+<span id="cb2-71"><a href="#cb2-71" tabindex="-1"></a>                alters <span class="ot">&lt;-</span> df_works_w<span class="sc">$</span>works_author[i][[<span class="dv">1</span>]]<span class="sc">$</span>au_id[<span class="sc">-</span><span class="dv">1</span>]</span>
+<span id="cb2-72"><a href="#cb2-72" tabindex="-1"></a>                <span class="cf">if</span> (<span class="fu">sum</span>(ids <span class="sc">%in%</span> ego) <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">&amp;</span> <span class="fu">sum</span>(ids <span class="sc">%in%</span> alters) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb2-73"><a href="#cb2-73" tabindex="-1"></a>                  nets[j, <span class="fu">which</span>(ids <span class="sc">%in%</span> ego), <span class="fu">which</span>(ids <span class="sc">%in%</span> alters)] <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb2-74"><a href="#cb2-74" tabindex="-1"></a>                }</span>
+<span id="cb2-75"><a href="#cb2-75" tabindex="-1"></a>            }</span>
+<span id="cb2-76"><a href="#cb2-76" tabindex="-1"></a>        }</span>
+<span id="cb2-77"><a href="#cb2-77" tabindex="-1"></a>    }</span>
+<span id="cb2-78"><a href="#cb2-78" tabindex="-1"></a></span>
+<span id="cb2-79"><a href="#cb2-79" tabindex="-1"></a>    <span class="cf">if</span> (type <span class="sc">==</span> <span class="st">&quot;last&quot;</span>) {</span>
+<span id="cb2-80"><a href="#cb2-80" tabindex="-1"></a>        <span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nwaves) {</span>
+<span id="cb2-81"><a href="#cb2-81" tabindex="-1"></a>            df_works_w <span class="ot">&lt;-</span> df_works[df_works<span class="sc">$</span>works_year <span class="sc">&gt;=</span> waves[[j]][<span class="dv">1</span>] <span class="sc">&amp;</span> df_works<span class="sc">$</span>works_year <span class="sc">&lt;=</span> waves[[j]][<span class="dv">2</span>],</span>
+<span id="cb2-82"><a href="#cb2-82" tabindex="-1"></a>                ]</span>
+<span id="cb2-83"><a href="#cb2-83" tabindex="-1"></a>            <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(df_works_w)) {</span>
+<span id="cb2-84"><a href="#cb2-84" tabindex="-1"></a>                ego <span class="ot">&lt;-</span> <span class="fu">rev</span>(df_works_w<span class="sc">$</span>works_author[i][[<span class="dv">1</span>]]<span class="sc">$</span>au_id)[<span class="dv">1</span>]</span>
+<span id="cb2-85"><a href="#cb2-85" tabindex="-1"></a>                alters <span class="ot">&lt;-</span> <span class="fu">rev</span>(df_works_w<span class="sc">$</span>works_author[i][[<span class="dv">1</span>]]<span class="sc">$</span>au_id)[<span class="sc">-</span><span class="dv">1</span>]</span>
+<span id="cb2-86"><a href="#cb2-86" tabindex="-1"></a>                <span class="cf">if</span> (<span class="fu">sum</span>(ids <span class="sc">%in%</span> ego) <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">&amp;</span> <span class="fu">sum</span>(ids <span class="sc">%in%</span> alters) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb2-87"><a href="#cb2-87" tabindex="-1"></a>                  nets[j, <span class="fu">which</span>(ids <span class="sc">%in%</span> ego), <span class="fu">which</span>(ids <span class="sc">%in%</span> alters)] <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb2-88"><a href="#cb2-88" tabindex="-1"></a>                }</span>
+<span id="cb2-89"><a href="#cb2-89" tabindex="-1"></a>            }</span>
+<span id="cb2-90"><a href="#cb2-90" tabindex="-1"></a>        }</span>
+<span id="cb2-91"><a href="#cb2-91" tabindex="-1"></a>    }</span>
+<span id="cb2-92"><a href="#cb2-92" tabindex="-1"></a></span>
+<span id="cb2-93"><a href="#cb2-93" tabindex="-1"></a>    <span class="cf">if</span> (type <span class="sc">==</span> <span class="st">&quot;all&quot;</span>) {</span>
+<span id="cb2-94"><a href="#cb2-94" tabindex="-1"></a>        <span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nwaves) {</span>
+<span id="cb2-95"><a href="#cb2-95" tabindex="-1"></a>            df_works_w <span class="ot">&lt;-</span> df_works[df_works<span class="sc">$</span>works_year <span class="sc">&gt;=</span> waves[[j]][<span class="dv">1</span>] <span class="sc">&amp;</span> df_works<span class="sc">$</span>works_year <span class="sc">&lt;=</span> waves[[j]][<span class="dv">2</span>],</span>
+<span id="cb2-96"><a href="#cb2-96" tabindex="-1"></a>                ]</span>
+<span id="cb2-97"><a href="#cb2-97" tabindex="-1"></a>            <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(df_works_w)) {</span>
+<span id="cb2-98"><a href="#cb2-98" tabindex="-1"></a>                egos <span class="ot">&lt;-</span> df_works_w<span class="sc">$</span>works_author[i][[<span class="dv">1</span>]]<span class="sc">$</span>au_id</span>
+<span id="cb2-99"><a href="#cb2-99" tabindex="-1"></a>                <span class="cf">if</span> (<span class="fu">sum</span>(ids <span class="sc">%in%</span> egos) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb2-100"><a href="#cb2-100" tabindex="-1"></a>                  nets[j, <span class="fu">which</span>(ids <span class="sc">%in%</span> egos), <span class="fu">which</span>(ids <span class="sc">%in%</span> egos)] <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb2-101"><a href="#cb2-101" tabindex="-1"></a>                }</span>
+<span id="cb2-102"><a href="#cb2-102" tabindex="-1"></a>            }</span>
+<span id="cb2-103"><a href="#cb2-103" tabindex="-1"></a>        }</span>
+<span id="cb2-104"><a href="#cb2-104" tabindex="-1"></a>    }</span>
+<span id="cb2-105"><a href="#cb2-105" tabindex="-1"></a>    output <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
+<span id="cb2-106"><a href="#cb2-106" tabindex="-1"></a>    output<span class="sc">$</span>data <span class="ot">&lt;-</span> scholars_sel</span>
+<span id="cb2-107"><a href="#cb2-107" tabindex="-1"></a>    output<span class="sc">$</span>nets <span class="ot">&lt;-</span> nets</span>
+<span id="cb2-108"><a href="#cb2-108" tabindex="-1"></a>    <span class="fu">return</span>(output)</span>
+<span id="cb2-109"><a href="#cb2-109" tabindex="-1"></a>}</span></code></pre></div>
+</div>
+<div id="packages" class="section level2" number="2.2">
+<h2><span class="header-section-number">2.2</span> Packages</h2>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>packages <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&quot;RSiena&quot;</span>, <span class="st">&quot;RsienaTwoStep&quot;</span>, <span class="st">&quot;igraph&quot;</span>, <span class="st">&quot;tidyverse&quot;</span>, <span class="st">&quot;foreach&quot;</span>, <span class="st">&quot;iterators&quot;</span>, <span class="st">&quot;doParallel&quot;</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="co"># fpackage.check(packages) # devtools::install_github(&#39;JochemTolsma/RsienaTwoStep&#39;,</span></span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="co"># build_vignettes=TRUE) packages = c(&#39;RsienaTwoStep&#39;)</span></span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a><span class="fu">fpackage.check</span>(packages)</span></code></pre></div>
+<pre class="test2"><code>#&gt; [[1]]
+#&gt; NULL
+#&gt; 
+#&gt; [[2]]
+#&gt; NULL
+#&gt; 
+#&gt; [[3]]
+#&gt; NULL
+#&gt; 
+#&gt; [[4]]
+#&gt; NULL
+#&gt; 
+#&gt; [[5]]
+#&gt; NULL
+#&gt; 
+#&gt; [[6]]
+#&gt; NULL
+#&gt; 
+#&gt; [[7]]
+#&gt; NULL</code></pre>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="co"># Load Ego data</span></span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;data/processed/RU_UU_ego.RData&quot;</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a><span class="co"># Load Works data</span></span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;data/processed/RU_UU_works.RData&quot;</span>)</span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a><span class="co"># Load raw data for networks</span></span>
+<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;data/processed/soc_data_raw.RData&quot;</span>)</span></code></pre></div>
+</div>
+<div id="step-1" class="section level2" number="2.3">
+<h2><span class="header-section-number">2.3</span> Step 1</h2>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="fu">dim</span>(soc_data<span class="sc">$</span>nets)</span></code></pre></div>
+<pre class="test2"><code>#&gt; [1]   2 100 100</code></pre>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a>wave_1 <span class="ot">&lt;-</span> soc_data<span class="sc">$</span>nets[<span class="dv">1</span>, , ]</span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a><span class="fu">diag</span>(wave_1) <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a>wave_2 <span class="ot">&lt;-</span> soc_data<span class="sc">$</span>nets[<span class="dv">2</span>, , ]</span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a><span class="fu">diag</span>(wave_2) <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a>net_soc_array <span class="ot">&lt;-</span> <span class="fu">array</span>(<span class="at">data =</span> <span class="fu">c</span>(wave_1, wave_2), <span class="at">dim =</span> <span class="fu">c</span>(<span class="fu">dim</span>(wave_1), <span class="dv">2</span>))</span>
+<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a><span class="fu">dim</span>(net_soc_array)</span></code></pre></div>
+<pre class="test2"><code>#&gt; [1] 100 100   2</code></pre>
+<div class="sourceCode" id="cb10"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="co">#---- Dependent ----</span></span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>net <span class="ot">&lt;-</span> <span class="fu">sienaDependent</span>(net_soc_array)</span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a><span class="co">#---- Independent ----</span></span>
+<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a><span class="co"># gender &lt;- df_ego$perc_female</span></span>
+<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a></span>
+<span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a><span class="co"># gender &lt;- coCovar(gender)</span></span>
+<span id="cb10-8"><a href="#cb10-8" tabindex="-1"></a></span>
+<span id="cb10-9"><a href="#cb10-9" tabindex="-1"></a><span class="co">#---- Make Siena df ----</span></span>
+<span id="cb10-10"><a href="#cb10-10" tabindex="-1"></a>mydata <span class="ot">&lt;-</span> <span class="fu">sienaDataCreate</span>(net)  <span class="co">#, gender)</span></span></code></pre></div>
+</div>
+<div id="step-2" class="section level2" number="2.4">
+<h2><span class="header-section-number">2.4</span> Step 2</h2>
+<div class="sourceCode" id="cb11"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a>myeff <span class="ot">&lt;-</span> <span class="fu">getEffects</span>(mydata)</span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a><span class="fu">print01Report</span>(mydata, <span class="at">modelname =</span> <span class="st">&quot;./results/soc_init_GOF&quot;</span>)</span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a><span class="co"># ts_dyads_evo(sims = wave_2, net1 = wave_1, forplot = TRUE) ts_triads_evo(sims = wave_2, net1 =</span></span>
+<span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a><span class="co"># wave_1, forplot = TRUE)</span></span></code></pre></div>
+</div>
+<div id="step-3" class="section level2" number="2.5">
+<h2><span class="header-section-number">2.5</span> Step 3</h2>
+<div class="sourceCode" id="cb12"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="co"># myeff &lt;- includeEffects(myeff, isolateNet, inPop, outAct)</span></span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="co"># myeff &lt;- includeEffects(myeff, sameX, egoX, altX, interaction1 = &#39;gender&#39;)</span></span></code></pre></div>
+</div>
+<div id="step-4" class="section level2" number="2.6">
+<h2><span class="header-section-number">2.6</span> Step 4</h2>
+<div class="sourceCode" id="cb14"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a>myAlgorithm <span class="ot">&lt;-</span> <span class="fu">sienaAlgorithmCreate</span>(<span class="at">projname =</span> <span class="st">&quot;./results/soc_init_GOF&quot;</span>)</span></code></pre></div>
+<pre class="test2"><code>#&gt; If you use this algorithm object, siena07 will create/use an output file ./results/soc_init_GOF.txt .</code></pre>
+<div class="sourceCode" id="cb16"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a>ansM1 <span class="ot">&lt;-</span> <span class="fu">siena07</span>(myAlgorithm, <span class="at">data =</span> mydata, <span class="at">effects =</span> myeff, <span class="at">returnDeps =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a>ansM1</span></code></pre></div>
+<pre class="test2"><code>#&gt; Estimates, standard errors and convergence t-ratios
+#&gt; 
+#&gt;                               Estimate   Standard   Convergence 
+#&gt;                                            Error      t-ratio   
+#&gt; 
+#&gt; Rate parameters: 
+#&gt;   0       Rate parameter       3.8260  ( 0.5801   )             
+#&gt; 
+#&gt; Other parameters: 
+#&gt;   1. eval outdegree (density) -2.4463  ( 0.0922   )   -0.0267   
+#&gt;   2. eval reciprocity          2.2353  ( 0.2544   )   -0.0415   
+#&gt; 
+#&gt; Overall maximum convergence ratio:    0.0426 
+#&gt; 
+#&gt; 
+#&gt; Total of 2265 iteration steps.</code></pre>
+<div class="sourceCode" id="cb18"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a><span class="co"># # if necessary estimate again!  ansM1_2 &lt;- siena07(myAlgorithm, data = mydata, effects = myeff,</span></span>
+<span id="cb18-2"><a href="#cb18-2" tabindex="-1"></a><span class="co"># prevAns = ansM1, returnDeps=TRUE) ansM1_2</span></span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a>GOF <span class="ot">&lt;-</span> <span class="fu">sienaGOF</span>(ansM1, IndegreeDistribution, <span class="at">verbose =</span> <span class="cn">FALSE</span>, <span class="at">join =</span> <span class="cn">TRUE</span>, <span class="at">varName =</span> <span class="st">&quot;net&quot;</span>)</span>
+<span id="cb19-2"><a href="#cb19-2" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="#cb19-3" tabindex="-1"></a><span class="fu">plot</span>(GOF, <span class="at">main =</span> <span class="st">&quot;&quot;</span>)</span></code></pre></div>
+<p><img src="Week6_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+</div>
+</div>
+
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIkpvdXJuYWwgLSBXZWVrIDYiDQojYmlibGlvZ3JhcGh5OiByZWZlcmVuY2VzLmJpYg0KYXV0aG9yOiAiTmllbHMgVnVsbGluZ3MiDQpiaWJsaW9ncmFwaHk6IHJlZmVyZW5jZXMuYmliDQpvdXRwdXQ6IA0KICBodG1sX2RvY3VtZW50OiANCiAgICBkZl9wcmludDogdGliYmxlDQotLS0NCg0KYGBgez1odG1sfQ0KPHN0eWxlPg0KYm9keSB7DQp0ZXh0LWFsaWduOiBqdXN0aWZ5fQ0KPC9zdHlsZT4NCmBgYA0KDQpgYGB7ciwgZ2xvYmFsc2V0dGluZ3MsIGVjaG89RkFMU0UsIHdhcm5pbmc9RkFMU0UsIHJlc3VsdHM9J2hpZGUnfQ0KbGlicmFyeShrbml0cikNCg0Ka25pdHI6Om9wdHNfY2h1bmskc2V0KGVjaG8gPSBUUlVFKQ0Kb3B0c19jaHVuayRzZXQodGlkeS5vcHRzPWxpc3Qod2lkdGguY3V0b2ZmPTEwMCksdGlkeT1UUlVFLCB3YXJuaW5nID0gRkFMU0UsIG1lc3NhZ2UgPSBGQUxTRSxjb21tZW50ID0gIiM+IiwgY2FjaGU9VFJVRSwgY2xhc3Muc291cmNlPWMoInRlc3QiKSwgY2xhc3Mub3V0cHV0PWMoInRlc3QyIikpDQpvcHRpb25zKHdpZHRoID0gMTAwKQ0KcmdsOjpzZXR1cEtuaXRyKCkNCg0KDQoNCmNvbG9yaXplIDwtIGZ1bmN0aW9uKHgsIGNvbG9yKSB7c3ByaW50ZigiPHNwYW4gc3R5bGU9J2NvbG9yOiAlczsnPiVzPC9zcGFuPiIsIGNvbG9yLCB4KSB9DQoNCmBgYA0KDQpgYGB7ciBrbGlwcHksIGVjaG89RkFMU0UsIGluY2x1ZGU9VFJVRX0NCmtsaXBweTo6a2xpcHB5KHBvc2l0aW9uID0gYygndG9wJywgJ3JpZ2h0JykpDQojIGtsaXBweTo6a2xpcHB5KGNvbG9yID0gJ2RhcmtncmVlbicpDQoja2xpcHB5OjprbGlwcHkodG9vbHRpcF9tZXNzYWdlID0gJ0NsaWNrIHRvIGNvcHknLCB0b29sdGlwX3N1Y2Nlc3MgPSAnRG9uZScpDQpgYGANCg0KTGFzdCBjb21waWxlZCBvbiBgciBmb3JtYXQoU3lzLnRpbWUoKSwgJyVCLCAlWScpYA0KDQo8YnI+DQoNCi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQ0KDQojIFdlZWsgNg0KVGhpcyB3ZWVrIEkgbW9zdGx5IHNwZW5kIG9uIHVwZGF0aW5nIG15IG1vZGVscyBhbmQgZml4aW5nIG15IGRhdGEuIA0KDQpgYGB7cn0NCnJtKGxpc3QgPSBscygpKQ0KYGBgDQoNCiMgR09GDQojIyBVREYNCmBgYHtyfQ0KZnBhY2thZ2UuY2hlY2sgPC0gZnVuY3Rpb24ocGFja2FnZXMpIHsNCiAgICBsYXBwbHkocGFja2FnZXMsIEZVTiA9IGZ1bmN0aW9uKHgpIHsNCiAgICAgICAgaWYgKCFyZXF1aXJlKHgsIGNoYXJhY3Rlci5vbmx5ID0gVFJVRSkpIHsNCiAgICAgICAgICAgIGluc3RhbGwucGFja2FnZXMoeCwgZGVwZW5kZW5jaWVzID0gVFJVRSkNCiAgICAgICAgICAgIGxpYnJhcnkoeCwgY2hhcmFjdGVyLm9ubHkgPSBUUlVFKQ0KICAgICAgICB9DQogICAgfSkNCn0NCg0KZnNhdmUgPC0gZnVuY3Rpb24oeCwgZmlsZSA9IE5VTEwsIGxvY2F0aW9uID0gIi4vZGF0YS9wcm9jZXNzZWQvIikgew0KICAgIGlmZWxzZSghZGlyLmV4aXN0cygiZGF0YSIpLCBkaXIuY3JlYXRlKCJkYXRhIiksIEZBTFNFKQ0KICAgIGlmZWxzZSghZGlyLmV4aXN0cygiZGF0YS9wcm9jZXNzZWQiKSwgZGlyLmNyZWF0ZSgiZGF0YS9wcm9jZXNzZWQiKSwgRkFMU0UpDQogICAgaWYgKGlzLm51bGwoZmlsZSkpDQogICAgICAgIGZpbGUgPSBkZXBhcnNlKHN1YnN0aXR1dGUoeCkpDQogICAgZGF0ZW5hbWUgPC0gc3Vic3RyKGdzdWIoIls6LV0iLCAiIiwgU3lzLnRpbWUoKSksIDEsIDgpDQogICAgdG90YWxuYW1lIDwtIHBhc3RlKGxvY2F0aW9uLCBkYXRlbmFtZSwgZmlsZSwgIi5yZGEiLCBzZXAgPSAiIikNCiAgICBzYXZlKHgsIGZpbGUgPSB0b3RhbG5hbWUpICAjbmVlZCB0byBmaXggaWYgZmlsZSBpcyByZWxvYWRlZCBhcyBpbnB1dCBuYW1lLCBub3QgYXMgeC4gDQp9DQoNCmZsb2FkIDwtIGZ1bmN0aW9uKGZpbGVuYW1lKSB7DQogICAgbG9hZChmaWxlbmFtZSkNCiAgICBnZXQobHMoKVtscygpICE9ICJmaWxlbmFtZSJdKQ0KfQ0KDQpmc2hvd2RmIDwtIGZ1bmN0aW9uKHgsIC4uLikgew0KICAgIGtuaXRyOjprYWJsZSh4LCBkaWdpdHMgPSAyLCAiaHRtbCIsIC4uLikgJT4lDQogICAgICAgIGthYmxlRXh0cmE6OmthYmxlX3N0eWxpbmcoYm9vdHN0cmFwX29wdGlvbnMgPSBjKCJzdHJpcGVkIiwgImhvdmVyIikpICU+JQ0KICAgICAgICBrYWJsZUV4dHJhOjpzY3JvbGxfYm94KHdpZHRoID0gIjEwMCUiLCBoZWlnaHQgPSAiMzAwcHgiKQ0KfQ0KDQoNCmZjb2xuZXQgPC0gZnVuY3Rpb24oZGF0YSA9IHNjaG9sYXJzLCB1bml2ZXJzaXR5ID0gIlJVIiwgZGlzY2lwbGluZSA9ICJzb2Npb2xvZ3kiLCB3YXZlcyA9IGxpc3QoYygyMDE1LA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDIwMTgpLCBjKDIwMTksIDIwMjMpKSwgdHlwZSA9IGMoImZpcnN0IikpIHsNCiAgDQogICMgc3RlcCAxDQogIGRlbW9ncmFwaGljcyA8LSBkby5jYWxsKHJiaW5kLmRhdGEuZnJhbWUsIGRhdGEkZGVtb2dyYXBoaWNzKQ0KICBkZW1vZ3JhcGhpY3MgPC0gZGVtb2dyYXBoaWNzICU+JQ0KICAgIG11dGF0ZShVbml2ZXJzaXRlaXQxLjIyID0gcmVwbGFjZShVbml2ZXJzaXRlaXQxLjIyLCBpcy5uYShVbml2ZXJzaXRlaXQxLjIyKSwgIiIpLCBVbml2ZXJzaXRlaXQyLjIyID0gcmVwbGFjZShVbml2ZXJzaXRlaXQyLjIyLA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBpcy5uYShVbml2ZXJzaXRlaXQyLjIyKSwgIiIpLCBVbml2ZXJzaXRlaXQxLjI0ID0gcmVwbGFjZShVbml2ZXJzaXRlaXQxLjI0LCBpcy5uYShVbml2ZXJzaXRlaXQxLjI0KSwNCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIiIpLCBVbml2ZXJzaXRlaXQyLjI0ID0gcmVwbGFjZShVbml2ZXJzaXRlaXQyLjI0LCBpcy5uYShVbml2ZXJzaXRlaXQyLjI0KSwgIiIpLCBkaXNjaXBsaW5lLjIyID0gcmVwbGFjZShkaXNjaXBsaW5lLjIyLA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIGlzLm5hKGRpc2NpcGxpbmUuMjIpLCAiIiksIGRpc2NpcGxpbmUuMjQgPSByZXBsYWNlKGRpc2NpcGxpbmUuMjQsIGlzLm5hKGRpc2NpcGxpbmUuMjQpLCAiIikpDQogIA0KICBzYW1wbGUgPC0gd2hpY2goKGRlbW9ncmFwaGljcyRVbml2ZXJzaXRlaXQxLjIyICVpbiUgdW5pdmVyc2l0eSB8IGRlbW9ncmFwaGljcyRVbml2ZXJzaXRlaXQyLjIyICVpbiUNCiAgICAgICAgICAgICAgICAgICAgIHVuaXZlcnNpdHkgfCBkZW1vZ3JhcGhpY3MkVW5pdmVyc2l0ZWl0MS4yNCAlaW4lIHVuaXZlcnNpdHkgfCBkZW1vZ3JhcGhpY3MkVW5pdmVyc2l0ZWl0Mi4yNCAlaW4lDQogICAgICAgICAgICAgICAgICAgICB1bml2ZXJzaXR5KSAmIChkZW1vZ3JhcGhpY3MkZGlzY2lwbGluZS4yMiAlaW4lIGRpc2NpcGxpbmUgfCBkZW1vZ3JhcGhpY3MkZGlzY2lwbGluZS4yNCAlaW4lIGRpc2NpcGxpbmUpKQ0KICANCiAgZGVtb2dyYXBoaWNzX3NvYyA8LSBkZW1vZ3JhcGhpY3Nbc2FtcGxlLCBdDQogIHNjaG9sYXJzX3NlbCA8LSBsYXBwbHkoc2Nob2xhcnMsICJbIiwgc2FtcGxlKQ0KICANCiAgIyBzdGVwIDINCiAgaWRzIDwtIGRlbW9ncmFwaGljc19zb2MkYXVfaWQNCiAgbndhdmVzIDwtIGxlbmd0aCh3YXZlcykNCiAgbmV0cyA8LSBhcnJheSgwLCBkaW0gPSBjKG53YXZlcywgbGVuZ3RoKGlkcyksIGxlbmd0aChpZHMpKSwgZGltbmFtZXMgPSBsaXN0KHdhdmUgPSAxOm53YXZlcywgaWRzLA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgaWRzKSkNCiAgZGltbmFtZXMobmV0cykNCiAgDQogICMgc3RlcCAzDQogIGRmX3dvcmtzIDwtIHRpYmJsZSh3b3Jrc19pZCA9IHVubGlzdChsYXBwbHkoc2Nob2xhcnNfc2VsJHdvcmssIGZ1bmN0aW9uKGwpIGwkaWQpKSwgd29ya3NfYXV0aG9yID0gdW5saXN0KGxhcHBseShzY2hvbGFyc19zZWwkd29yaywNCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIGZ1bmN0aW9uKGwpIGwkYXV0aG9yKSwgcmVjdXJzaXZlID0gRkFMU0UpLCB3b3Jrc195ZWFyID0gdW5saXN0KGxhcHBseShzY2hvbGFyc19zZWwkd29yaywgZnVuY3Rpb24obCkgbCRwdWJsaWNhdGlvbl95ZWFyKSwNCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHJlY3Vyc2l2ZSA9IEZBTFNFKSkNCiAgDQogIGRmX3dvcmtzIDwtIGRmX3dvcmtzWyFkdXBsaWNhdGVkKGRmX3dvcmtzKSwgXQ0KICANCiAgIyBzdGVwIDQNCiAgaWYgKHR5cGUgPT0gImZpcnN0Iikgew0KICAgIGZvciAoaiBpbiAxOm53YXZlcykgew0KICAgICAgZGZfd29ya3NfdyA8LSBkZl93b3Jrc1tkZl93b3JrcyR3b3Jrc195ZWFyID49IHdhdmVzW1tqXV1bMV0gJiBkZl93b3JrcyR3b3Jrc195ZWFyIDw9IHdhdmVzW1tqXV1bMl0sDQogICAgICBdDQogICAgICBmb3IgKGkgaW4gMTpucm93KGRmX3dvcmtzX3cpKSB7DQogICAgICAgIGVnbyA8LSBkZl93b3Jrc193JHdvcmtzX2F1dGhvcltpXVtbMV1dJGF1X2lkWzFdDQogICAgICAgIGFsdGVycyA8LSBkZl93b3Jrc193JHdvcmtzX2F1dGhvcltpXVtbMV1dJGF1X2lkWy0xXQ0KICAgICAgICBpZiAoc3VtKGlkcyAlaW4lIGVnbykgPiAwICYgc3VtKGlkcyAlaW4lIGFsdGVycykgPiAwKSB7DQogICAgICAgICAgbmV0c1tqLCB3aGljaChpZHMgJWluJSBlZ28pLCB3aGljaChpZHMgJWluJSBhbHRlcnMpXSA8LSAxDQogICAgICAgIH0NCiAgICAgIH0NCiAgICB9DQogIH0NCiAgDQogIGlmICh0eXBlID09ICJsYXN0Iikgew0KICAgIGZvciAoaiBpbiAxOm53YXZlcykgew0KICAgICAgZGZfd29ya3NfdyA8LSBkZl93b3Jrc1tkZl93b3JrcyR3b3Jrc195ZWFyID49IHdhdmVzW1tqXV1bMV0gJiBkZl93b3JrcyR3b3Jrc195ZWFyIDw9IHdhdmVzW1tqXV1bMl0sDQogICAgICBdDQogICAgICBmb3IgKGkgaW4gMTpucm93KGRmX3dvcmtzX3cpKSB7DQogICAgICAgIGVnbyA8LSByZXYoZGZfd29ya3NfdyR3b3Jrc19hdXRob3JbaV1bWzFdXSRhdV9pZClbMV0NCiAgICAgICAgYWx0ZXJzIDwtIHJldihkZl93b3Jrc193JHdvcmtzX2F1dGhvcltpXVtbMV1dJGF1X2lkKVstMV0NCiAgICAgICAgaWYgKHN1bShpZHMgJWluJSBlZ28pID4gMCAmIHN1bShpZHMgJWluJSBhbHRlcnMpID4gMCkgew0KICAgICAgICAgIG5ldHNbaiwgd2hpY2goaWRzICVpbiUgZWdvKSwgd2hpY2goaWRzICVpbiUgYWx0ZXJzKV0gPC0gMQ0KICAgICAgICB9DQogICAgICB9DQogICAgfQ0KICB9DQogIA0KICBpZiAodHlwZSA9PSAiYWxsIikgew0KICAgIGZvciAoaiBpbiAxOm53YXZlcykgew0KICAgICAgZGZfd29ya3NfdyA8LSBkZl93b3Jrc1tkZl93b3JrcyR3b3Jrc195ZWFyID49IHdhdmVzW1tqXV1bMV0gJiBkZl93b3JrcyR3b3Jrc195ZWFyIDw9IHdhdmVzW1tqXV1bMl0sDQogICAgICBdDQogICAgICBmb3IgKGkgaW4gMTpucm93KGRmX3dvcmtzX3cpKSB7DQogICAgICAgIGVnb3MgPC0gZGZfd29ya3NfdyR3b3Jrc19hdXRob3JbaV1bWzFdXSRhdV9pZA0KICAgICAgICBpZiAoc3VtKGlkcyAlaW4lIGVnb3MpID4gMCkgew0KICAgICAgICAgIG5ldHNbaiwgd2hpY2goaWRzICVpbiUgZWdvcyksIHdoaWNoKGlkcyAlaW4lIGVnb3MpXSA8LSAxDQogICAgICAgIH0NCiAgICAgIH0NCiAgICB9DQogIH0NCiAgb3V0cHV0IDwtIGxpc3QoKQ0KICBvdXRwdXQkZGF0YSA8LSBzY2hvbGFyc19zZWwNCiAgb3V0cHV0JG5ldHMgPC0gbmV0cw0KICByZXR1cm4ob3V0cHV0KQ0KfQ0KYGBgDQoNCiMjIFBhY2thZ2VzDQpgYGB7cn0NCnBhY2thZ2VzID0gYygiUlNpZW5hIiwgIlJzaWVuYVR3b1N0ZXAiLCAiaWdyYXBoIiwgInRpZHl2ZXJzZSIsICJmb3JlYWNoIiwgIml0ZXJhdG9ycyIsICJkb1BhcmFsbGVsIikNCiMgZnBhY2thZ2UuY2hlY2socGFja2FnZXMpDQojICMgZGV2dG9vbHM6Omluc3RhbGxfZ2l0aHViKCdKb2NoZW1Ub2xzbWEvUnNpZW5hVHdvU3RlcCcsIGJ1aWxkX3ZpZ25ldHRlcz1UUlVFKQ0KIyBwYWNrYWdlcyA9IGMoIlJzaWVuYVR3b1N0ZXAiKQ0KZnBhY2thZ2UuY2hlY2socGFja2FnZXMpDQpgYGANCg0KYGBge3J9DQojIExvYWQgRWdvIGRhdGENCmxvYWQoImRhdGEvcHJvY2Vzc2VkL1JVX1VVX2Vnby5SRGF0YSIpDQoNCiMgTG9hZCBXb3JrcyBkYXRhDQpsb2FkKCJkYXRhL3Byb2Nlc3NlZC9SVV9VVV93b3Jrcy5SRGF0YSIpDQoNCiMgTG9hZCByYXcgZGF0YSBmb3IgbmV0d29ya3MNCmxvYWQoImRhdGEvcHJvY2Vzc2VkL3NvY19kYXRhX3Jhdy5SRGF0YSIpDQpgYGANCg0KIyMgU3RlcCAxDQpgYGB7cn0NCmRpbShzb2NfZGF0YSRuZXRzKQ0KDQp3YXZlXzEgPC0gc29jX2RhdGEkbmV0c1sxLCxdDQpkaWFnKHdhdmVfMSkgPC0gMA0KDQp3YXZlXzIgPC0gc29jX2RhdGEkbmV0c1syLCxdDQpkaWFnKHdhdmVfMikgPC0gMA0KDQpuZXRfc29jX2FycmF5IDwtIGFycmF5KGRhdGEgPSBjKHdhdmVfMSwgd2F2ZV8yKSwgZGltID0gYyhkaW0od2F2ZV8xKSwgMikpDQpkaW0obmV0X3NvY19hcnJheSkNCg0KDQojLS0tLSBEZXBlbmRlbnQgLS0tLQ0KbmV0IDwtIHNpZW5hRGVwZW5kZW50KG5ldF9zb2NfYXJyYXkpDQoNCiMtLS0tIEluZGVwZW5kZW50IC0tLS0NCiMgZ2VuZGVyIDwtIGRmX2VnbyRwZXJjX2ZlbWFsZQ0KDQojIGdlbmRlciA8LSBjb0NvdmFyKGdlbmRlcikNCg0KIy0tLS0gTWFrZSBTaWVuYSBkZiAtLS0tDQpteWRhdGEgPC0gc2llbmFEYXRhQ3JlYXRlKG5ldCkjLCBnZW5kZXIpDQpgYGANCg0KIyMgU3RlcCAyDQpgYGB7cn0NCm15ZWZmIDwtIGdldEVmZmVjdHMobXlkYXRhKQ0KcHJpbnQwMVJlcG9ydChteWRhdGEsIG1vZGVsbmFtZSA9ICIuL3Jlc3VsdHMvc29jX2luaXRfR09GIikNCg0KIyB0c19keWFkc19ldm8oc2ltcyA9IHdhdmVfMiwgbmV0MSA9IHdhdmVfMSwgZm9ycGxvdCA9IFRSVUUpDQojIHRzX3RyaWFkc19ldm8oc2ltcyA9IHdhdmVfMiwgbmV0MSA9IHdhdmVfMSwgZm9ycGxvdCA9IFRSVUUpDQoNCmBgYA0KIyMgU3RlcCAzDQpgYGB7cn0NCiMgbXllZmYgPC0gaW5jbHVkZUVmZmVjdHMobXllZmYsIGlzb2xhdGVOZXQsIGluUG9wLCBvdXRBY3QpDQpgYGANCmBgYHtyfQ0KIyBteWVmZiA8LSBpbmNsdWRlRWZmZWN0cyhteWVmZiwgc2FtZVgsIGVnb1gsIGFsdFgsIGludGVyYWN0aW9uMSA9ICJnZW5kZXIiKQ0KYGBgDQojIyBTdGVwIDQNCmBgYHtyfQ0KbXlBbGdvcml0aG0gPC0gc2llbmFBbGdvcml0aG1DcmVhdGUocHJvam5hbWUgPSAiLi9yZXN1bHRzL3NvY19pbml0X0dPRiIpDQphbnNNMSA8LSBzaWVuYTA3KG15QWxnb3JpdGhtLCBkYXRhID0gbXlkYXRhLCBlZmZlY3RzID0gbXllZmYsIHJldHVybkRlcHMgPSBUUlVFKQ0KYW5zTTENCiMgDQojICMgaWYgbmVjZXNzYXJ5IGVzdGltYXRlIGFnYWluISAgDQojIGFuc00xXzIgPC0gc2llbmEwNyhteUFsZ29yaXRobSwgZGF0YSA9IG15ZGF0YSwgZWZmZWN0cyA9IG15ZWZmLCBwcmV2QW5zID0gYW5zTTEsIHJldHVybkRlcHM9VFJVRSkNCiMgYW5zTTFfMg0KYGBgDQpgYGB7cn0NCkdPRiA8LSBzaWVuYUdPRihhbnNNMSwgSW5kZWdyZWVEaXN0cmlidXRpb24sIHZlcmJvc2UgPSBGQUxTRSwgam9pbiA9IFRSVUUsIHZhck5hbWUgPSAibmV0IikNCg0KcGxvdChHT0YsIG1haW4gPSAiIikNCmBgYA0KDQoNCg0K</div>
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeSourceEmbed("Week6.Rmd");
+  window.initializeCodeFolding("show" === "show");
+});
+</script>
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

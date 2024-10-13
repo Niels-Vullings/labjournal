@@ -1,12 +1,12 @@
 							************************
-									 ./results/soc_init_test.txt
+									 ./results/soc_init_GOF.txt
 							************************
 
-Filename is ./results/soc_init_test.txt.
+Filename is ./results/soc_init_GOF.txt.
 
-This file contains primary output for SIENA project <<./results/soc_init_test>>.
+This file contains primary output for SIENA project <<./results/soc_init_GOF>>.
 
-Date and time: 09/10/2024 11:56:44 
+Date and time: 10/10/2024 16:55:47 
 
 RSiena version 1.4.7 (20 02 2024)
 
@@ -21,7 +21,7 @@ Data input.
 0 dependent bipartite variables,
 0 dependent discrete behavior variables,
 0 dependent continuous behavior variables,
-1 constant actor covariates,
+0 constant actor covariates,
 0 exogenous changing actor covariates,
 0 constant dyadic covariates,
 0 exogenous changing dyadic covariates,
@@ -93,32 +93,9 @@ No missing data for observation 2.
 
 
 
-@2
-Reading constant actor covariates.
-----------------------------------
-
-1 variable, named:
-gender          
-
-A total of 1 non-changing individual covariate.
-
-Number of missing cases:
-gender          1 	( 1.0 %)
-
-Information about covariates:
-              minimum  maximum	  mean  centered 
-gender          0.0     1.0      0.458    Y 
-The mean value is subtracted from the centered covariate.
-
-
 
 The mean structural dissimilarity value subtracted in the
 balance calculations is         0.0123.
-
-For the similarity variable calculated from each actor covariate,
-the mean is subtracted.
-These means are:
-Similarity gender                   :       0.4995 
 
 
 
@@ -158,4 +135,101 @@ Standard values for initial parameter values
 basic rate parameter net                3.0522 
 outdegree (density)                               -1.7032 
 
-Initialisation of project <<./results/soc_init_test>> executed succesfully.
+Initialisation of project <<./results/soc_init_GOF>> executed succesfully.
+
+
+-----------------------------------
+New Analysis started.
+Date and time: 10/10/2024 16:55:48
+New results follow.
+-----------------------------------
+
+RSiena version 1.4.7 (20 feb 24)
+
+
+@1
+Estimation by stochastic approximation algorithm.
+=================================================
+
+Random initialization of random number stream.
+Current random number seed is 301979.
+Effects object used: myeff 
+Model Type:
+ Standard actor-oriented model 
+Estimation method: conditional moment estimation.
+Conditioning variable is the total number of observed changes ("distance") 
+in the network variable.
+Distance for simulations is  151 .
+Standard errors are estimated with the likelihood ratio method.
+Dolby method (regression on scores) is used.
+Initial value of gain parameter is  0.2000000.
+Reduction factor for gain parameter is  0.5000000.
+Number of subphases in Phase 2 is 4.
+
+Initial parameter values are 
+  0. Rate parameter                           3.0522
+  1. eval:  outdegree (density)                            -1.7032
+  2. eval:  reciprocity                                     0.0000
+
+
+Values of target statistics are
+  1. Number of ties                                                     138.0000
+  2. Number of reciprocated ties                                         32.0000
+These were calculated from the data.
+
+ 2 parameters, 2 statistics
+
+Estimation of derivatives by the LR method (type 1).
+
+
+@2
+End of stochastic approximation algorithm, phase 3.
+---------------------------------------------------
+
+Total of 2265 iterations.
+Parameter estimates based on 1265 iterations,
+basic rate parameter as well as 
+convergence diagnostics, covariance and derivative matrices based on 1000 iterations.
+
+Information for convergence diagnosis.
+Averages, standard deviations, and t-ratios for deviations from targets:
+  1.  -0.2180   8.1579  -0.0267 
+  2.  -0.2900   6.9829  -0.0415 
+
+Good convergence is indicated by the t-ratios being close to zero.
+
+Overall maximum convergence ratio =  0.0426 .
+
+
+
+@2
+Estimation Results.
+-------------------
+
+Regular end of estimation algorithm.
+Total of 2265 iteration steps.
+
+
+@3
+Estimates and standard errors
+                             
+Rate parameters:
+ 0. Rate parameter                             3.826  (   0.5801)
+
+Other parameters:
+ 1. eval:  outdegree (density)                                    -2.4463  (   0.0922)
+ 2. eval:  reciprocity                                             2.2353  (   0.2544)
+
+
+@3
+Covariance matrices
+                   
+Covariance matrix of estimates (correlations below diagonal):
+     0.009     -0.006
+    -0.272      0.065
+
+Derivative matrix of expected statistics X by parameters and
+covariance/correlation matrix of X can be found using
+summary(ans) within R, or by using the 'verbose' option in Siena07.
+ 
+Total computation time 8.36 seconds.

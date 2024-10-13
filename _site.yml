@@ -12,6 +12,8 @@ navbar:
       href: index.html
     - text: "Journal"
       menu:
+      - text: "Buddy's first markdown file"
+        href: cheat_sheet.html
       - text: "Week 1"
         href: Week1.html
       - text: "Week 2"
@@ -26,21 +28,26 @@ navbar:
             href: Week5.html
           - text: "RSiena"
             href: Week5_RSiena.html
+      - text: "Week 6"
+        href: Week6.html
     - text: "Data Preparation"
       menu:
       - text: "Data Exploration"
         href: Data_exploration.html
       - text: "Data Manipulation"
-        href: Data_preparation.html
+        menu: 
+          - text: "Data Prep (Old)"
+            href: Data_preparation.html
+          - text: "Data Prep (New)"
+            href: Data_preparation_2.html
     - text: "Paper"
       menu:
       - text: "Introduction"
-        href: Introduction.html
+        href: Introduction2.html
       - text: "Theory"
-        href:
+        href: Theory.html
       - text: "Data"
         href: Data.html
-
         
         
         # here, other .Rmds can be added

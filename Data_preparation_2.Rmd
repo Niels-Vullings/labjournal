@@ -11,6 +11,7 @@ body {
 text-align: justify}
 </style>
 ```
+
 ```{r, globalsettings, echo=FALSE, warning=FALSE, results='hide'}
 library(knitr)
 
@@ -33,44 +34,59 @@ Last compiled on `r format(Sys.time(), '%B, %Y')`
 
 ------------------------------------------------------------------------
 
-# Set up
-
-```{r, eval = FALSE}
+# Functions
+```{r}
 rm(list = ls())
-
-# Libraries
-library(data.table)  # mainly for faster data handling
-library(tidyverse)  # I assume you already installed this one!
-# install.packages('httr') # we don't need this for now require(httr)
-# install.packages("xml2")
-library(xml2)
-# install.packages("rvest")
-library(rvest)
-
 ```
 
-## Functions
-
-```{r, eval = FALSE}
+## UDF
+```{r}
 colorize <- function(x, color) {sprintf("<span style='color: %s;'>%s</span>", color, x) }
 
-fsave <- function(x, file, location = "./data/processed/", ...) {
-  if (!dir.exists(location))
-    dir.create(location)
-  datename <- substr(gsub("[:-]", "", Sys.time()), 1, 8)
-  totalname <- paste(location, datename, file, sep = "")
-  print(paste("SAVED: ", totalname, sep = ""))
-  save(x, file = totalname)
+fpackage.check <- function(packages) {
+  lapply(packages, FUN = function(x) {
+    if (!require(x, character.only = TRUE)) {
+      install.packages(x, dependencies = TRUE)
+      library(x, character.only = TRUE)
+    }
+  })
 }
-```
 
-# Load data
+fsave <- function(x, file = NULL, location = "./data/processed/") {
+  ifelse(!dir.exists("data"), dir.create("data"), FALSE)
+  ifelse(!dir.exists("data/processed"), dir.create("data/processed"), FALSE)
+  if (is.null(file))
+    file = deparse(substitute(x))
+  datename <- substr(gsub("[:-]", "", Sys.time()), 1, 8)
+  totalname <- paste(location, datename, file, ".rda", sep = "")
+  save(x, file = totalname)  #need to fix if file is reloaded as input name, not as x. 
+}
 
-```{r, eval = FALSE}
-load("data/scholars_20240924.rda")
-scholars <- x
-rm(x)
+fload <- function(filename) {
+  load(filename)
+  get(ls()[ls() != "filename"])
+}
 
+fshowdf <- function(x, ...) {
+  knitr::kable(x, digits = 2, "html", ...) %>%
+    kableExtra::kable_styling(bootstrap_options = c("striped", "hover")) %>%
+    kableExtra::scroll_box(width = "100%", height = "300px")
+}
+
+#---- String Stripper ----
+str_strip <- function(input = "THIs StrïnG is ÑorMälìZed"){
+  
+  
+  string <- tolower(input)
+  string <- iconv(string, from = 'UTF-8', to = 'ASCII//TRANSLIT')
+  string <- sub(".* ", "", string)
+  
+  # string <- gsub("[[:punct:]]", " ", string)
+  
+  return(string)
+}
+
+# str_strip(df_ego$Naam)
 ```
 
 ## User function for Network data creation
@@ -89,7 +105,7 @@ Output: a list
 
 -   \$data: sample of data (scholars)
 
-```{r, eval = FALSE}
+```{r}
 fcolnet <- function(data = scholars, university = "RU", discipline = "sociology", waves = list(c(2015,
                                                                                                  2018), c(2019, 2023)), type = c("first")) {
   
@@ -168,6 +184,20 @@ fcolnet <- function(data = scholars, university = "RU", discipline = "sociology"
   output$nets <- nets
   return(output)
 }
+
+```
+
+# Set up
+```{r}
+
+packages <- c("data.table", "tidyverse", "xml2", "rvest")
+fpackage.check(packages)
+```
+
+# Load data
+```{r}
+scholars <- fload("data/scholars_20240924.rda")
+
 ```
 
 # Data Manipulation
@@ -176,7 +206,7 @@ fcolnet <- function(data = scholars, university = "RU", discipline = "sociology"
 
 I want to study the Sociology departments
 
-```{r, eval = FALSE}
+```{r}
 
 soc_data <- fcolnet(data = scholars, 
                     university = c("RU", "UU"), 
@@ -185,21 +215,19 @@ soc_data <- fcolnet(data = scholars,
                     type = c("first"))
 
 
-df <- soc_data$data
-df_ego <- do.call(rbind.data.frame, df$demographics)
+df_ego <- do.call(rbind.data.frame, soc_data$data$demographics)
 
 
 # soc_data$nets[2,,] # How to call a specific network
 
 ```
 
-## Create the gender variable
+## Gender
 
 In order to get use scrape first names, we first need to have the first names of all authors in our network
 
 ### Screwing around with strings
-
-```{r, eval = FALSE}
+```{r}
 vect <- c("Now this string is not split", "It is a nice Picture", "Is it ready", "Split Screen")
 
 vect
@@ -215,8 +243,7 @@ testje
 ```
 
 ### Extract first names
-
-```{r, eval = FALSE}
+```{r}
 
 x <- data.frame(Naam = df_ego$Naam)
 
@@ -233,7 +260,7 @@ head(df_names)
 
 The function gender_scraper uses HTML-scraping with rvest to extract first names from a string with one's full name. Input can be any dataframe that contains names, but this one is specifically made to be compatible with the '*fcolnet*' function by Jochem Tolsma. The function first extracts the first element of a string and saves it in variable first_name. I then loop over every first name in the dataframe, with each first name serving as new input for the "voornamenbank" <https://nvb.meertens.knaw.nl/>. If the name is in the database, the function will extract the occurences of the name by gender. If the name is not in the database, the function will return a NA value for the gender of that respondent. The final step is creating a scaled (0/1) variable '[*perc_female*]{.underline}', which represents the likelihood that a name corresponds with the female gender (1 = 100% female, 0 = 100% male).
 
-```{r, eval = FALSE}
+```{r}
 # df_names <- df_names[1:5,] # take first elements to try out
 
 i <- 1
@@ -301,20 +328,19 @@ df_ego <- gender_scraper.NV(names = df_ego, web_page = "https://nvb.meertens.kna
 
 ### Check results
 
-```{r, eval = FALSE}
+```{r}
 check <- df_ego %>% count(perc_female)
 
 plot(check$perc_female, check$n)
 ```
 
 ## Journal Rankings
-
 ### Extract works and check journals
 
-```{r, eval = FALSE}
+```{r}
 
-df_works <- do.call(rbind.data.frame, df$works) # put works in dataframe
-head(df_works)
+df_works <- do.call(rbind.data.frame, soc_data$data$works) # put works in dataframe
+# head(df_works)
 
 # test1 <- df_works %>% select(id, so, issn_l, author) # test the works
 
@@ -322,15 +348,15 @@ head(df_works)
 
 ### Load journal ranking data
 
-```{r, eval = FALSE}
+```{r}
 dat <- read_csv2("data/scimagojr_23_journals_all.csv")
-head(dat)
+# head(dat)
 
 ```
 
 ### Split the ISSN codes if 2 are available
 
-```{r, eval = FALSE}
+```{r}
 dat$Issn_1 <- sapply(strsplit(dat$Issn, ", "), `[`, 1) # This code should work as a way to split the two issn codes
 dat$Issn_2 <- sapply(strsplit(dat$Issn, ", "), `[`, 2)
 
@@ -346,70 +372,112 @@ df_pres <- dat %>% select(Rank, Title, Issn_1, Issn_2, SJR, `SJR Best Quartile`,
 
 ### check compatability
 
-```{r, eval = FALSE}
+```{r}
 
-df_works %>% select(issn_l)
-df_pres %>% select(Issn_1, Issn_2)
+# df_works %>% select(issn_l)
+# df_pres %>% select(Issn_1, Issn_2)
 df_works$check <- ifelse(df_works$issn_l %in% df_pres$Issn_1 | df_works$issn_l %in% df_pres$Issn_2, 1,0)
 
 mis_journal <- df_works %>% filter(check == 0)
 
-as.data.frame(unique(mis_journal$so)) # Still left with 166 missing journals
+# as.data.frame(unique(mis_journal$so)) # Still left with 166 missing journals
 
 ```
 
 ### Create ID variable
 
-```{r, eval = FALSE}
+```{r}
 df_pres <- df_pres %>% mutate(issn_l = case_when(Issn_1 %in% df_works$issn_l == TRUE ~ Issn_1,
                                                  Issn_2 %in% df_works$issn_l == TRUE ~ Issn_2,
                                                  .default = NA)) %>% filter(!is.na(issn_l))
+```
+
+### Looping algorithm logic
+The idea is to loop over every item in the list 'works', so that we can merge a journal ranking based on if someone in our target dataset has published the article
+
+```{r}
+list_works <- soc_data$data$works
+
+df_ego$Q1.W1 <- 0
+df_ego$Q1.W2 <- 0
+
+for (i in 1:length(list_works)){
+  
+  wave1s <- 2015
+  wave1e <- 2019
+  wave2s <- 2020
+  wave2e <- 2024
+  
+  works <- list_works[[i]]
+  
+  works <- works %>% left_join(df_pres, by = "issn_l", multiple = "all")
+  works$`SJR Best Quartile` <- ifelse(is.na(works$`SJR Best Quartile`), "No Rank", works$`SJR Best Quartile`)
+  
+  au <- works %>% unnest(author) %>% 
+    mutate(check_id = au_id %in% df_ego$au_id) %>% 
+    mutate(check_nam = str_strip(au_display_name) %in% str_strip(df_ego$Naam)) %>% 
+    filter(check_id == TRUE & check_nam == TRUE)
+  
+  works <- works %>% mutate(waves = case_when(publication_year >= wave1s & publication_year <= wave1e ~ "Wave 1",
+                                              publication_year >= wave2s & publication_year <= wave2e ~ "Wave 2",
+                                              .default = "NA")) %>% filter(waves != "NA")
+  if(nrow(works) == 0){
+    
+    next
+    
+  } else {
+    
+    for(x in 1:nrow(works)){
+      
+      if(works$waves[x] == "Wave 1"){
+        
+        if(works$`SJR Best Quartile`[x] == "Q1"){
+          
+          naam <- works$author[[x]]$au_display_name
+          df_ego[str_strip(df_ego$Naam) %in% str_strip(naam),]$Q1.W1 <- df_ego[str_strip(df_ego$Naam) %in% str_strip(naam),]$Q1.W1 + 1
+          
+        }
+      } else{
+        
+        if(works$`SJR Best Quartile`[x] == "Q1"){
+          
+          naam <- works$author[[x]]$au_display_name
+          df_ego[str_strip(df_ego$Naam) %in% str_strip(naam),]$Q1.W2 <- df_ego[str_strip(df_ego$Naam) %in% str_strip(naam),]$Q1.W2 + 1
+          
+        }
+      }    
+      
+    }
+    
+    
+    
+  }
+  
+}
 
 ```
 
-### Join prestige measures and works together
 
-```{r, eval = FALSE}
-# ?left_join()
-df_works <- df_works %>% left_join(df_pres, by = "issn_l", multiple = "all")
-
-df_works$`SJR Best Quartile` <- ifelse(is.na(df_works$`SJR Best Quartile`) | df_works$`SJR Best Quartile` == "-", "Q4", df_works$`SJR Best Quartile`)
-# df_works %>% count(`SJR Best Quartile`)
-
-
-df_works_unnest <- df_works %>% group_by(id) %>% 
-  unnest(author)
-
-df_prestige <- df_works_unnest %>% 
-  select(id:author_position,
-         so:publication_year,
-         check:`%Female`) %>% mutate(rel_au = case_when(au_id %in% df_ego$au_id ~ TRUE,
-                                                        .default = FALSE))
-  
-df_prestige %>% count(rel_au)
-
-
-df_prestige2 <- df_works_unnest %>% 
-  select(id:author_position,
-         so:publication_year,
-         check:`%Female`) %>% mutate(rel_au = case_when(au_display_name %in% df_ego$Naam ~ TRUE,
-                                                        .default = FALSE))
-  
-
-  
+## Author H-index
+## Ethnicity
+This data was very graciously "borrowed" from Hannah Groennou, who scraped data on country of origin and skin color for multiple universities. 
+```{r}
+# ethnicity <- readr::read_csv("data/subset_gender.csv") %>% 
+#   select(au_id, born_in, white_or_not) %>% 
+#   rename(Country_origin = born_in,
+#          Ethnicity_vis = white_or_not)
 # 
-# df_prestige %>% group_by(au_display_name) %>% count(`SJR Best Quartile`) %>% pivot_wider(names_from = `SJR Best Quartile`,
-#                                                                                          values_from = n)
+# check <- df_ego %>% left_join(ethnicity, by = "au_id")
 
 ```
+```{r}
+# check %>% count(Country_origin)
+```
 
-### TBD
-
--   Make a variable that
 
 # Save datasets
 
-```{r, eval = FALSE}
+```{r}
 # Save the raw sociology data for RU and UU
 save(soc_data, file = "data/processed/soc_data_raw.RData")
 
@@ -417,15 +485,8 @@ save(soc_data, file = "data/processed/soc_data_raw.RData")
 save(df_ego, file = "data/processed/RU_UU_ego.RData")
 
 # Save the works for RU and UU sociologists
-save(df_works, file = "data/processed/RU_UU_works.RData")
+# save(df_works, file = "data/processed/RU_UU_works.RData")
 
-
-```
-
-```{r, eval = FALSE}
-# net_w2 <- igraph::graph_from_adjacency_matrix(soc_data$nets[2,,], #now, I take the second wave
-#                                               mode = c("directed"),
-#                                               weighted = NULL,diag = FALSE,add.colnames = NULL)
 
 ```
 

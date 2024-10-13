@@ -8,10 +8,16 @@ bibliography: references.bib
 ```{=html}
 <style>
 body {
-text-align: justify}
+  text-align: justify;
+  font-family: Times;
+}
+
+h1, .h1, h2, .h2, h3, .h3 {
+  margin-top: 24px;
+  font-family: Times;
+}
 </style>
 ```
-
 ```{r, globalsettings, echo=FALSE, warning=FALSE, results='hide'}
 library(knitr)
 
@@ -40,7 +46,7 @@ Last compiled on `r format(Sys.time(), '%B, %Y')`
 
 # Set up
 
-```{r}
+```{r, warning=FALSE}
 rm(list = ls())
 
 # Libraries
@@ -65,7 +71,19 @@ load("data/processed/RU_UU_works.RData")
 
 ------------------------------------------------------------------------
 
-# Data description
+# Data
+
+This study uses collaboration data of sociologists from the Radboud University and Utrecht University, which has been scraped from the internet. It is part of a larger data project aiming to create large scale social network data on the collaborations of Dutch university scholars in the field of Political Science and Sociology. The data collection process is threefold. First, all employees of Sociology and Political Science departments at all Dutch universities were collected, filing their names, university, department, position and Google Scholar id code. This data was collected for both 2022 and 2024. Second, the works of all these authors were scraped through OpenAlex, a nonprofit database on open science (ref.). Lastly, this raw data was subset to get the sample relevant for this study. I ended up with sample of 100 sociologists from Radboud University (n = 44, 39) and Utrecht University (n = 48, 44). More information about the process and source code can be found under the "Data Manipulation" folder on this website.\
+  Before I explain the creation of the networks, it is important to note that the initial data collection in 2022 and 2024 does not determine the waves. The waves are determined based on the parameters set by the researcher. For this study, I analysed publication between 2015 to 2019 (wave 1) and 2020 to 2024 (wave 2). The implication this has for the data as a whole will be elaborated on in the discussion. Based on these waves, collaboration networks were created by analysing whether or not two scholars in the sample have worked together on a publication in each given wave. These networks are directed, which means the first author who sends a tie to all coauthors. This means that an actor with many indegrees often coauthors with different people, while an actor with a lot of outdegrees looks for many others to collaborate with. I chose this network structure, because it ???
+
+## Covariates
+
+The main independent variable of this study is gender. As gender was not available in the OpenAlex data, I developed a webscraped that determines the extent to which a name is considered to be female. Using Rvest, I scrape the first name of each author in the dataset. This results in a score from 0 to 1, where 0 means there are no women in the Netherlands with that name, while 1 means there are no men with that name. This is a scale variable, meaning technically means that an author can be 80% female. This was done to add some variability to this measure, as this way of constructing gender is a matter of association rather than an actual measure of how someone identifies themselves.\
+  To measure academic prestige, I added two variables: the number of Q1 journals in each wave and an author's H-index. The number of Q1 journals is a varying covariate, which means it can change over time. The rank of each journal was taken from Scimago, a public repository for worldwide journal and institution rankings (ref). Their measure (SJR best quartile) is determined by the number of weighted citations of the works that were published in the journal in the last three years (ref.). This standardized measure ensures that larger journals do not skew the overall ranking. I then summed the number of Q1 publications for each author, regardless of their position on the paper. The author's H-index was scraped from OpenAlex by Lucan Bovens. It measures the prestige of an author, by calculating how many papers have been cited at least as many times as their total amount of publication and can be expressed as the following formula: $$H_{index} = \sum_{N_c=>N_p}^{n}x_n$$ (***I have no clue if this is correct or makes sense... HELP***). It will be used as a stable covariate, as the H-index does not significantly change over the waves.
+
+  To control for several
+
+# Descriptive Analysis
 
 ## Scholars per university
 
@@ -130,7 +148,9 @@ df_ego %>% group_by(Universiteit1.24, Functie.24) %>%
     -   Network statistics table (density, betweeness, transitivity etc.)
 
 ## Networks
+
 ### Make the graph object
+
 ```{r}
 
 #---- Wave 2 ----
@@ -156,7 +176,9 @@ graph_w2 <- igraph::graph_from_adjacency_matrix(
 ### Network Visualisations (Universities)
 
 #### Wave 1 {.tabset}
+
 ##### University Colours
+
 ```{r, fig.width = 8}
 
 #---- Wave 1 ----
@@ -175,6 +197,7 @@ legend("topleft", c("Radboud", "Utrecht University"), pch = c(21,21), col = "#77
 ```
 
 ##### Better contrast
+
 ```{r, fig.width = 8}
 
 #---- Wave 1 ----
@@ -193,7 +216,9 @@ legend("topleft", c("Radboud", "Utrecht University"), pch = c(21,21), col = "#77
 ```
 
 #### Wave 2 {.tabset}
+
 ##### University Colours
+
 ```{r, fig.width = 8}
 #---- Wave 2 ----
 set.seed(234544)
@@ -211,6 +236,7 @@ legend("topleft", c("Radboud", "Utrecht University"), pch = c(21,21), col = "#77
 ```
 
 ##### Better Contrast
+
 ```{r, fig.width = 8}
 #---- Wave 2 ----
 set.seed(234544)
@@ -228,6 +254,7 @@ legend("topleft", c("Radboud", "Utrecht University"), pch = c(21,21), col = "#77
 ```
 
 ### Network Visualisations (Gender)
+
 ```{r}
 # Make a plotable gender variable to fix problems with vertex.shape
 df_ego <- df_ego %>% mutate(plot_gen = case_when(perc_female >= 0.80 ~ "Female",
@@ -236,7 +263,9 @@ df_ego <- df_ego %>% mutate(plot_gen = case_when(perc_female >= 0.80 ~ "Female",
 ```
 
 #### Wave 1 {.tabset}
+
 ##### University Colours
+
 ```{r, fig.width = 8}
 
 #---- Wave 1 ----
@@ -256,6 +285,7 @@ legend("topleft", c("Radboud", "Utrecht University", "Male", "Female"), pch = c(
 ```
 
 ##### Better Contrast
+
 ```{r, fig.width = 8}
 
 #---- Wave 1 ----
@@ -275,7 +305,9 @@ legend("topleft", c("Radboud", "Utrecht University", "Male", "Female"), pch = c(
 ```
 
 #### Wave 2 {.tabset}
+
 ##### University Colours
+
 ```{r, fig.width = 8}
 #---- Wave 2 ----
 set.seed(234544)
@@ -295,6 +327,7 @@ legend("topleft", c("Radboud", "Utrecht University", "Male", "Female"), pch = c(
 ```
 
 ##### Better Contrast
+
 ```{r, fig.width = 8}
 #---- Wave 2 ----
 set.seed(234544)
@@ -315,5 +348,4 @@ legend("topleft", c("Radboud", "Utrecht University", "Male", "Female"), pch = c(
 
 <br>
 
----------------------------------------------------------------------------------------------------- 
-
+------------------------------------------------------------------------

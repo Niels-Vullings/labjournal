@@ -54,6 +54,120 @@
 
 
 
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    background-color: #ffffff;
+    color: #a0a0a0;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #a0a0a0;  padding-left: 4px; }
+div.sourceCode
+  { color: #1f1c1b; background-color: #ffffff; }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span { color: #1f1c1b; } /* Normal */
+code span.al { color: #bf0303; background-color: #f7e6e6; font-weight: bold; } /* Alert */
+code span.an { color: #ca60ca; } /* Annotation */
+code span.at { color: #0057ae; } /* Attribute */
+code span.bn { color: #b08000; } /* BaseN */
+code span.bu { color: #644a9b; font-weight: bold; } /* BuiltIn */
+code span.cf { color: #1f1c1b; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #924c9d; } /* Char */
+code span.cn { color: #aa5500; } /* Constant */
+code span.co { color: #898887; } /* Comment */
+code span.cv { color: #0095ff; } /* CommentVar */
+code span.do { color: #607880; } /* Documentation */
+code span.dt { color: #0057ae; } /* DataType */
+code span.dv { color: #b08000; } /* DecVal */
+code span.er { color: #bf0303; text-decoration: underline; } /* Error */
+code span.ex { color: #0095ff; font-weight: bold; } /* Extension */
+code span.fl { color: #b08000; } /* Float */
+code span.fu { color: #644a9b; } /* Function */
+code span.im { color: #ff5500; } /* Import */
+code span.in { color: #b08000; } /* Information */
+code span.kw { color: #1f1c1b; font-weight: bold; } /* Keyword */
+code span.op { color: #1f1c1b; } /* Operator */
+code span.ot { color: #006e28; } /* Other */
+code span.pp { color: #006e28; } /* Preprocessor */
+code span.re { color: #0057ae; background-color: #e0e9f8; } /* RegionMarker */
+code span.sc { color: #3daee9; } /* SpecialChar */
+code span.ss { color: #ff5500; } /* SpecialString */
+code span.st { color: #bf0303; } /* String */
+code span.va { color: #0057ae; } /* Variable */
+code span.vs { color: #bf0303; } /* VerbatimString */
+code span.wa { color: #bf0303; } /* Warning */
+
+.sourceCode .row {
+  width: 100%;
+}
+.sourceCode {
+  overflow-x: auto;
+}
+.code-folding-btn {
+  margin-right: -30px;
+}
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
 
 
 <style type="text/css">
@@ -62,29 +176,6 @@
 }
 </style>
 
-<style type="text/css">
-/* for pandoc --citeproc since 2.11 */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-  margin-bottom: 0em;
-}
-.hanging div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}
-</style>
 
 <link rel="stylesheet" href="tweaks.css" type="text/css" />
 
@@ -465,109 +556,53 @@ div.tocify {
 </div>
 
 
-<style>
-body {
-text-align: justify}
-</style>
+<div id="html-text-stuff" class="section level1" number="1">
+<h1><span class="header-section-number">1</span> Html text stuff</h1>
+<div id="justify-my-text-files" class="section level2" number="1.1">
+<h2><span class="header-section-number">1.1</span> Justify my text
+files</h2>
+<p>Who doesn’t want their text files to be justified!</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="co"># ```{=html}</span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="co"># &lt;style&gt;</span></span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="co"># body {</span></span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="co"># text-align: justify}</span></span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="co"># &lt;/style&gt;</span></span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a><span class="co"># ```</span></span></code></pre></div>
+</div>
+<div id="tabs-galore" class="section level2" number="1.2">
+<h2><span class="header-section-number">1.2</span> Tabs galore</h2>
+<p>For when the start of a paragraph just needs a little nudge</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="co"># &amp;nbsp; # Wow it is a single space</span></span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="co"># &amp;ensp; # My god there are two</span></span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a><span class="co"># &amp;emsp; # Here we have 4 a.k.a a tab</span></span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a><span class="co"># &amp;nbsp; *4 # apparently does something different than emsp</span></span></code></pre></div>
+</div>
+<div id="writing-texts" class="section level2" number="1.3">
+<h2><span class="header-section-number">1.3</span> Writing texts</h2>
+<p>Use Visual mode instead of source mode (ctrl + shift + F4 | just
+click it in the visual button below the save button)</p>
+</div>
+</div>
+<div id="basic-knitting-stuff" class="section level1" number="2">
+<h1><span class="header-section-number">2</span> Basic knitting
+stuff</h1>
+</div>
+<div id="klippy-code-to-copy-code-chunks" class="section level1"
+number="3">
+<h1><span class="header-section-number">3</span> Klippy code to copy
+code chunks</h1>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>klippy<span class="sc">::</span><span class="fu">klippy</span>(<span class="at">position =</span> <span class="fu">c</span>(<span class="st">&quot;top&quot;</span>, <span class="st">&quot;right&quot;</span>))</span></code></pre></div>
 <script>
   addClassKlippyTo("pre.r, pre.markdown");
   addKlippy('right', 'top', 'auto', '1', 'Copy code', 'Copied!');
 </script>
-<p>Last compiled on oktober, 2024</p>
-<p><br></p>
-<hr />
-<div id="introduction" class="section level2" number="0.1">
-<h2><span class="header-section-number">0.1</span> Introduction</h2>
-<p>Inequalities are omnipresent in society and this does not exclude the
-academic world. Be it conscious or subconscious, our actions are in part
-shaped by bias and stereotypes (author, year). One of the most dividing
-lines in the 21st century is that of gender. In a study that looked at
-the impact that networks have on gender differences in coauthorship, it
-was found that representation of women matters in relation to their
-network access <span class="citation">(McDowell, Singell, and Stater
-2006)</span>. The study looked at how male and female economist PhD’s
-have access in their networks for publications and co-authorship. They
-find that over time, women are less likely to coauthor and publish
-articles compared to men. However, they also find that this probability
-does dwindle by 1993. When other forms of gender differences are
-included, women are less likely to be “successful” in academics. Even
-within the social sciences, men and women do not receive the same
-treatment and grants, publications and upper academic positions are
-unequally distributed <span class="citation">(Bellotti et al.
-2022)</span>. This concept of academic inequality has been called the
-<em>Matilda effect</em>, named after the <em>Matthew effect</em>, named
-by Robert Merton. Bellotti et al. (2022) studied the composition of male
-and female collaboration networks in Italy. They find persisting
-inequalities between men and women in terms of research funding and
-collaboration across all academic disciplines. They argue that their
-findings are generalisable to fields where collaboration is key to
-success.<br />
-  From a scientific standpoint, very little studies within the
-collaboration literature have focused on clustering in terms of social
-inequalities. <span class="citation">(Long, Cunningham, and Braithwaite
-2013)</span> wrote a systematic review on brokers in collaborative
-networks and how this influence the spread of information. Their
-conclusion is that while brokers, bridges and boundary spanners do play
-a critical role in spreading information throughout networks,
-information will spread more efficiently when networks are more close
-knit. However, this paper and thus the articles it has reviewed, pay
-little attention to who these brokers are. In organisational science,
-organisations are assumed to be egalitarian and thus social inequalities
-are deemed non existent. This study will drop this assumption in order
-to see whether gender inequalities play a role in the collaborative
-networks of academics. Specifically, this article will study how
-coauthorship networks of Dutch Sociologists are clustered in terms of
-gender.<br />
-  Secondly, this article will look at how this gender clustering in
-coauthorship networks influences the prestige or success of female
-scholars. Previous studies pointed out that not all research is valued
-equally and that gender is still an indicator of this inequality <span
-class="citation">(Bellotti et al. 2022; Bozeman and Gaughan
-2011)</span>. By studying this inequality through a social network
-perspective, this study will help us to see how male and female scholars
-relate to each other and how there preferences influence the likelihood
-of publishing together (or not), and will give insights into the
-patterns of gaining academic prestige (or not). This leads to the
-following research question:</p>
-<ul>
-<li><p>RQ 1: How are publication networks of scholars in Sociology
-departments clustered in terms of gender?</p></li>
-<li><p>RQ 2: To what extent does gender clustering of publication
-networks influence the prestige/success of female scholars?</p></li>
-</ul>
-<p><br></p>
-<hr />
-<div id="refs" class="references csl-bib-body hanging-indent"
-entry-spacing="0">
-<div id="ref-bellotti2022" class="csl-entry">
-Bellotti, E., D. Czerniawska, M. G. Everett, and Luigi Guadalupi. 2022.
-<span>“Gender Inequalities in Research Funding: Unequal Network
-Configurations, or Unequal Network Returns?”</span> <em>Social
-Networks</em> 70 (July): 138–51. <a
-href="https://doi.org/10.1016/j.socnet.2021.12.007">https://doi.org/10.1016/j.socnet.2021.12.007</a>.
-</div>
-<div id="ref-bozeman2011men" class="csl-entry">
-Bozeman, Barry, and Monica Gaughan. 2011. <span>“How Do Men and Women
-Differ in Research Collaborations? An Analysis of the Collaborative
-Motives and Strategies of Academic Researchers.”</span> <em>Research
-Policy</em> 40 (10): 1393–1402.
-</div>
-<div id="ref-long2013bridges" class="csl-entry">
-Long, Janet C, Frances C Cunningham, and Jeffrey Braithwaite. 2013.
-<span>“Bridges, Brokers and Boundary Spanners in Collaborative Networks:
-A Systematic Review.”</span> <em>BMC Health Services Research</em> 13:
-1–13.
-</div>
-<div id="ref-mcdowell2006a" class="csl-entry">
-McDowell, John M., Larry D. Singell, and Mark Stater. 2006. <span>“Two
-to Tango? Gender Differences in the Decision to Publish and
-Coauthor.”</span> <em>Economic Inquiry</em> 44 (1): 153–68. <a
-href="https://doi.org/10.1093/ei/cbi065">https://doi.org/10.1093/ei/cbi065</a>.
-</div>
-</div>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="co"># klippy::klippy(color = &#39;darkgreen&#39;) klippy::klippy(tooltip_message = &#39;Click to copy&#39;,</span></span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="co"># tooltip_success = &#39;Done&#39;)</span></span></code></pre></div>
 </div>
 
-<div id="rmd-source-code">LS0tDQp0aXRsZTogIkludHJvZHVjdGlvbiAoZHJhZnQpIg0KI2JpYmxpb2dyYXBoeTogcmVmZXJlbmNlcy5iaWINCmF1dGhvcjogIk5pZWxzIFZ1bGxpbmdzIg0KYmlibGlvZ3JhcGh5OiByZWZlcmVuY2VzLmJpYg0KLS0tDQoNCmBgYHs9aHRtbH0NCjxzdHlsZT4NCmJvZHkgew0KdGV4dC1hbGlnbjoganVzdGlmeX0NCjwvc3R5bGU+DQpgYGANCmBgYHtyLCBnbG9iYWxzZXR0aW5ncywgZWNobz1GQUxTRSwgd2FybmluZz1GQUxTRSwgcmVzdWx0cz0naGlkZSd9DQpsaWJyYXJ5KGtuaXRyKQ0KDQprbml0cjo6b3B0c19jaHVuayRzZXQoZWNobyA9IFRSVUUpDQpvcHRzX2NodW5rJHNldCh0aWR5Lm9wdHM9bGlzdCh3aWR0aC5jdXRvZmY9MTAwKSx0aWR5PVRSVUUsIHdhcm5pbmcgPSBGQUxTRSwgbWVzc2FnZSA9IEZBTFNFLGNvbW1lbnQgPSAiIz4iLCBjYWNoZT1UUlVFLCBjbGFzcy5zb3VyY2U9YygidGVzdCIpLCBjbGFzcy5vdXRwdXQ9YygidGVzdDIiKSkNCm9wdGlvbnMod2lkdGggPSAxMDApDQpyZ2w6OnNldHVwS25pdHIoKQ0KDQoNCg0KY29sb3JpemUgPC0gZnVuY3Rpb24oeCwgY29sb3IpIHtzcHJpbnRmKCI8c3BhbiBzdHlsZT0nY29sb3I6ICVzOyc+JXM8L3NwYW4+IiwgY29sb3IsIHgpIH0NCg0KYGBgDQoNCmBgYHtyIGtsaXBweSwgZWNobz1GQUxTRSwgaW5jbHVkZT1UUlVFfQ0Ka2xpcHB5OjprbGlwcHkocG9zaXRpb24gPSBjKCd0b3AnLCAncmlnaHQnKSkNCiMga2xpcHB5OjprbGlwcHkoY29sb3IgPSAnZGFya2dyZWVuJykNCiNrbGlwcHk6OmtsaXBweSh0b29sdGlwX21lc3NhZ2UgPSAnQ2xpY2sgdG8gY29weScsIHRvb2x0aXBfc3VjY2VzcyA9ICdEb25lJykNCmBgYA0KDQpMYXN0IGNvbXBpbGVkIG9uIGByIGZvcm1hdChTeXMudGltZSgpLCAnJUIsICVZJylgDQoNCjxicj4NCg0KLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tDQoNCiMjIEludHJvZHVjdGlvbg0KDQpJbmVxdWFsaXRpZXMgYXJlIG9tbmlwcmVzZW50IGluIHNvY2lldHkgYW5kIHRoaXMgZG9lcyBub3QgZXhjbHVkZSB0aGUgYWNhZGVtaWMgd29ybGQuIEJlIGl0IGNvbnNjaW91cyBvciBzdWJjb25zY2lvdXMsIG91ciBhY3Rpb25zIGFyZSBpbiBwYXJ0IHNoYXBlZCBieSBiaWFzIGFuZCBzdGVyZW90eXBlcyAoYXV0aG9yLCB5ZWFyKS4gT25lIG9mIHRoZSBtb3N0IGRpdmlkaW5nIGxpbmVzIGluIHRoZSAyMXN0IGNlbnR1cnkgaXMgdGhhdCBvZiBnZW5kZXIuIEluIGEgc3R1ZHkgdGhhdCBsb29rZWQgYXQgdGhlIGltcGFjdCB0aGF0IG5ldHdvcmtzIGhhdmUgb24gZ2VuZGVyIGRpZmZlcmVuY2VzIGluIGNvYXV0aG9yc2hpcCwgaXQgd2FzIGZvdW5kIHRoYXQgcmVwcmVzZW50YXRpb24gb2Ygd29tZW4gbWF0dGVycyBpbiByZWxhdGlvbiB0byB0aGVpciBuZXR3b3JrIGFjY2VzcyBbQG1jZG93ZWxsMjAwNmFdLiBUaGUgc3R1ZHkgbG9va2VkIGF0IGhvdyBtYWxlIGFuZCBmZW1hbGUgZWNvbm9taXN0IFBoRCdzIGhhdmUgYWNjZXNzIGluIHRoZWlyIG5ldHdvcmtzIGZvciBwdWJsaWNhdGlvbnMgYW5kIGNvLWF1dGhvcnNoaXAuIFRoZXkgZmluZCB0aGF0IG92ZXIgdGltZSwgd29tZW4gYXJlIGxlc3MgbGlrZWx5IHRvIGNvYXV0aG9yIGFuZCBwdWJsaXNoIGFydGljbGVzIGNvbXBhcmVkIHRvIG1lbi4gSG93ZXZlciwgdGhleSBhbHNvIGZpbmQgdGhhdCB0aGlzIHByb2JhYmlsaXR5IGRvZXMgZHdpbmRsZSBieSAxOTkzLiBXaGVuIG90aGVyIGZvcm1zIG9mIGdlbmRlciBkaWZmZXJlbmNlcyBhcmUgaW5jbHVkZWQsIHdvbWVuIGFyZSBsZXNzIGxpa2VseSB0byBiZSAic3VjY2Vzc2Z1bCIgaW4gYWNhZGVtaWNzLiBFdmVuIHdpdGhpbiB0aGUgc29jaWFsIHNjaWVuY2VzLCBtZW4gYW5kIHdvbWVuIGRvIG5vdCByZWNlaXZlIHRoZSBzYW1lIHRyZWF0bWVudCBhbmQgZ3JhbnRzLCBwdWJsaWNhdGlvbnMgYW5kIHVwcGVyIGFjYWRlbWljIHBvc2l0aW9ucyBhcmUgdW5lcXVhbGx5IGRpc3RyaWJ1dGVkIFtAYmVsbG90dGkyMDIyXS4gVGhpcyBjb25jZXB0IG9mIGFjYWRlbWljIGluZXF1YWxpdHkgaGFzIGJlZW4gY2FsbGVkIHRoZSAqTWF0aWxkYSBlZmZlY3QqLCBuYW1lZCBhZnRlciB0aGUgKk1hdHRoZXcgZWZmZWN0KiwgbmFtZWQgYnkgUm9iZXJ0IE1lcnRvbi4gQmVsbG90dGkgZXQgYWwuICgyMDIyKSBzdHVkaWVkIHRoZSBjb21wb3NpdGlvbiBvZiBtYWxlIGFuZCBmZW1hbGUgY29sbGFib3JhdGlvbiBuZXR3b3JrcyBpbiBJdGFseS4gVGhleSBmaW5kIHBlcnNpc3RpbmcgaW5lcXVhbGl0aWVzIGJldHdlZW4gbWVuIGFuZCB3b21lbiBpbiB0ZXJtcyBvZiByZXNlYXJjaCBmdW5kaW5nIGFuZCBjb2xsYWJvcmF0aW9uIGFjcm9zcyBhbGwgYWNhZGVtaWMgZGlzY2lwbGluZXMuIFRoZXkgYXJndWUgdGhhdCB0aGVpciBmaW5kaW5ncyBhcmUgZ2VuZXJhbGlzYWJsZSB0byBmaWVsZHMgd2hlcmUgY29sbGFib3JhdGlvbiBpcyBrZXkgdG8gc3VjY2Vzcy5cDQrigIMgRnJvbSBhIHNjaWVudGlmaWMgc3RhbmRwb2ludCwgdmVyeSBsaXR0bGUgc3R1ZGllcyB3aXRoaW4gdGhlIGNvbGxhYm9yYXRpb24gbGl0ZXJhdHVyZSBoYXZlIGZvY3VzZWQgb24gY2x1c3RlcmluZyBpbiB0ZXJtcyBvZiBzb2NpYWwgaW5lcXVhbGl0aWVzLiBbQGxvbmcyMDEzYnJpZGdlc10gd3JvdGUgYSBzeXN0ZW1hdGljIHJldmlldyBvbiBicm9rZXJzIGluIGNvbGxhYm9yYXRpdmUgbmV0d29ya3MgYW5kIGhvdyB0aGlzIGluZmx1ZW5jZSB0aGUgc3ByZWFkIG9mIGluZm9ybWF0aW9uLiBUaGVpciBjb25jbHVzaW9uIGlzIHRoYXQgd2hpbGUgYnJva2VycywgYnJpZGdlcyBhbmQgYm91bmRhcnkgc3Bhbm5lcnMgZG8gcGxheSBhIGNyaXRpY2FsIHJvbGUgaW4gc3ByZWFkaW5nIGluZm9ybWF0aW9uIHRocm91Z2hvdXQgbmV0d29ya3MsIGluZm9ybWF0aW9uIHdpbGwgc3ByZWFkIG1vcmUgZWZmaWNpZW50bHkgd2hlbiBuZXR3b3JrcyBhcmUgbW9yZSBjbG9zZSBrbml0LiBIb3dldmVyLCB0aGlzIHBhcGVyIGFuZCB0aHVzIHRoZSBhcnRpY2xlcyBpdCBoYXMgcmV2aWV3ZWQsIHBheSBsaXR0bGUgYXR0ZW50aW9uIHRvIHdobyB0aGVzZSBicm9rZXJzIGFyZS4gSW4gb3JnYW5pc2F0aW9uYWwgc2NpZW5jZSwgb3JnYW5pc2F0aW9ucyBhcmUgYXNzdW1lZCB0byBiZSBlZ2FsaXRhcmlhbiBhbmQgdGh1cyBzb2NpYWwgaW5lcXVhbGl0aWVzIGFyZSBkZWVtZWQgbm9uIGV4aXN0ZW50LiBUaGlzIHN0dWR5IHdpbGwgZHJvcCB0aGlzIGFzc3VtcHRpb24gaW4gb3JkZXIgdG8gc2VlIHdoZXRoZXIgZ2VuZGVyIGluZXF1YWxpdGllcyBwbGF5IGEgcm9sZSBpbiB0aGUgY29sbGFib3JhdGl2ZSBuZXR3b3JrcyBvZiBhY2FkZW1pY3MuIFNwZWNpZmljYWxseSwgdGhpcyBhcnRpY2xlIHdpbGwgc3R1ZHkgaG93IGNvYXV0aG9yc2hpcCBuZXR3b3JrcyBvZiBEdXRjaCBTb2Npb2xvZ2lzdHMgYXJlIGNsdXN0ZXJlZCBpbiB0ZXJtcyBvZiBnZW5kZXIuXA0K4oCDIFNlY29uZGx5LCB0aGlzIGFydGljbGUgd2lsbCBsb29rIGF0IGhvdyB0aGlzIGdlbmRlciBjbHVzdGVyaW5nIGluIGNvYXV0aG9yc2hpcCBuZXR3b3JrcyBpbmZsdWVuY2VzIHRoZSBwcmVzdGlnZSBvciBzdWNjZXNzIG9mIGZlbWFsZSBzY2hvbGFycy4gUHJldmlvdXMgc3R1ZGllcyBwb2ludGVkIG91dCB0aGF0IG5vdCBhbGwgcmVzZWFyY2ggaXMgdmFsdWVkIGVxdWFsbHkgYW5kIHRoYXQgZ2VuZGVyIGlzIHN0aWxsIGFuIGluZGljYXRvciBvZiB0aGlzIGluZXF1YWxpdHkgW0BiZWxsb3R0aTIwMjI7IEBib3plbWFuMjAxMW1lbl0uIEJ5IHN0dWR5aW5nIHRoaXMgaW5lcXVhbGl0eSB0aHJvdWdoIGEgc29jaWFsIG5ldHdvcmsgcGVyc3BlY3RpdmUsIHRoaXMgc3R1ZHkgd2lsbCBoZWxwIHVzIHRvIHNlZSBob3cgbWFsZSBhbmQgZmVtYWxlIHNjaG9sYXJzIHJlbGF0ZSB0byBlYWNoIG90aGVyIGFuZCBob3cgdGhlcmUgcHJlZmVyZW5jZXMgaW5mbHVlbmNlIHRoZSBsaWtlbGlob29kIG9mIHB1Ymxpc2hpbmcgdG9nZXRoZXIgKG9yIG5vdCksIGFuZCB3aWxsIGdpdmUgaW5zaWdodHMgaW50byB0aGUgcGF0dGVybnMgb2YgZ2FpbmluZyBhY2FkZW1pYyBwcmVzdGlnZSAob3Igbm90KS4gVGhpcyBsZWFkcyB0byB0aGUgZm9sbG93aW5nIHJlc2VhcmNoIHF1ZXN0aW9uOg0KDQotICAgUlEgMTogSG93IGFyZSBwdWJsaWNhdGlvbiBuZXR3b3JrcyBvZiBzY2hvbGFycyBpbiBTb2Npb2xvZ3kgZGVwYXJ0bWVudHMgY2x1c3RlcmVkIGluIHRlcm1zIG9mIGdlbmRlcj8NCg0KLSAgIFJRIDI6IFRvIHdoYXQgZXh0ZW50IGRvZXMgZ2VuZGVyIGNsdXN0ZXJpbmcgb2YgcHVibGljYXRpb24gbmV0d29ya3MgaW5mbHVlbmNlIHRoZSBwcmVzdGlnZS9zdWNjZXNzIG9mIGZlbWFsZSBzY2hvbGFycz8NCg0KPGJyPg0KDQotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0NCg==</div>
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIkludHJvZHVjdGlvbiAoZHJhZnQpIg0KI2JpYmxpb2dyYXBoeTogcmVmZXJlbmNlcy5iaWINCmF1dGhvcjogIk5pZWxzIFZ1bGxpbmdzIg0KYmlibGlvZ3JhcGh5OiByZWZlcmVuY2VzLmJpYg0KLS0tDQoNCiMgSHRtbCB0ZXh0IHN0dWZmDQojIyBKdXN0aWZ5IG15IHRleHQgZmlsZXMNCldobyBkb2Vzbid0IHdhbnQgdGhlaXIgdGV4dCBmaWxlcyB0byBiZSBqdXN0aWZpZWQhDQpgYGB7cn0NCg0KIyBgYGB7PWh0bWx9DQojIDxzdHlsZT4NCiMgYm9keSB7DQojIHRleHQtYWxpZ246IGp1c3RpZnl9DQojIDwvc3R5bGU+DQojIGBgYA0KDQpgYGANCg0KIyMgVGFicyBnYWxvcmUNCkZvciB3aGVuIHRoZSBzdGFydCBvZiBhIHBhcmFncmFwaCBqdXN0IG5lZWRzIGEgbGl0dGxlIG51ZGdlIA0KYGBge3J9DQogDQojICZuYnNwOyAjIFdvdyBpdCBpcyBhIHNpbmdsZSBzcGFjZQ0KIyAmZW5zcDsgIyBNeSBnb2QgdGhlcmUgYXJlIHR3bw0KIyAmZW1zcDsgIyBIZXJlIHdlIGhhdmUgNCBhLmsuYSBhIHRhYg0KIyAmbmJzcDsgKjQgIyBhcHBhcmVudGx5IGRvZXMgc29tZXRoaW5nIGRpZmZlcmVudCB0aGFuIGVtc3ANCg0KYGBgDQoNCiMjIFdyaXRpbmcgdGV4dHMNClVzZSBWaXN1YWwgbW9kZSBpbnN0ZWFkIG9mIHNvdXJjZSBtb2RlIChjdHJsICsgc2hpZnQgKyBGNCB8IGp1c3QgY2xpY2sgaXQgaW4gdGhlIHZpc3VhbCBidXR0b24gYmVsb3cgdGhlIHNhdmUgYnV0dG9uKQ0KDQojIEJhc2ljIGtuaXR0aW5nIHN0dWZmDQpgYGB7ciwgZ2xvYmFsc2V0dGluZ3MsIGVjaG89RkFMU0UsIHdhcm5pbmc9RkFMU0UsIHJlc3VsdHM9J2hpZGUnfQ0KbGlicmFyeShrbml0cikNCg0Ka25pdHI6Om9wdHNfY2h1bmskc2V0KGVjaG8gPSBUUlVFKQ0Kb3B0c19jaHVuayRzZXQodGlkeS5vcHRzPWxpc3Qod2lkdGguY3V0b2ZmPTEwMCksdGlkeT1UUlVFLCB3YXJuaW5nID0gRkFMU0UsIG1lc3NhZ2UgPSBGQUxTRSxjb21tZW50ID0gIiM+IiwgY2FjaGU9VFJVRSwgY2xhc3Muc291cmNlPWMoInRlc3QiKSwgY2xhc3Mub3V0cHV0PWMoInRlc3QyIikpDQpvcHRpb25zKHdpZHRoID0gMTAwKQ0KcmdsOjpzZXR1cEtuaXRyKCkNCmBgYA0KDQojIEtsaXBweSBjb2RlIHRvIGNvcHkgY29kZSBjaHVua3MNCmBgYHtyIGtsaXBweSwgZWNobz1UUlVFLCBpbmNsdWRlPVRSVUV9DQprbGlwcHk6OmtsaXBweShwb3NpdGlvbiA9IGMoJ3RvcCcsICdyaWdodCcpKQ0KIyBrbGlwcHk6OmtsaXBweShjb2xvciA9ICdkYXJrZ3JlZW4nKQ0KI2tsaXBweTo6a2xpcHB5KHRvb2x0aXBfbWVzc2FnZSA9ICdDbGljayB0byBjb3B5JywgdG9vbHRpcF9zdWNjZXNzID0gJ0RvbmUnKQ0KYGBgDQoNCg==</div>
 
 
 </div>
@@ -605,7 +640,7 @@ $(document).ready(function () {
 <!-- code folding -->
 <script>
 $(document).ready(function () {
-  window.initializeSourceEmbed("Introduction.Rmd");
+  window.initializeSourceEmbed("cheat_sheet.Rmd");
   window.initializeCodeFolding("show" === "show");
 });
 </script>
