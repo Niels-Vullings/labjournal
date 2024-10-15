@@ -507,7 +507,7 @@ div.tocify {
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    Paper
+    Paper (draft)
      
     <span class="caret"></span>
   </a>
@@ -518,9 +518,19 @@ div.tocify {
     <li>
       <a href="Theory.html">Theory</a>
     </li>
-    <li>
-      <a href="Data.html">Data</a>
+    <li class="dropdown-submenu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Data</a>
+      <ul class="dropdown-menu" role="menu">
+        <li>
+          <a href="Data.html">Data</a>
+        </li>
+        <li>
+          <a href="Descriptives.html">Descriptives</a>
+        </li>
+      </ul>
     </li>
+    <li class="dropdown-header">Results</li>
+    <li class="dropdown-header">Conclusion</li>
   </ul>
 </li>
       </ul>
@@ -565,9 +575,11 @@ files</h2>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="co"># ```{=html}</span></span>
 <span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="co"># &lt;style&gt;</span></span>
 <span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="co"># body {</span></span>
-<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="co"># text-align: justify}</span></span>
-<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="co"># &lt;/style&gt;</span></span>
-<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a><span class="co"># ```</span></span></code></pre></div>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="co"># text-align: justify;</span></span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="co"># font-family: Times;</span></span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a><span class="co"># }</span></span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a><span class="co"># &lt;/style&gt;</span></span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a><span class="co"># ```</span></span></code></pre></div>
 </div>
 <div id="tabs-galore" class="section level2" number="1.2">
 <h2><span class="header-section-number">1.2</span> Tabs galore</h2>
@@ -586,23 +598,29 @@ click it in the visual button below the save button)</p>
 <div id="basic-knitting-stuff" class="section level1" number="2">
 <h1><span class="header-section-number">2</span> Basic knitting
 stuff</h1>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(<span class="at">echo =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>opts_chunk<span class="sc">$</span><span class="fu">set</span>(<span class="at">tidy.opts=</span><span class="fu">list</span>(<span class="at">width.cutoff=</span><span class="dv">100</span>),<span class="at">tidy=</span><span class="cn">TRUE</span>, <span class="at">warning =</span> <span class="cn">FALSE</span>, <span class="at">message =</span> <span class="cn">FALSE</span>,<span class="at">comment =</span> <span class="st">&quot;#&gt;&quot;</span>, <span class="at">cache=</span><span class="cn">TRUE</span>, <span class="at">class.source=</span><span class="fu">c</span>(<span class="st">&quot;test&quot;</span>), <span class="at">class.output=</span><span class="fu">c</span>(<span class="st">&quot;test2&quot;</span>))</span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a><span class="fu">options</span>(<span class="at">width =</span> <span class="dv">100</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a>rgl<span class="sc">::</span><span class="fu">setupKnitr</span>()</span></code></pre></div>
 </div>
 <div id="klippy-code-to-copy-code-chunks" class="section level1"
 number="3">
 <h1><span class="header-section-number">3</span> Klippy code to copy
 code chunks</h1>
-<div class="sourceCode" id="cb3"><pre
-class="sourceCode r test"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>klippy<span class="sc">::</span><span class="fu">klippy</span>(<span class="at">position =</span> <span class="fu">c</span>(<span class="st">&quot;top&quot;</span>, <span class="st">&quot;right&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>klippy<span class="sc">::</span><span class="fu">klippy</span>(<span class="at">position =</span> <span class="fu">c</span>(<span class="st">&quot;top&quot;</span>, <span class="st">&quot;right&quot;</span>))</span></code></pre></div>
 <script>
   addClassKlippyTo("pre.r, pre.markdown");
   addKlippy('right', 'top', 'auto', '1', 'Copy code', 'Copied!');
 </script>
-<div class="sourceCode" id="cb4"><pre
-class="sourceCode r test"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="co"># klippy::klippy(color = &#39;darkgreen&#39;) klippy::klippy(tooltip_message = &#39;Click to copy&#39;,</span></span>
-<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="co"># tooltip_success = &#39;Done&#39;)</span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="co"># klippy::klippy(color = &#39;darkgreen&#39;) klippy::klippy(tooltip_message = &#39;Click to copy&#39;,</span></span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a><span class="co"># tooltip_success = &#39;Done&#39;)</span></span></code></pre></div>
 </div>
 
-<div id="rmd-source-code">LS0tDQp0aXRsZTogIkludHJvZHVjdGlvbiAoZHJhZnQpIg0KI2JpYmxpb2dyYXBoeTogcmVmZXJlbmNlcy5iaWINCmF1dGhvcjogIk5pZWxzIFZ1bGxpbmdzIg0KYmlibGlvZ3JhcGh5OiByZWZlcmVuY2VzLmJpYg0KLS0tDQoNCiMgSHRtbCB0ZXh0IHN0dWZmDQojIyBKdXN0aWZ5IG15IHRleHQgZmlsZXMNCldobyBkb2Vzbid0IHdhbnQgdGhlaXIgdGV4dCBmaWxlcyB0byBiZSBqdXN0aWZpZWQhDQpgYGB7cn0NCg0KIyBgYGB7PWh0bWx9DQojIDxzdHlsZT4NCiMgYm9keSB7DQojIHRleHQtYWxpZ246IGp1c3RpZnl9DQojIDwvc3R5bGU+DQojIGBgYA0KDQpgYGANCg0KIyMgVGFicyBnYWxvcmUNCkZvciB3aGVuIHRoZSBzdGFydCBvZiBhIHBhcmFncmFwaCBqdXN0IG5lZWRzIGEgbGl0dGxlIG51ZGdlIA0KYGBge3J9DQogDQojICZuYnNwOyAjIFdvdyBpdCBpcyBhIHNpbmdsZSBzcGFjZQ0KIyAmZW5zcDsgIyBNeSBnb2QgdGhlcmUgYXJlIHR3bw0KIyAmZW1zcDsgIyBIZXJlIHdlIGhhdmUgNCBhLmsuYSBhIHRhYg0KIyAmbmJzcDsgKjQgIyBhcHBhcmVudGx5IGRvZXMgc29tZXRoaW5nIGRpZmZlcmVudCB0aGFuIGVtc3ANCg0KYGBgDQoNCiMjIFdyaXRpbmcgdGV4dHMNClVzZSBWaXN1YWwgbW9kZSBpbnN0ZWFkIG9mIHNvdXJjZSBtb2RlIChjdHJsICsgc2hpZnQgKyBGNCB8IGp1c3QgY2xpY2sgaXQgaW4gdGhlIHZpc3VhbCBidXR0b24gYmVsb3cgdGhlIHNhdmUgYnV0dG9uKQ0KDQojIEJhc2ljIGtuaXR0aW5nIHN0dWZmDQpgYGB7ciwgZ2xvYmFsc2V0dGluZ3MsIGVjaG89RkFMU0UsIHdhcm5pbmc9RkFMU0UsIHJlc3VsdHM9J2hpZGUnfQ0KbGlicmFyeShrbml0cikNCg0Ka25pdHI6Om9wdHNfY2h1bmskc2V0KGVjaG8gPSBUUlVFKQ0Kb3B0c19jaHVuayRzZXQodGlkeS5vcHRzPWxpc3Qod2lkdGguY3V0b2ZmPTEwMCksdGlkeT1UUlVFLCB3YXJuaW5nID0gRkFMU0UsIG1lc3NhZ2UgPSBGQUxTRSxjb21tZW50ID0gIiM+IiwgY2FjaGU9VFJVRSwgY2xhc3Muc291cmNlPWMoInRlc3QiKSwgY2xhc3Mub3V0cHV0PWMoInRlc3QyIikpDQpvcHRpb25zKHdpZHRoID0gMTAwKQ0KcmdsOjpzZXR1cEtuaXRyKCkNCmBgYA0KDQojIEtsaXBweSBjb2RlIHRvIGNvcHkgY29kZSBjaHVua3MNCmBgYHtyIGtsaXBweSwgZWNobz1UUlVFLCBpbmNsdWRlPVRSVUV9DQprbGlwcHk6OmtsaXBweShwb3NpdGlvbiA9IGMoJ3RvcCcsICdyaWdodCcpKQ0KIyBrbGlwcHk6OmtsaXBweShjb2xvciA9ICdkYXJrZ3JlZW4nKQ0KI2tsaXBweTo6a2xpcHB5KHRvb2x0aXBfbWVzc2FnZSA9ICdDbGljayB0byBjb3B5JywgdG9vbHRpcF9zdWNjZXNzID0gJ0RvbmUnKQ0KYGBgDQoNCg==</div>
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIkludHJvZHVjdGlvbiAoZHJhZnQpIg0KI2JpYmxpb2dyYXBoeTogcmVmZXJlbmNlcy5iaWINCmF1dGhvcjogIk5pZWxzIFZ1bGxpbmdzIg0KYmlibGlvZ3JhcGh5OiByZWZlcmVuY2VzLmJpYg0KLS0tDQoNCiMgSHRtbCB0ZXh0IHN0dWZmDQojIyBKdXN0aWZ5IG15IHRleHQgZmlsZXMNCldobyBkb2Vzbid0IHdhbnQgdGhlaXIgdGV4dCBmaWxlcyB0byBiZSBqdXN0aWZpZWQhDQpgYGB7cn0NCg0KIyBgYGB7PWh0bWx9DQojIDxzdHlsZT4NCiMgYm9keSB7DQojIHRleHQtYWxpZ246IGp1c3RpZnk7DQojIGZvbnQtZmFtaWx5OiBUaW1lczsNCiMgfQ0KIyA8L3N0eWxlPg0KIyBgYGANCg0KYGBgDQoNCiMjIFRhYnMgZ2Fsb3JlDQpGb3Igd2hlbiB0aGUgc3RhcnQgb2YgYSBwYXJhZ3JhcGgganVzdCBuZWVkcyBhIGxpdHRsZSBudWRnZSANCmBgYHtyfQ0KIA0KIyAmbmJzcDsgIyBXb3cgaXQgaXMgYSBzaW5nbGUgc3BhY2UNCiMgJmVuc3A7ICMgTXkgZ29kIHRoZXJlIGFyZSB0d28NCiMgJmVtc3A7ICMgSGVyZSB3ZSBoYXZlIDQgYS5rLmEgYSB0YWINCiMgJm5ic3A7ICo0ICMgYXBwYXJlbnRseSBkb2VzIHNvbWV0aGluZyBkaWZmZXJlbnQgdGhhbiBlbXNwDQoNCmBgYA0KDQojIyBXcml0aW5nIHRleHRzDQpVc2UgVmlzdWFsIG1vZGUgaW5zdGVhZCBvZiBzb3VyY2UgbW9kZSAoY3RybCArIHNoaWZ0ICsgRjQgfCBqdXN0IGNsaWNrIGl0IGluIHRoZSB2aXN1YWwgYnV0dG9uIGJlbG93IHRoZSBzYXZlIGJ1dHRvbikNCg0KIyBCYXNpYyBrbml0dGluZyBzdHVmZg0KYGBge3IsIGdsb2JhbHNldHRpbmdzLCBlY2hvPVRSVUUsIHdhcm5pbmc9RkFMU0UsIHJlc3VsdHM9J2hpZGUnfQ0KbGlicmFyeShrbml0cikNCg0Ka25pdHI6Om9wdHNfY2h1bmskc2V0KGVjaG8gPSBUUlVFKQ0Kb3B0c19jaHVuayRzZXQodGlkeS5vcHRzPWxpc3Qod2lkdGguY3V0b2ZmPTEwMCksdGlkeT1UUlVFLCB3YXJuaW5nID0gRkFMU0UsIG1lc3NhZ2UgPSBGQUxTRSxjb21tZW50ID0gIiM+IiwgY2FjaGU9VFJVRSwgY2xhc3Muc291cmNlPWMoInRlc3QiKSwgY2xhc3Mub3V0cHV0PWMoInRlc3QyIikpDQpvcHRpb25zKHdpZHRoID0gMTAwKQ0KcmdsOjpzZXR1cEtuaXRyKCkNCmBgYA0KDQojIEtsaXBweSBjb2RlIHRvIGNvcHkgY29kZSBjaHVua3MNCmBgYHtyIGtsaXBweSwgZWNobz1UUlVFLCBpbmNsdWRlPVRSVUV9DQprbGlwcHk6OmtsaXBweShwb3NpdGlvbiA9IGMoJ3RvcCcsICdyaWdodCcpKQ0KIyBrbGlwcHk6OmtsaXBweShjb2xvciA9ICdkYXJrZ3JlZW4nKQ0KI2tsaXBweTo6a2xpcHB5KHRvb2x0aXBfbWVzc2FnZSA9ICdDbGljayB0byBjb3B5JywgdG9vbHRpcF9zdWNjZXNzID0gJ0RvbmUnKQ0KYGBgDQoNCg==</div>
 
 
 </div>

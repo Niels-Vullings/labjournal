@@ -13,7 +13,9 @@ Who doesn't want their text files to be justified!
 # ```{=html}
 # <style>
 # body {
-# text-align: justify}
+# text-align: justify;
+# font-family: Times;
+# }
 # </style>
 # ```
 
@@ -34,7 +36,7 @@ For when the start of a paragraph just needs a little nudge
 Use Visual mode instead of source mode (ctrl + shift + F4 | just click it in the visual button below the save button)
 
 # Basic knitting stuff
-```{r, globalsettings, echo=FALSE, warning=FALSE, results='hide'}
+```{r, globalsettings, echo=TRUE, warning=FALSE, results='hide'}
 library(knitr)
 
 knitr::opts_chunk$set(echo = TRUE)

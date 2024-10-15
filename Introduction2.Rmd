@@ -44,7 +44,13 @@ Last compiled on `r format(Sys.time(), '%B, %Y')`
 
 ------------------------------------------------------------------------
 
-## Introduction
+## Introduction (W.I.P)
+
+*Main things that need to change*
+
+-   Emphasise the SN-perspective of the topic
+
+-   Just writing basically...
 
 Inequalities are omnipresent in society. Not all people have the same opportunities and thus social differences exist in who has and who has not. One of the most prominent social divisions in society is gender, with terms such as the "glass-ceiling" and the "gender wage-gap" that are familiar to many (ref). Yet, even after many efforts to make policy changes, women are still not on equal footing to men. Unfortunately, the academic world is not an outlier in this case. Within the science of science, much has been written about academic disparities between men and women (ref.). Even within the social sciences, full professors are more often men than women and wage gaps still exist (vox??). At the same time, gender norms are becoming more egalitarian and within the university context, many policies have been installed towards more equality among male and female scholars. If the structures in which the academic world operates is becoming more egalitarian, one could wonder how these inequalities are kept in place. In this paper, I argue that inequalities in academic prestige are kept in place due to the social relations between scholars.
 
@@ -52,9 +58,17 @@ Inequalities are omnipresent in society. Not all people have the same opportunit
   From a scientific standpoint, very little studies within the collaboration literature have focused on clustering in terms of social inequalities. [@long2013bridges] wrote a systematic review on brokers in collaborative networks and how this influence the spread of information. Their conclusion is that while brokers, bridges and boundary spanners do play a critical role in spreading information throughout networks, information will spread more efficiently when networks are more close knit. However, this paper and thus the articles it has reviewed, pay little attention to who these brokers are. In organisational science, organisations are assumed to be egalitarian and thus social inequalities are deemed non existent. This study will drop this assumption in order to see whether gender inequalities play a role in the collaborative networks of academics. Specifically, this article will study how coauthorship networks of Dutch Sociologists are clustered in terms of gender.\
   Secondly, this article will look at how this gender clustering in coauthorship networks influences the prestige or success of female scholars. Previous studies pointed out that not all research is valued equally and that gender is still an indicator of this inequality [@bellotti2022; @bozeman2011men]. By studying this inequality through a social network perspective, this study will help us to see how male and female scholars relate to each other and how there preferences influence the likelihood of publishing together (or not), and will give insights into the patterns of gaining academic prestige (or not). This leads to the following research question:
 
--   RQ 1: How are publication networks of scholars in Sociology departments clustered in terms of gender?
+-   RQ 1: To what extent does genderhomophily influence clustering of collaboration networks in terms of Sociologists at Radboud University and Utrecht University?
 
--   RQ 2: To what extent does gender clustering of publication networks influence the prestige/success of female scholars?
+-   RQ 2: To what extent does gender clustering of publication networks influence the prestige/success of female scholars at Radboud University and Utrecht University?
+
+    *Alternative*
+
+<!-- -->
+
+-   RQ 1: To what extent does genderhomophily influence collaboration networks between sociologists at Radboud university and Utrecht University?
+
+-   RQ 2: To what extent does genderhomophily in collaboration networks influence the prestige/success of female sociologists?
 
 <br>
 

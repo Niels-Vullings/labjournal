@@ -40,14 +40,22 @@ navbar:
             href: Data_preparation.html
           - text: "Data Prep (New)"
             href: Data_preparation_2.html
-    - text: "Paper"
+    - text: "Paper (draft)"
       menu:
       - text: "Introduction"
         href: Introduction2.html
       - text: "Theory"
         href: Theory.html
       - text: "Data"
-        href: Data.html
+        menu:
+        - text: "Data"
+          href: Data.html
+        - text: "Descriptives"
+          href: Descriptives.html
+      - text: "Results"
+        href:
+      - text: "Conclusion"
+        href:
         
         
         # here, other .Rmds can be added
