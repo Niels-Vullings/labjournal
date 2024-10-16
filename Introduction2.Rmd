@@ -66,7 +66,7 @@ Inequalities are omnipresent in society. Not all people have the same opportunit
 
 <!-- -->
 
--   RQ 1: To what extent does genderhomophily influence collaboration networks between sociologists at Radboud university and Utrecht University?
+-   RQ 1: To what extent has intergender-collaboration in collaboration networks of sociologists at Radboud university and Utrecht University changed over time?
 
 -   RQ 2: To what extent does genderhomophily in collaboration networks influence the prestige/success of female sociologists?
 
