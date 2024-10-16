@@ -381,7 +381,7 @@ ts_triads_evo <- function (sims, net1, simtype = "notypespecified", forplot = TR
 
 # Load Packages
 
-```{r, warning=FALSE}
+```{r, warning=FALSE, message=FALSE, results='hide'}
 packages <- c("tidyverse", "sna", "igraph", "RsienaTwoStep", "ape", "iterators", "doParallel")
 
 fpackage.check(packages)
