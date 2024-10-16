@@ -6,7 +6,7 @@ Filename is ./results/Collab_M1.txt.
 
 This file contains primary output for SIENA project <<./results/Collab_M1>>.
 
-Date and time: 16/10/2024 14:28:43 
+Date and time: 16/10/2024 14:38:46 
 
 RSiena version 1.4.7 (20 02 2024)
 
@@ -167,7 +167,7 @@ Initialisation of project <<./results/Collab_M1>> executed succesfully.
 
 -----------------------------------
 New Analysis started.
-Date and time: 16/10/2024 14:28:43
+Date and time: 16/10/2024 14:38:47
 New results follow.
 -----------------------------------
 
@@ -179,7 +179,7 @@ Estimation by stochastic approximation algorithm.
 =================================================
 
 Random initialization of random number stream.
-Current random number seed is 394454.
+Current random number seed is 808985.
 Effects object used: myeff_M1 
 Model Type:
  Standard actor-oriented model 
@@ -225,25 +225,25 @@ Estimation of derivatives by the LR method (type 1).
 End of stochastic approximation algorithm, phase 3.
 ---------------------------------------------------
 
-Total of 2732 iterations.
-Parameter estimates based on 1732 iterations,
+Total of 2646 iterations.
+Parameter estimates based on 1646 iterations,
 basic rate parameter as well as 
 convergence diagnostics, covariance and derivative matrices based on 1000 iterations.
 
 Information for convergence diagnosis.
 Averages, standard deviations, and t-ratios for deviations from targets:
-  1.   2.4340   11.4980   0.2117 
-  2.  -1.0920    6.5966  -0.1655 
-  3. 389.0000 1036.2771   0.3754 
-  4.   6.5760   44.5374   0.1477 
-  5.  -0.8260    4.1520  -0.1989 
-  6.  -2.7923   11.7622  -0.2374 
-  7.  -0.7165    5.8821  -0.1218 
-  8.  -0.8870    8.7237  -0.1017 
+  1.   2.6280  11.1901   0.2348 
+  2.  -0.8460   6.8216  -0.1240 
+  3. 346.0300 994.6417   0.3479 
+  4.   7.6300  42.9318   0.1777 
+  5.  -0.6520   4.1260  -0.1580 
+  6.  -3.1613  11.5800  -0.2730 
+  7.   0.0552   5.7873   0.0095 
+  8.  -0.2480   8.3019  -0.0299 
 
 Good convergence is indicated by the t-ratios being close to zero.
 
-Overall maximum convergence ratio =  0.3902 .
+Overall maximum convergence ratio =  0.3883 .
 One or more of the t-statistics are rather large.
 
 
@@ -253,41 +253,41 @@ Estimation Results.
 -------------------
 
 Regular end of estimation algorithm.
-Total of 2732 iteration steps.
+Total of 2646 iteration steps.
 
 
 @3
 Estimates and standard errors
                              
 Rate parameters:
- 0. Rate parameter                            4.5166  (   0.7818)
+ 0. Rate parameter                              4.49  (   0.7704)
 
 Other parameters:
- 1. eval:  outdegree (density)                                    -2.0887  (   0.7185)
- 2. eval:  reciprocity                                             2.0338  (   0.2899)
- 3. eval:  indegree - popularity                                   0.2137  (   0.0361)
- 4. eval:  outdegree - activity                                   -0.1761  (   0.1423)
- 5. eval:  network-isolate                                         3.8103  (   1.2481)
- 6. eval:  gender alter                                            0.0225  (   0.1819)
- 7. eval:  gender ego                                              0.8499  (   0.3632)
- 8. eval:  same gender                                             0.2909  (   0.1970)
+ 1. eval:  outdegree (density)                                    -2.0262  (   0.7553)
+ 2. eval:  reciprocity                                             2.0488  (   0.2780)
+ 3. eval:  indegree - popularity                                   0.2112  (   0.0351)
+ 4. eval:  outdegree - activity                                   -0.1884  (   0.1402)
+ 5. eval:  network-isolate                                         3.8785  (   1.3734)
+ 6. eval:  gender alter                                            0.0086  (   0.1880)
+ 7. eval:  gender ego                                              0.8983  (   0.3310)
+ 8. eval:  same gender                                             0.2910  (   0.1934)
 
 
 @3
 Covariance matrices
                    
 Covariance matrix of estimates (correlations below diagonal):
-     0.516     -0.055     -0.006     -0.098      0.772     -0.006      0.170      0.001
-    -0.262      0.084      0.001      0.009     -0.102     -0.001     -0.011     -0.004
-    -0.216      0.122      0.001      0.000     -0.006      0.002      0.000      0.001
-    -0.960      0.208      0.051      0.020     -0.145      0.000     -0.035     -0.004
-     0.861     -0.281     -0.125     -0.814      1.558     -0.011      0.286      0.020
-    -0.045     -0.022      0.370      0.003     -0.048      0.033     -0.012     -0.002
-     0.653     -0.101     -0.036     -0.683      0.631     -0.188      0.132      0.015
-     0.010     -0.070      0.142     -0.140      0.080     -0.053      0.214      0.039
+     0.571     -0.002     -0.009     -0.101      0.936     -0.042      0.129     -0.042
+    -0.011      0.077      0.001     -0.003     -0.021     -0.004      0.012      0.004
+    -0.342      0.052      0.001      0.001     -0.014      0.003     -0.002      0.001
+    -0.958     -0.079      0.184      0.020     -0.163      0.007     -0.025      0.005
+     0.902     -0.054     -0.283     -0.847      1.886     -0.091      0.217     -0.056
+    -0.295     -0.070      0.394      0.273     -0.353      0.035     -0.024     -0.002
+     0.518      0.135     -0.149     -0.543      0.477     -0.388      0.110     -0.001
+    -0.286      0.075      0.108      0.169     -0.212     -0.065     -0.011      0.037
 
 Derivative matrix of expected statistics X by parameters and
 covariance/correlation matrix of X can be found using
 summary(ans) within R, or by using the 'verbose' option in Siena07.
  
-Total computation time 21.88 seconds.
+Total computation time 21.92 seconds.

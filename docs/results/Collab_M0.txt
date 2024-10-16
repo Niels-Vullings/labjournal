@@ -6,7 +6,7 @@ Filename is ./results/Collab_M0.txt.
 
 This file contains primary output for SIENA project <<./results/Collab_M0>>.
 
-Date and time: 16/10/2024 14:28:36 
+Date and time: 16/10/2024 14:38:39 
 
 RSiena version 1.4.7 (20 02 2024)
 
@@ -140,7 +140,7 @@ Initialisation of project <<./results/Collab_M0>> executed succesfully.
 
 -----------------------------------
 New Analysis started.
-Date and time: 16/10/2024 14:28:36
+Date and time: 16/10/2024 14:38:39
 New results follow.
 -----------------------------------
 
@@ -152,7 +152,7 @@ Estimation by stochastic approximation algorithm.
 =================================================
 
 Random initialization of random number stream.
-Current random number seed is 53786.
+Current random number seed is 614919.
 Effects object used: myeff_M0 
 Model Type:
  Standard actor-oriented model 
@@ -186,19 +186,19 @@ Estimation of derivatives by the LR method (type 1).
 End of stochastic approximation algorithm, phase 3.
 ---------------------------------------------------
 
-Total of 2059 iterations.
-Parameter estimates based on 1059 iterations,
+Total of 2021 iterations.
+Parameter estimates based on 1021 iterations,
 basic rate parameter as well as 
 convergence diagnostics, covariance and derivative matrices based on 1000 iterations.
 
 Information for convergence diagnosis.
 Averages, standard deviations, and t-ratios for deviations from targets:
-  1.   0.3660   8.3256   0.0440 
-  2.  -0.0760   6.9422  -0.0109 
+  1.  -0.5460   8.1538  -0.0670 
+  2.  -0.1540   6.6145  -0.0233 
 
 Good convergence is indicated by the t-ratios being close to zero.
 
-Overall maximum convergence ratio =  0.0548 .
+Overall maximum convergence ratio =  0.0678 .
 
 
 
@@ -207,18 +207,18 @@ Estimation Results.
 -------------------
 
 Regular end of estimation algorithm.
-Total of 2059 iteration steps.
+Total of 2021 iteration steps.
 
 
 @3
 Estimates and standard errors
                              
 Rate parameters:
- 0. Rate parameter                            3.8055  (   0.5757)
+ 0. Rate parameter                            3.8393  (   0.5663)
 
 Other parameters:
- 1. eval:  outdegree (density)                                    -2.4473  (   0.0996)
- 2. eval:  reciprocity                                             2.2373  (   0.2588)
+ 1. eval:  outdegree (density)                                    -2.4482  (   0.0983)
+ 2. eval:  reciprocity                                             2.2340  (   0.2661)
 
 
 @3
@@ -226,10 +226,10 @@ Covariance matrices
                    
 Covariance matrix of estimates (correlations below diagonal):
      0.010     -0.007
-    -0.258      0.067
+    -0.256      0.071
 
 Derivative matrix of expected statistics X by parameters and
 covariance/correlation matrix of X can be found using
 summary(ans) within R, or by using the 'verbose' option in Siena07.
  
-Total computation time 6.89 seconds.
+Total computation time 6.85 seconds.

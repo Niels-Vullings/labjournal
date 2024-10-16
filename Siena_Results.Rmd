@@ -264,9 +264,9 @@ myeff_M3 <- includeEffects(myeff_M3, altX, egoX, interaction1 = "career_age")
 ```
 ### Step 4 - Create and Run the Algorithm
 ```{r}
-myAlgorithm <- sienaAlgorithmCreate(projname = "./results/Collab_M2")
-ans_M2 <- siena07(myAlgorithm, data = mydata, effects = myeff_M3, returnDeps = TRUE)
-ans_M2
+myAlgorithm <- sienaAlgorithmCreate(projname = "./results/Collab_M3")
+ans_M3 <- siena07(myAlgorithm, data = mydata, effects = myeff_M3, returnDeps = TRUE)
+ans_M3
 
 # if necessary estimate again!  
 # ans_M2_2 <- siena07(myAlgorithm, data = mydata, effects = myeff, prevans_ = ans_M1, returnDeps=TRUE)
