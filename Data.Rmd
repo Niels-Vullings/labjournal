@@ -44,33 +44,6 @@ Last compiled on `r format(Sys.time(), '%B, %Y')`
 
 ------------------------------------------------------------------------
 
-# Set up
-
-```{r, warning=FALSE, message=FALSE}
-rm(list = ls())
-
-#---- Libraries ----
-library(tidyverse)  # I assume you already installed this one!
-library(igraph)
-
-
-```
-
-# Load data
-
-```{r}
-load("data/processed/soc_data_raw.RData")
-
-load("data/processed/RU_UU_ego.RData")
-
-load("data/processed/RU_UU_works.RData")
-
-```
-
-<br>
-
-------------------------------------------------------------------------
-
 # Data
 
 This study uses collaboration data of sociologists from the Radboud University and Utrecht University, which has been scraped from the internet. It is part of a larger data project aiming to create large scale social network data on the collaborations of Dutch university scholars in the field of Political Science and Sociology. The data collection process is threefold. First, all employees of Sociology and Political Science departments at all Dutch universities were collected, filing their names, university, department, position and Google Scholar id code. This data was collected for both 2022 and 2024. Second, the works of all these authors were scraped through OpenAlex, a nonprofit database on open science (ref.). Lastly, this raw data was subset to get the sample relevant for this study. I ended up with sample of 100 sociologists from Radboud University (n = 44, 39) and Utrecht University (n = 48, 44). More information about the process and source code can be found under the "Data Manipulation" folder on this website.\
@@ -119,6 +92,29 @@ where $N_p$ represents the sum total of all papers of an author and $n_c$ repres
             -   ts_dyads_evo mainly -\> interesting to gain more information of the correctness of the estimation process
 
 # Descriptive Analysis
+
+## Set up
+
+```{r, warning=FALSE, message=FALSE, results='hide'}
+rm(list = ls())
+
+#---- Libraries ----
+library(tidyverse)  # I assume you already installed this one!
+library(igraph)
+
+
+```
+
+## Load data
+
+```{r}
+load("data/processed/soc_data_raw.RData")
+
+load("data/processed/RU_UU_ego.RData")
+
+load("data/processed/RU_UU_works.RData")
+
+```
 
 I still need to put this in a nice descriptives table
 
