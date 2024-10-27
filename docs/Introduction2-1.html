@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Niels Vullings" />
+
+
+<title>Introduction</title>
+
+<script src="site_libs/header-attrs-2.18/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+<script src="site_libs/navigation-1.1/sourceembed.js"></script>
+<script src="site_libs/clipboard-1.7.1/clipboard.min.js"></script>
+<link href="site_libs/primer-tooltips-1.4.0/build.css" rel="stylesheet" />
+<link href="site_libs/klippy-0.0.0.9500/css/klippy.min.css" rel="stylesheet" />
+<script src="site_libs/klippy-0.0.0.9500/js/klippy.min.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+
+
+
+<style type="text/css">
+#rmd-source-code {
+  display: none;
+}
+</style>
+
+<style type="text/css">
+/* for pandoc --citeproc since 2.11 */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="tweaks.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html"></a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">
+    <span class="fa fa-home"></span>
+     
+  </a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Journal
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="cheat_sheet.html">Buddy's first markdown file</a>
+    </li>
+    <li>
+      <a href="Week1.html">Week 1</a>
+    </li>
+    <li>
+      <a href="Week2.html">Week 2</a>
+    </li>
+    <li>
+      <a href="Week3-webscraping.html">Week 3</a>
+    </li>
+    <li>
+      <a href="Week4.html">Week 4</a>
+    </li>
+    <li class="dropdown-submenu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Week 5</a>
+      <ul class="dropdown-menu" role="menu">
+        <li>
+          <a href="Week5.html">Logic of SAOM</a>
+        </li>
+        <li>
+          <a href="Week5_RSiena.html">RSiena</a>
+        </li>
+      </ul>
+    </li>
+    <li>
+      <a href="Week6.html">Week 6</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Data Preparation
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="Data_exploration.html">Data Exploration</a>
+    </li>
+    <li class="dropdown-submenu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Data Manipulation</a>
+      <ul class="dropdown-menu" role="menu">
+        <li>
+          <a href="Data_preparation.html">Data Prep (Old)</a>
+        </li>
+        <li>
+          <a href="Data_preparation_2.html">Data Prep (New)</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Paper (draft)
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="Introduction2-1.html">Introduction</a>
+    </li>
+    <li>
+      <a href="Theory.html">Theory</a>
+    </li>
+    <li class="dropdown-submenu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Data</a>
+      <ul class="dropdown-menu" role="menu">
+        <li>
+          <a href="Data.html">Data</a>
+        </li>
+      </ul>
+    </li>
+    <li class="dropdown-submenu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Results</a>
+      <ul class="dropdown-menu" role="menu">
+        <li>
+          <a href="Descriptives.html">Descriptive Results</a>
+        </li>
+        <li>
+          <a href="Siena_Results(final).html">RSiena Models</a>
+        </li>
+        <li>
+          <a href="Siena_GOF.html">RSiena GoF</a>
+        </li>
+        <li>
+          <a href="Siena_Behavior.html">Rsiena Behavior</a>
+        </li>
+      </ul>
+    </li>
+    <li class="dropdown-header">Conclusion</li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://github.com/Niels-Vullings/labjournal">
+    <span class="fab fa-github"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+<li role="separator" class="divider"></li>
+<li><a id="rmd-download-source" href="#">Download Rmd</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore">Introduction</h1>
+<h4 class="author">Niels Vullings</h4>
+
+</div>
+
+
+<style>
+body {
+  text-align: justify;
+  font-family: Times;
+}
+
+h1, .h1, h2, .h2, h3, .h3 {
+  margin-top: 24px;
+  font-family: Times;
+}
+</style>
+<script>
+  addClassKlippyTo("pre.r, pre.markdown");
+  addKlippy('right', 'top', 'auto', '1', 'Copy code', 'Copied!');
+</script>
+<p>Last compiled on oktober, 2024</p>
+<p><br></p>
+<hr />
+<div id="introduction" class="section level1" number="1">
+<h1><span class="header-section-number">1</span> Introduction</h1>
+<p>Inequalities are omnipresent in Dutch society. Not all people have
+the same opportunities and thus social differences exist in who has and
+who has not. One of the most prominent social divisions in society is
+still gender. Especially in the Dutch labour market, men and women are
+treated and valued differently, with women making less on average and
+having less job security than men (gender work paper). Unfortunately,
+the academic world in the Netherlands is not an outlier in this case.
+There is a growing body of research studying the academic disparities
+between men and women <span class="citation">(Mulders, Hofstra, and
+Tolsma 2024)</span>, even within fields such as Sociology, which are
+assumed to be more progressive and egalitarian (ref.). professors are
+more often men than women and even across similar positions, men are
+paid more than women <span class="citation">(Pouwels and Mutsaers
+2023)</span>. However, these inequalities are not only structural, they
+are also found in the interactions and networks of male and female
+scholars <span class="citation">(Bellotti et al. 2022)</span>.
+Therefore, this study will look at the collaborative networks of
+scholars in Dutch universities, specifically Radboud University and
+Utrecht University.<br />
+When it comes to publishing, collaborating and gaining prestige, there
+are differences between how men and women. Men and women do not receive
+the same treatment and grants, publications and upper academic positions
+are unequally distributed <span class="citation">(Bellotti et al.
+2022)</span>. They studied the composition of male and female
+collaboration networks in Italy and found persisting inequalities
+between men and women in terms of research funding and collaboration
+across all academic disciplines. In short, collaboration between
+scientists is in part gendered.<br />
+In a study that looked at the impact that networks have on gender
+differences in coauthorship, it was found that representation of women
+matters in relation to their network access <span
+class="citation">(McDowell, Singell, and Stater 2006)</span>. The study
+looked at how male and female economist PhD’s have access in their
+networks for publications and co-authorship. They find that over time,
+women are less likely to coauthor and publish articles compared to men.
+However, they also find that this probability does dwindle by 1993. When
+other forms of gender differences are included, women are less likely to
+be “successful” in academics than men.<br />
+Very little studies within the collaboration literature have focused on
+clustering in terms of social inequalities. <span
+class="citation">(Long, Cunningham, and Braithwaite 2013)</span>wrote a
+systematic review on brokers in collaborative networks and how this
+influence the spread of information, but this study focused on
+organisations as a whole, rather than public universities. Their
+conclusion is that while brokers, bridges and boundary spanners do play
+a critical role in spreading information throughout networks,
+information will spread more efficiently when networks are more close
+knit. However, this paper pays little attention to who these brokers
+are. In organisational science, organisations are assumed to be
+egalitarian and thus social inequalities are deemed non existent <span
+class="citation">(Long, Cunningham, and Braithwaite 2013)</span>.<br />
+  This study will drop the assumption that organisations are egalitarian
+in order to see whether gender inequalities play a role in the
+collaborative networks of academics. This is in line with previous
+studies who found persisting inequalities in both pay disparities <span
+class="citation">(Kim, Hofstra, and Galvez 2024)</span> and career
+inequalities <span class="citation">(Mulders, Hofstra, and Tolsma
+2024)</span>. This study will explore how collaboration networks of
+Dutch Sociologists are clustered in terms of gender. This leads to the
+following research question:</p>
+<ul>
+<li><em>RQ 1: To what extent are collaboration networks of sociologists
+at Utrecht University and Radboud University clustered in terms of
+gender?</em></li>
+</ul>
+<p>  Secondly, this article will look at how the prestige or success of
+female sociologists influences this gender clustering in coauthorship
+networks. Previous studies pointed out that not all research is valued
+equally and that gender is still an indicator of this inequality <span
+class="citation">(Bellotti et al. 2022; Bozeman and Gaughan
+2011)</span>. Studies on the matthew/matilda-effect have shown that
+people want to work with people who are succesfull, both with <span
+class="citation">(Bellotti et al. 2022; Kwiek and Roszka 2021; Y. S.
+Wang et al. 2023)</span> and without <span class="citation">(J. Wang
+2014; Bol, De Vaan, and Rijt 2018)</span> regards to gender. By studying
+this inequality through a social network perspective, this study will
+help us to see how male and female scholars relate to each other and how
+there preferences influence the likelihood of publishing together (or
+not), and will give insights into the patterns of gaining academic
+prestige (or not). However, as both <span class="citation">(Bellotti et
+al. 2022)</span>,<span class="citation">(McDowell, Singell, and Stater
+2006)</span> and <span class="citation">(Mulders, Hofstra, and Tolsma
+2024)</span> have pointed out, these inequalities are prone to change.
+Therefore, to know if prestige influences genderclustering, it is
+similarly important to know how and to what extent this gender
+clustering has changed over time. This leads to the following research
+question:</p>
+<ul>
+<li><p><em>RQ2: How has gender clustering of collaboration networks
+changed over time?</em></p></li>
+<li><p><em>RQ 3: To what extent does the prestige of female sociologists
+at Radboud University and Utrecht University influence the gender
+clustering of publication networks?</em></p></li>
+</ul>
+<hr />
+<div id="refs" class="references csl-bib-body hanging-indent"
+entry-spacing="0">
+<div id="ref-bellotti2022" class="csl-entry">
+Bellotti, E., D. Czerniawska, M. G. Everett, and Luigi Guadalupi. 2022.
+<span>“Gender Inequalities in Research Funding: Unequal Network
+Configurations, or Unequal Network Returns?”</span> <em>Social
+Networks</em> 70 (July): 138–51. <a
+href="https://doi.org/10.1016/j.socnet.2021.12.007">https://doi.org/10.1016/j.socnet.2021.12.007</a>.
+</div>
+<div id="ref-bol2018matthew" class="csl-entry">
+Bol, Thijs, Mathijs De Vaan, and Arnout van de Rijt. 2018. <span>“The
+Matthew Effect in Science Funding.”</span> <em>Proceedings of the
+National Academy of Sciences</em> 115 (19): 4887–90.
+</div>
+<div id="ref-bozeman2011men" class="csl-entry">
+Bozeman, Barry, and Monica Gaughan. 2011. <span>“How Do Men and Women
+Differ in Research Collaborations? An Analysis of the Collaborative
+Motives and Strategies of Academic Researchers.”</span> <em>Research
+Policy</em> 40 (10): 1393–1402.
+</div>
+<div id="ref-kim2024persistent" class="csl-entry">
+Kim, Lanu, Bas Hofstra, and Sebastian Munoz-Najar Galvez. 2024. <span>“A
+Persistent Gender Pay Gap Among Faculty in a Public University
+System.”</span> <em>Scientific Reports</em> 14 (1): 22212.
+</div>
+<div id="ref-kwiek2021gender" class="csl-entry">
+Kwiek, Marek, and Wojciech Roszka. 2021. <span>“Gender-Based Homophily
+in Research: A Large-Scale Study of Man-Woman Collaboration.”</span>
+<em>Journal of Informetrics</em> 15 (3): 101171.
+</div>
+<div id="ref-long2013bridges" class="csl-entry">
+Long, Janet C, Frances C Cunningham, and Jeffrey Braithwaite. 2013.
+<span>“Bridges, Brokers and Boundary Spanners in Collaborative Networks:
+A Systematic Review.”</span> <em>BMC Health Services Research</em> 13:
+1–13.
+</div>
+<div id="ref-mcdowell2006a" class="csl-entry">
+McDowell, John M., Larry D. Singell, and Mark Stater. 2006. <span>“Two
+to Tango? Gender Differences in the Decision to Publish and
+Coauthor.”</span> <em>Economic Inquiry</em> 44 (1): 153–68. <a
+href="https://doi.org/10.1093/ei/cbi065">https://doi.org/10.1093/ei/cbi065</a>.
+</div>
+<div id="ref-mulders2024matter" class="csl-entry">
+Mulders, Anne Maaike, Bas Hofstra, and Jochem Tolsma. 2024. <span>“A
+Matter of Time? Gender and Ethnic Inequality in the Academic Publishing
+Careers of Dutch PhDs.”</span> <em>Quantitative Science Studies</em>,
+1–29.
+</div>
+<div id="ref-pouwels2023finan" class="csl-entry">
+Pouwels, Babette, and Inge Mutsaers. 2023. <span>“Financiële Beloning
+van Vrouwen En Mannen Bij Het Wetenschappelijk Personeel van de Radboud
+Universiteit 2020 En 2021.”</span> <em>Bureau Pouwels</em>, 1–115.
+</div>
+<div id="ref-wang2014unpacking" class="csl-entry">
+Wang, Jian. 2014. <span>“Unpacking the Matthew Effect in
+Citations.”</span> <em>Journal of Informetrics</em> 8 (2): 329–39.
+</div>
+<div id="ref-wang2023gender" class="csl-entry">
+Wang, Y Samuel, Carole J Lee, Jevin D West, Carl T Bergstrom, and Elena
+A Erosheva. 2023. <span>“Gender-Based Homophily in Collaborations Across
+a Heterogeneous Scholarly Landscape.”</span> <em>Plos One</em> 18 (4):
+e0283106.
+</div>
+</div>
+</div>
+
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIkludHJvZHVjdGlvbiINCiNiaWJsaW9ncmFwaHk6IHJlZmVyZW5jZXMuYmliDQphdXRob3I6ICJOaWVscyBWdWxsaW5ncyINCmJpYmxpb2dyYXBoeTogcmVmZXJlbmNlcy5iaWINCi0tLQ0KDQpgYGB7PWh0bWx9DQo8c3R5bGU+DQpib2R5IHsNCiAgdGV4dC1hbGlnbjoganVzdGlmeTsNCiAgZm9udC1mYW1pbHk6IFRpbWVzOw0KfQ0KDQpoMSwgLmgxLCBoMiwgLmgyLCBoMywgLmgzIHsNCiAgbWFyZ2luLXRvcDogMjRweDsNCiAgZm9udC1mYW1pbHk6IFRpbWVzOw0KfQ0KPC9zdHlsZT4NCmBgYA0KYGBge3IsIGdsb2JhbHNldHRpbmdzLCBlY2hvPUZBTFNFLCB3YXJuaW5nPUZBTFNFLCByZXN1bHRzPSdoaWRlJ30NCmxpYnJhcnkoa25pdHIpDQoNCmtuaXRyOjpvcHRzX2NodW5rJHNldChlY2hvID0gVFJVRSkNCm9wdHNfY2h1bmskc2V0KHRpZHkub3B0cz1saXN0KHdpZHRoLmN1dG9mZj0xMDApLHRpZHk9VFJVRSwgd2FybmluZyA9IEZBTFNFLCBtZXNzYWdlID0gRkFMU0UsY29tbWVudCA9ICIjPiIsIGNhY2hlPVRSVUUsIGNsYXNzLnNvdXJjZT1jKCJ0ZXN0IiksIGNsYXNzLm91dHB1dD1jKCJ0ZXN0MiIpKQ0Kb3B0aW9ucyh3aWR0aCA9IDEwMCkNCnJnbDo6c2V0dXBLbml0cigpDQoNCg0KDQpjb2xvcml6ZSA8LSBmdW5jdGlvbih4LCBjb2xvcikge3NwcmludGYoIjxzcGFuIHN0eWxlPSdjb2xvcjogJXM7Jz4lczwvc3Bhbj4iLCBjb2xvciwgeCkgfQ0KDQpgYGANCg0KYGBge3Iga2xpcHB5LCBlY2hvPUZBTFNFLCBpbmNsdWRlPVRSVUV9DQprbGlwcHk6OmtsaXBweShwb3NpdGlvbiA9IGMoJ3RvcCcsICdyaWdodCcpKQ0KIyBrbGlwcHk6OmtsaXBweShjb2xvciA9ICdkYXJrZ3JlZW4nKQ0KI2tsaXBweTo6a2xpcHB5KHRvb2x0aXBfbWVzc2FnZSA9ICdDbGljayB0byBjb3B5JywgdG9vbHRpcF9zdWNjZXNzID0gJ0RvbmUnKQ0KYGBgDQoNCkxhc3QgY29tcGlsZWQgb24gYHIgZm9ybWF0KFN5cy50aW1lKCksICclQiwgJVknKWANCg0KPGJyPg0KDQotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0NCg0KIyBJbnRyb2R1Y3Rpb24NCg0KSW5lcXVhbGl0aWVzIGFyZSBvbW5pcHJlc2VudCBpbiBEdXRjaCBzb2NpZXR5LiBOb3QgYWxsIHBlb3BsZSBoYXZlIHRoZSBzYW1lIG9wcG9ydHVuaXRpZXMgYW5kIHRodXMgc29jaWFsIGRpZmZlcmVuY2VzIGV4aXN0IGluIHdobyBoYXMgYW5kIHdobyBoYXMgbm90LiBPbmUgb2YgdGhlIG1vc3QgcHJvbWluZW50IHNvY2lhbCBkaXZpc2lvbnMgaW4gc29jaWV0eSBpcyBzdGlsbCBnZW5kZXIuIEVzcGVjaWFsbHkgaW4gdGhlIER1dGNoIGxhYm91ciBtYXJrZXQsIG1lbiBhbmQgd29tZW4gYXJlIHRyZWF0ZWQgYW5kIHZhbHVlZCBkaWZmZXJlbnRseSwgd2l0aCB3b21lbiBtYWtpbmcgbGVzcyBvbiBhdmVyYWdlIGFuZCBoYXZpbmcgbGVzcyBqb2Igc2VjdXJpdHkgdGhhbiBtZW4gKGdlbmRlciB3b3JrIHBhcGVyKS4gVW5mb3J0dW5hdGVseSwgdGhlIGFjYWRlbWljIHdvcmxkIGluIHRoZSBOZXRoZXJsYW5kcyBpcyBub3QgYW4gb3V0bGllciBpbiB0aGlzIGNhc2UuIFRoZXJlIGlzIGEgZ3Jvd2luZyBib2R5IG9mIHJlc2VhcmNoIHN0dWR5aW5nIHRoZSBhY2FkZW1pYyBkaXNwYXJpdGllcyBiZXR3ZWVuIG1lbiBhbmQgd29tZW4gW0BtdWxkZXJzMjAyNG1hdHRlcl0sIGV2ZW4gd2l0aGluIGZpZWxkcyBzdWNoIGFzIFNvY2lvbG9neSwgd2hpY2ggYXJlIGFzc3VtZWQgdG8gYmUgbW9yZSBwcm9ncmVzc2l2ZSBhbmQgZWdhbGl0YXJpYW4gKHJlZi4pLiBwcm9mZXNzb3JzIGFyZSBtb3JlIG9mdGVuIG1lbiB0aGFuIHdvbWVuIGFuZCBldmVuIGFjcm9zcyBzaW1pbGFyIHBvc2l0aW9ucywgbWVuIGFyZSBwYWlkIG1vcmUgdGhhbiB3b21lbiBbQHBvdXdlbHMyMDIzZmluYW5dLiBIb3dldmVyLCB0aGVzZSBpbmVxdWFsaXRpZXMgYXJlIG5vdCBvbmx5IHN0cnVjdHVyYWwsIHRoZXkgYXJlIGFsc28gZm91bmQgaW4gdGhlIGludGVyYWN0aW9ucyBhbmQgbmV0d29ya3Mgb2YgbWFsZSBhbmQgZmVtYWxlIHNjaG9sYXJzIFtAYmVsbG90dGkyMDIyXS4gVGhlcmVmb3JlLCB0aGlzIHN0dWR5IHdpbGwgbG9vayBhdCB0aGUgY29sbGFib3JhdGl2ZSBuZXR3b3JrcyBvZiBzY2hvbGFycyBpbiBEdXRjaCB1bml2ZXJzaXRpZXMsIHNwZWNpZmljYWxseSBSYWRib3VkIFVuaXZlcnNpdHkgYW5kIFV0cmVjaHQgVW5pdmVyc2l0eS5cDQpXaGVuIGl0IGNvbWVzIHRvIHB1Ymxpc2hpbmcsIGNvbGxhYm9yYXRpbmcgYW5kIGdhaW5pbmcgcHJlc3RpZ2UsIHRoZXJlIGFyZSBkaWZmZXJlbmNlcyBiZXR3ZWVuIGhvdyBtZW4gYW5kIHdvbWVuLiBNZW4gYW5kIHdvbWVuIGRvIG5vdCByZWNlaXZlIHRoZSBzYW1lIHRyZWF0bWVudCBhbmQgZ3JhbnRzLCBwdWJsaWNhdGlvbnMgYW5kIHVwcGVyIGFjYWRlbWljIHBvc2l0aW9ucyBhcmUgdW5lcXVhbGx5IGRpc3RyaWJ1dGVkIFtAYmVsbG90dGkyMDIyXS4gVGhleSBzdHVkaWVkIHRoZSBjb21wb3NpdGlvbiBvZiBtYWxlIGFuZCBmZW1hbGUgY29sbGFib3JhdGlvbiBuZXR3b3JrcyBpbiBJdGFseSBhbmQgZm91bmQgcGVyc2lzdGluZyBpbmVxdWFsaXRpZXMgYmV0d2VlbiBtZW4gYW5kIHdvbWVuIGluIHRlcm1zIG9mIHJlc2VhcmNoIGZ1bmRpbmcgYW5kIGNvbGxhYm9yYXRpb24gYWNyb3NzIGFsbCBhY2FkZW1pYyBkaXNjaXBsaW5lcy4gSW4gc2hvcnQsIGNvbGxhYm9yYXRpb24gYmV0d2VlbiBzY2llbnRpc3RzIGlzIGluIHBhcnQgZ2VuZGVyZWQuXA0KSW4gYSBzdHVkeSB0aGF0IGxvb2tlZCBhdCB0aGUgaW1wYWN0IHRoYXQgbmV0d29ya3MgaGF2ZSBvbiBnZW5kZXIgZGlmZmVyZW5jZXMgaW4gY29hdXRob3JzaGlwLCBpdCB3YXMgZm91bmQgdGhhdCByZXByZXNlbnRhdGlvbiBvZiB3b21lbiBtYXR0ZXJzIGluIHJlbGF0aW9uIHRvIHRoZWlyIG5ldHdvcmsgYWNjZXNzIFtAbWNkb3dlbGwyMDA2YV0uIFRoZSBzdHVkeSBsb29rZWQgYXQgaG93IG1hbGUgYW5kIGZlbWFsZSBlY29ub21pc3QgUGhEJ3MgaGF2ZSBhY2Nlc3MgaW4gdGhlaXIgbmV0d29ya3MgZm9yIHB1YmxpY2F0aW9ucyBhbmQgY28tYXV0aG9yc2hpcC4gVGhleSBmaW5kIHRoYXQgb3ZlciB0aW1lLCB3b21lbiBhcmUgbGVzcyBsaWtlbHkgdG8gY29hdXRob3IgYW5kIHB1Ymxpc2ggYXJ0aWNsZXMgY29tcGFyZWQgdG8gbWVuLiBIb3dldmVyLCB0aGV5IGFsc28gZmluZCB0aGF0IHRoaXMgcHJvYmFiaWxpdHkgZG9lcyBkd2luZGxlIGJ5IDE5OTMuIFdoZW4gb3RoZXIgZm9ybXMgb2YgZ2VuZGVyIGRpZmZlcmVuY2VzIGFyZSBpbmNsdWRlZCwgd29tZW4gYXJlIGxlc3MgbGlrZWx5IHRvIGJlICJzdWNjZXNzZnVsIiBpbiBhY2FkZW1pY3MgdGhhbiBtZW4uXA0KVmVyeSBsaXR0bGUgc3R1ZGllcyB3aXRoaW4gdGhlIGNvbGxhYm9yYXRpb24gbGl0ZXJhdHVyZSBoYXZlIGZvY3VzZWQgb24gY2x1c3RlcmluZyBpbiB0ZXJtcyBvZiBzb2NpYWwgaW5lcXVhbGl0aWVzLiBbQGxvbmcyMDEzYnJpZGdlc113cm90ZSBhIHN5c3RlbWF0aWMgcmV2aWV3IG9uIGJyb2tlcnMgaW4gY29sbGFib3JhdGl2ZSBuZXR3b3JrcyBhbmQgaG93IHRoaXMgaW5mbHVlbmNlIHRoZSBzcHJlYWQgb2YgaW5mb3JtYXRpb24sIGJ1dCB0aGlzIHN0dWR5IGZvY3VzZWQgb24gb3JnYW5pc2F0aW9ucyBhcyBhIHdob2xlLCByYXRoZXIgdGhhbiBwdWJsaWMgdW5pdmVyc2l0aWVzLiBUaGVpciBjb25jbHVzaW9uIGlzIHRoYXQgd2hpbGUgYnJva2VycywgYnJpZGdlcyBhbmQgYm91bmRhcnkgc3Bhbm5lcnMgZG8gcGxheSBhIGNyaXRpY2FsIHJvbGUgaW4gc3ByZWFkaW5nIGluZm9ybWF0aW9uIHRocm91Z2hvdXQgbmV0d29ya3MsIGluZm9ybWF0aW9uIHdpbGwgc3ByZWFkIG1vcmUgZWZmaWNpZW50bHkgd2hlbiBuZXR3b3JrcyBhcmUgbW9yZSBjbG9zZSBrbml0LiBIb3dldmVyLCB0aGlzIHBhcGVyIHBheXMgbGl0dGxlIGF0dGVudGlvbiB0byB3aG8gdGhlc2UgYnJva2VycyBhcmUuIEluIG9yZ2FuaXNhdGlvbmFsIHNjaWVuY2UsIG9yZ2FuaXNhdGlvbnMgYXJlIGFzc3VtZWQgdG8gYmUgZWdhbGl0YXJpYW4gYW5kIHRodXMgc29jaWFsIGluZXF1YWxpdGllcyBhcmUgZGVlbWVkIG5vbiBleGlzdGVudCBbQGxvbmcyMDEzYnJpZGdlc10uXA0K4oCDIFRoaXMgc3R1ZHkgd2lsbCBkcm9wIHRoZSBhc3N1bXB0aW9uIHRoYXQgb3JnYW5pc2F0aW9ucyBhcmUgZWdhbGl0YXJpYW4gaW4gb3JkZXIgdG8gc2VlIHdoZXRoZXIgZ2VuZGVyIGluZXF1YWxpdGllcyBwbGF5IGEgcm9sZSBpbiB0aGUgY29sbGFib3JhdGl2ZSBuZXR3b3JrcyBvZiBhY2FkZW1pY3MuIFRoaXMgaXMgaW4gbGluZSB3aXRoIHByZXZpb3VzIHN0dWRpZXMgd2hvIGZvdW5kIHBlcnNpc3RpbmcgaW5lcXVhbGl0aWVzIGluIGJvdGggcGF5IGRpc3Bhcml0aWVzIFtAa2ltMjAyNHBlcnNpc3RlbnRdIGFuZCBjYXJlZXIgaW5lcXVhbGl0aWVzIFtAbXVsZGVyczIwMjRtYXR0ZXJdLiBUaGlzIHN0dWR5IHdpbGwgZXhwbG9yZSBob3cgY29sbGFib3JhdGlvbiBuZXR3b3JrcyBvZiBEdXRjaCBTb2Npb2xvZ2lzdHMgYXJlIGNsdXN0ZXJlZCBpbiB0ZXJtcyBvZiBnZW5kZXIuIFRoaXMgbGVhZHMgdG8gdGhlIGZvbGxvd2luZyByZXNlYXJjaCBxdWVzdGlvbjoNCg0KLSAgICpSUSAxOiBUbyB3aGF0IGV4dGVudCBhcmUgY29sbGFib3JhdGlvbiBuZXR3b3JrcyBvZiBzb2Npb2xvZ2lzdHMgYXQgVXRyZWNodCBVbml2ZXJzaXR5IGFuZCBSYWRib3VkIFVuaXZlcnNpdHkgY2x1c3RlcmVkIGluIHRlcm1zIG9mIGdlbmRlcj8qDQoNCuKAgyBTZWNvbmRseSwgdGhpcyBhcnRpY2xlIHdpbGwgbG9vayBhdCBob3cgdGhlIHByZXN0aWdlIG9yIHN1Y2Nlc3Mgb2YgZmVtYWxlIHNvY2lvbG9naXN0cyBpbmZsdWVuY2VzIHRoaXMgZ2VuZGVyIGNsdXN0ZXJpbmcgaW4gY29hdXRob3JzaGlwIG5ldHdvcmtzLiBQcmV2aW91cyBzdHVkaWVzIHBvaW50ZWQgb3V0IHRoYXQgbm90IGFsbCByZXNlYXJjaCBpcyB2YWx1ZWQgZXF1YWxseSBhbmQgdGhhdCBnZW5kZXIgaXMgc3RpbGwgYW4gaW5kaWNhdG9yIG9mIHRoaXMgaW5lcXVhbGl0eSBbQGJlbGxvdHRpMjAyMjsgQGJvemVtYW4yMDExbWVuXS4gU3R1ZGllcyBvbiB0aGUgbWF0dGhldy9tYXRpbGRhLWVmZmVjdCBoYXZlIHNob3duIHRoYXQgcGVvcGxlIHdhbnQgdG8gd29yayB3aXRoIHBlb3BsZSB3aG8gYXJlIHN1Y2Nlc2Z1bGwsIGJvdGggd2l0aCBbQGJlbGxvdHRpMjAyMjsgQGt3aWVrMjAyMWdlbmRlcjsgQHdhbmcyMDIzZ2VuZGVyXSBhbmQgd2l0aG91dCBbQHdhbmcyMDE0dW5wYWNraW5nOyBAYm9sMjAxOG1hdHRoZXddIHJlZ2FyZHMgdG8gZ2VuZGVyLiBCeSBzdHVkeWluZyB0aGlzIGluZXF1YWxpdHkgdGhyb3VnaCBhIHNvY2lhbCBuZXR3b3JrIHBlcnNwZWN0aXZlLCB0aGlzIHN0dWR5IHdpbGwgaGVscCB1cyB0byBzZWUgaG93IG1hbGUgYW5kIGZlbWFsZSBzY2hvbGFycyByZWxhdGUgdG8gZWFjaCBvdGhlciBhbmQgaG93IHRoZXJlIHByZWZlcmVuY2VzIGluZmx1ZW5jZSB0aGUgbGlrZWxpaG9vZCBvZiBwdWJsaXNoaW5nIHRvZ2V0aGVyIChvciBub3QpLCBhbmQgd2lsbCBnaXZlIGluc2lnaHRzIGludG8gdGhlIHBhdHRlcm5zIG9mIGdhaW5pbmcgYWNhZGVtaWMgcHJlc3RpZ2UgKG9yIG5vdCkuIEhvd2V2ZXIsIGFzIGJvdGggW0BiZWxsb3R0aTIwMjJdLFtAbWNkb3dlbGwyMDA2YV0gYW5kIFtAbXVsZGVyczIwMjRtYXR0ZXJdIGhhdmUgcG9pbnRlZCBvdXQsIHRoZXNlIGluZXF1YWxpdGllcyBhcmUgcHJvbmUgdG8gY2hhbmdlLiBUaGVyZWZvcmUsIHRvIGtub3cgaWYgcHJlc3RpZ2UgaW5mbHVlbmNlcyBnZW5kZXJjbHVzdGVyaW5nLCBpdCBpcyBzaW1pbGFybHkgaW1wb3J0YW50IHRvIGtub3cgaG93IGFuZCB0byB3aGF0IGV4dGVudCB0aGlzIGdlbmRlciBjbHVzdGVyaW5nIGhhcyBjaGFuZ2VkIG92ZXIgdGltZS4gVGhpcyBsZWFkcyB0byB0aGUgZm9sbG93aW5nIHJlc2VhcmNoIHF1ZXN0aW9uOg0KDQotICAgKlJRMjogSG93IGhhcyBnZW5kZXIgY2x1c3RlcmluZyBvZiBjb2xsYWJvcmF0aW9uIG5ldHdvcmtzIGNoYW5nZWQgb3ZlciB0aW1lPyoNCg0KLSAgICpSUSAzOiBUbyB3aGF0IGV4dGVudCBkb2VzIHRoZSBwcmVzdGlnZSBvZiBmZW1hbGUgc29jaW9sb2dpc3RzIGF0IFJhZGJvdWQgVW5pdmVyc2l0eSBhbmQgVXRyZWNodCBVbml2ZXJzaXR5IGluZmx1ZW5jZSB0aGUgZ2VuZGVyIGNsdXN0ZXJpbmcgb2YgcHVibGljYXRpb24gbmV0d29ya3M/Kg0KDQotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0NCg==</div>
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeSourceEmbed("Introduction2-1.Rmd");
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

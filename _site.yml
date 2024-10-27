@@ -43,17 +43,23 @@ navbar:
     - text: "Paper (draft)"
       menu:
       - text: "Introduction"
-        href: Introduction2.html
+        href: Introduction2-1.html
       - text: "Theory"
         href: Theory.html
       - text: "Data"
         menu:
         - text: "Data"
           href: Data.html
-        - text: "Descriptives"
-          href: Descriptives.html
       - text: "Results"
-        href: Siena_Results.html
+        menu:
+        - text: "Descriptive Results"
+          href: Descriptives.html
+        - text: "RSiena Models"
+          href: Siena_Results(final).html
+        - text: "RSiena GoF"
+          href: Siena_GOF.html
+        - text: "Rsiena Behavior"
+          href: Siena_Behavior.html
       - text: "Conclusion"
         href:
         

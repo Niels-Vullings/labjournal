@@ -1,0 +1,109 @@
+---
+title: "RSiena Behavioural Models"
+#bibliography: references.bib
+author: "Niels Vullings"
+bibliography: references.bib
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+```{r, echo=FALSE}
+rm(list = ls())
+```
+
+# Load UDF
+
+```{r}
+colorize <- function(x, color) {sprintf("<span style='color: %s;'>%s</span>", color, x) }
+
+fpackage.check <- function(packages) {
+  lapply(packages, FUN = function(x) {
+    if (!require(x, character.only = TRUE)) {
+      install.packages(x, dependencies = TRUE)
+      library(x, character.only = TRUE)
+    }
+  })
+}
+
+fsave <- function(x, file = NULL, location = "./results/processed/") {
+  ifelse(!dir.exists("results"), dir.create("data"), FALSE)
+  ifelse(!dir.exists("results/processed"), dir.create("results/processed"), FALSE)
+  if (is.null(file))
+    file = deparse(substitute(x))
+  datename <- substr(gsub("[:-]", "", Sys.time()), 1, 8)
+  totalname <- paste(location, datename, file, ".rda", sep = "")
+  save(x, file = totalname)  #need to fix if file is reloaded as input name, not as x. 
+}
+
+fload <- function(filename) {
+  load(filename)
+  get(ls()[ls() != "filename"])
+}
+
+fshowdf <- function(x, ...) {
+  knitr::kable(x, digits = 2, "html", ...) %>%
+    kableExtra::kable_styling(bootstrap_options = c("striped", "hover")) %>%
+    kableExtra::scroll_box(width = "100%", height = "300px")
+}
+
+```
+
+# Load Packages
+
+```{r, warning=FALSE, results='hide', message=FALSE}
+packages <- c("tidyverse", "sna", "igraph", "RSiena", "iterators", "doParallel")
+
+fpackage.check(packages)
+
+```
+
+# Load Data
+
+```{r}
+# Load Ego data
+load("data/processed/RU_UU_ego.RData")
+
+# Load Works data
+load("data/processed/RU_UU_works.RData")
+
+# Load raw data for networks
+load("data/processed/soc_data_raw.RData")
+```
+
+# Make network data for RSiena
+
+```{r}
+print(paste0("", dim(soc_data$nets)))
+
+wave_1 <- soc_data$nets[1,,]
+diag(wave_1) <- 0
+
+wave_2 <- soc_data$nets[2,,]
+diag(wave_2) <- 0
+
+net_soc_array <- array(data = c(wave_1, wave_2), dim = c(dim(wave_1), 2))
+dim(net_soc_array)
+```
+
+# Analysis {.tabset}
+
+TEXT
+
+### Create SienaData
+
+```{r}
+# #---- Dependent ----
+# net <- sienaDependent(net_soc_array)
+# 
+# Beh_pres <- sienaDependent(Beh_pres, type = "behavior")
+# 
+# #---- Independent ----
+# # gender <- 
+#   
+# # prestige <- 
+# 
+# #---- Make Siena df ----
+# mydata <- sienaDataCreate(net, Beh_pres)
+```
+

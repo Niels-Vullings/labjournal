@@ -1,0 +1,63 @@
+---
+title: "Introduction"
+#bibliography: references.bib
+author: "Niels Vullings"
+bibliography: references.bib
+---
+
+```{=html}
+<style>
+body {
+  text-align: justify;
+  font-family: Times;
+}
+
+h1, .h1, h2, .h2, h3, .h3 {
+  margin-top: 24px;
+  font-family: Times;
+}
+</style>
+```
+```{r, globalsettings, echo=FALSE, warning=FALSE, results='hide'}
+library(knitr)
+
+knitr::opts_chunk$set(echo = TRUE)
+opts_chunk$set(tidy.opts=list(width.cutoff=100),tidy=TRUE, warning = FALSE, message = FALSE,comment = "#>", cache=TRUE, class.source=c("test"), class.output=c("test2"))
+options(width = 100)
+rgl::setupKnitr()
+
+
+
+colorize <- function(x, color) {sprintf("<span style='color: %s;'>%s</span>", color, x) }
+
+```
+
+```{r klippy, echo=FALSE, include=TRUE}
+klippy::klippy(position = c('top', 'right'))
+# klippy::klippy(color = 'darkgreen')
+#klippy::klippy(tooltip_message = 'Click to copy', tooltip_success = 'Done')
+```
+
+Last compiled on `r format(Sys.time(), '%B, %Y')`
+
+<br>
+
+------------------------------------------------------------------------
+
+# Introduction
+
+Inequalities are omnipresent in Dutch society. Not all people have the same opportunities and thus social differences exist in who has and who has not. One of the most prominent social divisions in society is still gender. Especially in the Dutch labour market, men and women are treated and valued differently, with women making less on average and having less job security than men (gender work paper). Unfortunately, the academic world in the Netherlands is not an outlier in this case. There is a growing body of research studying the academic disparities between men and women [@mulders2024matter], even within fields such as Sociology, which are assumed to be more progressive and egalitarian (ref.). professors are more often men than women and even across similar positions, men are paid more than women [@pouwels2023finan]. However, these inequalities are not only structural, they are also found in the interactions and networks of male and female scholars [@bellotti2022]. Therefore, this study will look at the collaborative networks of scholars in Dutch universities, specifically Radboud University and Utrecht University.\
+When it comes to publishing, collaborating and gaining prestige, there are differences between how men and women. Men and women do not receive the same treatment and grants, publications and upper academic positions are unequally distributed [@bellotti2022]. They studied the composition of male and female collaboration networks in Italy and found persisting inequalities between men and women in terms of research funding and collaboration across all academic disciplines. In short, collaboration between scientists is in part gendered.\
+In a study that looked at the impact that networks have on gender differences in coauthorship, it was found that representation of women matters in relation to their network access [@mcdowell2006a]. The study looked at how male and female economist PhD's have access in their networks for publications and co-authorship. They find that over time, women are less likely to coauthor and publish articles compared to men. However, they also find that this probability does dwindle by 1993. When other forms of gender differences are included, women are less likely to be "successful" in academics than men.\
+Very little studies within the collaboration literature have focused on clustering in terms of social inequalities. [@long2013bridges]wrote a systematic review on brokers in collaborative networks and how this influence the spread of information, but this study focused on organisations as a whole, rather than public universities. Their conclusion is that while brokers, bridges and boundary spanners do play a critical role in spreading information throughout networks, information will spread more efficiently when networks are more close knit. However, this paper pays little attention to who these brokers are. In organisational science, organisations are assumed to be egalitarian and thus social inequalities are deemed non existent [@long2013bridges].\
+  This study will drop the assumption that organisations are egalitarian in order to see whether gender inequalities play a role in the collaborative networks of academics. This is in line with previous studies who found persisting inequalities in both pay disparities [@kim2024persistent] and career inequalities [@mulders2024matter]. This study will explore how collaboration networks of Dutch Sociologists are clustered in terms of gender. This leads to the following research question:
+
+-   *RQ 1: To what extent are collaboration networks of sociologists at Utrecht University and Radboud University clustered in terms of gender?*
+
+  Secondly, this article will look at how the prestige or success of female sociologists influences this gender clustering in coauthorship networks. Previous studies pointed out that not all research is valued equally and that gender is still an indicator of this inequality [@bellotti2022; @bozeman2011men]. Studies on the matthew/matilda-effect have shown that people want to work with people who are succesfull, both with [@bellotti2022; @kwiek2021gender; @wang2023gender] and without [@wang2014unpacking; @bol2018matthew] regards to gender. By studying this inequality through a social network perspective, this study will help us to see how male and female scholars relate to each other and how there preferences influence the likelihood of publishing together (or not), and will give insights into the patterns of gaining academic prestige (or not). However, as both [@bellotti2022],[@mcdowell2006a] and [@mulders2024matter] have pointed out, these inequalities are prone to change. Therefore, to know if prestige influences genderclustering, it is similarly important to know how and to what extent this gender clustering has changed over time. This leads to the following research question:
+
+-   *RQ2: How has gender clustering of collaboration networks changed over time?*
+
+-   *RQ 3: To what extent does the prestige of female sociologists at Radboud University and Utrecht University influence the gender clustering of publication networks?*
+
+------------------------------------------------------------------------

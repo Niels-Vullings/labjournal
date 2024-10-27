@@ -6,7 +6,7 @@ Filename is ./results/Collab_M1.txt.
 
 This file contains primary output for SIENA project <<./results/Collab_M1>>.
 
-Date and time: 16/10/2024 14:38:46 
+Date and time: 28/10/2024 00:12:25 
 
 RSiena version 1.4.7 (20 02 2024)
 
@@ -21,7 +21,7 @@ Data input.
 0 dependent bipartite variables,
 0 dependent discrete behavior variables,
 0 dependent continuous behavior variables,
-2 constant actor covariates,
+0 constant actor covariates,
 0 exogenous changing actor covariates,
 0 constant dyadic covariates,
 0 exogenous changing dyadic covariates,
@@ -93,36 +93,9 @@ No missing data for observation 2.
 
 
 
-@2
-Reading constant actor covariates.
-----------------------------------
-
-2 variables, named:
-gender          
-prestige        
-
-A total of 2 non-changing individual covariates.
-
-Number of missing cases:
-gender          1 	( 1.0 %)
-prestige        0 	( 0.0 %)
-
-Information about covariates:
-              minimum  maximum	  mean  centered 
-gender          0.0     1.0      0.458    Y 
-prestige        0.0    55.0     11.310    Y 
-The mean values are subtracted from the covariates.
-
-
 
 The mean structural dissimilarity value subtracted in the
 balance calculations is         0.0123.
-
-For the similarity variable calculated from each actor covariate,
-the mean is subtracted.
-These means are:
-Similarity gender                   :       0.4995 
-Similarity prestige                 :       0.7767 
 
 
 
@@ -163,131 +136,3 @@ basic rate parameter net                3.0522
 outdegree (density)                               -1.7032 
 
 Initialisation of project <<./results/Collab_M1>> executed succesfully.
-
-
------------------------------------
-New Analysis started.
-Date and time: 16/10/2024 14:38:47
-New results follow.
------------------------------------
-
-RSiena version 1.4.7 (20 feb 24)
-
-
-@1
-Estimation by stochastic approximation algorithm.
-=================================================
-
-Random initialization of random number stream.
-Current random number seed is 808985.
-Effects object used: myeff_M1 
-Model Type:
- Standard actor-oriented model 
-Estimation method: conditional moment estimation.
-Conditioning variable is the total number of observed changes ("distance") 
-in the network variable.
-Distance for simulations is  151 .
-Standard errors are estimated with the likelihood ratio method.
-Dolby method (regression on scores) is used.
-Initial value of gain parameter is  0.2000000.
-Reduction factor for gain parameter is  0.5000000.
-Number of subphases in Phase 2 is 4.
-
-Initial parameter values are 
-  0. Rate parameter                           3.0522
-  1. eval:  outdegree (density)                            -1.7032
-  2. eval:  reciprocity                                     0.0000
-  3. eval:  indegree - popularity                           0.0000
-  4. eval:  outdegree - activity                            0.0000
-  5. eval:  network-isolate                                 0.0000
-  6. eval:  gender alter                                    0.0000
-  7. eval:  gender ego                                      0.0000
-  8. eval:  same gender                                     0.0000
-
-
-Values of target statistics are
-  1. Number of ties                                                     138.0000
-  2. Number of reciprocated ties                                         32.0000
-  3. Sum of squared indegrees                                           756.0000
-  4. Sum of squared outdegrees                                          346.0000
-  5. Number of isolates                                                  22.0000
-  6. Sum indegrees x gender                                              -9.4832
-  7. Sum outdegrees x gender                                             13.6468
-  8. Same values on gender                                               57.0000
-These were calculated from the data.
-
- 8 parameters, 8 statistics
-
-Estimation of derivatives by the LR method (type 1).
-
-
-@2
-End of stochastic approximation algorithm, phase 3.
----------------------------------------------------
-
-Total of 2646 iterations.
-Parameter estimates based on 1646 iterations,
-basic rate parameter as well as 
-convergence diagnostics, covariance and derivative matrices based on 1000 iterations.
-
-Information for convergence diagnosis.
-Averages, standard deviations, and t-ratios for deviations from targets:
-  1.   2.6280  11.1901   0.2348 
-  2.  -0.8460   6.8216  -0.1240 
-  3. 346.0300 994.6417   0.3479 
-  4.   7.6300  42.9318   0.1777 
-  5.  -0.6520   4.1260  -0.1580 
-  6.  -3.1613  11.5800  -0.2730 
-  7.   0.0552   5.7873   0.0095 
-  8.  -0.2480   8.3019  -0.0299 
-
-Good convergence is indicated by the t-ratios being close to zero.
-
-Overall maximum convergence ratio =  0.3883 .
-One or more of the t-statistics are rather large.
-
-
-
-@2
-Estimation Results.
--------------------
-
-Regular end of estimation algorithm.
-Total of 2646 iteration steps.
-
-
-@3
-Estimates and standard errors
-                             
-Rate parameters:
- 0. Rate parameter                              4.49  (   0.7704)
-
-Other parameters:
- 1. eval:  outdegree (density)                                    -2.0262  (   0.7553)
- 2. eval:  reciprocity                                             2.0488  (   0.2780)
- 3. eval:  indegree - popularity                                   0.2112  (   0.0351)
- 4. eval:  outdegree - activity                                   -0.1884  (   0.1402)
- 5. eval:  network-isolate                                         3.8785  (   1.3734)
- 6. eval:  gender alter                                            0.0086  (   0.1880)
- 7. eval:  gender ego                                              0.8983  (   0.3310)
- 8. eval:  same gender                                             0.2910  (   0.1934)
-
-
-@3
-Covariance matrices
-                   
-Covariance matrix of estimates (correlations below diagonal):
-     0.571     -0.002     -0.009     -0.101      0.936     -0.042      0.129     -0.042
-    -0.011      0.077      0.001     -0.003     -0.021     -0.004      0.012      0.004
-    -0.342      0.052      0.001      0.001     -0.014      0.003     -0.002      0.001
-    -0.958     -0.079      0.184      0.020     -0.163      0.007     -0.025      0.005
-     0.902     -0.054     -0.283     -0.847      1.886     -0.091      0.217     -0.056
-    -0.295     -0.070      0.394      0.273     -0.353      0.035     -0.024     -0.002
-     0.518      0.135     -0.149     -0.543      0.477     -0.388      0.110     -0.001
-    -0.286      0.075      0.108      0.169     -0.212     -0.065     -0.011      0.037
-
-Derivative matrix of expected statistics X by parameters and
-covariance/correlation matrix of X can be found using
-summary(ans) within R, or by using the 'verbose' option in Siena07.
- 
-Total computation time 21.92 seconds.

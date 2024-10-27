@@ -1,5 +1,5 @@
 ---
-title: "Network Descriptives"
+title: "Descriptive Analysis"
 #bibliography: references.bib
 author: "Niels Vullings"
 bibliography: references.bib
@@ -382,14 +382,14 @@ ts_triads_evo <- function (sims, net1, simtype = "notypespecified", forplot = TR
 # Load Packages
 
 ```{r, warning=FALSE, message=FALSE, results='hide'}
-packages <- c("tidyverse", "sna", "igraph", "RsienaTwoStep", "ape", "iterators", "doParallel")
+packages <- c("tidyverse", "sna", "igraph", "RsienaTwoStep", "ape", "iterators", "doParallel", "rstatix")
 
 fpackage.check(packages)
 ```
 
 # Set up parallel cluster
 
-```{r}
+```{r, results='hide', message=FALSE}
 no_cores <- detectCores() - 1
 mycl <- makeCluster(rep("localhost", no_cores))
 clusterEvalQ(mycl, library(RsienaTwoStep))
@@ -410,9 +410,15 @@ load("data/processed/soc_data_raw.RData")
 
 ------------------------------------------------------------------------
 
-# Networks
+# Descriptive Analysis
 
-## Make the graph object
+To partially answer the first two research questions of this study, I will further describe and assess the data by visualising the collaboration networks of sociologists at Radboud University and Utrecht University. These networks give us interesting insights into the collaboration practices of sociologists at Radboud University (RU) and Utrecht University (UU). First of all, the size of the nodes in determined by the amount of indegrees a scholar has, or in other words, with how many other sociologists a person has collaborated. The graph of wave 1 shows that at Radboud University, it is mostly men who collaborate with each other, with the inclusion of some female sociologists who send ties, but do not receive any. For Utrecht University, there is a small group of four male sociologists who collaborate with each other. Interestingly, there are also two female sociologists who work together with sociologists at Radboud University. Overall, the network at wave 1 is not very dense, which is also visible in the density score of Table 1. The graph of wave 2 shows a different picture. This network is much less sparse and shows more diversity in terms of both gender and department. At both Radboud University and Utrecht University, the sociologists with the most indegrees are mostly male, with the exception of one female sociologist at Utrecht University, who seemingly has the most indegrees of anyone in the network. This scholar, combined with the most popular scholar at Radboud University, both serve a "hub"- function, as the network seems to be centered around them. In terms of gender, it seems that male sociologists seem to get slightly more indegrees on average compared to women. This is however less prevalent than at wave 1, implying that the collaboration network might be more egalitarian.\
+  Looking at the network statistics of these networks, we first of all see that the jaccard-similarity index (0.142) is relatively low, which indicates that the network does not change much over time (Table 1) [@ripley2011manual]. As said before, the density of the networks is quite small. This might cause some issues for the estimation process in RSiena, but is still within range for valid estimation [@ripley2011manual]. To get a preliminary idea of how the network evolves, a dyad census was calculated. This specific dyad census tracks dyads between the waves and sums up the specific change a dyad has undergone, which offers more insight than the conventional dyad census, which only takes a macro perspective (Table 2). Unsurprisingly, most dyads in the network are Null at wave 1 and wave 2, which means there are no ties being sent. When we look at actual ties, we see that there are 83 assymetric ties that were sent at wave 2, which will likely be junior scholars who managed to get their first paper published, or scholars who were new to their respective departments. Conversely, 29 assymetric ties which were present at wave 1 were gone at wave 2. Another finding worth noting is the fact that 11 dyads had no ties at wave 1, but had a mutual collaboration at wave 2, implying that they both coauthored on at least one of each of their papers in wave 2. This form of collaboration is interesting, because it implies a spontaneous collaboration, instead of a "tit for tat"-approach.\
+  Lastly, to give a more concrete answer to the first and second research question, the Moran's I was calculated for both gender and prestige. Moran's I is a measure of segregation in social networks, which measures the extent to which scholars who are connected to each other are also more similar to each other [@SNASS]. In simpler words, are men more connected to other men and are women more connected to other women. The Moran's I was calculated using the "*fMoran.i*"-function, derived from @SNASS. The choice was made to not row standardize the Moran's I, as the more connections you have to others who are similar influences you differently then when it is only a few. At wave 1, the Moran's I is 0.22, which mean that nodes who are connected are indeed more alike, at least to some extent. At wave 2, the Moran's I is 0.14, implying that the correlation between connection and similarity is decreasing. However, this observed difference between wave 1 and wave 2 is rather small ($\Delta$ = 0.075). When testing for the significance of this difference, it is not found to be significant for an alpha of 0.05 (Table 4), meaning that it can not be excluded that this difference is due to chance alone. Although the results should be interpreted with caution, it is found that there is some degree of gender clustering taking place in the network. Collaboration between scholars at Radboud University and Utrecht University is partially determined by gender clustering, which means hypothesis 1 finds at least partial support. In contrast, due to the small differences and lack of significant findings, it cannot be conclusively proven that gender clustering has decreased over time. Thus, hypothesis 2 has to be rejected.
+
+## Networks
+
+### Make the graph object
 
 ```{r}
 
@@ -436,35 +442,51 @@ graph_w2 <- igraph::graph_from_adjacency_matrix(
 
 ```
 
-## Network Visualisations
+### Network Visualisations
 
 ```{r}
 # Make a plotable gender variable to fix problems with vertex.shape
-df_ego <- df_ego %>% mutate(plot_gen = case_when(perc_female >= 0.80 ~ "Female",
+df_ego <- df_ego %>% mutate(plot_gen = case_when(perc_female >= 0.70 ~ "Female",
                                                  .default = "Male"))
+
+df_ego <- df_ego %>% mutate(University_22 = case_when(str_detect(Universiteit.22, "RU") ~ "RU",
+                                         str_detect(Universiteit.22, "UU") ~ "UU",
+                                         .default = "Not in Department"),
+                            University_24 = case_when(str_detect(Universiteit.24, "RU") ~ "RU",
+                                         str_detect(Universiteit.24, "UU") ~ "UU",
+                                         .default = "Not in Department"))
+
+df_ego[which(str_detect(df_ego$Naam, "Weverthon")),]$plot_gen <- "Male" # Fix missing on gender
 # df_ego %>% count(plot_gen)
 ```
 
-## Wave 1 {.tabset}
+### Wave 1 {.tabset}
 
-```{r}
+#### With Isolates
+
+```{r, fig.width=9}
 #---- Full network including Isolates ----
 set.seed(2345)
-l_w1 <- layout_with_mds(graph_w1)
+l_w1 <- layout_nicely(graph_w1)
 
 plot(graph_w1, layout = l_w1,
-     vertex.color = ifelse(df_ego$Universiteit1.22 == "RU", "red", "gold"), #now, I can use actor attributes for plotting. 
+     vertex.color = ifelse(df_ego$University_22 == "RU", "red", "gold"), #now, I can use actor attributes for plotting. 
      vertex.shape = ifelse(df_ego$plot_gen == "Male", "square", "circle"),
-     vertex.size = igraph::degree(graph_w1, mode = "all") * 1.5,
+     vertex.size = igraph::degree(graph_w1, mode = "in") * 1.5,
      vertex.label = NA,
      edge.width = .8,
      edge.curved = 0.5,
-     edge.arrow.size =0.2,
-     main = "Gender Distribution of Two Sociology Departments 2022")
+     edge.arrow.size =0.2)
+     # main = "Gender Distribution of Two Sociology Departments 2022")
 
-legend("topleft", c("Radboud", "Utrecht University", "Male", "Female"), pch = c(21,21,15,20), col = "#777777", pt.bg = c("red", "gold"), pt.cex = 1,
+legend("topleft", c("RU", "UU", "Male", "Female"), pch = c(21,21,15,20), col = "#777777", pt.bg = c("red", "gold"), pt.cex = 1,
        cex = 0.8, bty = "n", ncol = 1)
 
+```
+
+#### Without Isolates
+
+```{r, fig.width=9}
 #---- Remove Isolates ----
 diag(soc_data$nets[1,,]) <- 0
 
@@ -478,23 +500,25 @@ graph_w1_sel <- graph_from_adjacency_matrix(soc_w1_sel, mode = "directed", weigh
 ego_iso_w1 <- df_ego[noisolates,]
 #---- Graph without Isolates ----
 set.seed(2345)
-l_w1 <- layout_with_mds(graph_w1_sel)
+l_w1 <- layout_nicely(graph_w1_sel)
 
 plot(graph_w1_sel, layout = l_w1,
-     vertex.color = ifelse(ego_iso_w1$Universiteit1.22 == "RU", "red", "gold"), #now, I can use actor attributes for plotting. 
+     vertex.color = ifelse(ego_iso_w1$University_22 == "RU", "red", "gold"), #now, I can use actor attributes for plotting. 
      vertex.shape = ifelse(ego_iso_w1$plot_gen == "Male", "square", "circle"),
-     vertex.size = igraph::degree(graph_w1_sel, mode = "all") * 1.5,
+     vertex.size = igraph::degree(graph_w1_sel, mode = "in") * 1.5,
      vertex.label = NA,
      edge.width = .8,
      edge.curved = 0.5,
-     edge.arrow.size =0.2,
-     main = "Gender Distribution of Two Sociology Departments 2022")
+     edge.arrow.size =0.2)
+     # main = "Gender Distribution of Two Sociology Departments 2022")
 
-legend("topleft", c("Radboud", "Utrecht University", "Male", "Female"), pch = c(21,21,15,20), col = "#777777", pt.bg = c("red", "gold"), pt.cex = 1,
+legend("topleft", c("RU", "UU", "Male", "Female"), pch = c(21,21,15,20), col = "#777777", pt.bg = c("red", "gold"), pt.cex = 1,
        cex = 0.8, bty = "n", ncol = 1)
 ```
 
-## Wave 2
+### Wave 2 {.tabset}
+
+#### With Isolates
 
 ```{r, fig.width = 8}
 #---- Full network including Isolates ----
@@ -502,16 +526,22 @@ set.seed(2345)
 l_w2 <- layout_nicely(graph_w2)
 
 plot(graph_w2, layout = l_w2,
-     vertex.color = ifelse(df_ego$Universiteit1.24 == "RU", "red", "gold"), #now, I can use actor attributes for plotting. 
+     vertex.color = ifelse(df_ego$University_24 == "RU", "red", "gold"), #now, I can use actor attributes for plotting. 
      vertex.shape = ifelse(df_ego$plot_gen == "Male", "square", "circle"),
-     vertex.size = igraph::degree(graph_w2, mode = "all") * 1.5,
+     vertex.size = igraph::degree(graph_w2, mode = "in") * 1.5,
      vertex.label = NA,
      edge.width = 0.8,
      edge.curved = 0.5,
-     edge.arrow.size =0.2,
-     main = "Gender Distribution of Two Sociology Departments 2022")
-legend("topleft", c("Radboud", "Utrecht University", "Male", "Female"), pch = c(21,21,15,20), col = "#777777", pt.bg = c("red", "gold"), pt.cex = 1,
+     edge.arrow.size =0.2)
+     # main = "Gender Distribution of Two Sociology Departments 2024")
+legend("topleft", c("RU", "UU", "Male", "Female"), pch = c(21,21,15,20), col = "#777777", pt.bg = c("red", "gold"), pt.cex = 1,
        cex = 0.8, bty = "n", ncol = 1)
+
+```
+
+#### Without Isolates
+
+```{r, fig.width = 9}
 
 #---- Remove Isolates ----
 diag(soc_data$nets[2,,]) <- 0
@@ -530,39 +560,39 @@ set.seed(2345)
 l_w2 <- layout_nicely(graph_w2_sel)
 
 plot(graph_w2_sel, layout = l_w2,
-     vertex.color = ifelse(ego_iso_w2$Universiteit1.24 == "RU", "red", "gold"), #now, I can use actor attributes for plotting. 
+     vertex.color = ifelse(ego_iso_w2$University_24 == "RU", "red", "gold"), #now, I can use actor attributes for plotting. 
      vertex.shape = ifelse(ego_iso_w2$plot_gen == "Male", "square", "circle"),
-     vertex.size = igraph::degree(graph_w2_sel, mode = "all") * 1.5,
+     vertex.size = igraph::degree(graph_w2_sel, mode = "in") * 1.5,
      vertex.label = NA,
      edge.width = 0.8,
      edge.curved = 0.5,
-     edge.arrow.size =0.2,
-     main = "Gender Distribution of Two Sociology Departments 2022")
-legend("topleft", c("Radboud", "Utrecht University", "Male", "Female"), pch = c(21,21,15,20), col = "#777777", pt.bg = c("red", "gold"), pt.cex = 1,
+     edge.arrow.size =0.2)
+     # main = "Gender Distribution of Two Sociology Departments 2024")
+legend("topleft", c("RU", "UU", "Male", "Female"), pch = c(21,21,15,20), col = "#777777", pt.bg = c("red", "gold"), pt.cex = 1,
        cex = 0.8, bty = "n", ncol = 1)
 ```
 
-## Network Statistics
+### Network Statistics
 
--   I am working on making a nice table that adds all relevant descriptive Network Statistics
-    -   Jaccard
-    -   Hamming
-    -   Indegrees and outdegrees
-    -   Moran's I for Prestige ()
-
-### Calculate Network Statistics
+#### Calculate Network Statistics
 
 ```{r}
 #---- Extract networks ----
 wave_1 <- soc_data$nets[1,,]
 wave_2 <- soc_data$nets[2,,]
 
-#---- Jaccard, Hamming & Density ----
+#---- Jaccard, Hamming, Transitivity & Density ----
 jac <- fjac(wave_1, wave_2)
 ham <- fham(wave_1, wave_2)
 
 dens1 <- fdens(nrow(wave_1),wave_1) 
 dens2 <- fdens(nrow(wave_2),wave_2)
+
+
+triad_1 <- data.frame(sna::triad.census(wave_1))
+trans_1 <- (3 * triad_1$X300)/(triad_1$X201 + 3 * triad_1$X300)
+triad_2 <- data.frame(sna::triad.census(wave_2))
+trans_2 <- (3 * triad_2$X300)/(triad_2$X201 + 3 * triad_2$X300)
 
 #---- Indegree distribution ----
 hist(table(igraph::degree(graph_w1, mode = "in")), breaks = seq(from = 0, to = 100, by = 5),xlab='indegree', main= 'Histogram of indegree')
@@ -616,32 +646,56 @@ MI_gen_2
 
 ```
 
-### Create DF
+#### Create DF
 
 ```{r}
 
-df <- data.frame(Network_size_W1 = nrow(wave_1),
-                 Jaccard_Index = round(jac, digits = 3),
-                 Hamming_Distance = round(ham, digits = 3),
-                 Density_w1 = round(dens1, digits = 3),
-                 Density_w2 = round(dens2, digits = 3),
-                 MoranI_pres_1 = round(MI_pres_1[[1]], digits = 3),
-                 MoranI_pres_2 = round(MI_pres_2[[1]], digits = 3),
-                 MoranI_gender_1 = round(MI_gen_1[[1]], digits = 3),
-                 MoranI_gender_2 = round(MI_gen_2[[1]], digits = 3))
-
-rownames(df) <- NULL
+df_stat <- data.frame(Network_size_W1 = nrow(wave_1),
+                      Jaccard_Index = round(jac, digits = 3),
+                      Hamming_Distance = round(ham, digits = 3),
+                      Density_w1 = round(dens1, digits = 3),
+                      Density_w2 = round(dens2, digits = 3),
+                      Transitivity_W1 = round(trans_1, digits = 3),
+                      Transitivity_W2 = round(trans_2, digits = 3))
 
 ```
 
-### Add data to appendix
+#### Table 1 - Network Statistics
 
 ```{r}
-
-DT::datatable(df)
-
+DT::datatable(df_stat)
 ```
+
+#### Table 2 - Dyad & Triad Census
 
 ```{r}
 fshowdf(ts_dyads_evo(wave_2, wave_1))
+
+fshowdf(rbind(sna::triad.census(wave_1),
+              sna::triad.census(wave_2)))
+```
+
+#### Table 3 - Moran's I
+
+```{r}
+df_moran <- data.frame(MoranI_pres_1 = round(MI_pres_1[[1]], digits = 3),
+                       MoranI_pres_2 = round(MI_pres_2[[1]], digits = 3),
+                       MoranI_gender_1 = round(MI_gen_1[[1]], digits = 3),
+                       MoranI_gender_2 = round(MI_gen_2[[1]], digits = 3))
+```
+
+```{r}
+fshowdf(df_moran)
+```
+
+#### Table 4 - Testing the difference of Moran's I on gender
+
+```{r}
+psych::paired.r(df_moran$MoranI_gender_1, df_moran$MoranI_gender_2, n = 100)
+```
+
+#### Table 5 - Testing the difference of Moran's I on prestige
+
+```{r}
+psych::paired.r(df_moran$MoranI_pres_1, df_moran$MoranI_pres_2, n = 100)
 ```

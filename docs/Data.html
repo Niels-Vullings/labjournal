@@ -40,6 +40,8 @@
 <link href="site_libs/primer-tooltips-1.4.0/build.css" rel="stylesheet" />
 <link href="site_libs/klippy-0.0.0.9500/css/klippy.min.css" rel="stylesheet" />
 <script src="site_libs/klippy-0.0.0.9500/js/klippy.min.js"></script>
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
 
@@ -176,6 +178,29 @@ code span.wa { color: #bf0303; } /* Warning */
 }
 </style>
 
+<style type="text/css">
+/* for pandoc --citeproc since 2.11 */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
 
 <link rel="stylesheet" href="tweaks.css" type="text/css" />
 
@@ -513,7 +538,7 @@ div.tocify {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="Introduction2.html">Introduction</a>
+      <a href="Introduction2-1.html">Introduction</a>
     </li>
     <li>
       <a href="Theory.html">Theory</a>
@@ -524,13 +549,24 @@ div.tocify {
         <li>
           <a href="Data.html">Data</a>
         </li>
-        <li>
-          <a href="Descriptives.html">Descriptives</a>
-        </li>
       </ul>
     </li>
-    <li>
-      <a href="Siena_Results.html">Results</a>
+    <li class="dropdown-submenu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Results</a>
+      <ul class="dropdown-menu" role="menu">
+        <li>
+          <a href="Descriptives.html">Descriptive Results</a>
+        </li>
+        <li>
+          <a href="Siena_Results(final).html">RSiena Models</a>
+        </li>
+        <li>
+          <a href="Siena_GOF.html">RSiena GoF</a>
+        </li>
+        <li>
+          <a href="Siena_Behavior.html">Rsiena Behavior</a>
+        </li>
+      </ul>
     </li>
     <li class="dropdown-header">Conclusion</li>
   </ul>
@@ -570,13 +606,13 @@ div.tocify {
 
 <style>
 body {
-  text-align: justify;
-  font-family: Times;
+text-align: justify;
+font-family: Times;
 }
 
 h1, .h1, h2, .h2, h3, .h3 {
-  margin-top: 24px;
-  font-family: Times;
+margin-top: 24px;
+font-family: Times;
 }
 </style>
 <script>
@@ -603,7 +639,7 @@ the sample relevant for this study. I ended up with sample of 100
 sociologists from Radboud University (n = 44, 39) and Utrecht University
 (n = 48, 44). More information about the process and source code can be
 found under the “Data Manipulation” folder on this website.<br />
-  Before I explain the creation of the networks, it is important to note
+Before I explain the creation of the networks, it is important to note
 that the initial data collection in 2022 and 2024 does not determine the
 waves. The waves are determined based on the parameters set by the
 researcher. For this study, I analysed publication between 2015 to 2019
@@ -628,7 +664,7 @@ can be 80% female. This was done to add some variability to this
 measure, as this way of constructing gender is a matter of association
 rather than an actual measure of how someone identifies
 themselves.<br />
-  To measure academic prestige, I added two variables: the number of Q1
+To measure academic prestige, I added two variables: the number of Q1
 journals in each wave and an author’s H-index. The number of Q1 journals
 is a varying covariate, which means it can change over time. The rank of
 each journal was taken from Scimago, a public repository for worldwide
@@ -648,53 +684,111 @@ class="math display">\[H_{index} = \sum_{0}^{P}(1 \mid \;|n_c| \ge
 <p>where <span class="math inline">\(N_p\)</span> represents the sum
 total of all papers of an author and <span
 class="math inline">\(n_c\)</span> represents the number of citations of
-a specific paper an author has published(<strong><em>I asked a
-semi-mathematician, so this should be correct…??</em></strong>).<br />
-  To control for author characteristics, I included several control
+a specific paper an author has published(<strong>This is not correct,
+but was a nice try</strong>).<br />
+To control for author characteristics, I included several control
 variables, such as ethnicity and career age. Ethnicity was manually
 scraped by Hannah Groennou and is defined by whether a scholar is white
-or not. Career age was constructed by Koen Lucas and</p>
+or not. Career age was constructed by Koen Lucas and measures the year
+since an author’s first publication.</p>
 </div>
 </div>
 <div id="analytical-strategy" class="section level1" number="2">
 <h1><span class="header-section-number">2</span> Analytical
 Strategy</h1>
-<ul>
-<li><p>Two part analytical strategy:</p>
-<ul>
-<li><p>Descriptive Network Analysis: how are the genders divided,
-average prestige per gender, network statistics etc.</p></li>
-<li><p>RSiena: Modelling network change</p></li>
-</ul></li>
-<li><p>Explanation of RSiena</p>
-<ul>
-<li><p>What do we do?</p></li>
-<li><p>What models do we estimate?</p>
-<ul>
-<li><p>Basic model: “Null”-model</p></li>
-<li><p>Network Stats:</p>
-<ul>
-<li><p>gendered covariates</p></li>
-<li><p>altPrestige</p></li>
-<li><p>sameGender(TransTrip)</p></li>
-<li><p>inpop (sqrt), outpop (sqrt)</p></li>
-<li><p>inpopX, outpopX</p></li>
-</ul></li>
-</ul></li>
-<li><p>GOF Models</p>
-<ul>
-<li><p>Employ my own functions for the plots?</p>
-<ul>
-<li>ts_dyads_evo mainly -&gt; interesting to gain more information of
-the correctness of the estimation process</li>
-</ul></li>
-</ul></li>
-</ul></li>
-</ul>
+<p>The analytical strategy for this study is two-fold. First, I will
+perform perform a descriptive analysis, in order to answer the first two
+research questions, as these questions are descriptive in nature.
+Second, I will assess the network evolution through a Stochastic Actor
+Oriented Model (saom), with RSiena <span class="citation">(Ripley et al.
+2011)</span>. For the descriptive analysis, I will calculate several
+network statistics, such as the global level of transitivity and the
+moran’s I, which will be calculated based on gender. This will give an
+overview of the extent to which the network is clustered. Apart from
+this, I will also qualitatively assess the structure of the
+collaboration networks. To answer the second research question, I will
+perform a t-test to test if there is significant change in the level of
+clustering between the two waves. By assessing this change in network
+clustering, we have an idea of the scale of the issue. If there is
+relatively little change in terms of clustering, the subsequent estimate
+sizes of the RSiena Models will be less relevant than when we see large
+amounts of clustering between the two waves.<br />
+  As said before, the third research question will be assessed with
+RSiena. This method of analysis uses probabilistic simulations to model
+how networks evolve based on a given set of network statistics <span
+class="citation">(Ripley et al. 2011)</span>. Network statistics in this
+sense can best be described as independent variables. For example, the
+network statistic <em>“recip”</em> (reciprocity) means that people like
+or do not like to send a tie back to a person who has sent a tie to them
+previously. RSiena has two different types of independent variables,
+Structural effects and Covariate effects. Structural effects are network
+statistics, that deal with the overall tendencies of actors in the
+network, such as their tendency to connect with popular actors (inPop)
+or their tendency to close triads (transTrip). Covariate effects are
+network statistics that hold for specific actors, such as an actor’s
+gender or their prestige.<br />
+  To ensure that the model is somewhat accurate, I will build the model
+from a null-model (Model 0) to a complete model (Model 5). The null
+model will have no structural effects, apart from reciprocity and
+density, which as standard in RSiena. The first model will contain the
+structural effects. The second model contains the covariate effects for
+gender and has two parts, Model 2 has the network statistic <em>Indegree
+popularity.</em> Model 2.5 has this same network statistic but squared,
+in order to test how this improves model fit. It was found that Model
+2.5 fit the data significantly better and thus, all future models use
+the squared <em>indegree popularity</em> statistic. Model 3 contains the
+covariate effects for prestige. Model 4 was meant as a full model,
+containing covariate effects for h-index, ethnicity and career age.
+However, this model severly impacted the goodness of fit and was thus
+dropped, to prevent overcontrolling the models. Finally, model 5
+contains an covariate interaction effect for gender and prestige, to
+finally test the third hypothesis.</p>
 </div>
-<div id="descriptive-analysis" class="section level1" number="3">
+<div id="descriptive-statistics" class="section level1" number="3">
 <h1><span class="header-section-number">3</span> Descriptive
-Analysis</h1>
+Statistics</h1>
+<p>When we take a look at the data, we see that the departments of
+Radboud University and Utrecht University are getting slightly smaller,
+but are still relatively equal in terms of size (Table 1). At wave 1,
+there 6 people who are not yet in any department. These will likely be
+scholars who started working after 2022 and before 2024. Conversely, the
+18 people who are not in any department in wave 2 are scholars who left
+their respective departments somewhere between 2022 and 2024. These are
+most likely PhD candidates and post docs who finished their
+dissertations and left the department.<br />
+  Regarding the gender distribution, we see that Radboud University has
+an almost perfect division in terms of gender, while women are slightly
+underrepresented at Utrecht University (Table 2). We also see that the
+future scholars, represented by the “<em>not in department</em>” - row,
+are largely women, while the group that left the department before wave
+2 has proportionally more men.<br />
+  In terms of prestige, we see that, at wave 1, scholars of Radboud
+University have slightly more prestige than scholars of Utrecht
+University (Table 4). It also shows that scholar who are not yet in a
+department have very low prestige, as they are still junior researchers
+who have not yet published. At wave 2 we see that these differences have
+equalized, and now Raboud University and Utrecht University are almost
+equal in terms of prestige. We also see a much higher mean for the group
+that in not in the department. This makes sense, as these are not
+starting scholars, but scholars who have been working for some time and
+have thus had the opportunity to publish more.<br />
+  For this study, the most important tables are Table 4 and Table 5,
+which shows how prestige is distributed among male and female scholar.
+Table 4 shows that male scholars on average have more Q1 publications
+more than women. At wave 1, this average difference is eight Q1
+publications, while the difference at wave 2 is five Q1 publications,
+which means the difference between male and female scholars is getting
+closed. Taking into account the scholars with the maximum amount of
+publications, we see that the differences between the most prestigious
+male scholar and the most prestigious female scholar has drastically
+decreased (from <span class="math inline">\(\Delta\)</span> 59
+Q1-publications to <span class="math inline">\(\Delta\)</span> 12
+Q1-publications). Zooming in on the department level, we see an
+interesting pattern. At Radboud University, female scholars increased
+their prestige between wave 1 and wave 2, while the prestige of male
+scholar stayed consistent. However, at Utrecht University, we see that
+both male and female scholars increased their prestige, but female
+scholars increased stronger that male scholars.</p>
 <div id="set-up" class="section level2" number="3.1">
 <h2><span class="header-section-number">3.1</span> Set up</h2>
 <div class="sourceCode" id="cb1"><pre
@@ -707,854 +801,1020 @@ class="sourceCode r test"><code class="sourceCode r"><span id="cb1-1"><a href="#
 <div id="load-data" class="section level2" number="3.2">
 <h2><span class="header-section-number">3.2</span> Load data</h2>
 <div class="sourceCode" id="cb2"><pre
-class="sourceCode r test"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;data/processed/soc_data_raw.RData&quot;</span>)</span>
-<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;data/processed/RU_UU_ego.RData&quot;</span>)</span>
+class="sourceCode r test"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>colorize <span class="ot">&lt;-</span> <span class="cf">function</span>(x, color) {</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>    <span class="fu">sprintf</span>(<span class="st">&quot;&lt;span style=&#39;color: %s;&#39;&gt;%s&lt;/span&gt;&quot;</span>, color, x)</span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>}</span>
 <span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a></span>
-<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;data/processed/RU_UU_works.RData&quot;</span>)</span></code></pre></div>
-<p>I still need to put this in a nice descriptives table</p>
-</div>
-<div id="scholars-per-university" class="section level2" number="3.3">
-<h2><span class="header-section-number">3.3</span> Scholars per
-university</h2>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>fshowdf <span class="ot">&lt;-</span> <span class="cf">function</span>(x, ...) {</span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>    knitr<span class="sc">::</span><span class="fu">kable</span>(x, <span class="at">digits =</span> <span class="dv">2</span>, <span class="st">&quot;html&quot;</span>, ...) <span class="sc">%&gt;%</span></span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a>        kableExtra<span class="sc">::</span><span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="fu">c</span>(<span class="st">&quot;striped&quot;</span>, <span class="st">&quot;hover&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a>        kableExtra<span class="sc">::</span><span class="fu">scroll_box</span>(<span class="at">width =</span> <span class="st">&quot;100%&quot;</span>, <span class="at">height =</span> <span class="st">&quot;300px&quot;</span>)</span>
+<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a>}</span></code></pre></div>
 <div class="sourceCode" id="cb3"><pre
-class="sourceCode r test"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>df_ego <span class="sc">%&gt;%</span></span>
-<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>    <span class="fu">count</span>(Universiteit1<span class="fl">.22</span>)</span></code></pre></div>
-<div class="kable-table">
-<table>
-<thead>
-<tr class="header">
-<th align="left">Universiteit1.22</th>
-<th align="right">n</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left"></td>
-<td align="right">6</td>
-</tr>
-<tr class="even">
-<td align="left">RU</td>
-<td align="right">44</td>
-</tr>
-<tr class="odd">
-<td align="left">RUG</td>
-<td align="right">1</td>
-</tr>
-<tr class="even">
-<td align="left">UU</td>
-<td align="right">48</td>
-</tr>
-<tr class="odd">
-<td align="left">UvA</td>
-<td align="right">1</td>
-</tr>
-</tbody>
-</table>
+class="sourceCode r test"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;data/processed/soc_data_raw.RData&quot;</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;data/processed/RU_UU_ego.RData&quot;</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;data/processed/RU_UU_works.RData&quot;</span>)</span></code></pre></div>
 </div>
+<div id="table-1" class="section level2" number="3.3">
+<h2><span class="header-section-number">3.3</span> Table 1</h2>
+<div id="distribution-of-scholars-per-university" class="section level3"
+number="3.3.1">
+<h3><span class="header-section-number">3.3.1</span> Distribution of
+scholars per university</h3>
 <div class="sourceCode" id="cb4"><pre
 class="sourceCode r test"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>df_ego <span class="sc">%&gt;%</span></span>
-<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>    <span class="fu">count</span>(Universiteit2<span class="fl">.22</span>)</span></code></pre></div>
-<div class="kable-table">
-<table>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">University =</span> <span class="fu">case_when</span>(<span class="fu">str_detect</span>(Universiteit<span class="fl">.22</span>, <span class="st">&quot;RU&quot;</span>) <span class="sc">~</span> <span class="st">&quot;RU&quot;</span>, <span class="fu">str_detect</span>(Universiteit<span class="fl">.22</span>,</span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>        <span class="st">&quot;UU&quot;</span>) <span class="sc">~</span> <span class="st">&quot;UU&quot;</span>, <span class="at">.default =</span> <span class="st">&quot;Not in Department&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>    <span class="fu">count</span>(University) <span class="sc">%&gt;%</span></span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a>    <span class="fu">fshowdf</span>()</span></code></pre></div>
+<div
+style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:300px; overflow-x: scroll; width:100%; ">
+<table class="table table-striped table-hover" style="margin-left: auto; margin-right: auto;">
 <thead>
-<tr class="header">
-<th align="left">Universiteit2.22</th>
-<th align="right">n</th>
+<tr>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+University
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+n
+</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td align="left"></td>
-<td align="right">97</td>
+<tr>
+<td style="text-align:left;">
+Not in Department
+</td>
+<td style="text-align:right;">
+7
+</td>
 </tr>
-<tr class="even">
-<td align="left">RU</td>
-<td align="right">1</td>
+<tr>
+<td style="text-align:left;">
+RU
+</td>
+<td style="text-align:right;">
+45
+</td>
 </tr>
-<tr class="odd">
-<td align="left">RUG</td>
-<td align="right">1</td>
-</tr>
-<tr class="even">
-<td align="left">UvA</td>
-<td align="right">1</td>
+<tr>
+<td style="text-align:left;">
+UU
+</td>
+<td style="text-align:right;">
+48
+</td>
 </tr>
 </tbody>
 </table>
 </div>
 <div class="sourceCode" id="cb5"><pre
 class="sourceCode r test"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>df_ego <span class="sc">%&gt;%</span></span>
-<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>    <span class="fu">count</span>(Universiteit1<span class="fl">.24</span>)</span></code></pre></div>
-<div class="kable-table">
-<table>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">University =</span> <span class="fu">case_when</span>(<span class="fu">str_detect</span>(Universiteit<span class="fl">.24</span>, <span class="st">&quot;RU&quot;</span>) <span class="sc">~</span> <span class="st">&quot;RU&quot;</span>, <span class="fu">str_detect</span>(Universiteit<span class="fl">.24</span>,</span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>        <span class="st">&quot;UU&quot;</span>) <span class="sc">~</span> <span class="st">&quot;UU&quot;</span>, <span class="at">.default =</span> <span class="st">&quot;Not in Department&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>    <span class="fu">count</span>(University) <span class="sc">%&gt;%</span></span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a>    <span class="fu">fshowdf</span>()</span></code></pre></div>
+<div
+style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:300px; overflow-x: scroll; width:100%; ">
+<table class="table table-striped table-hover" style="margin-left: auto; margin-right: auto;">
 <thead>
-<tr class="header">
-<th align="left">Universiteit1.24</th>
-<th align="right">n</th>
+<tr>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+University
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+n
+</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td align="left"></td>
-<td align="right">18</td>
+<tr>
+<td style="text-align:left;">
+Not in Department
+</td>
+<td style="text-align:right;">
+20
+</td>
 </tr>
-<tr class="even">
-<td align="left">RU</td>
-<td align="right">39</td>
+<tr>
+<td style="text-align:left;">
+RU
+</td>
+<td style="text-align:right;">
+39
+</td>
 </tr>
-<tr class="odd">
-<td align="left">UU</td>
-<td align="right">41</td>
-</tr>
-<tr class="even">
-<td align="left">University of Cologne</td>
-<td align="right">1</td>
-</tr>
-<tr class="odd">
-<td align="left">UvT</td>
-<td align="right">1</td>
+<tr>
+<td style="text-align:left;">
+UU
+</td>
+<td style="text-align:right;">
+41
+</td>
 </tr>
 </tbody>
 </table>
 </div>
+</div>
+</div>
+<div id="table-2" class="section level2" number="3.4">
+<h2><span class="header-section-number">3.4</span> Table 2</h2>
+<div id="gender-distribution-per-university-in-22-and-24"
+class="section level3" number="3.4.1">
+<h3><span class="header-section-number">3.4.1</span> Gender distribution
+per University in 22 and 24</h3>
 <div class="sourceCode" id="cb6"><pre
 class="sourceCode r test"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>df_ego <span class="sc">%&gt;%</span></span>
-<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>    <span class="fu">count</span>(Universiteit2<span class="fl">.24</span>)</span></code></pre></div>
-<div class="kable-table">
-<table>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">University =</span> <span class="fu">case_when</span>(<span class="fu">str_detect</span>(Universiteit<span class="fl">.22</span>, <span class="st">&quot;RU&quot;</span>) <span class="sc">~</span> <span class="st">&quot;RU&quot;</span>, <span class="fu">str_detect</span>(Universiteit<span class="fl">.22</span>,</span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>        <span class="st">&quot;UU&quot;</span>) <span class="sc">~</span> <span class="st">&quot;UU&quot;</span>, <span class="at">.default =</span> <span class="st">&quot;Not in Department&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>    <span class="fu">group_by</span>(University) <span class="sc">%&gt;%</span></span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a>    <span class="fu">summarise</span>(<span class="at">mean_gender =</span> <span class="fu">mean</span>(female, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a>    <span class="fu">fshowdf</span>()</span></code></pre></div>
+<div
+style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:300px; overflow-x: scroll; width:100%; ">
+<table class="table table-striped table-hover" style="margin-left: auto; margin-right: auto;">
 <thead>
-<tr class="header">
-<th align="left">Universiteit2.24</th>
-<th align="right">n</th>
+<tr>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+University
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+mean_gender
+</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td align="left"></td>
-<td align="right">98</td>
+<tr>
+<td style="text-align:left;">
+Not in Department
+</td>
+<td style="text-align:right;">
+0.57
+</td>
 </tr>
-<tr class="even">
-<td align="left">RUG</td>
-<td align="right">1</td>
+<tr>
+<td style="text-align:left;">
+RU
+</td>
+<td style="text-align:right;">
+0.49
+</td>
 </tr>
-<tr class="odd">
-<td align="left">UvA</td>
-<td align="right">1</td>
+<tr>
+<td style="text-align:left;">
+UU
+</td>
+<td style="text-align:right;">
+0.40
+</td>
 </tr>
 </tbody>
 </table>
 </div>
-</div>
-<div id="functions" class="section level2" number="3.4">
-<h2><span class="header-section-number">3.4</span> Functions</h2>
 <div class="sourceCode" id="cb7"><pre
 class="sourceCode r test"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>df_ego <span class="sc">%&gt;%</span></span>
-<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>    <span class="fu">group_by</span>(Universiteit1<span class="fl">.22</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>    <span class="fu">count</span>(Functie<span class="fl">.22</span>)</span></code></pre></div>
-<div class="kable-table">
-<table>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">University =</span> <span class="fu">case_when</span>(<span class="fu">str_detect</span>(Universiteit<span class="fl">.24</span>, <span class="st">&quot;RU&quot;</span>) <span class="sc">~</span> <span class="st">&quot;RU&quot;</span>, <span class="fu">str_detect</span>(Universiteit<span class="fl">.24</span>,</span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>        <span class="st">&quot;UU&quot;</span>) <span class="sc">~</span> <span class="st">&quot;UU&quot;</span>, <span class="at">.default =</span> <span class="st">&quot;Not in Department&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>    <span class="fu">group_by</span>(University) <span class="sc">%&gt;%</span></span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>    <span class="fu">summarise</span>(<span class="at">mean_gender =</span> <span class="fu">mean</span>(female, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a>    <span class="fu">fshowdf</span>()</span></code></pre></div>
+<div
+style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:300px; overflow-x: scroll; width:100%; ">
+<table class="table table-striped table-hover" style="margin-left: auto; margin-right: auto;">
 <thead>
-<tr class="header">
-<th align="left">Universiteit1.22</th>
-<th align="left">Functie.22</th>
-<th align="right">n</th>
+<tr>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+University
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+mean_gender
+</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td align="left"></td>
-<td align="left">NA</td>
-<td align="right">6</td>
+<tr>
+<td style="text-align:left;">
+Not in Department
+</td>
+<td style="text-align:right;">
+0.40
+</td>
 </tr>
-<tr class="even">
-<td align="left">RU</td>
-<td align="left">Associate researcher</td>
-<td align="right">1</td>
+<tr>
+<td style="text-align:left;">
+RU
+</td>
+<td style="text-align:right;">
+0.51
+</td>
 </tr>
-<tr class="odd">
-<td align="left">RU</td>
-<td align="left">External Phd</td>
-<td align="right">4</td>
-</tr>
-<tr class="even">
-<td align="left">RU</td>
-<td align="left">Guest Researcher</td>
-<td align="right">2</td>
-</tr>
-<tr class="odd">
-<td align="left">RU</td>
-<td align="left">Hoogleraar</td>
-<td align="right">6</td>
-</tr>
-<tr class="even">
-<td align="left">RU</td>
-<td align="left">Other researcher</td>
-<td align="right">1</td>
-</tr>
-<tr class="odd">
-<td align="left">RU</td>
-<td align="left">PhD Student</td>
-<td align="right">15</td>
-</tr>
-<tr class="even">
-<td align="left">RU</td>
-<td align="left">Postdoc</td>
-<td align="right">3</td>
-</tr>
-<tr class="odd">
-<td align="left">RU</td>
-<td align="left">Senior Researcher</td>
-<td align="right">1</td>
-</tr>
-<tr class="even">
-<td align="left">RU</td>
-<td align="left">Universitair docent</td>
-<td align="right">10</td>
-</tr>
-<tr class="odd">
-<td align="left">RU</td>
-<td align="left">Universitair hoofddocent</td>
-<td align="right">1</td>
-</tr>
-<tr class="even">
-<td align="left">RUG</td>
-<td align="left">Hoogleraar</td>
-<td align="right">1</td>
-</tr>
-<tr class="odd">
-<td align="left">UU</td>
-<td align="left">Bijzonder hoogleraar</td>
-<td align="right">3</td>
-</tr>
-<tr class="even">
-<td align="left">UU</td>
-<td align="left">Docent</td>
-<td align="right">2</td>
-</tr>
-<tr class="odd">
-<td align="left">UU</td>
-<td align="left">Emeritus hoogleraar</td>
-<td align="right">1</td>
-</tr>
-<tr class="even">
-<td align="left">UU</td>
-<td align="left">Hoogleraar</td>
-<td align="right">4</td>
-</tr>
-<tr class="odd">
-<td align="left">UU</td>
-<td align="left">Hoogleraar + Universitair hoofddocent</td>
-<td align="right">1</td>
-</tr>
-<tr class="even">
-<td align="left">UU</td>
-<td align="left">Onderzoeker</td>
-<td align="right">5</td>
-</tr>
-<tr class="odd">
-<td align="left">UU</td>
-<td align="left">Onderzoeks- en onderwijsmedewerker</td>
-<td align="right">1</td>
-</tr>
-<tr class="even">
-<td align="left">UU</td>
-<td align="left">PhD Student</td>
-<td align="right">15</td>
-</tr>
-<tr class="odd">
-<td align="left">UU</td>
-<td align="left">Universitair docent</td>
-<td align="right">9</td>
-</tr>
-<tr class="even">
-<td align="left">UU</td>
-<td align="left">Universitair hoofddocent</td>
-<td align="right">6</td>
-</tr>
-<tr class="odd">
-<td align="left">UU</td>
-<td align="left">NA</td>
-<td align="right">1</td>
-</tr>
-<tr class="even">
-<td align="left">UvA</td>
-<td align="left">Postdoc</td>
-<td align="right">1</td>
+<tr>
+<td style="text-align:left;">
+UU
+</td>
+<td style="text-align:right;">
+0.41
+</td>
 </tr>
 </tbody>
 </table>
 </div>
+</div>
+</div>
+<div id="table-3" class="section level2" number="3.5">
+<h2><span class="header-section-number">3.5</span> Table 3</h2>
+<div id="prestige-distribution-per-university-in-22-and-24"
+class="section level3" number="3.5.1">
+<h3><span class="header-section-number">3.5.1</span> Prestige
+distribution per University in 22 and 24</h3>
 <div class="sourceCode" id="cb8"><pre
 class="sourceCode r test"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a>df_ego <span class="sc">%&gt;%</span></span>
-<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>    <span class="fu">group_by</span>(Universiteit1<span class="fl">.24</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a>    <span class="fu">count</span>(Functie<span class="fl">.24</span>)</span></code></pre></div>
-<div class="kable-table">
-<table>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">University =</span> <span class="fu">case_when</span>(<span class="fu">str_detect</span>(Universiteit<span class="fl">.22</span>, <span class="st">&quot;RU&quot;</span>) <span class="sc">~</span> <span class="st">&quot;RU&quot;</span>, <span class="fu">str_detect</span>(Universiteit<span class="fl">.22</span>,</span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a>        <span class="st">&quot;UU&quot;</span>) <span class="sc">~</span> <span class="st">&quot;UU&quot;</span>, <span class="at">.default =</span> <span class="st">&quot;Not in Department&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a>    <span class="fu">group_by</span>(University) <span class="sc">%&gt;%</span></span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a>    <span class="fu">summarise</span>(<span class="at">mean =</span> <span class="fu">mean</span>(Q1.W1), <span class="at">min =</span> <span class="fu">min</span>(Q1.W1), <span class="at">max =</span> <span class="fu">max</span>(Q1.W1), <span class="at">sd =</span> <span class="fu">sd</span>(Q1.W1)) <span class="sc">%&gt;%</span></span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a>    <span class="fu">fshowdf</span>()</span></code></pre></div>
+<div
+style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:300px; overflow-x: scroll; width:100%; ">
+<table class="table table-striped table-hover" style="margin-left: auto; margin-right: auto;">
 <thead>
-<tr class="header">
-<th align="left">Universiteit1.24</th>
-<th align="left">Functie.24</th>
-<th align="right">n</th>
+<tr>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+University
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+mean
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+min
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+max
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+sd
+</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td align="left"></td>
-<td align="left">External Phd</td>
-<td align="right">2</td>
+<tr>
+<td style="text-align:left;">
+Not in Department
+</td>
+<td style="text-align:right;">
+1.43
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+2.15
+</td>
 </tr>
-<tr class="even">
-<td align="left"></td>
-<td align="left">Guest Researcher</td>
-<td align="right">2</td>
+<tr>
+<td style="text-align:left;">
+RU
+</td>
+<td style="text-align:right;">
+11.16
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+67
+</td>
+<td style="text-align:right;">
+15.34
+</td>
 </tr>
-<tr class="odd">
-<td align="left"></td>
-<td align="left">Onderzoeker</td>
-<td align="right">2</td>
-</tr>
-<tr class="even">
-<td align="left"></td>
-<td align="left">Other researcher</td>
-<td align="right">1</td>
-</tr>
-<tr class="odd">
-<td align="left"></td>
-<td align="left">PhD Student</td>
-<td align="right">8</td>
-</tr>
-<tr class="even">
-<td align="left"></td>
-<td align="left">Postdoc</td>
-<td align="right">2</td>
-</tr>
-<tr class="odd">
-<td align="left"></td>
-<td align="left">Senior Researcher</td>
-<td align="right">1</td>
-</tr>
-<tr class="even">
-<td align="left">RU</td>
-<td align="left">Associate researcher</td>
-<td align="right">1</td>
-</tr>
-<tr class="odd">
-<td align="left">RU</td>
-<td align="left">Bijzonder hoogleraar</td>
-<td align="right">1</td>
-</tr>
-<tr class="even">
-<td align="left">RU</td>
-<td align="left">External Phd</td>
-<td align="right">4</td>
-</tr>
-<tr class="odd">
-<td align="left">RU</td>
-<td align="left">Hoogleraar</td>
-<td align="right">6</td>
-</tr>
-<tr class="even">
-<td align="left">RU</td>
-<td align="left">Onderzoeker</td>
-<td align="right">1</td>
-</tr>
-<tr class="odd">
-<td align="left">RU</td>
-<td align="left">PhD Student</td>
-<td align="right">12</td>
-</tr>
-<tr class="even">
-<td align="left">RU</td>
-<td align="left">Postdoc</td>
-<td align="right">3</td>
-</tr>
-<tr class="odd">
-<td align="left">RU</td>
-<td align="left">Universitair docent</td>
-<td align="right">11</td>
-</tr>
-<tr class="even">
-<td align="left">UU</td>
-<td align="left">Bijzonder hoogleraar</td>
-<td align="right">2</td>
-</tr>
-<tr class="odd">
-<td align="left">UU</td>
-<td align="left">Docent</td>
-<td align="right">2</td>
-</tr>
-<tr class="even">
-<td align="left">UU</td>
-<td align="left">Emeritus hoogleraar</td>
-<td align="right">1</td>
-</tr>
-<tr class="odd">
-<td align="left">UU</td>
-<td align="left">Hoogleraar</td>
-<td align="right">5</td>
-</tr>
-<tr class="even">
-<td align="left">UU</td>
-<td align="left">Hoogleraar + Universitair hoofddocent</td>
-<td align="right">1</td>
-</tr>
-<tr class="odd">
-<td align="left">UU</td>
-<td align="left">Onderwijsontwikkelaar</td>
-<td align="right">1</td>
-</tr>
-<tr class="even">
-<td align="left">UU</td>
-<td align="left">Onderzoeker</td>
-<td align="right">2</td>
-</tr>
-<tr class="odd">
-<td align="left">UU</td>
-<td align="left">PhD Student</td>
-<td align="right">9</td>
-</tr>
-<tr class="even">
-<td align="left">UU</td>
-<td align="left">Promovendus</td>
-<td align="right">1</td>
-</tr>
-<tr class="odd">
-<td align="left">UU</td>
-<td align="left">Universitair docent</td>
-<td align="right">9</td>
-</tr>
-<tr class="even">
-<td align="left">UU</td>
-<td align="left">Universitair hoofddocent</td>
-<td align="right">6</td>
-</tr>
-<tr class="odd">
-<td align="left">UU</td>
-<td align="left">Unversitair docent GPM</td>
-<td align="right">1</td>
-</tr>
-<tr class="even">
-<td align="left">UU</td>
-<td align="left">NA</td>
-<td align="right">1</td>
-</tr>
-<tr class="odd">
-<td align="left">University of Cologne</td>
-<td align="left">Onderzoeker</td>
-<td align="right">1</td>
-</tr>
-<tr class="even">
-<td align="left">UvT</td>
-<td align="left">Bijzonder hoogleraar</td>
-<td align="right">1</td>
+<tr>
+<td style="text-align:left;">
+UU
+</td>
+<td style="text-align:right;">
+9.21
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+91
+</td>
+<td style="text-align:right;">
+16.42
+</td>
 </tr>
 </tbody>
 </table>
 </div>
-</div>
-<div id="gender" class="section level2" number="3.5">
-<h2><span class="header-section-number">3.5</span> Gender</h2>
-<div id="gender-distribution-per-university-in-22-and-24"
-class="section level3" number="3.5.1">
-<h3><span class="header-section-number">3.5.1</span> Gender distribution
-per University in 22 and 24</h3>
 <div class="sourceCode" id="cb9"><pre
 class="sourceCode r test"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a>df_ego <span class="sc">%&gt;%</span></span>
-<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>    <span class="fu">group_by</span>(Universiteit1<span class="fl">.22</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>    <span class="fu">summarise</span>(<span class="at">mean_gender =</span> <span class="fu">mean</span>(perc_female, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code></pre></div>
-<div class="kable-table">
-<table>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">University =</span> <span class="fu">case_when</span>(<span class="fu">str_detect</span>(Universiteit<span class="fl">.22</span>, <span class="st">&quot;RU&quot;</span>) <span class="sc">~</span> <span class="st">&quot;RU&quot;</span>, <span class="fu">str_detect</span>(Universiteit<span class="fl">.22</span>,</span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>        <span class="st">&quot;UU&quot;</span>) <span class="sc">~</span> <span class="st">&quot;UU&quot;</span>, <span class="at">.default =</span> <span class="st">&quot;Not in Department&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a>    <span class="fu">group_by</span>(University) <span class="sc">%&gt;%</span></span>
+<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a>    <span class="fu">summarise</span>(<span class="at">mean =</span> <span class="fu">mean</span>(Q1.W2), <span class="at">min =</span> <span class="fu">min</span>(Q1.W2), <span class="at">max =</span> <span class="fu">max</span>(Q1.W2), <span class="at">sd =</span> <span class="fu">sd</span>(Q1.W2)) <span class="sc">%&gt;%</span></span>
+<span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a>    <span class="fu">fshowdf</span>()</span></code></pre></div>
+<div
+style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:300px; overflow-x: scroll; width:100%; ">
+<table class="table table-striped table-hover" style="margin-left: auto; margin-right: auto;">
 <thead>
-<tr class="header">
-<th align="left">Universiteit1.22</th>
-<th align="right">mean_gender</th>
+<tr>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+University
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+mean
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+min
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+max
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+sd
+</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td align="left"></td>
-<td align="right">0.6650000</td>
+<tr>
+<td style="text-align:left;">
+Not in Department
+</td>
+<td style="text-align:right;">
+5.43
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+4.31
+</td>
 </tr>
-<tr class="even">
-<td align="left">RU</td>
-<td align="right">0.4945455</td>
+<tr>
+<td style="text-align:left;">
+RU
+</td>
+<td style="text-align:right;">
+14.02
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+62
+</td>
+<td style="text-align:right;">
+12.23
+</td>
 </tr>
-<tr class="odd">
-<td align="left">RUG</td>
-<td align="right">0.0000000</td>
-</tr>
-<tr class="even">
-<td align="left">UU</td>
-<td align="right">0.4168085</td>
-</tr>
-<tr class="odd">
-<td align="left">UvA</td>
-<td align="right">0.0000000</td>
+<tr>
+<td style="text-align:left;">
+UU
+</td>
+<td style="text-align:right;">
+13.31
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+50
+</td>
+<td style="text-align:right;">
+12.48
+</td>
 </tr>
 </tbody>
 </table>
 </div>
+</div>
+</div>
+<div id="table-4" class="section level2" number="3.6">
+<h2><span class="header-section-number">3.6</span> Table 4</h2>
+<div id="prestige-distribution-per-gender-in-22-and-24"
+class="section level3" number="3.6.1">
+<h3><span class="header-section-number">3.6.1</span> Prestige
+distribution per Gender in 22 and 24</h3>
 <div class="sourceCode" id="cb10"><pre
 class="sourceCode r test"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>df_ego <span class="sc">%&gt;%</span></span>
-<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>    <span class="fu">group_by</span>(Universiteit1<span class="fl">.24</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a>    <span class="fu">summarise</span>(<span class="at">mean_gender =</span> <span class="fu">mean</span>(perc_female, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code></pre></div>
-<div class="kable-table">
-<table>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>    <span class="fu">group_by</span>(female) <span class="sc">%&gt;%</span></span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a>    <span class="fu">summarise</span>(<span class="at">mean =</span> <span class="fu">mean</span>(Q1.W1), <span class="at">min =</span> <span class="fu">min</span>(Q1.W1), <span class="at">max =</span> <span class="fu">max</span>(Q1.W1), <span class="at">sd =</span> <span class="fu">sd</span>(Q1.W1)) <span class="sc">%&gt;%</span></span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a>    <span class="fu">fshowdf</span>()</span></code></pre></div>
+<div
+style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:300px; overflow-x: scroll; width:100%; ">
+<table class="table table-striped table-hover" style="margin-left: auto; margin-right: auto;">
 <thead>
-<tr class="header">
-<th align="left">Universiteit1.24</th>
-<th align="right">mean_gender</th>
+<tr>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+female
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+mean
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+min
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+max
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+sd
+</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td align="left"></td>
-<td align="right">0.4411111</td>
+<tr>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+13.11
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+91
+</td>
+<td style="text-align:right;">
+18.86
+</td>
 </tr>
-<tr class="even">
-<td align="left">RU</td>
-<td align="right">0.5076923</td>
-</tr>
-<tr class="odd">
-<td align="left">UU</td>
-<td align="right">0.4400000</td>
-</tr>
-<tr class="even">
-<td align="left">University of Cologne</td>
-<td align="right">0.0000000</td>
-</tr>
-<tr class="odd">
-<td align="left">UvT</td>
-<td align="right">0.0000000</td>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+5.18
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+32
+</td>
+<td style="text-align:right;">
+8.10
+</td>
 </tr>
 </tbody>
 </table>
 </div>
-</div>
-<div
-id="gender-distribution-per-university-and-per-function-in-22-and-24"
-class="section level3" number="3.5.2">
-<h3><span class="header-section-number">3.5.2</span> Gender distribution
-per University and per Function in 22 and 24</h3>
-<p>!!Important to change function levels to have more meaningful
-results!!</p>
 <div class="sourceCode" id="cb11"><pre
 class="sourceCode r test"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a>df_ego <span class="sc">%&gt;%</span></span>
-<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a>    <span class="fu">group_by</span>(Universiteit1<span class="fl">.22</span>, Functie<span class="fl">.22</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a>    <span class="fu">summarise</span>(<span class="at">mean_gender =</span> <span class="fu">mean</span>(perc_female, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code></pre></div>
-<div class="kable-table">
-<table>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a>    <span class="fu">group_by</span>(female) <span class="sc">%&gt;%</span></span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a>    <span class="fu">summarise</span>(<span class="at">mean =</span> <span class="fu">mean</span>(Q1.W2), <span class="at">min =</span> <span class="fu">min</span>(Q1.W2), <span class="at">max =</span> <span class="fu">max</span>(Q1.W2), <span class="at">sd =</span> <span class="fu">sd</span>(Q1.W2)) <span class="sc">%&gt;%</span></span>
+<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a>    <span class="fu">fshowdf</span>()</span></code></pre></div>
+<div
+style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:300px; overflow-x: scroll; width:100%; ">
+<table class="table table-striped table-hover" style="margin-left: auto; margin-right: auto;">
 <thead>
-<tr class="header">
-<th align="left">Universiteit1.22</th>
-<th align="left">Functie.22</th>
-<th align="right">mean_gender</th>
+<tr>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+female
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+mean
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+min
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+max
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+sd
+</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td align="left"></td>
-<td align="left">NA</td>
-<td align="right">0.6650000</td>
+<tr>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+15.00
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+62
+</td>
+<td style="text-align:right;">
+13.43
+</td>
 </tr>
-<tr class="even">
-<td align="left">RU</td>
-<td align="left">Associate researcher</td>
-<td align="right">0.0000000</td>
-</tr>
-<tr class="odd">
-<td align="left">RU</td>
-<td align="left">External Phd</td>
-<td align="right">0.4975000</td>
-</tr>
-<tr class="even">
-<td align="left">RU</td>
-<td align="left">Guest Researcher</td>
-<td align="right">0.0000000</td>
-</tr>
-<tr class="odd">
-<td align="left">RU</td>
-<td align="left">Hoogleraar</td>
-<td align="right">0.1700000</td>
-</tr>
-<tr class="even">
-<td align="left">RU</td>
-<td align="left">Other researcher</td>
-<td align="right">1.0000000</td>
-</tr>
-<tr class="odd">
-<td align="left">RU</td>
-<td align="left">PhD Student</td>
-<td align="right">0.6500000</td>
-</tr>
-<tr class="even">
-<td align="left">RU</td>
-<td align="left">Postdoc</td>
-<td align="right">1.0000000</td>
-</tr>
-<tr class="odd">
-<td align="left">RU</td>
-<td align="left">Senior Researcher</td>
-<td align="right">0.0000000</td>
-</tr>
-<tr class="even">
-<td align="left">RU</td>
-<td align="left">Universitair docent</td>
-<td align="right">0.5000000</td>
-</tr>
-<tr class="odd">
-<td align="left">RU</td>
-<td align="left">Universitair hoofddocent</td>
-<td align="right">0.0000000</td>
-</tr>
-<tr class="even">
-<td align="left">RUG</td>
-<td align="left">Hoogleraar</td>
-<td align="right">0.0000000</td>
-</tr>
-<tr class="odd">
-<td align="left">UU</td>
-<td align="left">Bijzonder hoogleraar</td>
-<td align="right">0.0000000</td>
-</tr>
-<tr class="even">
-<td align="left">UU</td>
-<td align="left">Docent</td>
-<td align="right">0.0000000</td>
-</tr>
-<tr class="odd">
-<td align="left">UU</td>
-<td align="left">Emeritus hoogleraar</td>
-<td align="right">0.0000000</td>
-</tr>
-<tr class="even">
-<td align="left">UU</td>
-<td align="left">Hoogleraar</td>
-<td align="right">0.2500000</td>
-</tr>
-<tr class="odd">
-<td align="left">UU</td>
-<td align="left">Hoogleraar + Universitair hoofddocent</td>
-<td align="right">1.0000000</td>
-</tr>
-<tr class="even">
-<td align="left">UU</td>
-<td align="left">Onderzoeker</td>
-<td align="right">0.1975000</td>
-</tr>
-<tr class="odd">
-<td align="left">UU</td>
-<td align="left">Onderzoeks- en onderwijsmedewerker</td>
-<td align="right">0.0000000</td>
-</tr>
-<tr class="even">
-<td align="left">UU</td>
-<td align="left">PhD Student</td>
-<td align="right">0.5213333</td>
-</tr>
-<tr class="odd">
-<td align="left">UU</td>
-<td align="left">Universitair docent</td>
-<td align="right">0.5522222</td>
-</tr>
-<tr class="even">
-<td align="left">UU</td>
-<td align="left">Universitair hoofddocent</td>
-<td align="right">0.5016667</td>
-</tr>
-<tr class="odd">
-<td align="left">UU</td>
-<td align="left">NA</td>
-<td align="right">1.0000000</td>
-</tr>
-<tr class="even">
-<td align="left">UvA</td>
-<td align="left">Postdoc</td>
-<td align="right">0.0000000</td>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+10.73
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+50
+</td>
+<td style="text-align:right;">
+9.86
+</td>
 </tr>
 </tbody>
 </table>
 </div>
+</div>
+</div>
+<div id="table-5" class="section level2" number="3.7">
+<h2><span class="header-section-number">3.7</span> Table 5</h2>
+<div
+id="prestige-distribution-per-gender-and-per-university-in-22-and-24"
+class="section level3" number="3.7.1">
+<h3><span class="header-section-number">3.7.1</span> Prestige
+distribution per Gender and per University in 22 and 24</h3>
 <div class="sourceCode" id="cb12"><pre
 class="sourceCode r test"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a>df_ego <span class="sc">%&gt;%</span></span>
-<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a>    <span class="fu">group_by</span>(Universiteit1<span class="fl">.24</span>, Functie<span class="fl">.24</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a>    <span class="fu">summarise</span>(<span class="at">mean_gender =</span> <span class="fu">mean</span>(perc_female, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code></pre></div>
-<div class="kable-table">
-<table>
-<colgroup>
-<col width="30%" />
-<col width="52%" />
-<col width="16%" />
-</colgroup>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">University =</span> <span class="fu">case_when</span>(<span class="fu">str_detect</span>(Universiteit<span class="fl">.22</span>, <span class="st">&quot;RU&quot;</span>) <span class="sc">~</span> <span class="st">&quot;RU&quot;</span>, <span class="fu">str_detect</span>(Universiteit<span class="fl">.22</span>,</span>
+<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a>        <span class="st">&quot;UU&quot;</span>) <span class="sc">~</span> <span class="st">&quot;UU&quot;</span>, <span class="at">.default =</span> <span class="st">&quot;Not in Department&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a>    <span class="fu">group_by</span>(University, female) <span class="sc">%&gt;%</span></span>
+<span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a>    <span class="fu">summarise</span>(<span class="at">mean =</span> <span class="fu">mean</span>(Q1.W1), <span class="at">min =</span> <span class="fu">min</span>(Q1.W1), <span class="at">max =</span> <span class="fu">max</span>(Q1.W1), <span class="at">sd =</span> <span class="fu">sd</span>(Q1.W1)) <span class="sc">%&gt;%</span></span>
+<span id="cb12-6"><a href="#cb12-6" tabindex="-1"></a>    <span class="fu">fshowdf</span>()</span></code></pre></div>
+<div
+style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:300px; overflow-x: scroll; width:100%; ">
+<table class="table table-striped table-hover" style="margin-left: auto; margin-right: auto;">
 <thead>
-<tr class="header">
-<th align="left">Universiteit1.24</th>
-<th align="left">Functie.24</th>
-<th align="right">mean_gender</th>
+<tr>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+University
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+female
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+mean
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+min
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+max
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+sd
+</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td align="left"></td>
-<td align="left">External Phd</td>
-<td align="right">0.5000000</td>
+<tr>
+<td style="text-align:left;">
+Not in Department
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+3.00
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+2.65
+</td>
 </tr>
-<tr class="even">
-<td align="left"></td>
-<td align="left">Guest Researcher</td>
-<td align="right">0.0000000</td>
+<tr>
+<td style="text-align:left;">
+Not in Department
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0.25
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0.50
+</td>
 </tr>
-<tr class="odd">
-<td align="left"></td>
-<td align="left">Onderzoeker</td>
-<td align="right">0.0000000</td>
+<tr>
+<td style="text-align:left;">
+RU
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+17.52
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+67
+</td>
+<td style="text-align:right;">
+18.78
+</td>
 </tr>
-<tr class="even">
-<td align="left"></td>
-<td align="left">Other researcher</td>
-<td align="right">1.0000000</td>
+<tr>
+<td style="text-align:left;">
+RU
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+4.50
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+23
+</td>
+<td style="text-align:right;">
+5.75
+</td>
 </tr>
-<tr class="odd">
-<td align="left"></td>
-<td align="left">PhD Student</td>
-<td align="right">0.4925000</td>
+<tr>
+<td style="text-align:left;">
+UU
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+10.66
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+91
+</td>
+<td style="text-align:right;">
+19.37
+</td>
 </tr>
-<tr class="even">
-<td align="left"></td>
-<td align="left">Postdoc</td>
-<td align="right">1.0000000</td>
+<tr>
+<td style="text-align:left;">
+UU
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+7.00
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+32
+</td>
+<td style="text-align:right;">
+10.59
+</td>
 </tr>
-<tr class="odd">
-<td align="left"></td>
-<td align="left">Senior Researcher</td>
-<td align="right">0.0000000</td>
+</tbody>
+</table>
+</div>
+<div class="sourceCode" id="cb13"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a>df_ego <span class="sc">%&gt;%</span></span>
+<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">University =</span> <span class="fu">case_when</span>(<span class="fu">str_detect</span>(Universiteit<span class="fl">.24</span>, <span class="st">&quot;RU&quot;</span>) <span class="sc">~</span> <span class="st">&quot;RU&quot;</span>, <span class="fu">str_detect</span>(Universiteit<span class="fl">.24</span>,</span>
+<span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a>        <span class="st">&quot;UU&quot;</span>) <span class="sc">~</span> <span class="st">&quot;UU&quot;</span>, <span class="at">.default =</span> <span class="st">&quot;Not in Department&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a>    <span class="fu">group_by</span>(University, female) <span class="sc">%&gt;%</span></span>
+<span id="cb13-5"><a href="#cb13-5" tabindex="-1"></a>    <span class="fu">summarise</span>(<span class="at">mean =</span> <span class="fu">mean</span>(Q1.W2), <span class="at">min =</span> <span class="fu">min</span>(Q1.W2), <span class="at">max =</span> <span class="fu">max</span>(Q1.W2), <span class="at">sd =</span> <span class="fu">sd</span>(Q1.W2)) <span class="sc">%&gt;%</span></span>
+<span id="cb13-6"><a href="#cb13-6" tabindex="-1"></a>    <span class="fu">fshowdf</span>()</span></code></pre></div>
+<div
+style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:300px; overflow-x: scroll; width:100%; ">
+<table class="table table-striped table-hover" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+University
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+female
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+mean
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+min
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+max
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+sd
+</th>
 </tr>
-<tr class="even">
-<td align="left">RU</td>
-<td align="left">Associate researcher</td>
-<td align="right">0.0000000</td>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Not in Department
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+13.33
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+24
+</td>
+<td style="text-align:right;">
+7.43
+</td>
 </tr>
-<tr class="odd">
-<td align="left">RU</td>
-<td align="left">Bijzonder hoogleraar</td>
-<td align="right">0.0000000</td>
+<tr>
+<td style="text-align:left;">
+Not in Department
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+7.62
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+15
+</td>
+<td style="text-align:right;">
+4.57
+</td>
 </tr>
-<tr class="even">
-<td align="left">RU</td>
-<td align="left">External Phd</td>
-<td align="right">0.7450000</td>
+<tr>
+<td style="text-align:left;">
+RU
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+17.68
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+62
+</td>
+<td style="text-align:right;">
+15.17
+</td>
 </tr>
-<tr class="odd">
-<td align="left">RU</td>
-<td align="left">Hoogleraar</td>
-<td align="right">0.1700000</td>
+<tr>
+<td style="text-align:left;">
+RU
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+10.15
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+23
+</td>
+<td style="text-align:right;">
+6.68
+</td>
 </tr>
-<tr class="even">
-<td align="left">RU</td>
-<td align="left">Onderzoeker</td>
-<td align="right">1.0000000</td>
+<tr>
+<td style="text-align:left;">
+UU
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+13.71
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+43
+</td>
+<td style="text-align:right;">
+14.42
+</td>
 </tr>
-<tr class="odd">
-<td align="left">RU</td>
-<td align="left">PhD Student</td>
-<td align="right">0.5666667</td>
+<tr>
+<td style="text-align:left;">
+UU
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+12.88
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+50
+</td>
+<td style="text-align:right;">
+13.97
+</td>
 </tr>
-<tr class="even">
-<td align="left">RU</td>
-<td align="left">Postdoc</td>
-<td align="right">0.6666667</td>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="table-7" class="section level2" number="3.8">
+<h2><span class="header-section-number">3.8</span> Table 7</h2>
+<div id="general-descriptives" class="section level3" number="3.8.1">
+<h3><span class="header-section-number">3.8.1</span> General
+Descriptives</h3>
+<div class="sourceCode" id="cb14"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a>df_char <span class="ot">&lt;-</span> df_ego <span class="sc">%&gt;%</span></span>
+<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a>    <span class="fu">select</span>(female, ethnicity, Q1.W1, Q1.W2, first_year_pub) <span class="sc">%&gt;%</span></span>
+<span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">career_age =</span> <span class="dv">2024</span> <span class="sc">-</span> first_year_pub) <span class="sc">%&gt;%</span></span>
+<span id="cb14-4"><a href="#cb14-4" tabindex="-1"></a>    <span class="fu">select</span>(<span class="sc">!</span>first_year_pub) <span class="sc">%&gt;%</span></span>
+<span id="cb14-5"><a href="#cb14-5" tabindex="-1"></a>    psych<span class="sc">::</span><span class="fu">describe</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb14-6"><a href="#cb14-6" tabindex="-1"></a>    <span class="fu">select</span>(<span class="sc">!</span><span class="fu">c</span>(vars, trimmed, median, mad, range, skew, kurtosis, se))</span>
+<span id="cb14-7"><a href="#cb14-7" tabindex="-1"></a></span>
+<span id="cb14-8"><a href="#cb14-8" tabindex="-1"></a><span class="fu">fshowdf</span>(df_char)</span></code></pre></div>
+<div
+style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:300px; overflow-x: scroll; width:100%; ">
+<table class="table table-striped table-hover" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+n
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+mean
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+sd
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+min
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+max
+</th>
 </tr>
-<tr class="odd">
-<td align="left">RU</td>
-<td align="left">Universitair docent</td>
-<td align="right">0.5454545</td>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+female
+</td>
+<td style="text-align:right;">
+100
+</td>
+<td style="text-align:right;">
+0.45
+</td>
+<td style="text-align:right;">
+0.50
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
 </tr>
-<tr class="even">
-<td align="left">UU</td>
-<td align="left">Bijzonder hoogleraar</td>
-<td align="right">0.0000000</td>
+<tr>
+<td style="text-align:left;">
+ethnicity
+</td>
+<td style="text-align:right;">
+99
+</td>
+<td style="text-align:right;">
+0.88
+</td>
+<td style="text-align:right;">
+0.33
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
 </tr>
-<tr class="odd">
-<td align="left">UU</td>
-<td align="left">Docent</td>
-<td align="right">0.0000000</td>
+<tr>
+<td style="text-align:left;">
+Q1.W1
+</td>
+<td style="text-align:right;">
+100
+</td>
+<td style="text-align:right;">
+9.54
+</td>
+<td style="text-align:right;">
+15.45
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+91
+</td>
 </tr>
-<tr class="even">
-<td align="left">UU</td>
-<td align="left">Emeritus hoogleraar</td>
-<td align="right">0.0000000</td>
+<tr>
+<td style="text-align:left;">
+Q1.W2
+</td>
+<td style="text-align:right;">
+100
+</td>
+<td style="text-align:right;">
+13.08
+</td>
+<td style="text-align:right;">
+12.09
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+62
+</td>
 </tr>
-<tr class="odd">
-<td align="left">UU</td>
-<td align="left">Hoogleraar</td>
-<td align="right">0.2000000</td>
-</tr>
-<tr class="even">
-<td align="left">UU</td>
-<td align="left">Hoogleraar + Universitair hoofddocent</td>
-<td align="right">1.0000000</td>
-</tr>
-<tr class="odd">
-<td align="left">UU</td>
-<td align="left">Onderwijsontwikkelaar</td>
-<td align="right">0.0000000</td>
-</tr>
-<tr class="even">
-<td align="left">UU</td>
-<td align="left">Onderzoeker</td>
-<td align="right">0.7900000</td>
-</tr>
-<tr class="odd">
-<td align="left">UU</td>
-<td align="left">PhD Student</td>
-<td align="right">0.6477778</td>
-</tr>
-<tr class="even">
-<td align="left">UU</td>
-<td align="left">Promovendus</td>
-<td align="right">0.0000000</td>
-</tr>
-<tr class="odd">
-<td align="left">UU</td>
-<td align="left">Universitair docent</td>
-<td align="right">0.5522222</td>
-</tr>
-<tr class="even">
-<td align="left">UU</td>
-<td align="left">Universitair hoofddocent</td>
-<td align="right">0.5016667</td>
-</tr>
-<tr class="odd">
-<td align="left">UU</td>
-<td align="left">Unversitair docent GPM</td>
-<td align="right">0.0000000</td>
-</tr>
-<tr class="even">
-<td align="left">UU</td>
-<td align="left">NA</td>
-<td align="right">1.0000000</td>
-</tr>
-<tr class="odd">
-<td align="left">University of Cologne</td>
-<td align="left">Onderzoeker</td>
-<td align="right">0.0000000</td>
-</tr>
-<tr class="even">
-<td align="left">UvT</td>
-<td align="left">Bijzonder hoogleraar</td>
-<td align="right">0.0000000</td>
+<tr>
+<td style="text-align:left;">
+career_age
+</td>
+<td style="text-align:right;">
+100
+</td>
+<td style="text-align:right;">
+14.18
+</td>
+<td style="text-align:right;">
+12.04
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+44
+</td>
 </tr>
 </tbody>
 </table>
 </div>
 <p><br></p>
 <hr />
+<div id="refs" class="references csl-bib-body hanging-indent"
+entry-spacing="0">
+<div id="ref-ripley2011manual" class="csl-entry">
+Ripley, Ruth M, Tom AB Snijders, Zsófia Boda, András Vörös, and Paulina
+Preciado. 2011. <span>“Manual for RSIENA.”</span> <em>University of
+Oxford, Department of Statistics, Nuffield College</em> 1: 2011.
+</div>
+</div>
 </div>
 </div>
 </div>
 
-<div id="rmd-source-code">LS0tDQp0aXRsZTogIkRhdGEgcHJlcGFyYXRpb24iDQojYmlibGlvZ3JhcGh5OiByZWZlcmVuY2VzLmJpYg0KYXV0aG9yOiAiTmllbHMgVnVsbGluZ3MiDQpiaWJsaW9ncmFwaHk6IHJlZmVyZW5jZXMuYmliDQotLS0NCg0KYGBgez1odG1sfQ0KPHN0eWxlPg0KYm9keSB7DQogIHRleHQtYWxpZ246IGp1c3RpZnk7DQogIGZvbnQtZmFtaWx5OiBUaW1lczsNCn0NCg0KaDEsIC5oMSwgaDIsIC5oMiwgaDMsIC5oMyB7DQogIG1hcmdpbi10b3A6IDI0cHg7DQogIGZvbnQtZmFtaWx5OiBUaW1lczsNCn0NCjwvc3R5bGU+DQpgYGANCmBgYHtyLCBnbG9iYWxzZXR0aW5ncywgZWNobz1GQUxTRSwgd2FybmluZz1GQUxTRSwgcmVzdWx0cz0naGlkZSd9DQpsaWJyYXJ5KGtuaXRyKQ0KDQprbml0cjo6b3B0c19jaHVuayRzZXQoZWNobyA9IFRSVUUpDQpvcHRzX2NodW5rJHNldCh0aWR5Lm9wdHM9bGlzdCh3aWR0aC5jdXRvZmY9MTAwKSx0aWR5PVRSVUUsIHdhcm5pbmcgPSBGQUxTRSwgbWVzc2FnZSA9IEZBTFNFLGNvbW1lbnQgPSAiIz4iLCBjYWNoZT1UUlVFLCBjbGFzcy5zb3VyY2U9YygidGVzdCIpLCBjbGFzcy5vdXRwdXQ9YygidGVzdDIiKSkNCm9wdGlvbnMod2lkdGggPSAxMDApDQpyZ2w6OnNldHVwS25pdHIoKQ0KDQoNCg0KY29sb3JpemUgPC0gZnVuY3Rpb24oeCwgY29sb3IpIHtzcHJpbnRmKCI8c3BhbiBzdHlsZT0nY29sb3I6ICVzOyc+JXM8L3NwYW4+IiwgY29sb3IsIHgpIH0NCg0KYGBgDQoNCmBgYHtyIGtsaXBweSwgZWNobz1GQUxTRSwgaW5jbHVkZT1UUlVFfQ0Ka2xpcHB5OjprbGlwcHkocG9zaXRpb24gPSBjKCd0b3AnLCAncmlnaHQnKSkNCiMga2xpcHB5OjprbGlwcHkoY29sb3IgPSAnZGFya2dyZWVuJykNCiNrbGlwcHk6OmtsaXBweSh0b29sdGlwX21lc3NhZ2UgPSAnQ2xpY2sgdG8gY29weScsIHRvb2x0aXBfc3VjY2VzcyA9ICdEb25lJykNCmBgYA0KDQpMYXN0IGNvbXBpbGVkIG9uIGByIGZvcm1hdChTeXMudGltZSgpLCAnJUIsICVZJylgDQoNCjxicj4NCg0KLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tDQoNCiMgRGF0YQ0KDQpUaGlzIHN0dWR5IHVzZXMgY29sbGFib3JhdGlvbiBkYXRhIG9mIHNvY2lvbG9naXN0cyBmcm9tIHRoZSBSYWRib3VkIFVuaXZlcnNpdHkgYW5kIFV0cmVjaHQgVW5pdmVyc2l0eSwgd2hpY2ggaGFzIGJlZW4gc2NyYXBlZCBmcm9tIHRoZSBpbnRlcm5ldC4gSXQgaXMgcGFydCBvZiBhIGxhcmdlciBkYXRhIHByb2plY3QgYWltaW5nIHRvIGNyZWF0ZSBsYXJnZSBzY2FsZSBzb2NpYWwgbmV0d29yayBkYXRhIG9uIHRoZSBjb2xsYWJvcmF0aW9ucyBvZiBEdXRjaCB1bml2ZXJzaXR5IHNjaG9sYXJzIGluIHRoZSBmaWVsZCBvZiBQb2xpdGljYWwgU2NpZW5jZSBhbmQgU29jaW9sb2d5LiBUaGUgZGF0YSBjb2xsZWN0aW9uIHByb2Nlc3MgaXMgdGhyZWVmb2xkLiBGaXJzdCwgYWxsIGVtcGxveWVlcyBvZiBTb2Npb2xvZ3kgYW5kIFBvbGl0aWNhbCBTY2llbmNlIGRlcGFydG1lbnRzIGF0IGFsbCBEdXRjaCB1bml2ZXJzaXRpZXMgd2VyZSBjb2xsZWN0ZWQsIGZpbGluZyB0aGVpciBuYW1lcywgdW5pdmVyc2l0eSwgZGVwYXJ0bWVudCwgcG9zaXRpb24gYW5kIEdvb2dsZSBTY2hvbGFyIGlkIGNvZGUuIFRoaXMgZGF0YSB3YXMgY29sbGVjdGVkIGZvciBib3RoIDIwMjIgYW5kIDIwMjQuIFNlY29uZCwgdGhlIHdvcmtzIG9mIGFsbCB0aGVzZSBhdXRob3JzIHdlcmUgc2NyYXBlZCB0aHJvdWdoIE9wZW5BbGV4LCBhIG5vbnByb2ZpdCBkYXRhYmFzZSBvbiBvcGVuIHNjaWVuY2UgKHJlZi4pLiBMYXN0bHksIHRoaXMgcmF3IGRhdGEgd2FzIHN1YnNldCB0byBnZXQgdGhlIHNhbXBsZSByZWxldmFudCBmb3IgdGhpcyBzdHVkeS4gSSBlbmRlZCB1cCB3aXRoIHNhbXBsZSBvZiAxMDAgc29jaW9sb2dpc3RzIGZyb20gUmFkYm91ZCBVbml2ZXJzaXR5IChuID0gNDQsIDM5KSBhbmQgVXRyZWNodCBVbml2ZXJzaXR5IChuID0gNDgsIDQ0KS4gTW9yZSBpbmZvcm1hdGlvbiBhYm91dCB0aGUgcHJvY2VzcyBhbmQgc291cmNlIGNvZGUgY2FuIGJlIGZvdW5kIHVuZGVyIHRoZSAiRGF0YSBNYW5pcHVsYXRpb24iIGZvbGRlciBvbiB0aGlzIHdlYnNpdGUuXA0K4oCDIEJlZm9yZSBJIGV4cGxhaW4gdGhlIGNyZWF0aW9uIG9mIHRoZSBuZXR3b3JrcywgaXQgaXMgaW1wb3J0YW50IHRvIG5vdGUgdGhhdCB0aGUgaW5pdGlhbCBkYXRhIGNvbGxlY3Rpb24gaW4gMjAyMiBhbmQgMjAyNCBkb2VzIG5vdCBkZXRlcm1pbmUgdGhlIHdhdmVzLiBUaGUgd2F2ZXMgYXJlIGRldGVybWluZWQgYmFzZWQgb24gdGhlIHBhcmFtZXRlcnMgc2V0IGJ5IHRoZSByZXNlYXJjaGVyLiBGb3IgdGhpcyBzdHVkeSwgSSBhbmFseXNlZCBwdWJsaWNhdGlvbiBiZXR3ZWVuIDIwMTUgdG8gMjAxOSAod2F2ZSAxKSBhbmQgMjAyMCB0byAyMDI0ICh3YXZlIDIpLiBUaGUgaW1wbGljYXRpb24gdGhpcyBoYXMgZm9yIHRoZSBkYXRhIGFzIGEgd2hvbGUgd2lsbCBiZSBlbGFib3JhdGVkIG9uIGluIHRoZSBkaXNjdXNzaW9uLiBCYXNlZCBvbiB0aGVzZSB3YXZlcywgY29sbGFib3JhdGlvbiBuZXR3b3JrcyB3ZXJlIGNyZWF0ZWQgYnkgYW5hbHlzaW5nIHdoZXRoZXIgb3Igbm90IHR3byBzY2hvbGFycyBpbiB0aGUgc2FtcGxlIGhhdmUgd29ya2VkIHRvZ2V0aGVyIG9uIGEgcHVibGljYXRpb24gaW4gZWFjaCBnaXZlbiB3YXZlLiBUaGVzZSBuZXR3b3JrcyBhcmUgZGlyZWN0ZWQsIHdoaWNoIG1lYW5zIHRoZSBmaXJzdCBhdXRob3Igd2hvIHNlbmRzIGEgdGllIHRvIGFsbCBjb2F1dGhvcnMuIFRoaXMgbWVhbnMgdGhhdCBhbiBhY3RvciB3aXRoIG1hbnkgaW5kZWdyZWVzIG9mdGVuIGNvYXV0aG9ycyB3aXRoIGRpZmZlcmVudCBwZW9wbGUsIHdoaWxlIGFuIGFjdG9yIHdpdGggYSBsb3Qgb2Ygb3V0ZGVncmVlcyBsb29rcyBmb3IgbWFueSBvdGhlcnMgdG8gY29sbGFib3JhdGUgd2l0aC4NCg0KIyMgQ292YXJpYXRlcw0KDQpUaGUgbWFpbiBpbmRlcGVuZGVudCB2YXJpYWJsZSBvZiB0aGlzIHN0dWR5IGlzIGdlbmRlci4gQXMgZ2VuZGVyIHdhcyBub3QgYXZhaWxhYmxlIGluIHRoZSBPcGVuQWxleCBkYXRhLCBJIGRldmVsb3BlZCBhIHdlYnNjcmFwZWQgdGhhdCBkZXRlcm1pbmVzIHRoZSBleHRlbnQgdG8gd2hpY2ggYSBuYW1lIGlzIGNvbnNpZGVyZWQgdG8gYmUgZmVtYWxlLiBVc2luZyBSdmVzdCwgSSBzY3JhcGUgdGhlIGZpcnN0IG5hbWUgb2YgZWFjaCBhdXRob3IgaW4gdGhlIGRhdGFzZXQuIFRoaXMgcmVzdWx0cyBpbiBhIHNjb3JlIGZyb20gMCB0byAxLCB3aGVyZSAwIG1lYW5zIHRoZXJlIGFyZSBubyB3b21lbiBpbiB0aGUgTmV0aGVybGFuZHMgd2l0aCB0aGF0IG5hbWUsIHdoaWxlIDEgbWVhbnMgdGhlcmUgYXJlIG5vIG1lbiB3aXRoIHRoYXQgbmFtZS4gVGhpcyBpcyBhIHNjYWxlIHZhcmlhYmxlLCBtZWFuaW5nIHRlY2huaWNhbGx5IG1lYW5zIHRoYXQgYW4gYXV0aG9yIGNhbiBiZSA4MCUgZmVtYWxlLiBUaGlzIHdhcyBkb25lIHRvIGFkZCBzb21lIHZhcmlhYmlsaXR5IHRvIHRoaXMgbWVhc3VyZSwgYXMgdGhpcyB3YXkgb2YgY29uc3RydWN0aW5nIGdlbmRlciBpcyBhIG1hdHRlciBvZiBhc3NvY2lhdGlvbiByYXRoZXIgdGhhbiBhbiBhY3R1YWwgbWVhc3VyZSBvZiBob3cgc29tZW9uZSBpZGVudGlmaWVzIHRoZW1zZWx2ZXMuXA0K4oCDIFRvIG1lYXN1cmUgYWNhZGVtaWMgcHJlc3RpZ2UsIEkgYWRkZWQgdHdvIHZhcmlhYmxlczogdGhlIG51bWJlciBvZiBRMSBqb3VybmFscyBpbiBlYWNoIHdhdmUgYW5kIGFuIGF1dGhvcidzIEgtaW5kZXguIFRoZSBudW1iZXIgb2YgUTEgam91cm5hbHMgaXMgYSB2YXJ5aW5nIGNvdmFyaWF0ZSwgd2hpY2ggbWVhbnMgaXQgY2FuIGNoYW5nZSBvdmVyIHRpbWUuIFRoZSByYW5rIG9mIGVhY2ggam91cm5hbCB3YXMgdGFrZW4gZnJvbSBTY2ltYWdvLCBhIHB1YmxpYyByZXBvc2l0b3J5IGZvciB3b3JsZHdpZGUgam91cm5hbCBhbmQgaW5zdGl0dXRpb24gcmFua2luZ3MgKHJlZikuIFRoZWlyIG1lYXN1cmUgKFNKUiBiZXN0IHF1YXJ0aWxlKSBpcyBkZXRlcm1pbmVkIGJ5IHRoZSBudW1iZXIgb2Ygd2VpZ2h0ZWQgY2l0YXRpb25zIG9mIHRoZSB3b3JrcyB0aGF0IHdlcmUgcHVibGlzaGVkIGluIHRoZSBqb3VybmFsIGluIHRoZSBsYXN0IHRocmVlIHllYXJzIChyZWYuKS4gVGhpcyBzdGFuZGFyZGl6ZWQgbWVhc3VyZSBlbnN1cmVzIHRoYXQgbGFyZ2VyIGpvdXJuYWxzIGRvIG5vdCBza2V3IHRoZSBvdmVyYWxsIHJhbmtpbmcuIEkgdGhlbiBzdW1tZWQgdGhlIG51bWJlciBvZiBRMSBwdWJsaWNhdGlvbnMgZm9yIGVhY2ggYXV0aG9yLCByZWdhcmRsZXNzIG9mIHRoZWlyIHBvc2l0aW9uIG9uIHRoZSBwYXBlci4gVGhlIGF1dGhvcidzIEgtaW5kZXggd2FzIHNjcmFwZWQgZnJvbSBPcGVuQWxleCBieSBMdWNhbiBCb3ZlbnMuIEl0IHdpbGwgYmUgdXNlZCBhcyBhIHN0YWJsZSBjb3ZhcmlhdGUsIGFzIHRoZSBILWluZGV4IGRvZXMgbm90IHNpZ25pZmljYW50bHkgY2hhbmdlIG92ZXIgdGhlIHdhdmVzLiBJdCBtZWFzdXJlcyB0aGUgcHJlc3RpZ2Ugb2YgYW4gYXV0aG9yLCBieSBjYWxjdWxhdGluZyBob3cgbWFueSBwYXBlcnMgaGF2ZSBiZWVuIGNpdGVkIGF0IGxlYXN0IGFzIG1hbnkgdGltZXMgYXMgdGhlIGF1dGhvcidzIHRvdGFsIGFtb3VudCBvZiBwdWJsaWNhdGlvbiBhbmQgY2FuIGJlIGV4cHJlc3NlZCBhcyB0aGUgZm9sbG93aW5nIGZvcm11bGEsICQkSF97aW5kZXh9ID0gXHN1bV97MH1ee1B9KDEgXG1pZCBcO3xuX2N8IFxnZSB8Tl9wfCkkJA0KDQp3aGVyZSAkTl9wJCByZXByZXNlbnRzIHRoZSBzdW0gdG90YWwgb2YgYWxsIHBhcGVycyBvZiBhbiBhdXRob3IgYW5kICRuX2MkIHJlcHJlc2VudHMgdGhlIG51bWJlciBvZiBjaXRhdGlvbnMgb2YgYSBzcGVjaWZpYyBwYXBlciBhbiBhdXRob3IgaGFzIHB1Ymxpc2hlZCgqKipJIGFza2VkIGEgc2VtaS1tYXRoZW1hdGljaWFuLCBzbyB0aGlzIHNob3VsZCBiZSBjb3JyZWN0Li4uPz8qKiopLlwNCuKAgyBUbyBjb250cm9sIGZvciBhdXRob3IgY2hhcmFjdGVyaXN0aWNzLCBJIGluY2x1ZGVkIHNldmVyYWwgY29udHJvbCB2YXJpYWJsZXMsIHN1Y2ggYXMgZXRobmljaXR5IGFuZCBjYXJlZXIgYWdlLiBFdGhuaWNpdHkgd2FzIG1hbnVhbGx5IHNjcmFwZWQgYnkgSGFubmFoIEdyb2Vubm91IGFuZCBpcyBkZWZpbmVkIGJ5IHdoZXRoZXIgYSBzY2hvbGFyIGlzIHdoaXRlIG9yIG5vdC4gQ2FyZWVyIGFnZSB3YXMgY29uc3RydWN0ZWQgYnkgS29lbiBMdWNhcyBhbmQNCg0KIyBBbmFseXRpY2FsIFN0cmF0ZWd5DQoNCi0gICBUd28gcGFydCBhbmFseXRpY2FsIHN0cmF0ZWd5Og0KDQogICAgLSAgIERlc2NyaXB0aXZlIE5ldHdvcmsgQW5hbHlzaXM6IGhvdyBhcmUgdGhlIGdlbmRlcnMgZGl2aWRlZCwgYXZlcmFnZSBwcmVzdGlnZSBwZXIgZ2VuZGVyLCBuZXR3b3JrIHN0YXRpc3RpY3MgZXRjLg0KDQogICAgLSAgIFJTaWVuYTogTW9kZWxsaW5nIG5ldHdvcmsgY2hhbmdlDQoNCi0gICBFeHBsYW5hdGlvbiBvZiBSU2llbmENCg0KICAgIC0gICBXaGF0IGRvIHdlIGRvPw0KDQogICAgLSAgIFdoYXQgbW9kZWxzIGRvIHdlIGVzdGltYXRlPw0KDQogICAgICAgIC0gICBCYXNpYyBtb2RlbDogIk51bGwiLW1vZGVsDQoNCiAgICAgICAgLSAgIE5ldHdvcmsgU3RhdHM6DQoNCiAgICAgICAgICAgIC0gICBnZW5kZXJlZCBjb3ZhcmlhdGVzDQoNCiAgICAgICAgICAgIC0gICBhbHRQcmVzdGlnZQ0KDQogICAgICAgICAgICAtICAgc2FtZUdlbmRlcihUcmFuc1RyaXApDQoNCiAgICAgICAgICAgIC0gICBpbnBvcCAoc3FydCksIG91dHBvcCAoc3FydCkNCg0KICAgICAgICAgICAgLSAgIGlucG9wWCwgb3V0cG9wWA0KDQogICAgLSAgIEdPRiBNb2RlbHMNCg0KICAgICAgICAtICAgRW1wbG95IG15IG93biBmdW5jdGlvbnMgZm9yIHRoZSBwbG90cz8NCg0KICAgICAgICAgICAgLSAgIHRzX2R5YWRzX2V2byBtYWlubHkgLVw+IGludGVyZXN0aW5nIHRvIGdhaW4gbW9yZSBpbmZvcm1hdGlvbiBvZiB0aGUgY29ycmVjdG5lc3Mgb2YgdGhlIGVzdGltYXRpb24gcHJvY2Vzcw0KDQojIERlc2NyaXB0aXZlIEFuYWx5c2lzDQoNCiMjIFNldCB1cA0KDQpgYGB7ciwgd2FybmluZz1GQUxTRSwgbWVzc2FnZT1GQUxTRSwgcmVzdWx0cz0naGlkZSd9DQpybShsaXN0ID0gbHMoKSkNCg0KIy0tLS0gTGlicmFyaWVzIC0tLS0NCmxpYnJhcnkodGlkeXZlcnNlKSAgIyBJIGFzc3VtZSB5b3UgYWxyZWFkeSBpbnN0YWxsZWQgdGhpcyBvbmUhDQpsaWJyYXJ5KGlncmFwaCkNCg0KDQpgYGANCg0KIyMgTG9hZCBkYXRhDQoNCmBgYHtyfQ0KbG9hZCgiZGF0YS9wcm9jZXNzZWQvc29jX2RhdGFfcmF3LlJEYXRhIikNCg0KbG9hZCgiZGF0YS9wcm9jZXNzZWQvUlVfVVVfZWdvLlJEYXRhIikNCg0KbG9hZCgiZGF0YS9wcm9jZXNzZWQvUlVfVVVfd29ya3MuUkRhdGEiKQ0KDQpgYGANCg0KSSBzdGlsbCBuZWVkIHRvIHB1dCB0aGlzIGluIGEgbmljZSBkZXNjcmlwdGl2ZXMgdGFibGUNCg0KIyMgU2Nob2xhcnMgcGVyIHVuaXZlcnNpdHkNCg0KYGBge3J9DQoNCmRmX2VnbyAlPiUgY291bnQoVW5pdmVyc2l0ZWl0MS4yMikNCmRmX2VnbyAlPiUgY291bnQoVW5pdmVyc2l0ZWl0Mi4yMikNCg0KDQpkZl9lZ28gJT4lIGNvdW50KFVuaXZlcnNpdGVpdDEuMjQpDQpkZl9lZ28gJT4lIGNvdW50KFVuaXZlcnNpdGVpdDIuMjQpDQoNCmBgYA0KDQojIyBGdW5jdGlvbnMNCg0KYGBge3J9DQpkZl9lZ28gJT4lIGdyb3VwX2J5KFVuaXZlcnNpdGVpdDEuMjIpICU+JSBjb3VudChGdW5jdGllLjIyKQ0KDQpkZl9lZ28gJT4lIGdyb3VwX2J5KFVuaXZlcnNpdGVpdDEuMjQpICU+JSBjb3VudChGdW5jdGllLjI0KQ0KYGBgDQoNCiMjIEdlbmRlcg0KDQojIyMgR2VuZGVyIGRpc3RyaWJ1dGlvbiBwZXIgVW5pdmVyc2l0eSBpbiAyMiBhbmQgMjQNCg0KYGBge3J9DQoNCmRmX2VnbyAlPiUgZ3JvdXBfYnkoVW5pdmVyc2l0ZWl0MS4yMikgJT4lIA0KICBzdW1tYXJpc2UobWVhbl9nZW5kZXIgPSBtZWFuKHBlcmNfZmVtYWxlLCBuYS5ybSA9IFRSVUUpKQ0KDQoNCmRmX2VnbyAlPiUgZ3JvdXBfYnkoVW5pdmVyc2l0ZWl0MS4yNCkgJT4lIA0KICBzdW1tYXJpc2UobWVhbl9nZW5kZXIgPSBtZWFuKHBlcmNfZmVtYWxlLCBuYS5ybSA9IFRSVUUpKQ0KDQpgYGANCg0KIyMjIEdlbmRlciBkaXN0cmlidXRpb24gcGVyIFVuaXZlcnNpdHkgYW5kIHBlciBGdW5jdGlvbiBpbiAyMiBhbmQgMjQNCg0KISFJbXBvcnRhbnQgdG8gY2hhbmdlIGZ1bmN0aW9uIGxldmVscyB0byBoYXZlIG1vcmUgbWVhbmluZ2Z1bCByZXN1bHRzISENCg0KYGBge3J9DQpkZl9lZ28gJT4lIGdyb3VwX2J5KFVuaXZlcnNpdGVpdDEuMjIsIEZ1bmN0aWUuMjIpICU+JSANCiAgc3VtbWFyaXNlKG1lYW5fZ2VuZGVyID0gbWVhbihwZXJjX2ZlbWFsZSwgbmEucm0gPSBUUlVFKSkNCg0KZGZfZWdvICU+JSBncm91cF9ieShVbml2ZXJzaXRlaXQxLjI0LCBGdW5jdGllLjI0KSAlPiUgDQogIHN1bW1hcmlzZShtZWFuX2dlbmRlciA9IG1lYW4ocGVyY19mZW1hbGUsIG5hLnJtID0gVFJVRSkpDQpgYGANCg0KPGJyPg0KDQotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0NCg==</div>
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIkRhdGEgcHJlcGFyYXRpb24iDQojYmlibGlvZ3JhcGh5OiByZWZlcmVuY2VzLmJpYg0KYXV0aG9yOiAiTmllbHMgVnVsbGluZ3MiDQpiaWJsaW9ncmFwaHk6IHJlZmVyZW5jZXMuYmliDQotLS0NCg0KYGBgez1odG1sfQ0KPHN0eWxlPg0KYm9keSB7DQp0ZXh0LWFsaWduOiBqdXN0aWZ5Ow0KZm9udC1mYW1pbHk6IFRpbWVzOw0KfQ0KDQpoMSwgLmgxLCBoMiwgLmgyLCBoMywgLmgzIHsNCm1hcmdpbi10b3A6IDI0cHg7DQpmb250LWZhbWlseTogVGltZXM7DQp9DQo8L3N0eWxlPg0KYGBgDQpgYGB7ciwgZ2xvYmFsc2V0dGluZ3MsIGVjaG89RkFMU0UsIHdhcm5pbmc9RkFMU0UsIHJlc3VsdHM9J2hpZGUnfQ0KbGlicmFyeShrbml0cikNCg0Ka25pdHI6Om9wdHNfY2h1bmskc2V0KGVjaG8gPSBUUlVFKQ0Kb3B0c19jaHVuayRzZXQodGlkeS5vcHRzPWxpc3Qod2lkdGguY3V0b2ZmPTEwMCksdGlkeT1UUlVFLCB3YXJuaW5nID0gRkFMU0UsIG1lc3NhZ2UgPSBGQUxTRSxjb21tZW50ID0gIiM+IiwgY2FjaGU9VFJVRSwgY2xhc3Muc291cmNlPWMoInRlc3QiKSwgY2xhc3Mub3V0cHV0PWMoInRlc3QyIikpDQpvcHRpb25zKHdpZHRoID0gMTAwKQ0KcmdsOjpzZXR1cEtuaXRyKCkNCmBgYA0KDQpgYGB7ciBrbGlwcHksIGVjaG89RkFMU0UsIGluY2x1ZGU9VFJVRX0NCmtsaXBweTo6a2xpcHB5KHBvc2l0aW9uID0gYygndG9wJywgJ3JpZ2h0JykpDQojIGtsaXBweTo6a2xpcHB5KGNvbG9yID0gJ2RhcmtncmVlbicpDQoja2xpcHB5OjprbGlwcHkodG9vbHRpcF9tZXNzYWdlID0gJ0NsaWNrIHRvIGNvcHknLCB0b29sdGlwX3N1Y2Nlc3MgPSAnRG9uZScpDQpgYGANCg0KTGFzdCBjb21waWxlZCBvbiBgciBmb3JtYXQoU3lzLnRpbWUoKSwgJyVCLCAlWScpYA0KDQo8YnI+DQoNCi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQ0KDQojIERhdGENCg0KVGhpcyBzdHVkeSB1c2VzIGNvbGxhYm9yYXRpb24gZGF0YSBvZiBzb2Npb2xvZ2lzdHMgZnJvbSB0aGUgUmFkYm91ZCBVbml2ZXJzaXR5IGFuZCBVdHJlY2h0IFVuaXZlcnNpdHksIHdoaWNoIGhhcyBiZWVuIHNjcmFwZWQgZnJvbSB0aGUgaW50ZXJuZXQuIEl0IGlzIHBhcnQgb2YgYSBsYXJnZXIgZGF0YSBwcm9qZWN0IGFpbWluZyB0byBjcmVhdGUgbGFyZ2Ugc2NhbGUgc29jaWFsIG5ldHdvcmsgZGF0YSBvbiB0aGUgY29sbGFib3JhdGlvbnMgb2YgRHV0Y2ggdW5pdmVyc2l0eSBzY2hvbGFycyBpbiB0aGUgZmllbGQgb2YgUG9saXRpY2FsIFNjaWVuY2UgYW5kIFNvY2lvbG9neS4gVGhlIGRhdGEgY29sbGVjdGlvbiBwcm9jZXNzIGlzIHRocmVlZm9sZC4gRmlyc3QsIGFsbCBlbXBsb3llZXMgb2YgU29jaW9sb2d5IGFuZCBQb2xpdGljYWwgU2NpZW5jZSBkZXBhcnRtZW50cyBhdCBhbGwgRHV0Y2ggdW5pdmVyc2l0aWVzIHdlcmUgY29sbGVjdGVkLCBmaWxpbmcgdGhlaXIgbmFtZXMsIHVuaXZlcnNpdHksIGRlcGFydG1lbnQsIHBvc2l0aW9uIGFuZCBHb29nbGUgU2Nob2xhciBpZCBjb2RlLiBUaGlzIGRhdGEgd2FzIGNvbGxlY3RlZCBmb3IgYm90aCAyMDIyIGFuZCAyMDI0LiBTZWNvbmQsIHRoZSB3b3JrcyBvZiBhbGwgdGhlc2UgYXV0aG9ycyB3ZXJlIHNjcmFwZWQgdGhyb3VnaCBPcGVuQWxleCwgYSBub25wcm9maXQgZGF0YWJhc2Ugb24gb3BlbiBzY2llbmNlIChyZWYuKS4gTGFzdGx5LCB0aGlzIHJhdyBkYXRhIHdhcyBzdWJzZXQgdG8gZ2V0IHRoZSBzYW1wbGUgcmVsZXZhbnQgZm9yIHRoaXMgc3R1ZHkuIEkgZW5kZWQgdXAgd2l0aCBzYW1wbGUgb2YgMTAwIHNvY2lvbG9naXN0cyBmcm9tIFJhZGJvdWQgVW5pdmVyc2l0eSAobiA9IDQ0LCAzOSkgYW5kIFV0cmVjaHQgVW5pdmVyc2l0eSAobiA9IDQ4LCA0NCkuIE1vcmUgaW5mb3JtYXRpb24gYWJvdXQgdGhlIHByb2Nlc3MgYW5kIHNvdXJjZSBjb2RlIGNhbiBiZSBmb3VuZCB1bmRlciB0aGUgIkRhdGEgTWFuaXB1bGF0aW9uIiBmb2xkZXIgb24gdGhpcyB3ZWJzaXRlLlwNCkJlZm9yZSBJIGV4cGxhaW4gdGhlIGNyZWF0aW9uIG9mIHRoZSBuZXR3b3JrcywgaXQgaXMgaW1wb3J0YW50IHRvIG5vdGUgdGhhdCB0aGUgaW5pdGlhbCBkYXRhIGNvbGxlY3Rpb24gaW4gMjAyMiBhbmQgMjAyNCBkb2VzIG5vdCBkZXRlcm1pbmUgdGhlIHdhdmVzLiBUaGUgd2F2ZXMgYXJlIGRldGVybWluZWQgYmFzZWQgb24gdGhlIHBhcmFtZXRlcnMgc2V0IGJ5IHRoZSByZXNlYXJjaGVyLiBGb3IgdGhpcyBzdHVkeSwgSSBhbmFseXNlZCBwdWJsaWNhdGlvbiBiZXR3ZWVuIDIwMTUgdG8gMjAxOSAod2F2ZSAxKSBhbmQgMjAyMCB0byAyMDI0ICh3YXZlIDIpLiBUaGUgaW1wbGljYXRpb24gdGhpcyBoYXMgZm9yIHRoZSBkYXRhIGFzIGEgd2hvbGUgd2lsbCBiZSBlbGFib3JhdGVkIG9uIGluIHRoZSBkaXNjdXNzaW9uLiBCYXNlZCBvbiB0aGVzZSB3YXZlcywgY29sbGFib3JhdGlvbiBuZXR3b3JrcyB3ZXJlIGNyZWF0ZWQgYnkgYW5hbHlzaW5nIHdoZXRoZXIgb3Igbm90IHR3byBzY2hvbGFycyBpbiB0aGUgc2FtcGxlIGhhdmUgd29ya2VkIHRvZ2V0aGVyIG9uIGEgcHVibGljYXRpb24gaW4gZWFjaCBnaXZlbiB3YXZlLiBUaGVzZSBuZXR3b3JrcyBhcmUgZGlyZWN0ZWQsIHdoaWNoIG1lYW5zIHRoZSBmaXJzdCBhdXRob3Igd2hvIHNlbmRzIGEgdGllIHRvIGFsbCBjb2F1dGhvcnMuIFRoaXMgbWVhbnMgdGhhdCBhbiBhY3RvciB3aXRoIG1hbnkgaW5kZWdyZWVzIG9mdGVuIGNvYXV0aG9ycyB3aXRoIGRpZmZlcmVudCBwZW9wbGUsIHdoaWxlIGFuIGFjdG9yIHdpdGggYSBsb3Qgb2Ygb3V0ZGVncmVlcyBsb29rcyBmb3IgbWFueSBvdGhlcnMgdG8gY29sbGFib3JhdGUgd2l0aC4NCg0KIyMgQ292YXJpYXRlcw0KDQpUaGUgbWFpbiBpbmRlcGVuZGVudCB2YXJpYWJsZSBvZiB0aGlzIHN0dWR5IGlzIGdlbmRlci4gQXMgZ2VuZGVyIHdhcyBub3QgYXZhaWxhYmxlIGluIHRoZSBPcGVuQWxleCBkYXRhLCBJIGRldmVsb3BlZCBhIHdlYnNjcmFwZWQgdGhhdCBkZXRlcm1pbmVzIHRoZSBleHRlbnQgdG8gd2hpY2ggYSBuYW1lIGlzIGNvbnNpZGVyZWQgdG8gYmUgZmVtYWxlLiBVc2luZyBSdmVzdCwgSSBzY3JhcGUgdGhlIGZpcnN0IG5hbWUgb2YgZWFjaCBhdXRob3IgaW4gdGhlIGRhdGFzZXQuIFRoaXMgcmVzdWx0cyBpbiBhIHNjb3JlIGZyb20gMCB0byAxLCB3aGVyZSAwIG1lYW5zIHRoZXJlIGFyZSBubyB3b21lbiBpbiB0aGUgTmV0aGVybGFuZHMgd2l0aCB0aGF0IG5hbWUsIHdoaWxlIDEgbWVhbnMgdGhlcmUgYXJlIG5vIG1lbiB3aXRoIHRoYXQgbmFtZS4gVGhpcyBpcyBhIHNjYWxlIHZhcmlhYmxlLCBtZWFuaW5nIHRlY2huaWNhbGx5IG1lYW5zIHRoYXQgYW4gYXV0aG9yIGNhbiBiZSA4MCUgZmVtYWxlLiBUaGlzIHdhcyBkb25lIHRvIGFkZCBzb21lIHZhcmlhYmlsaXR5IHRvIHRoaXMgbWVhc3VyZSwgYXMgdGhpcyB3YXkgb2YgY29uc3RydWN0aW5nIGdlbmRlciBpcyBhIG1hdHRlciBvZiBhc3NvY2lhdGlvbiByYXRoZXIgdGhhbiBhbiBhY3R1YWwgbWVhc3VyZSBvZiBob3cgc29tZW9uZSBpZGVudGlmaWVzIHRoZW1zZWx2ZXMuXA0KVG8gbWVhc3VyZSBhY2FkZW1pYyBwcmVzdGlnZSwgSSBhZGRlZCB0d28gdmFyaWFibGVzOiB0aGUgbnVtYmVyIG9mIFExIGpvdXJuYWxzIGluIGVhY2ggd2F2ZSBhbmQgYW4gYXV0aG9yJ3MgSC1pbmRleC4gVGhlIG51bWJlciBvZiBRMSBqb3VybmFscyBpcyBhIHZhcnlpbmcgY292YXJpYXRlLCB3aGljaCBtZWFucyBpdCBjYW4gY2hhbmdlIG92ZXIgdGltZS4gVGhlIHJhbmsgb2YgZWFjaCBqb3VybmFsIHdhcyB0YWtlbiBmcm9tIFNjaW1hZ28sIGEgcHVibGljIHJlcG9zaXRvcnkgZm9yIHdvcmxkd2lkZSBqb3VybmFsIGFuZCBpbnN0aXR1dGlvbiByYW5raW5ncyAocmVmKS4gVGhlaXIgbWVhc3VyZSAoU0pSIGJlc3QgcXVhcnRpbGUpIGlzIGRldGVybWluZWQgYnkgdGhlIG51bWJlciBvZiB3ZWlnaHRlZCBjaXRhdGlvbnMgb2YgdGhlIHdvcmtzIHRoYXQgd2VyZSBwdWJsaXNoZWQgaW4gdGhlIGpvdXJuYWwgaW4gdGhlIGxhc3QgdGhyZWUgeWVhcnMgKHJlZi4pLiBUaGlzIHN0YW5kYXJkaXplZCBtZWFzdXJlIGVuc3VyZXMgdGhhdCBsYXJnZXIgam91cm5hbHMgZG8gbm90IHNrZXcgdGhlIG92ZXJhbGwgcmFua2luZy4gSSB0aGVuIHN1bW1lZCB0aGUgbnVtYmVyIG9mIFExIHB1YmxpY2F0aW9ucyBmb3IgZWFjaCBhdXRob3IsIHJlZ2FyZGxlc3Mgb2YgdGhlaXIgcG9zaXRpb24gb24gdGhlIHBhcGVyLiBUaGUgYXV0aG9yJ3MgSC1pbmRleCB3YXMgc2NyYXBlZCBmcm9tIE9wZW5BbGV4IGJ5IEx1Y2FuIEJvdmVucy4gSXQgd2lsbCBiZSB1c2VkIGFzIGEgc3RhYmxlIGNvdmFyaWF0ZSwgYXMgdGhlIEgtaW5kZXggZG9lcyBub3Qgc2lnbmlmaWNhbnRseSBjaGFuZ2Ugb3ZlciB0aGUgd2F2ZXMuIEl0IG1lYXN1cmVzIHRoZSBwcmVzdGlnZSBvZiBhbiBhdXRob3IsIGJ5IGNhbGN1bGF0aW5nIGhvdyBtYW55IHBhcGVycyBoYXZlIGJlZW4gY2l0ZWQgYXQgbGVhc3QgYXMgbWFueSB0aW1lcyBhcyB0aGUgYXV0aG9yJ3MgdG90YWwgYW1vdW50IG9mIHB1YmxpY2F0aW9uIGFuZCBjYW4gYmUgZXhwcmVzc2VkIGFzIHRoZSBmb2xsb3dpbmcgZm9ybXVsYSwgJCRIX3tpbmRleH0gPSBcc3VtX3swfV57UH0oMSBcbWlkIFw7fG5fY3wgXGdlIHxOX3B8KSQkDQoNCndoZXJlICROX3AkIHJlcHJlc2VudHMgdGhlIHN1bSB0b3RhbCBvZiBhbGwgcGFwZXJzIG9mIGFuIGF1dGhvciBhbmQgJG5fYyQgcmVwcmVzZW50cyB0aGUgbnVtYmVyIG9mIGNpdGF0aW9ucyBvZiBhIHNwZWNpZmljIHBhcGVyIGFuIGF1dGhvciBoYXMgcHVibGlzaGVkKCoqVGhpcyBpcyBub3QgY29ycmVjdCwgYnV0IHdhcyBhIG5pY2UgdHJ5KiopLlwNClRvIGNvbnRyb2wgZm9yIGF1dGhvciBjaGFyYWN0ZXJpc3RpY3MsIEkgaW5jbHVkZWQgc2V2ZXJhbCBjb250cm9sIHZhcmlhYmxlcywgc3VjaCBhcyBldGhuaWNpdHkgYW5kIGNhcmVlciBhZ2UuIEV0aG5pY2l0eSB3YXMgbWFudWFsbHkgc2NyYXBlZCBieSBIYW5uYWggR3JvZW5ub3UgYW5kIGlzIGRlZmluZWQgYnkgd2hldGhlciBhIHNjaG9sYXIgaXMgd2hpdGUgb3Igbm90LiBDYXJlZXIgYWdlIHdhcyBjb25zdHJ1Y3RlZCBieSBLb2VuIEx1Y2FzIGFuZCBtZWFzdXJlcyB0aGUgeWVhciBzaW5jZSBhbiBhdXRob3IncyBmaXJzdCBwdWJsaWNhdGlvbi4NCg0KIyBBbmFseXRpY2FsIFN0cmF0ZWd5DQoNClRoZSBhbmFseXRpY2FsIHN0cmF0ZWd5IGZvciB0aGlzIHN0dWR5IGlzIHR3by1mb2xkLiBGaXJzdCwgSSB3aWxsIHBlcmZvcm0gcGVyZm9ybSBhIGRlc2NyaXB0aXZlIGFuYWx5c2lzLCBpbiBvcmRlciB0byBhbnN3ZXIgdGhlIGZpcnN0IHR3byByZXNlYXJjaCBxdWVzdGlvbnMsIGFzIHRoZXNlIHF1ZXN0aW9ucyBhcmUgZGVzY3JpcHRpdmUgaW4gbmF0dXJlLiBTZWNvbmQsIEkgd2lsbCBhc3Nlc3MgdGhlIG5ldHdvcmsgZXZvbHV0aW9uIHRocm91Z2ggYSBTdG9jaGFzdGljIEFjdG9yIE9yaWVudGVkIE1vZGVsIChzYW9tKSwgd2l0aCBSU2llbmEgW0ByaXBsZXkyMDExbWFudWFsXS4gRm9yIHRoZSBkZXNjcmlwdGl2ZSBhbmFseXNpcywgSSB3aWxsIGNhbGN1bGF0ZSBzZXZlcmFsIG5ldHdvcmsgc3RhdGlzdGljcywgc3VjaCBhcyB0aGUgZ2xvYmFsIGxldmVsIG9mIHRyYW5zaXRpdml0eSBhbmQgdGhlIG1vcmFuJ3MgSSwgd2hpY2ggd2lsbCBiZSBjYWxjdWxhdGVkIGJhc2VkIG9uIGdlbmRlci4gVGhpcyB3aWxsIGdpdmUgYW4gb3ZlcnZpZXcgb2YgdGhlIGV4dGVudCB0byB3aGljaCB0aGUgbmV0d29yayBpcyBjbHVzdGVyZWQuIEFwYXJ0IGZyb20gdGhpcywgSSB3aWxsIGFsc28gcXVhbGl0YXRpdmVseSBhc3Nlc3MgdGhlIHN0cnVjdHVyZSBvZiB0aGUgY29sbGFib3JhdGlvbiBuZXR3b3Jrcy4gVG8gYW5zd2VyIHRoZSBzZWNvbmQgcmVzZWFyY2ggcXVlc3Rpb24sIEkgd2lsbCBwZXJmb3JtIGEgdC10ZXN0IHRvIHRlc3QgaWYgdGhlcmUgaXMgc2lnbmlmaWNhbnQgY2hhbmdlIGluIHRoZSBsZXZlbCBvZiBjbHVzdGVyaW5nIGJldHdlZW4gdGhlIHR3byB3YXZlcy4gQnkgYXNzZXNzaW5nIHRoaXMgY2hhbmdlIGluIG5ldHdvcmsgY2x1c3RlcmluZywgd2UgaGF2ZSBhbiBpZGVhIG9mIHRoZSBzY2FsZSBvZiB0aGUgaXNzdWUuIElmIHRoZXJlIGlzIHJlbGF0aXZlbHkgbGl0dGxlIGNoYW5nZSBpbiB0ZXJtcyBvZiBjbHVzdGVyaW5nLCB0aGUgc3Vic2VxdWVudCBlc3RpbWF0ZSBzaXplcyBvZiB0aGUgUlNpZW5hIE1vZGVscyB3aWxsIGJlIGxlc3MgcmVsZXZhbnQgdGhhbiB3aGVuIHdlIHNlZSBsYXJnZSBhbW91bnRzIG9mIGNsdXN0ZXJpbmcgYmV0d2VlbiB0aGUgdHdvIHdhdmVzLlwNCuKAgyBBcyBzYWlkIGJlZm9yZSwgdGhlIHRoaXJkIHJlc2VhcmNoIHF1ZXN0aW9uIHdpbGwgYmUgYXNzZXNzZWQgd2l0aCBSU2llbmEuIFRoaXMgbWV0aG9kIG9mIGFuYWx5c2lzIHVzZXMgcHJvYmFiaWxpc3RpYyBzaW11bGF0aW9ucyB0byBtb2RlbCBob3cgbmV0d29ya3MgZXZvbHZlIGJhc2VkIG9uIGEgZ2l2ZW4gc2V0IG9mIG5ldHdvcmsgc3RhdGlzdGljcyBbQHJpcGxleTIwMTFtYW51YWxdLiBOZXR3b3JrIHN0YXRpc3RpY3MgaW4gdGhpcyBzZW5zZSBjYW4gYmVzdCBiZSBkZXNjcmliZWQgYXMgaW5kZXBlbmRlbnQgdmFyaWFibGVzLiBGb3IgZXhhbXBsZSwgdGhlIG5ldHdvcmsgc3RhdGlzdGljICoicmVjaXAiKiAocmVjaXByb2NpdHkpIG1lYW5zIHRoYXQgcGVvcGxlIGxpa2Ugb3IgZG8gbm90IGxpa2UgdG8gc2VuZCBhIHRpZSBiYWNrIHRvIGEgcGVyc29uIHdobyBoYXMgc2VudCBhIHRpZSB0byB0aGVtIHByZXZpb3VzbHkuIFJTaWVuYSBoYXMgdHdvIGRpZmZlcmVudCB0eXBlcyBvZiBpbmRlcGVuZGVudCB2YXJpYWJsZXMsIFN0cnVjdHVyYWwgZWZmZWN0cyBhbmQgQ292YXJpYXRlIGVmZmVjdHMuIFN0cnVjdHVyYWwgZWZmZWN0cyBhcmUgbmV0d29yayBzdGF0aXN0aWNzLCB0aGF0IGRlYWwgd2l0aCB0aGUgb3ZlcmFsbCB0ZW5kZW5jaWVzIG9mIGFjdG9ycyBpbiB0aGUgbmV0d29yaywgc3VjaCBhcyB0aGVpciB0ZW5kZW5jeSB0byBjb25uZWN0IHdpdGggcG9wdWxhciBhY3RvcnMgKGluUG9wKSBvciB0aGVpciB0ZW5kZW5jeSB0byBjbG9zZSB0cmlhZHMgKHRyYW5zVHJpcCkuIENvdmFyaWF0ZSBlZmZlY3RzIGFyZSBuZXR3b3JrIHN0YXRpc3RpY3MgdGhhdCBob2xkIGZvciBzcGVjaWZpYyBhY3RvcnMsIHN1Y2ggYXMgYW4gYWN0b3IncyBnZW5kZXIgb3IgdGhlaXIgcHJlc3RpZ2UuXA0K4oCDIFRvIGVuc3VyZSB0aGF0IHRoZSBtb2RlbCBpcyBzb21ld2hhdCBhY2N1cmF0ZSwgSSB3aWxsIGJ1aWxkIHRoZSBtb2RlbCBmcm9tIGEgbnVsbC1tb2RlbCAoTW9kZWwgMCkgdG8gYSBjb21wbGV0ZSBtb2RlbCAoTW9kZWwgNSkuIFRoZSBudWxsIG1vZGVsIHdpbGwgaGF2ZSBubyBzdHJ1Y3R1cmFsIGVmZmVjdHMsIGFwYXJ0IGZyb20gcmVjaXByb2NpdHkgYW5kIGRlbnNpdHksIHdoaWNoIGFzIHN0YW5kYXJkIGluIFJTaWVuYS4gVGhlIGZpcnN0IG1vZGVsIHdpbGwgY29udGFpbiB0aGUgc3RydWN0dXJhbCBlZmZlY3RzLiBUaGUgc2Vjb25kIG1vZGVsIGNvbnRhaW5zIHRoZSBjb3ZhcmlhdGUgZWZmZWN0cyBmb3IgZ2VuZGVyIGFuZCBoYXMgdHdvIHBhcnRzLCBNb2RlbCAyIGhhcyB0aGUgbmV0d29yayBzdGF0aXN0aWMgKkluZGVncmVlIHBvcHVsYXJpdHkuKiBNb2RlbCAyLjUgaGFzIHRoaXMgc2FtZSBuZXR3b3JrIHN0YXRpc3RpYyBidXQgc3F1YXJlZCwgaW4gb3JkZXIgdG8gdGVzdCBob3cgdGhpcyBpbXByb3ZlcyBtb2RlbCBmaXQuIEl0IHdhcyBmb3VuZCB0aGF0IE1vZGVsIDIuNSBmaXQgdGhlIGRhdGEgc2lnbmlmaWNhbnRseSBiZXR0ZXIgYW5kIHRodXMsIGFsbCBmdXR1cmUgbW9kZWxzIHVzZSB0aGUgc3F1YXJlZCAqaW5kZWdyZWUgcG9wdWxhcml0eSogc3RhdGlzdGljLiBNb2RlbCAzIGNvbnRhaW5zIHRoZSBjb3ZhcmlhdGUgZWZmZWN0cyBmb3IgcHJlc3RpZ2UuIE1vZGVsIDQgd2FzIG1lYW50IGFzIGEgZnVsbCBtb2RlbCwgY29udGFpbmluZyBjb3ZhcmlhdGUgZWZmZWN0cyBmb3IgaC1pbmRleCwgZXRobmljaXR5IGFuZCBjYXJlZXIgYWdlLiBIb3dldmVyLCB0aGlzIG1vZGVsIHNldmVybHkgaW1wYWN0ZWQgdGhlIGdvb2RuZXNzIG9mIGZpdCBhbmQgd2FzIHRodXMgZHJvcHBlZCwgdG8gcHJldmVudCBvdmVyY29udHJvbGxpbmcgdGhlIG1vZGVscy4gRmluYWxseSwgbW9kZWwgNSBjb250YWlucyBhbiBjb3ZhcmlhdGUgaW50ZXJhY3Rpb24gZWZmZWN0IGZvciBnZW5kZXIgYW5kIHByZXN0aWdlLCB0byBmaW5hbGx5IHRlc3QgdGhlIHRoaXJkIGh5cG90aGVzaXMuDQoNCiMgRGVzY3JpcHRpdmUgU3RhdGlzdGljcw0KDQpXaGVuIHdlIHRha2UgYSBsb29rIGF0IHRoZSBkYXRhLCB3ZSBzZWUgdGhhdCB0aGUgZGVwYXJ0bWVudHMgb2YgUmFkYm91ZCBVbml2ZXJzaXR5IGFuZCBVdHJlY2h0IFVuaXZlcnNpdHkgYXJlIGdldHRpbmcgc2xpZ2h0bHkgc21hbGxlciwgYnV0IGFyZSBzdGlsbCByZWxhdGl2ZWx5IGVxdWFsIGluIHRlcm1zIG9mIHNpemUgKFRhYmxlIDEpLiBBdCB3YXZlIDEsIHRoZXJlIDYgcGVvcGxlIHdobyBhcmUgbm90IHlldCBpbiBhbnkgZGVwYXJ0bWVudC4gVGhlc2Ugd2lsbCBsaWtlbHkgYmUgc2Nob2xhcnMgd2hvIHN0YXJ0ZWQgd29ya2luZyBhZnRlciAyMDIyIGFuZCBiZWZvcmUgMjAyNC4gQ29udmVyc2VseSwgdGhlIDE4IHBlb3BsZSB3aG8gYXJlIG5vdCBpbiBhbnkgZGVwYXJ0bWVudCBpbiB3YXZlIDIgYXJlIHNjaG9sYXJzIHdobyBsZWZ0IHRoZWlyIHJlc3BlY3RpdmUgZGVwYXJ0bWVudHMgc29tZXdoZXJlIGJldHdlZW4gMjAyMiBhbmQgMjAyNC4gVGhlc2UgYXJlIG1vc3QgbGlrZWx5IFBoRCBjYW5kaWRhdGVzIGFuZCBwb3N0IGRvY3Mgd2hvIGZpbmlzaGVkIHRoZWlyIGRpc3NlcnRhdGlvbnMgYW5kIGxlZnQgdGhlIGRlcGFydG1lbnQuXA0K4oCDIFJlZ2FyZGluZyB0aGUgZ2VuZGVyIGRpc3RyaWJ1dGlvbiwgd2Ugc2VlIHRoYXQgUmFkYm91ZCBVbml2ZXJzaXR5IGhhcyBhbiBhbG1vc3QgcGVyZmVjdCBkaXZpc2lvbiBpbiB0ZXJtcyBvZiBnZW5kZXIsIHdoaWxlIHdvbWVuIGFyZSBzbGlnaHRseSB1bmRlcnJlcHJlc2VudGVkIGF0IFV0cmVjaHQgVW5pdmVyc2l0eSAoVGFibGUgMikuIFdlIGFsc28gc2VlIHRoYXQgdGhlIGZ1dHVyZSBzY2hvbGFycywgcmVwcmVzZW50ZWQgYnkgdGhlICIqbm90IGluIGRlcGFydG1lbnQqIiAtIHJvdywgYXJlIGxhcmdlbHkgd29tZW4sIHdoaWxlIHRoZSBncm91cCB0aGF0IGxlZnQgdGhlIGRlcGFydG1lbnQgYmVmb3JlIHdhdmUgMiBoYXMgcHJvcG9ydGlvbmFsbHkgbW9yZSBtZW4uXA0K4oCDIEluIHRlcm1zIG9mIHByZXN0aWdlLCB3ZSBzZWUgdGhhdCwgYXQgd2F2ZSAxLCBzY2hvbGFycyBvZiBSYWRib3VkIFVuaXZlcnNpdHkgaGF2ZSBzbGlnaHRseSBtb3JlIHByZXN0aWdlIHRoYW4gc2Nob2xhcnMgb2YgVXRyZWNodCBVbml2ZXJzaXR5IChUYWJsZSA0KS4gSXQgYWxzbyBzaG93cyB0aGF0IHNjaG9sYXIgd2hvIGFyZSBub3QgeWV0IGluIGEgZGVwYXJ0bWVudCBoYXZlIHZlcnkgbG93IHByZXN0aWdlLCBhcyB0aGV5IGFyZSBzdGlsbCBqdW5pb3IgcmVzZWFyY2hlcnMgd2hvIGhhdmUgbm90IHlldCBwdWJsaXNoZWQuIEF0IHdhdmUgMiB3ZSBzZWUgdGhhdCB0aGVzZSBkaWZmZXJlbmNlcyBoYXZlIGVxdWFsaXplZCwgYW5kIG5vdyBSYWJvdWQgVW5pdmVyc2l0eSBhbmQgVXRyZWNodCBVbml2ZXJzaXR5IGFyZSBhbG1vc3QgZXF1YWwgaW4gdGVybXMgb2YgcHJlc3RpZ2UuIFdlIGFsc28gc2VlIGEgbXVjaCBoaWdoZXIgbWVhbiBmb3IgdGhlIGdyb3VwIHRoYXQgaW4gbm90IGluIHRoZSBkZXBhcnRtZW50LiBUaGlzIG1ha2VzIHNlbnNlLCBhcyB0aGVzZSBhcmUgbm90IHN0YXJ0aW5nIHNjaG9sYXJzLCBidXQgc2Nob2xhcnMgd2hvIGhhdmUgYmVlbiB3b3JraW5nIGZvciBzb21lIHRpbWUgYW5kIGhhdmUgdGh1cyBoYWQgdGhlIG9wcG9ydHVuaXR5IHRvIHB1Ymxpc2ggbW9yZS5cDQrigIMgRm9yIHRoaXMgc3R1ZHksIHRoZSBtb3N0IGltcG9ydGFudCB0YWJsZXMgYXJlIFRhYmxlIDQgYW5kIFRhYmxlIDUsIHdoaWNoIHNob3dzIGhvdyBwcmVzdGlnZSBpcyBkaXN0cmlidXRlZCBhbW9uZyBtYWxlIGFuZCBmZW1hbGUgc2Nob2xhci4gVGFibGUgNCBzaG93cyB0aGF0IG1hbGUgc2Nob2xhcnMgb24gYXZlcmFnZSBoYXZlIG1vcmUgUTEgcHVibGljYXRpb25zIG1vcmUgdGhhbiB3b21lbi4gQXQgd2F2ZSAxLCB0aGlzIGF2ZXJhZ2UgZGlmZmVyZW5jZSBpcyBlaWdodCBRMSBwdWJsaWNhdGlvbnMsIHdoaWxlIHRoZSBkaWZmZXJlbmNlIGF0IHdhdmUgMiBpcyBmaXZlIFExIHB1YmxpY2F0aW9ucywgd2hpY2ggbWVhbnMgdGhlIGRpZmZlcmVuY2UgYmV0d2VlbiBtYWxlIGFuZCBmZW1hbGUgc2Nob2xhcnMgaXMgZ2V0dGluZyBjbG9zZWQuIFRha2luZyBpbnRvIGFjY291bnQgdGhlIHNjaG9sYXJzIHdpdGggdGhlIG1heGltdW0gYW1vdW50IG9mIHB1YmxpY2F0aW9ucywgd2Ugc2VlIHRoYXQgdGhlIGRpZmZlcmVuY2VzIGJldHdlZW4gdGhlIG1vc3QgcHJlc3RpZ2lvdXMgbWFsZSBzY2hvbGFyIGFuZCB0aGUgbW9zdCBwcmVzdGlnaW91cyBmZW1hbGUgc2Nob2xhciBoYXMgZHJhc3RpY2FsbHkgZGVjcmVhc2VkIChmcm9tICRcRGVsdGEkIDU5IFExLXB1YmxpY2F0aW9ucyB0byAkXERlbHRhJCAxMiBRMS1wdWJsaWNhdGlvbnMpLiBab29taW5nIGluIG9uIHRoZSBkZXBhcnRtZW50IGxldmVsLCB3ZSBzZWUgYW4gaW50ZXJlc3RpbmcgcGF0dGVybi4gQXQgUmFkYm91ZCBVbml2ZXJzaXR5LCBmZW1hbGUgc2Nob2xhcnMgaW5jcmVhc2VkIHRoZWlyIHByZXN0aWdlIGJldHdlZW4gd2F2ZSAxIGFuZCB3YXZlIDIsIHdoaWxlIHRoZSBwcmVzdGlnZSBvZiBtYWxlIHNjaG9sYXIgc3RheWVkIGNvbnNpc3RlbnQuIEhvd2V2ZXIsIGF0IFV0cmVjaHQgVW5pdmVyc2l0eSwgd2Ugc2VlIHRoYXQgYm90aCBtYWxlIGFuZCBmZW1hbGUgc2Nob2xhcnMgaW5jcmVhc2VkIHRoZWlyIHByZXN0aWdlLCBidXQgZmVtYWxlIHNjaG9sYXJzIGluY3JlYXNlZCBzdHJvbmdlciB0aGF0IG1hbGUgc2Nob2xhcnMuDQoNCiMjIFNldCB1cA0KDQpgYGB7ciwgd2FybmluZz1GQUxTRSwgbWVzc2FnZT1GQUxTRSwgcmVzdWx0cz0naGlkZSd9DQpybShsaXN0ID0gbHMoKSkNCg0KIy0tLS0gTGlicmFyaWVzIC0tLS0NCmxpYnJhcnkodGlkeXZlcnNlKSAgIyBJIGFzc3VtZSB5b3UgYWxyZWFkeSBpbnN0YWxsZWQgdGhpcyBvbmUhDQpsaWJyYXJ5KGlncmFwaCkNCg0KDQpgYGANCg0KIyMgTG9hZCBkYXRhDQoNCmBgYHtyfQ0KDQpjb2xvcml6ZSA8LSBmdW5jdGlvbih4LCBjb2xvcikge3NwcmludGYoIjxzcGFuIHN0eWxlPSdjb2xvcjogJXM7Jz4lczwvc3Bhbj4iLCBjb2xvciwgeCkgfQ0KDQpmc2hvd2RmIDwtIGZ1bmN0aW9uKHgsIC4uLikgew0KICBrbml0cjo6a2FibGUoeCwgZGlnaXRzID0gMiwgImh0bWwiLCAuLi4pICU+JQ0KICAgIGthYmxlRXh0cmE6OmthYmxlX3N0eWxpbmcoYm9vdHN0cmFwX29wdGlvbnMgPSBjKCJzdHJpcGVkIiwgImhvdmVyIikpICU+JQ0KICAgIGthYmxlRXh0cmE6OnNjcm9sbF9ib3god2lkdGggPSAiMTAwJSIsIGhlaWdodCA9ICIzMDBweCIpDQp9DQoNCmBgYA0KDQpgYGB7cn0NCmxvYWQoImRhdGEvcHJvY2Vzc2VkL3NvY19kYXRhX3Jhdy5SRGF0YSIpDQoNCmxvYWQoImRhdGEvcHJvY2Vzc2VkL1JVX1VVX2Vnby5SRGF0YSIpDQoNCmxvYWQoImRhdGEvcHJvY2Vzc2VkL1JVX1VVX3dvcmtzLlJEYXRhIikNCg0KYGBgDQoNCmBgYHtyLCBlY2hvPUZBTFNFfQ0KZGZfZWdvJGZlbWFsZSA8LSBpZmVsc2UoZGZfZWdvJHBlcmNfZmVtYWxlID49IC43LCAxLDApDQoNCmRmX2Vnb1t3aGljaChzdHJfZGV0ZWN0KGRmX2VnbyROYWFtLCAiV2V2ZXJ0aG9uIikpLF0kZmVtYWxlIDwtIDAgIyBGaXggbWlzc2luZyBvbiBnZW5kZXINCmBgYA0KDQojIyBUYWJsZSAxDQoNCiMjIyBEaXN0cmlidXRpb24gb2Ygc2Nob2xhcnMgcGVyIHVuaXZlcnNpdHkNCg0KYGBge3J9DQpkZl9lZ28gJT4lIG11dGF0ZShVbml2ZXJzaXR5ID0gY2FzZV93aGVuKHN0cl9kZXRlY3QoVW5pdmVyc2l0ZWl0LjIyLCAiUlUiKSB+ICJSVSIsDQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHN0cl9kZXRlY3QoVW5pdmVyc2l0ZWl0LjIyLCAiVVUiKSB+ICJVVSIsDQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIC5kZWZhdWx0ID0gIk5vdCBpbiBEZXBhcnRtZW50IikpICU+JSANCiAgY291bnQoVW5pdmVyc2l0eSkgJT4lIA0KICBmc2hvd2RmKCkNCg0KZGZfZWdvICU+JSBtdXRhdGUoVW5pdmVyc2l0eSA9IGNhc2Vfd2hlbihzdHJfZGV0ZWN0KFVuaXZlcnNpdGVpdC4yNCwgIlJVIikgfiAiUlUiLA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBzdHJfZGV0ZWN0KFVuaXZlcnNpdGVpdC4yNCwgIlVVIikgfiAiVVUiLA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAuZGVmYXVsdCA9ICJOb3QgaW4gRGVwYXJ0bWVudCIpKSAlPiUgDQogIGNvdW50KFVuaXZlcnNpdHkpICU+JSANCiAgZnNob3dkZigpDQoNCmBgYA0KDQojIyBUYWJsZSAyDQoNCiMjIyBHZW5kZXIgZGlzdHJpYnV0aW9uIHBlciBVbml2ZXJzaXR5IGluIDIyIGFuZCAyNA0KDQpgYGB7cn0NCg0KZGZfZWdvICU+JSBtdXRhdGUoVW5pdmVyc2l0eSA9IGNhc2Vfd2hlbihzdHJfZGV0ZWN0KFVuaXZlcnNpdGVpdC4yMiwgIlJVIikgfiAiUlUiLA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBzdHJfZGV0ZWN0KFVuaXZlcnNpdGVpdC4yMiwgIlVVIikgfiAiVVUiLA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAuZGVmYXVsdCA9ICJOb3QgaW4gRGVwYXJ0bWVudCIpKSAlPiUgDQogIGdyb3VwX2J5KFVuaXZlcnNpdHkpICU+JSANCiAgc3VtbWFyaXNlKG1lYW5fZ2VuZGVyID0gbWVhbihmZW1hbGUsIG5hLnJtID0gVFJVRSkpICU+JSBmc2hvd2RmKCkNCg0KZGZfZWdvICU+JSBtdXRhdGUoVW5pdmVyc2l0eSA9IGNhc2Vfd2hlbihzdHJfZGV0ZWN0KFVuaXZlcnNpdGVpdC4yNCwgIlJVIikgfiAiUlUiLA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBzdHJfZGV0ZWN0KFVuaXZlcnNpdGVpdC4yNCwgIlVVIikgfiAiVVUiLA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAuZGVmYXVsdCA9ICJOb3QgaW4gRGVwYXJ0bWVudCIpKSAlPiUgDQogIGdyb3VwX2J5KFVuaXZlcnNpdHkpICU+JSANCiAgc3VtbWFyaXNlKG1lYW5fZ2VuZGVyID0gbWVhbihmZW1hbGUsIG5hLnJtID0gVFJVRSkpICU+JSBmc2hvd2RmKCkNCg0KDQpgYGANCg0KIyMgVGFibGUgMw0KDQojIyMgUHJlc3RpZ2UgZGlzdHJpYnV0aW9uIHBlciBVbml2ZXJzaXR5IGluIDIyIGFuZCAyNA0KDQpgYGB7cn0NCg0KZGZfZWdvICU+JSBtdXRhdGUoVW5pdmVyc2l0eSA9IGNhc2Vfd2hlbihzdHJfZGV0ZWN0KFVuaXZlcnNpdGVpdC4yMiwgIlJVIikgfiAiUlUiLA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBzdHJfZGV0ZWN0KFVuaXZlcnNpdGVpdC4yMiwgIlVVIikgfiAiVVUiLA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAuZGVmYXVsdCA9ICJOb3QgaW4gRGVwYXJ0bWVudCIpKSAlPiUgDQogIGdyb3VwX2J5KFVuaXZlcnNpdHkpICU+JSANCiAgc3VtbWFyaXNlKG1lYW4gPSBtZWFuKFExLlcxKSwNCiAgICAgICAgICAgIG1pbiA9IG1pbihRMS5XMSksDQogICAgICAgICAgICBtYXggPSBtYXgoUTEuVzEpLA0KICAgICAgICAgICAgc2QgPSBzZChRMS5XMSkpICU+JSANCiAgZnNob3dkZigpDQoNCmRmX2VnbyAlPiUgbXV0YXRlKFVuaXZlcnNpdHkgPSBjYXNlX3doZW4oc3RyX2RldGVjdChVbml2ZXJzaXRlaXQuMjIsICJSVSIpIH4gIlJVIiwNCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgc3RyX2RldGVjdChVbml2ZXJzaXRlaXQuMjIsICJVVSIpIH4gIlVVIiwNCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgLmRlZmF1bHQgPSAiTm90IGluIERlcGFydG1lbnQiKSkgJT4lIA0KICBncm91cF9ieShVbml2ZXJzaXR5KSAlPiUgDQogIHN1bW1hcmlzZShtZWFuID0gbWVhbihRMS5XMiksDQogICAgICAgICAgICBtaW4gPSBtaW4oUTEuVzIpLA0KICAgICAgICAgICAgbWF4ID0gbWF4KFExLlcyKSwNCiAgICAgICAgICAgIHNkID0gc2QoUTEuVzIpKSAlPiUgDQogIGZzaG93ZGYoKQ0KDQoNCg0KYGBgDQoNCiMjIFRhYmxlIDQNCg0KIyMjIFByZXN0aWdlIGRpc3RyaWJ1dGlvbiBwZXIgR2VuZGVyIGluIDIyIGFuZCAyNA0KDQpgYGB7cn0NCmRmX2VnbyAlPiUgZ3JvdXBfYnkoZmVtYWxlKSAlPiUgc3VtbWFyaXNlKG1lYW4gPSBtZWFuKFExLlcxKSwNCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIG1pbiA9IG1pbihRMS5XMSksDQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBtYXggPSBtYXgoUTEuVzEpLA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgc2QgPSBzZChRMS5XMSkpICU+JSBmc2hvd2RmKCkNCg0KZGZfZWdvICU+JSBncm91cF9ieShmZW1hbGUpICU+JSBzdW1tYXJpc2UobWVhbiA9IG1lYW4oUTEuVzIpLA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgbWluID0gbWluKFExLlcyKSwNCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIG1heCA9IG1heChRMS5XMiksDQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBzZCA9IHNkKFExLlcyKSkgJT4lIGZzaG93ZGYoKQ0KYGBgDQoNCiMjIFRhYmxlIDUNCg0KIyMjIFByZXN0aWdlIGRpc3RyaWJ1dGlvbiBwZXIgR2VuZGVyIGFuZCBwZXIgVW5pdmVyc2l0eSBpbiAyMiBhbmQgMjQNCg0KYGBge3J9DQpkZl9lZ28gJT4lIG11dGF0ZShVbml2ZXJzaXR5ID0gY2FzZV93aGVuKHN0cl9kZXRlY3QoVW5pdmVyc2l0ZWl0LjIyLCAiUlUiKSB+ICJSVSIsDQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHN0cl9kZXRlY3QoVW5pdmVyc2l0ZWl0LjIyLCAiVVUiKSB+ICJVVSIsDQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIC5kZWZhdWx0ID0gIk5vdCBpbiBEZXBhcnRtZW50IikpICU+JSANCiAgZ3JvdXBfYnkoVW5pdmVyc2l0eSwgZmVtYWxlKSAlPiUgDQogIHN1bW1hcmlzZShtZWFuID0gbWVhbihRMS5XMSksDQogICAgICAgICAgICBtaW4gPSBtaW4oUTEuVzEpLA0KICAgICAgICAgICAgbWF4ID0gbWF4KFExLlcxKSwNCiAgICAgICAgICAgIHNkID0gc2QoUTEuVzEpKSAlPiUgDQogIGZzaG93ZGYoKQ0KDQpkZl9lZ28gJT4lIG11dGF0ZShVbml2ZXJzaXR5ID0gY2FzZV93aGVuKHN0cl9kZXRlY3QoVW5pdmVyc2l0ZWl0LjI0LCAiUlUiKSB+ICJSVSIsDQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHN0cl9kZXRlY3QoVW5pdmVyc2l0ZWl0LjI0LCAiVVUiKSB+ICJVVSIsDQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIC5kZWZhdWx0ID0gIk5vdCBpbiBEZXBhcnRtZW50IikpICU+JSANCiAgZ3JvdXBfYnkoVW5pdmVyc2l0eSwgZmVtYWxlKSAlPiUgDQogIHN1bW1hcmlzZShtZWFuID0gbWVhbihRMS5XMiksDQogICAgICAgICAgICBtaW4gPSBtaW4oUTEuVzIpLA0KICAgICAgICAgICAgbWF4ID0gbWF4KFExLlcyKSwNCiAgICAgICAgICAgIHNkID0gc2QoUTEuVzIpKSAlPiUgDQogIGZzaG93ZGYoKQ0KYGBgDQoNCiMjIFRhYmxlIDcNCg0KIyMjIEdlbmVyYWwgRGVzY3JpcHRpdmVzDQoNCmBgYHtyfQ0KZGZfY2hhciA8LSBkZl9lZ28gJT4lIA0KICBzZWxlY3QoZmVtYWxlLCBldGhuaWNpdHksIFExLlcxLCBRMS5XMiwgZmlyc3RfeWVhcl9wdWIpICU+JSANCiAgbXV0YXRlKGNhcmVlcl9hZ2UgPSAyMDI0IC0gZmlyc3RfeWVhcl9wdWIpICU+JSANCiAgc2VsZWN0KCFmaXJzdF95ZWFyX3B1YikgJT4lIA0KICBwc3ljaDo6ZGVzY3JpYmUoKSAlPiUgDQogIHNlbGVjdCghYyh2YXJzLCB0cmltbWVkLCBtZWRpYW4sIG1hZCwgcmFuZ2UsIHNrZXcsIGt1cnRvc2lzLCBzZSkpDQoNCmZzaG93ZGYoZGZfY2hhcikNCmBgYA0KDQo8YnI+DQoNCi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQ0K</div>
 
 
 </div>

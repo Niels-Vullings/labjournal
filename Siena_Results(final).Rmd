@@ -1,0 +1,627 @@
+---
+title: "Results - RSiena Models"
+#bibliography: references.bib
+author: "Niels Vullings"
+bibliography: references.bib
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+```{r, echo=FALSE}
+rm(list = ls())
+```
+
+# Load UDF
+
+```{r}
+colorize <- function(x, color) {sprintf("<span style='color: %s;'>%s</span>", color, x) }
+
+fpackage.check <- function(packages) {
+  lapply(packages, FUN = function(x) {
+    if (!require(x, character.only = TRUE)) {
+      install.packages(x, dependencies = TRUE)
+      library(x, character.only = TRUE)
+    }
+  })
+}
+
+fsave <- function(x, file = NULL, location = "./results/processed/") {
+  ifelse(!dir.exists("results"), dir.create("data"), FALSE)
+  ifelse(!dir.exists("results/processed"), dir.create("results/processed"), FALSE)
+  if (is.null(file))
+    file = deparse(substitute(x))
+  datename <- substr(gsub("[:-]", "", Sys.time()), 1, 8)
+  totalname <- paste(location, datename, file, ".rda", sep = "")
+  save(x, file = totalname)  #need to fix if file is reloaded as input name, not as x. 
+}
+
+fload <- function(filename) {
+  load(filename)
+  get(ls()[ls() != "filename"])
+}
+
+fshowdf <- function(x, ...) {
+  knitr::kable(x, digits = 2, "html", ...) %>%
+    kableExtra::kable_styling(bootstrap_options = c("striped", "hover")) %>%
+    kableExtra::scroll_box(width = "100%", height = "300px")
+}
+
+```
+
+# Load Packages
+
+```{r, warning=FALSE, results='hide', message=FALSE}
+packages <- c("tidyverse", "sna", "igraph", "RSiena", "iterators", "doParallel")
+
+fpackage.check(packages)
+
+```
+
+# Load Data
+
+```{r}
+# Load Ego data
+load("data/processed/RU_UU_ego.RData")
+
+# Load Works data
+load("data/processed/RU_UU_works.RData")
+
+# Load raw data for networks
+load("data/processed/soc_data_raw.RData")
+```
+
+# Make network data for RSiena
+
+```{r}
+print(paste0("", dim(soc_data$nets)))
+
+wave_1 <- soc_data$nets[1,,]
+diag(wave_1) <- 0
+
+wave_2 <- soc_data$nets[2,,]
+diag(wave_2) <- 0
+
+net_soc_array <- array(data = c(wave_1, wave_2), dim = c(dim(wave_1), 2))
+dim(net_soc_array)
+```
+
+# Analysis {.tabset}
+
+## Model 0
+TEXT
+
+### Create SienaData
+
+```{r}
+#---- Dependent ----
+net <- sienaDependent(net_soc_array)
+
+#---- Make Siena df ----
+mydata <- sienaDataCreate(net)
+```
+
+### Create Effects object
+
+```{r}
+myeff_M0 <- getEffects(mydata)
+print01Report(mydata, modelname = "./results/Collab_M0")
+
+# ts_dyads_evo(sims = wave_2, net1 = wave_1, forplot = TRUE)
+# ts_triads_evo(sims = wave_2, net1 = wave_1, forplot = TRUE)
+
+```
+
+### Add Effects
+
+### Create and Run the Algorithm
+
+```{r, eval=FALSE}
+myAlgorithm <- sienaAlgorithmCreate(projname = "./results/Collab_M0")
+ans_M0 <- siena07(myAlgorithm, data = mydata, effects = myeff_M0, returnDeps = TRUE)
+ans_M0
+
+fsave(ans_M0, file = "-ans_M0")
+
+# if necessary estimate again!  
+# ans_M1_2 <- siena07(myAlgorithm, data = mydata, effects = myeff, prevans_ = ans_M1, returnDeps=TRUE)
+# ans_M1_2
+```
+
+```{r, echo=FALSE}
+
+ans_M0 <- fload("./results/processed/20241024-ans_M0.rda")
+ans_M0
+```
+
+### Goodness of Fit
+
+```{r}
+GOF <- sienaGOF(ans_M0, IndegreeDistribution, verbose = FALSE, join = TRUE, varName = "net")
+
+plot(GOF, main = "")
+```
+
+## Model 1
+TEXT
+
+
+### Create SienaData
+
+```{r}
+#---- Dependent ----
+net <- sienaDependent(net_soc_array)
+
+#---- Make Siena df ----
+mydata <- sienaDataCreate(net)
+```
+
+### Create Effects object
+
+```{r}
+myeff_M1 <- getEffects(mydata)
+print01Report(mydata, modelname = "./results/Collab_M1")
+
+# ts_dyads_evo(sims = wave_2, net1 = wave_1, forplot = TRUE)
+# ts_triads_evo(sims = wave_2, net1 = wave_1, forplot = TRUE)
+
+```
+
+### Add Effects
+
+```{r}
+myeff_M1 <- includeEffects(myeff_M1, isolateNet, inPop, outAct)
+```
+
+### Create and Run the Algorithm
+
+```{r, eval=FALSE}
+
+myAlgorithm <- sienaAlgorithmCreate(projname = "./results/Collab_M1")
+ans_M1 <- siena07(myAlgorithm, data = mydata, effects = myeff_M1, returnDeps = TRUE)
+ans_M1
+
+# fsave(ans_M1, file = "-ans_M1")
+
+# if necessary estimate again!  
+ans_M1_2 <- siena07(myAlgorithm, data = mydata, effects = myeff_M1, prevAns = ans_M1, returnDeps=TRUE)
+ans_M1_2
+
+fsave(ans_M1_2, file = "-ans_M1_2")
+
+```
+
+```{r, echo=FALSE}
+
+ans_M1 <- fload("./results/processed/20241024-ans_M1_2.rda")
+ans_M1
+
+```
+
+### Goodness of Fit
+
+```{r}
+GOF <- sienaGOF(ans_M1, IndegreeDistribution, verbose = FALSE, join = TRUE, varName = "net")
+
+plot(GOF, main = "")
+```
+
+## Model 2 - Add Gender (dropped)
+TEXT 
+
+### Create SienaData
+
+```{r}
+#---- Dependent ----
+net <- sienaDependent(net_soc_array)
+
+#---- Independent ----
+gender <- df_ego$perc_female
+gender <- coCovar(gender)
+
+
+#---- Make Siena df ----
+mydata <- sienaDataCreate(net, gender)
+```
+
+### Create Effects object
+
+```{r}
+myeff_M2 <- getEffects(mydata)
+print01Report(mydata, modelname = "./results/Collab_M2")
+
+```
+
+### Add Effects
+
+```{r}
+
+myeff_M2 <- includeEffects(myeff_M2, isolateNet, inPop, outAct)
+
+```
+
+```{r}
+
+myeff_M2 <- includeEffects(myeff_M2, diffX, diffXTransTrip, egoX, altX, interaction1 = "gender")
+
+```
+
+### Create and Run the Algorithm
+
+```{r, eval=FALSE}
+myAlgorithm <- sienaAlgorithmCreate(projname = "./results/Collab_M2")
+ans_M2 <- siena07(myAlgorithm, data = mydata, effects = myeff_M2, returnDeps = TRUE)
+ans_M2
+
+# fsave(ans_M2, file = "-ans_M2")
+
+
+# if necessary estimate again!  
+ans_M2_2 <- siena07(myAlgorithm, data = mydata, effects = myeff_M2, prevAns = ans_M2, returnDeps=TRUE)
+ans_M2_2
+fsave(ans_M2_2, file = "-ans_M2_2")
+
+
+```
+
+```{r, echo=FALSE}
+
+ans_M2 <- fload("./results/processed/20241024-ans_M2_2.rda")
+ans_M2
+
+```
+
+### Goodness of Fit
+
+```{r}
+GOF <- sienaGOF(ans_M2, IndegreeDistribution, verbose = FALSE, join = TRUE, varName = "net")
+
+plot(GOF, main = "")
+
+```
+
+## Model 2.5 - Add Gender
+TEXT 
+
+### Create SienaData
+
+```{r}
+#---- Dependent ----
+net <- sienaDependent(net_soc_array)
+
+#---- Independent ----
+gender <- df_ego$perc_female
+gender <- coCovar(gender)
+
+
+#---- Make Siena df ----
+mydata <- sienaDataCreate(net, gender)
+```
+
+### Create Effects object
+
+```{r}
+myeff_M2.5 <- getEffects(mydata)
+print01Report(mydata, modelname = "./results/Collab_M2.5")
+
+```
+
+### Add Effects
+
+```{r}
+myeff_M2.5 <- includeEffects(myeff_M2.5, isolateNet, inPopSqrt, outAct)
+
+```
+
+```{r}
+myeff_M2.5 <- includeEffects(myeff_M2.5, diffX, diffXTransTrip, egoX, altX, interaction1 = "gender")
+
+```
+
+### Create and Run the Algorithm
+
+```{r, eval=FALSE}
+myAlgorithm <- sienaAlgorithmCreate(projname = "./results/Collab_M2.5")
+ans_M2.5 <- siena07(myAlgorithm, data = mydata, effects = myeff_M2.5, returnDeps = TRUE)
+ans_M2.5
+
+fsave(ans_M2.5, file = "-ans_M2.5")
+
+# if necessary estimate again!  
+# ans_M2.5_2 <- siena07(myAlgorithm, data = mydata, effects = myeff_M2.5, prevAns = ans_M2.5, returnDeps=TRUE)
+# ans_M2.5_2
+# fsave(ans_M2.5_2, file = "-ans_M2.5_2")
+
+
+```
+
+```{r, echo=FALSE}
+
+ans_M2.5 <- fload("./results/processed/20241024-ans_M2.5.rda")
+ans_M2.5
+
+```
+
+### Goodness of Fit
+
+```{r}
+GOF <- sienaGOF(ans_M2.5, IndegreeDistribution, verbose = FALSE, join = TRUE, varName = "net")
+
+plot(GOF, main = "")
+
+```
+
+## Model 3 - Add Prestige
+TEXT 
+
+### Create SienaData
+
+```{r}
+#---- Dependent ----
+net <- sienaDependent(net_soc_array)
+
+#---- Independent ----
+# gender <- df_ego$perc_female
+# gender <- coCovar(gender)
+
+prestige <- df_ego %>% select(Q1.W1, Q1.W2) %>% mutate(mean_pres = (Q1.W1 + Q1.W2)/2)
+prestige <- prestige$mean_pres
+prestige <- coCovar(prestige)
+
+# h_index <- df_ego$h_index
+# h_index <- coCovar(h_index)
+
+#---- Make Siena df ----
+mydata_M3 <- sienaDataCreate(net, gender, prestige)#, h_index)
+
+```
+
+### Create Effects object
+
+```{r}
+myeff_M3 <- getEffects(mydata)
+print01Report(mydata, modelname = "./results/Collab_M3")
+
+# ts_dyads_evo(sims = wave_2, net1 = wave_1, forplot = TRUE)
+# ts_triads_evo(sims = wave_2, net1 = wave_1, forplot = TRUE)
+
+```
+
+### Add Effects
+
+```{r}
+myeff_M3 <- includeEffects(myeff_M3, isolateNet, inPopSqrt, outAct)
+```
+
+```{r}
+myeff_M3 <- includeEffects(myeff_M3, diffX, diffXTransTrip, egoX, altX, interaction1 = "gender")
+myeff_M3 <- includeEffects(myeff_M3, altX, inPopX, interaction1 = "prestige")
+# myeff_M3 <- includeEffects(myeff_M3, altX, inpopX, interaction1 = "h_index")
+
+```
+
+### Create and Run the Algorithm
+
+```{r, eval=FALSE}
+myAlgorithm_M3 <- sienaAlgorithmCreate(projname = "./results/Collab_M3")
+ans_M3 <- siena07(myAlgorithm, data = mydata, effects = myeff_M3, returnDeps = TRUE)
+ans_M3
+
+fsave(ans_M3, file = "-ans_M3")
+
+# if necessary estimate again!  
+# ans_M3_2 <- siena07(myAlgorithm, data = mydata, effects = myeff_M3, prevAns = ans_M3, returnDeps=TRUE)
+# ans_M3_2
+# fsave(ans_M2_2, file = "-ans_M2_2")
+
+```
+
+```{r, echo=FALSE}
+
+ans_M3 <- fload("./results/processed/20241024-ans_M3.rda")
+ans_M3
+
+```
+
+```{r, echo=FALSE}
+
+ans_M3_strange <- fload("./results/processed/20241023-ans_M3(weird).rda")
+ans_M3_strange
+
+```
+
+### Goodness of Fit
+```{r}
+GOF <- sienaGOF(ans_M3, IndegreeDistribution, verbose = FALSE, join = TRUE, varName = "net")
+
+plot(GOF, main = "")
+
+GOF_str <- sienaGOF(ans_M3_strange, IndegreeDistribution, verbose = FALSE, join = TRUE, varName = "net")
+
+plot(GOF_str, main = "")
+```
+
+### Relative Influence
+```{r}
+# RI_M3 <- sienaRI(data = mydata_M3,ans = ans_M3)
+```
+
+## Model 4 - Full Model (dropped)
+ 
+
+### Create SienaData
+
+```{r}
+#---- Dependent ----
+# net <- sienaDependent(net_soc_array)
+
+#---- Independent ----
+# gender <- df_ego$perc_female
+# gender <- coCovar(gender)
+# 
+# prestige <- df_ego %>% select(Q1.W1, Q1.W2) %>% mutate(mean_pres = (Q1.W1 + Q1.W2)/2)
+# prestige <- prestige$mean_pres
+# prestige <- coCovar(prestige)
+# 
+# h_index <- df_ego$h_index
+# h_index <- coCovar(h_index)
+
+ethnicity <- df_ego$ethnicity
+ethnicity <- coCovar(ethnicity)
+
+career_age <- 2024 - df_ego$first_year_pub
+career_age <- coCovar(career_age)
+
+#---- Make Siena df ----
+mydata <- sienaDataCreate(net, gender, prestige, ethnicity, career_age)
+
+```
+
+### Create Effects object
+
+```{r}
+myeff_M4 <- getEffects(mydata)
+print01Report(mydata, modelname = "./results/Collab_M4")
+
+# ts_dyads_evo(sims = wave_2, net1 = wave_1, forplot = TRUE)
+# ts_triads_evo(sims = wave_2, net1 = wave_1, forplot = TRUE)
+
+```
+
+### Add Effects
+
+```{r}
+myeff_M4 <- includeEffects(myeff_M4, isolateNet, inPopSqrt, outAct)
+```
+
+```{r}
+myeff_M4 <- includeEffects(myeff_M4, diffX, diffSqX, egoX, altX, interaction1 = "gender")
+myeff_M4 <- includeEffects(myeff_M4, altX, inPopX, interaction1 = "prestige")
+# myeff_M4 <- includeEffects(myeff_M4, altX, inpopX, interaction1 = "h_index")
+myeff_M4 <- includeEffects(myeff_M4, sameX, interaction1 = "ethnicity")
+myeff_M4 <- includeEffects(myeff_M4, altX, egoX, interaction1 = "career_age")
+
+
+```
+
+### Create and Run the Algorithm
+
+```{r, eval=FALSE}
+myAlgorithm_M4 <- sienaAlgorithmCreate(projname = "./results/Collab_M4")
+ans_M4 <- siena07(myAlgorithm, data = mydata, effects = myeff_M4, returnDeps = TRUE)
+ans_M4
+
+fsave(ans_M4, file = "-ans_M4")
+
+# if necessary estimate again!  
+# ans_M2_2 <- siena07(myAlgorithm, data = mydata, effects = myeff, prevans_ = ans_M1, returnDeps=TRUE)
+# ans_M2_2
+```
+
+```{r, echo=FALSE}
+
+ans_M4 <- fload("./results/processed/20241024-ans_M4.rda")
+ans_M4
+
+```
+
+### Goodness of Fit
+
+```{r}
+GOF <- sienaGOF(ans_M4, IndegreeDistribution, verbose = FALSE, join = TRUE, varName = "net")
+
+plot(GOF, main = "")
+```
+
+
+## Model 5 - Interaction Model
+ 
+
+### Create SienaData
+```{r}
+#---- Dependent ----
+net <- sienaDependent(net_soc_array)
+
+#---- Independent ----
+gender <- df_ego$perc_female
+G_cent <- gender - mean(gender, na.rm = T)
+gender <- coCovar(gender)
+
+prestige <- df_ego %>% select(Q1.W1, Q1.W2) %>% mutate(mean_pres = (Q1.W1 + Q1.W2)/2)
+prestige <- prestige$mean_pres
+P_cent <- prestige - mean(prestige)
+
+prestige <- coCovar(prestige)
+
+
+IT_PxG <- P_cent * G_cent
+IT_PxG <- coCovar(IT_PxG, centered = FALSE)
+
+
+#---- Make Siena df ----
+mydata_M5 <- sienaDataCreate(net, gender, prestige, IT_PxG)
+
+```
+
+### Create Effects object
+```{r}
+myeff_M5 <- getEffects(mydata_M5)
+print01Report(mydata, modelname = "./results/Collab_M5")
+
+# ts_dyads_evo(sims = wave_2, net1 = wave_1, forplot = TRUE)
+# ts_triads_evo(sims = wave_2, net1 = wave_1, forplot = TRUE)
+
+```
+
+### Add Effects
+```{r}
+myeff_M5 <- includeEffects(myeff_M5, isolateNet, inPopSqrt, outAct)
+```
+
+```{r}
+myeff_M5 <- includeEffects(myeff_M5, diffX, diffXTransTrip, egoX, altX, interaction1 = "gender")
+myeff_M5 <- includeEffects(myeff_M5, altX, inPopX, interaction1 = "prestige")
+myeff_M5 <- includeEffects(myeff_M5, altX, inPopX, interaction1 = "IT_PxG")
+
+# myeff_M3 <- includeEffects(myeff_M3, altX, inpopX, interaction1 = "h_index")
+
+```
+
+### Create and Run the Algorithm
+```{r, eval=FALSE}
+myAlgorithm_M5 <- sienaAlgorithmCreate(projname = "./results/Collab_M5")
+ans_M5 <- siena07(myAlgorithm_M5, data = mydata_M5, effects = myeff_M5, returnDeps = TRUE)
+ans_M5
+
+# fsave(ans_M5, file = "-ans_M5")
+
+# if necessary estimate again!  
+ans_M5_2 <- siena07(myAlgorithm_M5, data = mydata_M5, effects = myeff_M5, prevAns = ans_M5, returnDeps=TRUE)
+ans_M5_2
+# fsave(ans_M5_2, file = "-ans_M5")
+
+```
+
+```{r, echo=FALSE}
+ans_M5 <- fload("results/processed/20241025-ans_M5.rda")
+
+```
+
+```{r}
+GOF <- sienaGOF(ans_M5, IndegreeDistribution, verbose = FALSE, join = TRUE, varName = "net")
+
+plot(GOF, main = "")
+```
+
+```{r}
+# egoX, altX voor career_age
+# sameX voor ethnicity
+```
+
+
+```{r}
+# sessionInfo()
+# SienaRI - 1.3.14
+#Rsiena Schatten, ANS opslaan, code chunk, evaluate = FALSE, inladen siena object, die echo = FALSE
+# Alle cache folder leeghalen op het moment dat iets foutgaat met wegschrijven of inladen
+```

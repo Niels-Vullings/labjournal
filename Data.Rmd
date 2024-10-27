@@ -8,13 +8,13 @@ bibliography: references.bib
 ```{=html}
 <style>
 body {
-  text-align: justify;
-  font-family: Times;
+text-align: justify;
+font-family: Times;
 }
 
 h1, .h1, h2, .h2, h3, .h3 {
-  margin-top: 24px;
-  font-family: Times;
+margin-top: 24px;
+font-family: Times;
 }
 </style>
 ```
@@ -25,11 +25,6 @@ knitr::opts_chunk$set(echo = TRUE)
 opts_chunk$set(tidy.opts=list(width.cutoff=100),tidy=TRUE, warning = FALSE, message = FALSE,comment = "#>", cache=TRUE, class.source=c("test"), class.output=c("test2"))
 options(width = 100)
 rgl::setupKnitr()
-
-
-
-colorize <- function(x, color) {sprintf("<span style='color: %s;'>%s</span>", color, x) }
-
 ```
 
 ```{r klippy, echo=FALSE, include=TRUE}
@@ -47,51 +42,28 @@ Last compiled on `r format(Sys.time(), '%B, %Y')`
 # Data
 
 This study uses collaboration data of sociologists from the Radboud University and Utrecht University, which has been scraped from the internet. It is part of a larger data project aiming to create large scale social network data on the collaborations of Dutch university scholars in the field of Political Science and Sociology. The data collection process is threefold. First, all employees of Sociology and Political Science departments at all Dutch universities were collected, filing their names, university, department, position and Google Scholar id code. This data was collected for both 2022 and 2024. Second, the works of all these authors were scraped through OpenAlex, a nonprofit database on open science (ref.). Lastly, this raw data was subset to get the sample relevant for this study. I ended up with sample of 100 sociologists from Radboud University (n = 44, 39) and Utrecht University (n = 48, 44). More information about the process and source code can be found under the "Data Manipulation" folder on this website.\
-  Before I explain the creation of the networks, it is important to note that the initial data collection in 2022 and 2024 does not determine the waves. The waves are determined based on the parameters set by the researcher. For this study, I analysed publication between 2015 to 2019 (wave 1) and 2020 to 2024 (wave 2). The implication this has for the data as a whole will be elaborated on in the discussion. Based on these waves, collaboration networks were created by analysing whether or not two scholars in the sample have worked together on a publication in each given wave. These networks are directed, which means the first author who sends a tie to all coauthors. This means that an actor with many indegrees often coauthors with different people, while an actor with a lot of outdegrees looks for many others to collaborate with.
+Before I explain the creation of the networks, it is important to note that the initial data collection in 2022 and 2024 does not determine the waves. The waves are determined based on the parameters set by the researcher. For this study, I analysed publication between 2015 to 2019 (wave 1) and 2020 to 2024 (wave 2). The implication this has for the data as a whole will be elaborated on in the discussion. Based on these waves, collaboration networks were created by analysing whether or not two scholars in the sample have worked together on a publication in each given wave. These networks are directed, which means the first author who sends a tie to all coauthors. This means that an actor with many indegrees often coauthors with different people, while an actor with a lot of outdegrees looks for many others to collaborate with.
 
 ## Covariates
 
 The main independent variable of this study is gender. As gender was not available in the OpenAlex data, I developed a webscraped that determines the extent to which a name is considered to be female. Using Rvest, I scrape the first name of each author in the dataset. This results in a score from 0 to 1, where 0 means there are no women in the Netherlands with that name, while 1 means there are no men with that name. This is a scale variable, meaning technically means that an author can be 80% female. This was done to add some variability to this measure, as this way of constructing gender is a matter of association rather than an actual measure of how someone identifies themselves.\
-  To measure academic prestige, I added two variables: the number of Q1 journals in each wave and an author's H-index. The number of Q1 journals is a varying covariate, which means it can change over time. The rank of each journal was taken from Scimago, a public repository for worldwide journal and institution rankings (ref). Their measure (SJR best quartile) is determined by the number of weighted citations of the works that were published in the journal in the last three years (ref.). This standardized measure ensures that larger journals do not skew the overall ranking. I then summed the number of Q1 publications for each author, regardless of their position on the paper. The author's H-index was scraped from OpenAlex by Lucan Bovens. It will be used as a stable covariate, as the H-index does not significantly change over the waves. It measures the prestige of an author, by calculating how many papers have been cited at least as many times as the author's total amount of publication and can be expressed as the following formula, $$H_{index} = \sum_{0}^{P}(1 \mid \;|n_c| \ge |N_p|)$$
+To measure academic prestige, I added two variables: the number of Q1 journals in each wave and an author's H-index. The number of Q1 journals is a varying covariate, which means it can change over time. The rank of each journal was taken from Scimago, a public repository for worldwide journal and institution rankings (ref). Their measure (SJR best quartile) is determined by the number of weighted citations of the works that were published in the journal in the last three years (ref.). This standardized measure ensures that larger journals do not skew the overall ranking. I then summed the number of Q1 publications for each author, regardless of their position on the paper. The author's H-index was scraped from OpenAlex by Lucan Bovens. It will be used as a stable covariate, as the H-index does not significantly change over the waves. It measures the prestige of an author, by calculating how many papers have been cited at least as many times as the author's total amount of publication and can be expressed as the following formula, $$H_{index} = \sum_{0}^{P}(1 \mid \;|n_c| \ge |N_p|)$$
 
-where $N_p$ represents the sum total of all papers of an author and $n_c$ represents the number of citations of a specific paper an author has published(***I asked a semi-mathematician, so this should be correct...??***).\
-  To control for author characteristics, I included several control variables, such as ethnicity and career age. Ethnicity was manually scraped by Hannah Groennou and is defined by whether a scholar is white or not. Career age was constructed by Koen Lucas and
+where $N_p$ represents the sum total of all papers of an author and $n_c$ represents the number of citations of a specific paper an author has published(**This is not correct, but was a nice try**).\
+To control for author characteristics, I included several control variables, such as ethnicity and career age. Ethnicity was manually scraped by Hannah Groennou and is defined by whether a scholar is white or not. Career age was constructed by Koen Lucas and measures the year since an author's first publication.
 
 # Analytical Strategy
 
--   Two part analytical strategy:
+The analytical strategy for this study is two-fold. First, I will perform perform a descriptive analysis, in order to answer the first two research questions, as these questions are descriptive in nature. Second, I will assess the network evolution through a Stochastic Actor Oriented Model (saom), with RSiena [@ripley2011manual]. For the descriptive analysis, I will calculate several network statistics, such as the global level of transitivity and the moran's I, which will be calculated based on gender. This will give an overview of the extent to which the network is clustered. Apart from this, I will also qualitatively assess the structure of the collaboration networks. To answer the second research question, I will perform a t-test to test if there is significant change in the level of clustering between the two waves. By assessing this change in network clustering, we have an idea of the scale of the issue. If there is relatively little change in terms of clustering, the subsequent estimate sizes of the RSiena Models will be less relevant than when we see large amounts of clustering between the two waves.\
+  As said before, the third research question will be assessed with RSiena. This method of analysis uses probabilistic simulations to model how networks evolve based on a given set of network statistics [@ripley2011manual]. Network statistics in this sense can best be described as independent variables. For example, the network statistic *"recip"* (reciprocity) means that people like or do not like to send a tie back to a person who has sent a tie to them previously. RSiena has two different types of independent variables, Structural effects and Covariate effects. Structural effects are network statistics, that deal with the overall tendencies of actors in the network, such as their tendency to connect with popular actors (inPop) or their tendency to close triads (transTrip). Covariate effects are network statistics that hold for specific actors, such as an actor's gender or their prestige.\
+  To ensure that the model is somewhat accurate, I will build the model from a null-model (Model 0) to a complete model (Model 5). The null model will have no structural effects, apart from reciprocity and density, which as standard in RSiena. The first model will contain the structural effects. The second model contains the covariate effects for gender and has two parts, Model 2 has the network statistic *Indegree popularity.* Model 2.5 has this same network statistic but squared, in order to test how this improves model fit. It was found that Model 2.5 fit the data significantly better and thus, all future models use the squared *indegree popularity* statistic. Model 3 contains the covariate effects for prestige. Model 4 was meant as a full model, containing covariate effects for h-index, ethnicity and career age. However, this model severly impacted the goodness of fit and was thus dropped, to prevent overcontrolling the models. Finally, model 5 contains an covariate interaction effect for gender and prestige, to finally test the third hypothesis.
 
-    -   Descriptive Network Analysis: how are the genders divided, average prestige per gender, network statistics etc.
+# Descriptive Statistics
 
-    -   RSiena: Modelling network change
-
--   Explanation of RSiena
-
-    -   What do we do?
-
-    -   What models do we estimate?
-
-        -   Basic model: "Null"-model
-
-        -   Network Stats:
-
-            -   gendered covariates
-
-            -   altPrestige
-
-            -   sameGender(TransTrip)
-
-            -   inpop (sqrt), outpop (sqrt)
-
-            -   inpopX, outpopX
-
-    -   GOF Models
-
-        -   Employ my own functions for the plots?
-
-            -   ts_dyads_evo mainly -\> interesting to gain more information of the correctness of the estimation process
-
-# Descriptive Analysis
+When we take a look at the data, we see that the departments of Radboud University and Utrecht University are getting slightly smaller, but are still relatively equal in terms of size (Table 1). At wave 1, there 6 people who are not yet in any department. These will likely be scholars who started working after 2022 and before 2024. Conversely, the 18 people who are not in any department in wave 2 are scholars who left their respective departments somewhere between 2022 and 2024. These are most likely PhD candidates and post docs who finished their dissertations and left the department.\
+  Regarding the gender distribution, we see that Radboud University has an almost perfect division in terms of gender, while women are slightly underrepresented at Utrecht University (Table 2). We also see that the future scholars, represented by the "*not in department*" - row, are largely women, while the group that left the department before wave 2 has proportionally more men.\
+  In terms of prestige, we see that, at wave 1, scholars of Radboud University have slightly more prestige than scholars of Utrecht University (Table 4). It also shows that scholar who are not yet in a department have very low prestige, as they are still junior researchers who have not yet published. At wave 2 we see that these differences have equalized, and now Raboud University and Utrecht University are almost equal in terms of prestige. We also see a much higher mean for the group that in not in the department. This makes sense, as these are not starting scholars, but scholars who have been working for some time and have thus had the opportunity to publish more.\
+  For this study, the most important tables are Table 4 and Table 5, which shows how prestige is distributed among male and female scholar. Table 4 shows that male scholars on average have more Q1 publications more than women. At wave 1, this average difference is eight Q1 publications, while the difference at wave 2 is five Q1 publications, which means the difference between male and female scholars is getting closed. Taking into account the scholars with the maximum amount of publications, we see that the differences between the most prestigious male scholar and the most prestigious female scholar has drastically decreased (from $\Delta$ 59 Q1-publications to $\Delta$ 12 Q1-publications). Zooming in on the department level, we see an interesting pattern. At Radboud University, female scholars increased their prestige between wave 1 and wave 2, while the prestige of male scholar stayed consistent. However, at Utrecht University, we see that both male and female scholars increased their prestige, but female scholars increased stronger that male scholars.
 
 ## Set up
 
@@ -108,6 +80,18 @@ library(igraph)
 ## Load data
 
 ```{r}
+
+colorize <- function(x, color) {sprintf("<span style='color: %s;'>%s</span>", color, x) }
+
+fshowdf <- function(x, ...) {
+  knitr::kable(x, digits = 2, "html", ...) %>%
+    kableExtra::kable_styling(bootstrap_options = c("striped", "hover")) %>%
+    kableExtra::scroll_box(width = "100%", height = "300px")
+}
+
+```
+
+```{r}
 load("data/processed/soc_data_raw.RData")
 
 load("data/processed/RU_UU_ego.RData")
@@ -116,54 +100,137 @@ load("data/processed/RU_UU_works.RData")
 
 ```
 
-I still need to put this in a nice descriptives table
+```{r, echo=FALSE}
+df_ego$female <- ifelse(df_ego$perc_female >= .7, 1,0)
 
-## Scholars per university
+df_ego[which(str_detect(df_ego$Naam, "Weverthon")),]$female <- 0 # Fix missing on gender
+```
+
+## Table 1
+
+### Distribution of scholars per university
 
 ```{r}
+df_ego %>% mutate(University = case_when(str_detect(Universiteit.22, "RU") ~ "RU",
+                                         str_detect(Universiteit.22, "UU") ~ "UU",
+                                         .default = "Not in Department")) %>% 
+  count(University) %>% 
+  fshowdf()
 
-df_ego %>% count(Universiteit1.22)
-df_ego %>% count(Universiteit2.22)
-
-
-df_ego %>% count(Universiteit1.24)
-df_ego %>% count(Universiteit2.24)
+df_ego %>% mutate(University = case_when(str_detect(Universiteit.24, "RU") ~ "RU",
+                                         str_detect(Universiteit.24, "UU") ~ "UU",
+                                         .default = "Not in Department")) %>% 
+  count(University) %>% 
+  fshowdf()
 
 ```
 
-## Functions
-
-```{r}
-df_ego %>% group_by(Universiteit1.22) %>% count(Functie.22)
-
-df_ego %>% group_by(Universiteit1.24) %>% count(Functie.24)
-```
-
-## Gender
+## Table 2
 
 ### Gender distribution per University in 22 and 24
 
 ```{r}
 
-df_ego %>% group_by(Universiteit1.22) %>% 
-  summarise(mean_gender = mean(perc_female, na.rm = TRUE))
+df_ego %>% mutate(University = case_when(str_detect(Universiteit.22, "RU") ~ "RU",
+                                         str_detect(Universiteit.22, "UU") ~ "UU",
+                                         .default = "Not in Department")) %>% 
+  group_by(University) %>% 
+  summarise(mean_gender = mean(female, na.rm = TRUE)) %>% fshowdf()
 
+df_ego %>% mutate(University = case_when(str_detect(Universiteit.24, "RU") ~ "RU",
+                                         str_detect(Universiteit.24, "UU") ~ "UU",
+                                         .default = "Not in Department")) %>% 
+  group_by(University) %>% 
+  summarise(mean_gender = mean(female, na.rm = TRUE)) %>% fshowdf()
 
-df_ego %>% group_by(Universiteit1.24) %>% 
-  summarise(mean_gender = mean(perc_female, na.rm = TRUE))
 
 ```
 
-### Gender distribution per University and per Function in 22 and 24
+## Table 3
 
-!!Important to change function levels to have more meaningful results!!
+### Prestige distribution per University in 22 and 24
 
 ```{r}
-df_ego %>% group_by(Universiteit1.22, Functie.22) %>% 
-  summarise(mean_gender = mean(perc_female, na.rm = TRUE))
 
-df_ego %>% group_by(Universiteit1.24, Functie.24) %>% 
-  summarise(mean_gender = mean(perc_female, na.rm = TRUE))
+df_ego %>% mutate(University = case_when(str_detect(Universiteit.22, "RU") ~ "RU",
+                                         str_detect(Universiteit.22, "UU") ~ "UU",
+                                         .default = "Not in Department")) %>% 
+  group_by(University) %>% 
+  summarise(mean = mean(Q1.W1),
+            min = min(Q1.W1),
+            max = max(Q1.W1),
+            sd = sd(Q1.W1)) %>% 
+  fshowdf()
+
+df_ego %>% mutate(University = case_when(str_detect(Universiteit.22, "RU") ~ "RU",
+                                         str_detect(Universiteit.22, "UU") ~ "UU",
+                                         .default = "Not in Department")) %>% 
+  group_by(University) %>% 
+  summarise(mean = mean(Q1.W2),
+            min = min(Q1.W2),
+            max = max(Q1.W2),
+            sd = sd(Q1.W2)) %>% 
+  fshowdf()
+
+
+
+```
+
+## Table 4
+
+### Prestige distribution per Gender in 22 and 24
+
+```{r}
+df_ego %>% group_by(female) %>% summarise(mean = mean(Q1.W1),
+                                          min = min(Q1.W1),
+                                          max = max(Q1.W1),
+                                          sd = sd(Q1.W1)) %>% fshowdf()
+
+df_ego %>% group_by(female) %>% summarise(mean = mean(Q1.W2),
+                                          min = min(Q1.W2),
+                                          max = max(Q1.W2),
+                                          sd = sd(Q1.W2)) %>% fshowdf()
+```
+
+## Table 5
+
+### Prestige distribution per Gender and per University in 22 and 24
+
+```{r}
+df_ego %>% mutate(University = case_when(str_detect(Universiteit.22, "RU") ~ "RU",
+                                         str_detect(Universiteit.22, "UU") ~ "UU",
+                                         .default = "Not in Department")) %>% 
+  group_by(University, female) %>% 
+  summarise(mean = mean(Q1.W1),
+            min = min(Q1.W1),
+            max = max(Q1.W1),
+            sd = sd(Q1.W1)) %>% 
+  fshowdf()
+
+df_ego %>% mutate(University = case_when(str_detect(Universiteit.24, "RU") ~ "RU",
+                                         str_detect(Universiteit.24, "UU") ~ "UU",
+                                         .default = "Not in Department")) %>% 
+  group_by(University, female) %>% 
+  summarise(mean = mean(Q1.W2),
+            min = min(Q1.W2),
+            max = max(Q1.W2),
+            sd = sd(Q1.W2)) %>% 
+  fshowdf()
+```
+
+## Table 7
+
+### General Descriptives
+
+```{r}
+df_char <- df_ego %>% 
+  select(female, ethnicity, Q1.W1, Q1.W2, first_year_pub) %>% 
+  mutate(career_age = 2024 - first_year_pub) %>% 
+  select(!first_year_pub) %>% 
+  psych::describe() %>% 
+  select(!c(vars, trimmed, median, mad, range, skew, kurtosis, se))
+
+fshowdf(df_char)
 ```
 
 <br>

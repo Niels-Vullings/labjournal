@@ -12,7 +12,7 @@
 <meta name="author" content="Niels Vullings" />
 
 
-<title>Network Descriptives</title>
+<title>Descriptive Analysis</title>
 
 <script src="site_libs/header-attrs-2.18/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -182,6 +182,29 @@ code span.wa { color: #bf0303; } /* Warning */
 }
 </style>
 
+<style type="text/css">
+/* for pandoc --citeproc since 2.11 */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
 
 <link rel="stylesheet" href="tweaks.css" type="text/css" />
 
@@ -519,7 +542,7 @@ div.tocify {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="Introduction2.html">Introduction</a>
+      <a href="Introduction2-1.html">Introduction</a>
     </li>
     <li>
       <a href="Theory.html">Theory</a>
@@ -530,13 +553,24 @@ div.tocify {
         <li>
           <a href="Data.html">Data</a>
         </li>
-        <li>
-          <a href="Descriptives.html">Descriptives</a>
-        </li>
       </ul>
     </li>
-    <li>
-      <a href="Siena_Results.html">Results</a>
+    <li class="dropdown-submenu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Results</a>
+      <ul class="dropdown-menu" role="menu">
+        <li>
+          <a href="Descriptives.html">Descriptive Results</a>
+        </li>
+        <li>
+          <a href="Siena_Results(final).html">RSiena Models</a>
+        </li>
+        <li>
+          <a href="Siena_GOF.html">RSiena GoF</a>
+        </li>
+        <li>
+          <a href="Siena_Behavior.html">Rsiena Behavior</a>
+        </li>
+      </ul>
     </li>
     <li class="dropdown-header">Conclusion</li>
   </ul>
@@ -568,7 +602,7 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Network Descriptives</h1>
+<h1 class="title toc-ignore">Descriptive Analysis</h1>
 <h4 class="author">Niels Vullings</h4>
 
 </div>
@@ -941,7 +975,7 @@ Triad census function</h2>
 </div>
 <div id="load-packages" class="section level1" number="2">
 <h1><span class="header-section-number">2</span> Load Packages</h1>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>packages <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;tidyverse&quot;</span>, <span class="st">&quot;sna&quot;</span>, <span class="st">&quot;igraph&quot;</span>, <span class="st">&quot;RsienaTwoStep&quot;</span>, <span class="st">&quot;ape&quot;</span>, <span class="st">&quot;iterators&quot;</span>, <span class="st">&quot;doParallel&quot;</span>)</span>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>packages <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;tidyverse&quot;</span>, <span class="st">&quot;sna&quot;</span>, <span class="st">&quot;igraph&quot;</span>, <span class="st">&quot;RsienaTwoStep&quot;</span>, <span class="st">&quot;ape&quot;</span>, <span class="st">&quot;iterators&quot;</span>, <span class="st">&quot;doParallel&quot;</span>, <span class="st">&quot;rstatix&quot;</span>)</span>
 <span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a></span>
 <span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a><span class="fu">fpackage.check</span>(packages)</span></code></pre></div>
 </div>
@@ -950,252 +984,296 @@ Triad census function</h2>
 cluster</h1>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>no_cores <span class="ot">&lt;-</span> <span class="fu">detectCores</span>() <span class="sc">-</span> <span class="dv">1</span></span>
 <span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>mycl <span class="ot">&lt;-</span> <span class="fu">makeCluster</span>(<span class="fu">rep</span>(<span class="st">&quot;localhost&quot;</span>, no_cores))</span>
-<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a><span class="fu">clusterEvalQ</span>(mycl, <span class="fu">library</span>(RsienaTwoStep))</span></code></pre></div>
-<pre><code>## [[1]]
-## [1] &quot;RsienaTwoStep&quot; &quot;foreach&quot;       &quot;stats&quot;         &quot;graphics&quot;      &quot;grDevices&quot;     &quot;utils&quot;        
-## [7] &quot;datasets&quot;      &quot;methods&quot;       &quot;base&quot;         
-## 
-## [[2]]
-## [1] &quot;RsienaTwoStep&quot; &quot;foreach&quot;       &quot;stats&quot;         &quot;graphics&quot;      &quot;grDevices&quot;     &quot;utils&quot;        
-## [7] &quot;datasets&quot;      &quot;methods&quot;       &quot;base&quot;         
-## 
-## [[3]]
-## [1] &quot;RsienaTwoStep&quot; &quot;foreach&quot;       &quot;stats&quot;         &quot;graphics&quot;      &quot;grDevices&quot;     &quot;utils&quot;        
-## [7] &quot;datasets&quot;      &quot;methods&quot;       &quot;base&quot;         
-## 
-## [[4]]
-## [1] &quot;RsienaTwoStep&quot; &quot;foreach&quot;       &quot;stats&quot;         &quot;graphics&quot;      &quot;grDevices&quot;     &quot;utils&quot;        
-## [7] &quot;datasets&quot;      &quot;methods&quot;       &quot;base&quot;         
-## 
-## [[5]]
-## [1] &quot;RsienaTwoStep&quot; &quot;foreach&quot;       &quot;stats&quot;         &quot;graphics&quot;      &quot;grDevices&quot;     &quot;utils&quot;        
-## [7] &quot;datasets&quot;      &quot;methods&quot;       &quot;base&quot;         
-## 
-## [[6]]
-## [1] &quot;RsienaTwoStep&quot; &quot;foreach&quot;       &quot;stats&quot;         &quot;graphics&quot;      &quot;grDevices&quot;     &quot;utils&quot;        
-## [7] &quot;datasets&quot;      &quot;methods&quot;       &quot;base&quot;         
-## 
-## [[7]]
-## [1] &quot;RsienaTwoStep&quot; &quot;foreach&quot;       &quot;stats&quot;         &quot;graphics&quot;      &quot;grDevices&quot;     &quot;utils&quot;        
-## [7] &quot;datasets&quot;      &quot;methods&quot;       &quot;base&quot;         
-## 
-## [[8]]
-## [1] &quot;RsienaTwoStep&quot; &quot;foreach&quot;       &quot;stats&quot;         &quot;graphics&quot;      &quot;grDevices&quot;     &quot;utils&quot;        
-## [7] &quot;datasets&quot;      &quot;methods&quot;       &quot;base&quot;         
-## 
-## [[9]]
-## [1] &quot;RsienaTwoStep&quot; &quot;foreach&quot;       &quot;stats&quot;         &quot;graphics&quot;      &quot;grDevices&quot;     &quot;utils&quot;        
-## [7] &quot;datasets&quot;      &quot;methods&quot;       &quot;base&quot;         
-## 
-## [[10]]
-## [1] &quot;RsienaTwoStep&quot; &quot;foreach&quot;       &quot;stats&quot;         &quot;graphics&quot;      &quot;grDevices&quot;     &quot;utils&quot;        
-## [7] &quot;datasets&quot;      &quot;methods&quot;       &quot;base&quot;         
-## 
-## [[11]]
-## [1] &quot;RsienaTwoStep&quot; &quot;foreach&quot;       &quot;stats&quot;         &quot;graphics&quot;      &quot;grDevices&quot;     &quot;utils&quot;        
-## [7] &quot;datasets&quot;      &quot;methods&quot;       &quot;base&quot;         
-## 
-## [[12]]
-## [1] &quot;RsienaTwoStep&quot; &quot;foreach&quot;       &quot;stats&quot;         &quot;graphics&quot;      &quot;grDevices&quot;     &quot;utils&quot;        
-## [7] &quot;datasets&quot;      &quot;methods&quot;       &quot;base&quot;         
-## 
-## [[13]]
-## [1] &quot;RsienaTwoStep&quot; &quot;foreach&quot;       &quot;stats&quot;         &quot;graphics&quot;      &quot;grDevices&quot;     &quot;utils&quot;        
-## [7] &quot;datasets&quot;      &quot;methods&quot;       &quot;base&quot;         
-## 
-## [[14]]
-## [1] &quot;RsienaTwoStep&quot; &quot;foreach&quot;       &quot;stats&quot;         &quot;graphics&quot;      &quot;grDevices&quot;     &quot;utils&quot;        
-## [7] &quot;datasets&quot;      &quot;methods&quot;       &quot;base&quot;         
-## 
-## [[15]]
-## [1] &quot;RsienaTwoStep&quot; &quot;foreach&quot;       &quot;stats&quot;         &quot;graphics&quot;      &quot;grDevices&quot;     &quot;utils&quot;        
-## [7] &quot;datasets&quot;      &quot;methods&quot;       &quot;base&quot;</code></pre>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="fu">registerDoParallel</span>(mycl)</span>
-<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a><span class="co"># stopCluster(mycl)</span></span></code></pre></div>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a><span class="fu">clusterEvalQ</span>(mycl, <span class="fu">library</span>(RsienaTwoStep))</span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a><span class="fu">registerDoParallel</span>(mycl)</span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a><span class="co"># stopCluster(mycl)</span></span></code></pre></div>
 </div>
 <div id="load-data" class="section level1" number="4">
 <h1><span class="header-section-number">4</span> Load Data</h1>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;data/processed/RU_UU_ego.RData&quot;</span>)</span>
-<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a></span>
-<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;data/processed/soc_data_raw.RData&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;data/processed/RU_UU_ego.RData&quot;</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;data/processed/soc_data_raw.RData&quot;</span>)</span></code></pre></div>
 <p><br></p>
 <hr />
 </div>
-<div id="networks" class="section level1" number="5">
-<h1><span class="header-section-number">5</span> Networks</h1>
-<div id="make-the-graph-object" class="section level2" number="5.1">
-<h2><span class="header-section-number">5.1</span> Make the graph
-object</h2>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="co">#---- Wave 2 ----</span></span>
-<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>graph_w1 <span class="ot">&lt;-</span> igraph<span class="sc">::</span><span class="fu">graph_from_adjacency_matrix</span>(</span>
-<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>  soc_data<span class="sc">$</span>nets[<span class="dv">1</span>,,], <span class="co">#now, I take the second wave</span></span>
-<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a>  <span class="at">mode =</span> <span class="fu">c</span>(<span class="st">&quot;directed&quot;</span>),</span>
-<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a>  <span class="at">weighted =</span> <span class="cn">NULL</span>,</span>
-<span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a>  <span class="at">diag =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb9-7"><a href="#cb9-7" tabindex="-1"></a>  <span class="at">add.colnames =</span> <span class="cn">NULL</span></span>
-<span id="cb9-8"><a href="#cb9-8" tabindex="-1"></a>)</span>
-<span id="cb9-9"><a href="#cb9-9" tabindex="-1"></a></span>
-<span id="cb9-10"><a href="#cb9-10" tabindex="-1"></a><span class="co">#---- Wave 2 ----</span></span>
-<span id="cb9-11"><a href="#cb9-11" tabindex="-1"></a>graph_w2 <span class="ot">&lt;-</span> igraph<span class="sc">::</span><span class="fu">graph_from_adjacency_matrix</span>(</span>
-<span id="cb9-12"><a href="#cb9-12" tabindex="-1"></a>  soc_data<span class="sc">$</span>nets[<span class="dv">2</span>,,], <span class="co">#now, I take the second wave</span></span>
-<span id="cb9-13"><a href="#cb9-13" tabindex="-1"></a>  <span class="at">mode =</span> <span class="fu">c</span>(<span class="st">&quot;directed&quot;</span>),</span>
-<span id="cb9-14"><a href="#cb9-14" tabindex="-1"></a>  <span class="at">weighted =</span> <span class="cn">NULL</span>,</span>
-<span id="cb9-15"><a href="#cb9-15" tabindex="-1"></a>  <span class="at">diag =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb9-16"><a href="#cb9-16" tabindex="-1"></a>  <span class="at">add.colnames =</span> <span class="cn">NULL</span></span>
-<span id="cb9-17"><a href="#cb9-17" tabindex="-1"></a>)</span></code></pre></div>
+<div id="descriptive-analysis" class="section level1" number="5">
+<h1><span class="header-section-number">5</span> Descriptive
+Analysis</h1>
+<p>To partially answer the first two research questions of this study, I
+will further describe and assess the data by visualising the
+collaboration networks of sociologists at Radboud University and Utrecht
+University. These networks give us interesting insights into the
+collaboration practices of sociologists at Radboud University (RU) and
+Utrecht University (UU). First of all, the size of the nodes in
+determined by the amount of indegrees a scholar has, or in other words,
+with how many other sociologists a person has collaborated. The graph of
+wave 1 shows that at Radboud University, it is mostly men who
+collaborate with each other, with the inclusion of some female
+sociologists who send ties, but do not receive any. For Utrecht
+University, there is a small group of four male sociologists who
+collaborate with each other. Interestingly, there are also two female
+sociologists who work together with sociologists at Radboud University.
+Overall, the network at wave 1 is not very dense, which is also visible
+in the density score of Table 1. The graph of wave 2 shows a different
+picture. This network is much less sparse and shows more diversity in
+terms of both gender and department. At both Radboud University and
+Utrecht University, the sociologists with the most indegrees are mostly
+male, with the exception of one female sociologist at Utrecht
+University, who seemingly has the most indegrees of anyone in the
+network. This scholar, combined with the most popular scholar at Radboud
+University, both serve a “hub”- function, as the network seems to be
+centered around them. In terms of gender, it seems that male
+sociologists seem to get slightly more indegrees on average compared to
+women. This is however less prevalent than at wave 1, implying that the
+collaboration network might be more egalitarian.<br />
+  Looking at the network statistics of these networks, we first of all
+see that the jaccard-similarity index (0.142) is relatively low, which
+indicates that the network does not change much over time (Table 1)
+<span class="citation">(Ripley et al. 2011)</span>. As said before, the
+density of the networks is quite small. This might cause some issues for
+the estimation process in RSiena, but is still within range for valid
+estimation <span class="citation">(Ripley et al. 2011)</span>. To get a
+preliminary idea of how the network evolves, a dyad census was
+calculated. This specific dyad census tracks dyads between the waves and
+sums up the specific change a dyad has undergone, which offers more
+insight than the conventional dyad census, which only takes a macro
+perspective (Table 2). Unsurprisingly, most dyads in the network are
+Null at wave 1 and wave 2, which means there are no ties being sent.
+When we look at actual ties, we see that there are 83 assymetric ties
+that were sent at wave 2, which will likely be junior scholars who
+managed to get their first paper published, or scholars who were new to
+their respective departments. Conversely, 29 assymetric ties which were
+present at wave 1 were gone at wave 2. Another finding worth noting is
+the fact that 11 dyads had no ties at wave 1, but had a mutual
+collaboration at wave 2, implying that they both coauthored on at least
+one of each of their papers in wave 2. This form of collaboration is
+interesting, because it implies a spontaneous collaboration, instead of
+a “tit for tat”-approach.<br />
+  Lastly, to give a more concrete answer to the first and second
+research question, the Moran’s I was calculated for both gender and
+prestige. Moran’s I is a measure of segregation in social networks,
+which measures the extent to which scholars who are connected to each
+other are also more similar to each other <span class="citation">(Tolsma
+and Hofstra 2022)</span>. In simpler words, are men more connected to
+other men and are women more connected to other women. The Moran’s I was
+calculated using the “<em>fMoran.i</em>”-function, derived from <span
+class="citation">Tolsma and Hofstra (2022)</span>. The choice was made
+to not row standardize the Moran’s I, as the more connections you have
+to others who are similar influences you differently then when it is
+only a few. At wave 1, the Moran’s I is 0.22, which mean that nodes who
+are connected are indeed more alike, at least to some extent. At wave 2,
+the Moran’s I is 0.14, implying that the correlation between connection
+and similarity is decreasing. However, this observed difference between
+wave 1 and wave 2 is rather small (<span
+class="math inline">\(\Delta\)</span> = 0.075). When testing for the
+significance of this difference, it is not found to be significant for
+an alpha of 0.05 (Table 4), meaning that it can not be excluded that
+this difference is due to chance alone. Although the results should be
+interpreted with caution, it is found that there is some degree of
+gender clustering taking place in the network. Collaboration between
+scholars at Radboud University and Utrecht University is partially
+determined by gender clustering, which means hypothesis 1 finds at least
+partial support. In contrast, due to the small differences and lack of
+significant findings, it cannot be conclusively proven that gender
+clustering has decreased over time. Thus, hypothesis 2 has to be
+rejected.</p>
+<div id="networks" class="section level2" number="5.1">
+<h2><span class="header-section-number">5.1</span> Networks</h2>
+<div id="make-the-graph-object" class="section level3" number="5.1.1">
+<h3><span class="header-section-number">5.1.1</span> Make the graph
+object</h3>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="co">#---- Wave 2 ----</span></span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>graph_w1 <span class="ot">&lt;-</span> igraph<span class="sc">::</span><span class="fu">graph_from_adjacency_matrix</span>(</span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>  soc_data<span class="sc">$</span>nets[<span class="dv">1</span>,,], <span class="co">#now, I take the second wave</span></span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>  <span class="at">mode =</span> <span class="fu">c</span>(<span class="st">&quot;directed&quot;</span>),</span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>  <span class="at">weighted =</span> <span class="cn">NULL</span>,</span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a>  <span class="at">diag =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a>  <span class="at">add.colnames =</span> <span class="cn">NULL</span></span>
+<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a>)</span>
+<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a></span>
+<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a><span class="co">#---- Wave 2 ----</span></span>
+<span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a>graph_w2 <span class="ot">&lt;-</span> igraph<span class="sc">::</span><span class="fu">graph_from_adjacency_matrix</span>(</span>
+<span id="cb7-12"><a href="#cb7-12" tabindex="-1"></a>  soc_data<span class="sc">$</span>nets[<span class="dv">2</span>,,], <span class="co">#now, I take the second wave</span></span>
+<span id="cb7-13"><a href="#cb7-13" tabindex="-1"></a>  <span class="at">mode =</span> <span class="fu">c</span>(<span class="st">&quot;directed&quot;</span>),</span>
+<span id="cb7-14"><a href="#cb7-14" tabindex="-1"></a>  <span class="at">weighted =</span> <span class="cn">NULL</span>,</span>
+<span id="cb7-15"><a href="#cb7-15" tabindex="-1"></a>  <span class="at">diag =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb7-16"><a href="#cb7-16" tabindex="-1"></a>  <span class="at">add.colnames =</span> <span class="cn">NULL</span></span>
+<span id="cb7-17"><a href="#cb7-17" tabindex="-1"></a>)</span></code></pre></div>
 </div>
-<div id="network-visualisations" class="section level2" number="5.2">
-<h2><span class="header-section-number">5.2</span> Network
-Visualisations</h2>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="co"># Make a plotable gender variable to fix problems with vertex.shape</span></span>
-<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>df_ego <span class="ot">&lt;-</span> df_ego <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">plot_gen =</span> <span class="fu">case_when</span>(perc_female <span class="sc">&gt;=</span> <span class="fl">0.80</span> <span class="sc">~</span> <span class="st">&quot;Female&quot;</span>,</span>
-<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a>                                                 <span class="at">.default =</span> <span class="st">&quot;Male&quot;</span>))</span>
-<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a><span class="co"># df_ego %&gt;% count(plot_gen)</span></span></code></pre></div>
+<div id="network-visualisations" class="section level3" number="5.1.2">
+<h3><span class="header-section-number">5.1.2</span> Network
+Visualisations</h3>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="co"># Make a plotable gender variable to fix problems with vertex.shape</span></span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>df_ego <span class="ot">&lt;-</span> df_ego <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">plot_gen =</span> <span class="fu">case_when</span>(perc_female <span class="sc">&gt;=</span> <span class="fl">0.70</span> <span class="sc">~</span> <span class="st">&quot;Female&quot;</span>,</span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a>                                                 <span class="at">.default =</span> <span class="st">&quot;Male&quot;</span>))</span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a>df_ego <span class="ot">&lt;-</span> df_ego <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">University_22 =</span> <span class="fu">case_when</span>(<span class="fu">str_detect</span>(Universiteit<span class="fl">.22</span>, <span class="st">&quot;RU&quot;</span>) <span class="sc">~</span> <span class="st">&quot;RU&quot;</span>,</span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a>                                         <span class="fu">str_detect</span>(Universiteit<span class="fl">.22</span>, <span class="st">&quot;UU&quot;</span>) <span class="sc">~</span> <span class="st">&quot;UU&quot;</span>,</span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a>                                         <span class="at">.default =</span> <span class="st">&quot;Not in Department&quot;</span>),</span>
+<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a>                            <span class="at">University_24 =</span> <span class="fu">case_when</span>(<span class="fu">str_detect</span>(Universiteit<span class="fl">.24</span>, <span class="st">&quot;RU&quot;</span>) <span class="sc">~</span> <span class="st">&quot;RU&quot;</span>,</span>
+<span id="cb8-9"><a href="#cb8-9" tabindex="-1"></a>                                         <span class="fu">str_detect</span>(Universiteit<span class="fl">.24</span>, <span class="st">&quot;UU&quot;</span>) <span class="sc">~</span> <span class="st">&quot;UU&quot;</span>,</span>
+<span id="cb8-10"><a href="#cb8-10" tabindex="-1"></a>                                         <span class="at">.default =</span> <span class="st">&quot;Not in Department&quot;</span>))</span>
+<span id="cb8-11"><a href="#cb8-11" tabindex="-1"></a></span>
+<span id="cb8-12"><a href="#cb8-12" tabindex="-1"></a>df_ego[<span class="fu">which</span>(<span class="fu">str_detect</span>(df_ego<span class="sc">$</span>Naam, <span class="st">&quot;Weverthon&quot;</span>)),]<span class="sc">$</span>plot_gen <span class="ot">&lt;-</span> <span class="st">&quot;Male&quot;</span> <span class="co"># Fix missing on gender</span></span>
+<span id="cb8-13"><a href="#cb8-13" tabindex="-1"></a><span class="co"># df_ego %&gt;% count(plot_gen)</span></span></code></pre></div>
 </div>
-<div id="wave-1" class="section level2 tabset" number="5.3">
-<h2 class="tabset"><span class="header-section-number">5.3</span> Wave
-1</h2>
+<div id="wave-1" class="section level3 tabset" number="5.1.3">
+<h3 class="tabset"><span class="header-section-number">5.1.3</span> Wave
+1</h3>
+<div id="with-isolates" class="section level4" number="5.1.3.1">
+<h4><span class="header-section-number">5.1.3.1</span> With
+Isolates</h4>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="co">#---- Full network including Isolates ----</span></span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2345</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>l_w1 <span class="ot">&lt;-</span> <span class="fu">layout_nicely</span>(graph_w1)</span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a></span>
+<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a><span class="fu">plot</span>(graph_w1, <span class="at">layout =</span> l_w1,</span>
+<span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a>     <span class="at">vertex.color =</span> <span class="fu">ifelse</span>(df_ego<span class="sc">$</span>University_22 <span class="sc">==</span> <span class="st">&quot;RU&quot;</span>, <span class="st">&quot;red&quot;</span>, <span class="st">&quot;gold&quot;</span>), <span class="co">#now, I can use actor attributes for plotting. </span></span>
+<span id="cb9-7"><a href="#cb9-7" tabindex="-1"></a>     <span class="at">vertex.shape =</span> <span class="fu">ifelse</span>(df_ego<span class="sc">$</span>plot_gen <span class="sc">==</span> <span class="st">&quot;Male&quot;</span>, <span class="st">&quot;square&quot;</span>, <span class="st">&quot;circle&quot;</span>),</span>
+<span id="cb9-8"><a href="#cb9-8" tabindex="-1"></a>     <span class="at">vertex.size =</span> igraph<span class="sc">::</span><span class="fu">degree</span>(graph_w1, <span class="at">mode =</span> <span class="st">&quot;in&quot;</span>) <span class="sc">*</span> <span class="fl">1.5</span>,</span>
+<span id="cb9-9"><a href="#cb9-9" tabindex="-1"></a>     <span class="at">vertex.label =</span> <span class="cn">NA</span>,</span>
+<span id="cb9-10"><a href="#cb9-10" tabindex="-1"></a>     <span class="at">edge.width =</span> .<span class="dv">8</span>,</span>
+<span id="cb9-11"><a href="#cb9-11" tabindex="-1"></a>     <span class="at">edge.curved =</span> <span class="fl">0.5</span>,</span>
+<span id="cb9-12"><a href="#cb9-12" tabindex="-1"></a>     <span class="at">edge.arrow.size =</span><span class="fl">0.2</span>)</span>
+<span id="cb9-13"><a href="#cb9-13" tabindex="-1"></a>     <span class="co"># main = &quot;Gender Distribution of Two Sociology Departments 2022&quot;)</span></span>
+<span id="cb9-14"><a href="#cb9-14" tabindex="-1"></a></span>
+<span id="cb9-15"><a href="#cb9-15" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;topleft&quot;</span>, <span class="fu">c</span>(<span class="st">&quot;RU&quot;</span>, <span class="st">&quot;UU&quot;</span>, <span class="st">&quot;Male&quot;</span>, <span class="st">&quot;Female&quot;</span>), <span class="at">pch =</span> <span class="fu">c</span>(<span class="dv">21</span>,<span class="dv">21</span>,<span class="dv">15</span>,<span class="dv">20</span>), <span class="at">col =</span> <span class="st">&quot;#777777&quot;</span>, <span class="at">pt.bg =</span> <span class="fu">c</span>(<span class="st">&quot;red&quot;</span>, <span class="st">&quot;gold&quot;</span>), <span class="at">pt.cex =</span> <span class="dv">1</span>,</span>
+<span id="cb9-16"><a href="#cb9-16" tabindex="-1"></a>       <span class="at">cex =</span> <span class="fl">0.8</span>, <span class="at">bty =</span> <span class="st">&quot;n&quot;</span>, <span class="at">ncol =</span> <span class="dv">1</span>)</span></code></pre></div>
+<p><img src="Descriptives_files/figure-html/unnamed-chunk-10-1.png" width="864" /></p>
+</div>
+<div id="without-isolates" class="section level4" number="5.1.3.2">
+<h4><span class="header-section-number">5.1.3.2</span> Without
+Isolates</h4>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="co">#---- Remove Isolates ----</span></span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a><span class="fu">diag</span>(soc_data<span class="sc">$</span>nets[<span class="dv">1</span>,,]) <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a>noisolates <span class="ot">&lt;-</span> <span class="fu">rowSums</span>(soc_data<span class="sc">$</span>nets[<span class="dv">1</span>,,], <span class="at">na.rm =</span> T) <span class="sc">&gt;</span> <span class="dv">0</span></span>
+<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a></span>
+<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a>soc_w1_sel <span class="ot">&lt;-</span> soc_data<span class="sc">$</span>nets[<span class="dv">1</span>,,][noisolates, noisolates]</span>
+<span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a></span>
+<span id="cb10-8"><a href="#cb10-8" tabindex="-1"></a>graph_w1_sel <span class="ot">&lt;-</span> <span class="fu">graph_from_adjacency_matrix</span>(soc_w1_sel, <span class="at">mode =</span> <span class="st">&quot;directed&quot;</span>, <span class="at">weighted =</span> <span class="cn">NULL</span>, <span class="at">diag =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb10-9"><a href="#cb10-9" tabindex="-1"></a>                                            <span class="at">add.colnames =</span> <span class="cn">NA</span>, <span class="at">add.rownames =</span> <span class="cn">NA</span>)</span>
+<span id="cb10-10"><a href="#cb10-10" tabindex="-1"></a></span>
+<span id="cb10-11"><a href="#cb10-11" tabindex="-1"></a>ego_iso_w1 <span class="ot">&lt;-</span> df_ego[noisolates,]</span>
+<span id="cb10-12"><a href="#cb10-12" tabindex="-1"></a><span class="co">#---- Graph without Isolates ----</span></span>
+<span id="cb10-13"><a href="#cb10-13" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2345</span>)</span>
+<span id="cb10-14"><a href="#cb10-14" tabindex="-1"></a>l_w1 <span class="ot">&lt;-</span> <span class="fu">layout_nicely</span>(graph_w1_sel)</span>
+<span id="cb10-15"><a href="#cb10-15" tabindex="-1"></a></span>
+<span id="cb10-16"><a href="#cb10-16" tabindex="-1"></a><span class="fu">plot</span>(graph_w1_sel, <span class="at">layout =</span> l_w1,</span>
+<span id="cb10-17"><a href="#cb10-17" tabindex="-1"></a>     <span class="at">vertex.color =</span> <span class="fu">ifelse</span>(ego_iso_w1<span class="sc">$</span>University_22 <span class="sc">==</span> <span class="st">&quot;RU&quot;</span>, <span class="st">&quot;red&quot;</span>, <span class="st">&quot;gold&quot;</span>), <span class="co">#now, I can use actor attributes for plotting. </span></span>
+<span id="cb10-18"><a href="#cb10-18" tabindex="-1"></a>     <span class="at">vertex.shape =</span> <span class="fu">ifelse</span>(ego_iso_w1<span class="sc">$</span>plot_gen <span class="sc">==</span> <span class="st">&quot;Male&quot;</span>, <span class="st">&quot;square&quot;</span>, <span class="st">&quot;circle&quot;</span>),</span>
+<span id="cb10-19"><a href="#cb10-19" tabindex="-1"></a>     <span class="at">vertex.size =</span> igraph<span class="sc">::</span><span class="fu">degree</span>(graph_w1_sel, <span class="at">mode =</span> <span class="st">&quot;in&quot;</span>) <span class="sc">*</span> <span class="fl">1.5</span>,</span>
+<span id="cb10-20"><a href="#cb10-20" tabindex="-1"></a>     <span class="at">vertex.label =</span> <span class="cn">NA</span>,</span>
+<span id="cb10-21"><a href="#cb10-21" tabindex="-1"></a>     <span class="at">edge.width =</span> .<span class="dv">8</span>,</span>
+<span id="cb10-22"><a href="#cb10-22" tabindex="-1"></a>     <span class="at">edge.curved =</span> <span class="fl">0.5</span>,</span>
+<span id="cb10-23"><a href="#cb10-23" tabindex="-1"></a>     <span class="at">edge.arrow.size =</span><span class="fl">0.2</span>)</span>
+<span id="cb10-24"><a href="#cb10-24" tabindex="-1"></a>     <span class="co"># main = &quot;Gender Distribution of Two Sociology Departments 2022&quot;)</span></span>
+<span id="cb10-25"><a href="#cb10-25" tabindex="-1"></a></span>
+<span id="cb10-26"><a href="#cb10-26" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;topleft&quot;</span>, <span class="fu">c</span>(<span class="st">&quot;RU&quot;</span>, <span class="st">&quot;UU&quot;</span>, <span class="st">&quot;Male&quot;</span>, <span class="st">&quot;Female&quot;</span>), <span class="at">pch =</span> <span class="fu">c</span>(<span class="dv">21</span>,<span class="dv">21</span>,<span class="dv">15</span>,<span class="dv">20</span>), <span class="at">col =</span> <span class="st">&quot;#777777&quot;</span>, <span class="at">pt.bg =</span> <span class="fu">c</span>(<span class="st">&quot;red&quot;</span>, <span class="st">&quot;gold&quot;</span>), <span class="at">pt.cex =</span> <span class="dv">1</span>,</span>
+<span id="cb10-27"><a href="#cb10-27" tabindex="-1"></a>       <span class="at">cex =</span> <span class="fl">0.8</span>, <span class="at">bty =</span> <span class="st">&quot;n&quot;</span>, <span class="at">ncol =</span> <span class="dv">1</span>)</span></code></pre></div>
+<p><img src="Descriptives_files/figure-html/unnamed-chunk-11-1.png" width="864" /></p>
+</div>
+</div>
+<div id="wave-2" class="section level3 tabset" number="5.1.4">
+<h3 class="tabset"><span class="header-section-number">5.1.4</span> Wave
+2</h3>
+<div id="with-isolates-1" class="section level4" number="5.1.4.1">
+<h4><span class="header-section-number">5.1.4.1</span> With
+Isolates</h4>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="co">#---- Full network including Isolates ----</span></span>
 <span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2345</span>)</span>
-<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a>l_w1 <span class="ot">&lt;-</span> <span class="fu">layout_with_mds</span>(graph_w1)</span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a>l_w2 <span class="ot">&lt;-</span> <span class="fu">layout_nicely</span>(graph_w2)</span>
 <span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a></span>
-<span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a><span class="fu">plot</span>(graph_w1, <span class="at">layout =</span> l_w1,</span>
-<span id="cb11-6"><a href="#cb11-6" tabindex="-1"></a>     <span class="at">vertex.color =</span> <span class="fu">ifelse</span>(df_ego<span class="sc">$</span>Universiteit1<span class="fl">.22</span> <span class="sc">==</span> <span class="st">&quot;RU&quot;</span>, <span class="st">&quot;red&quot;</span>, <span class="st">&quot;gold&quot;</span>), <span class="co">#now, I can use actor attributes for plotting. </span></span>
+<span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a><span class="fu">plot</span>(graph_w2, <span class="at">layout =</span> l_w2,</span>
+<span id="cb11-6"><a href="#cb11-6" tabindex="-1"></a>     <span class="at">vertex.color =</span> <span class="fu">ifelse</span>(df_ego<span class="sc">$</span>University_24 <span class="sc">==</span> <span class="st">&quot;RU&quot;</span>, <span class="st">&quot;red&quot;</span>, <span class="st">&quot;gold&quot;</span>), <span class="co">#now, I can use actor attributes for plotting. </span></span>
 <span id="cb11-7"><a href="#cb11-7" tabindex="-1"></a>     <span class="at">vertex.shape =</span> <span class="fu">ifelse</span>(df_ego<span class="sc">$</span>plot_gen <span class="sc">==</span> <span class="st">&quot;Male&quot;</span>, <span class="st">&quot;square&quot;</span>, <span class="st">&quot;circle&quot;</span>),</span>
-<span id="cb11-8"><a href="#cb11-8" tabindex="-1"></a>     <span class="at">vertex.size =</span> igraph<span class="sc">::</span><span class="fu">degree</span>(graph_w1, <span class="at">mode =</span> <span class="st">&quot;all&quot;</span>) <span class="sc">*</span> <span class="fl">1.5</span>,</span>
+<span id="cb11-8"><a href="#cb11-8" tabindex="-1"></a>     <span class="at">vertex.size =</span> igraph<span class="sc">::</span><span class="fu">degree</span>(graph_w2, <span class="at">mode =</span> <span class="st">&quot;in&quot;</span>) <span class="sc">*</span> <span class="fl">1.5</span>,</span>
 <span id="cb11-9"><a href="#cb11-9" tabindex="-1"></a>     <span class="at">vertex.label =</span> <span class="cn">NA</span>,</span>
-<span id="cb11-10"><a href="#cb11-10" tabindex="-1"></a>     <span class="at">edge.width =</span> .<span class="dv">8</span>,</span>
+<span id="cb11-10"><a href="#cb11-10" tabindex="-1"></a>     <span class="at">edge.width =</span> <span class="fl">0.8</span>,</span>
 <span id="cb11-11"><a href="#cb11-11" tabindex="-1"></a>     <span class="at">edge.curved =</span> <span class="fl">0.5</span>,</span>
-<span id="cb11-12"><a href="#cb11-12" tabindex="-1"></a>     <span class="at">edge.arrow.size =</span><span class="fl">0.2</span>,</span>
-<span id="cb11-13"><a href="#cb11-13" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">&quot;Gender Distribution of Two Sociology Departments 2022&quot;</span>)</span>
-<span id="cb11-14"><a href="#cb11-14" tabindex="-1"></a></span>
-<span id="cb11-15"><a href="#cb11-15" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;topleft&quot;</span>, <span class="fu">c</span>(<span class="st">&quot;Radboud&quot;</span>, <span class="st">&quot;Utrecht University&quot;</span>, <span class="st">&quot;Male&quot;</span>, <span class="st">&quot;Female&quot;</span>), <span class="at">pch =</span> <span class="fu">c</span>(<span class="dv">21</span>,<span class="dv">21</span>,<span class="dv">15</span>,<span class="dv">20</span>), <span class="at">col =</span> <span class="st">&quot;#777777&quot;</span>, <span class="at">pt.bg =</span> <span class="fu">c</span>(<span class="st">&quot;red&quot;</span>, <span class="st">&quot;gold&quot;</span>), <span class="at">pt.cex =</span> <span class="dv">1</span>,</span>
-<span id="cb11-16"><a href="#cb11-16" tabindex="-1"></a>       <span class="at">cex =</span> <span class="fl">0.8</span>, <span class="at">bty =</span> <span class="st">&quot;n&quot;</span>, <span class="at">ncol =</span> <span class="dv">1</span>)</span></code></pre></div>
-<p><img src="Descriptives_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<span id="cb11-12"><a href="#cb11-12" tabindex="-1"></a>     <span class="at">edge.arrow.size =</span><span class="fl">0.2</span>)</span>
+<span id="cb11-13"><a href="#cb11-13" tabindex="-1"></a>     <span class="co"># main = &quot;Gender Distribution of Two Sociology Departments 2024&quot;)</span></span>
+<span id="cb11-14"><a href="#cb11-14" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;topleft&quot;</span>, <span class="fu">c</span>(<span class="st">&quot;RU&quot;</span>, <span class="st">&quot;UU&quot;</span>, <span class="st">&quot;Male&quot;</span>, <span class="st">&quot;Female&quot;</span>), <span class="at">pch =</span> <span class="fu">c</span>(<span class="dv">21</span>,<span class="dv">21</span>,<span class="dv">15</span>,<span class="dv">20</span>), <span class="at">col =</span> <span class="st">&quot;#777777&quot;</span>, <span class="at">pt.bg =</span> <span class="fu">c</span>(<span class="st">&quot;red&quot;</span>, <span class="st">&quot;gold&quot;</span>), <span class="at">pt.cex =</span> <span class="dv">1</span>,</span>
+<span id="cb11-15"><a href="#cb11-15" tabindex="-1"></a>       <span class="at">cex =</span> <span class="fl">0.8</span>, <span class="at">bty =</span> <span class="st">&quot;n&quot;</span>, <span class="at">ncol =</span> <span class="dv">1</span>)</span></code></pre></div>
+<p><img src="Descriptives_files/figure-html/unnamed-chunk-12-1.png" width="768" /></p>
+</div>
+<div id="without-isolates-1" class="section level4" number="5.1.4.2">
+<h4><span class="header-section-number">5.1.4.2</span> Without
+Isolates</h4>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="co">#---- Remove Isolates ----</span></span>
-<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a><span class="fu">diag</span>(soc_data<span class="sc">$</span>nets[<span class="dv">1</span>,,]) <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a><span class="fu">diag</span>(soc_data<span class="sc">$</span>nets[<span class="dv">2</span>,,]) <span class="ot">&lt;-</span> <span class="dv">0</span></span>
 <span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a></span>
-<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a>noisolates <span class="ot">&lt;-</span> <span class="fu">rowSums</span>(soc_data<span class="sc">$</span>nets[<span class="dv">1</span>,,], <span class="at">na.rm =</span> T) <span class="sc">&gt;</span> <span class="dv">0</span></span>
+<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a>noisolates <span class="ot">&lt;-</span> <span class="fu">rowSums</span>(soc_data<span class="sc">$</span>nets[<span class="dv">2</span>,,], <span class="at">na.rm =</span> T) <span class="sc">&gt;</span> <span class="dv">0</span></span>
 <span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a></span>
-<span id="cb12-6"><a href="#cb12-6" tabindex="-1"></a>soc_w1_sel <span class="ot">&lt;-</span> soc_data<span class="sc">$</span>nets[<span class="dv">1</span>,,][noisolates, noisolates]</span>
+<span id="cb12-6"><a href="#cb12-6" tabindex="-1"></a>soc_w2_sel <span class="ot">&lt;-</span> soc_data<span class="sc">$</span>nets[<span class="dv">2</span>,,][noisolates, noisolates]</span>
 <span id="cb12-7"><a href="#cb12-7" tabindex="-1"></a></span>
-<span id="cb12-8"><a href="#cb12-8" tabindex="-1"></a>graph_w1_sel <span class="ot">&lt;-</span> <span class="fu">graph_from_adjacency_matrix</span>(soc_w1_sel, <span class="at">mode =</span> <span class="st">&quot;directed&quot;</span>, <span class="at">weighted =</span> <span class="cn">NULL</span>, <span class="at">diag =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb12-8"><a href="#cb12-8" tabindex="-1"></a>graph_w2_sel <span class="ot">&lt;-</span> <span class="fu">graph_from_adjacency_matrix</span>(soc_w2_sel, <span class="at">mode =</span> <span class="st">&quot;directed&quot;</span>, <span class="at">weighted =</span> <span class="cn">NULL</span>, <span class="at">diag =</span> <span class="cn">TRUE</span>,</span>
 <span id="cb12-9"><a href="#cb12-9" tabindex="-1"></a>                                            <span class="at">add.colnames =</span> <span class="cn">NA</span>, <span class="at">add.rownames =</span> <span class="cn">NA</span>)</span>
 <span id="cb12-10"><a href="#cb12-10" tabindex="-1"></a></span>
-<span id="cb12-11"><a href="#cb12-11" tabindex="-1"></a>ego_iso_w1 <span class="ot">&lt;-</span> df_ego[noisolates,]</span>
-<span id="cb12-12"><a href="#cb12-12" tabindex="-1"></a><span class="co">#---- Graph without Isolates ----</span></span>
-<span id="cb12-13"><a href="#cb12-13" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2345</span>)</span>
-<span id="cb12-14"><a href="#cb12-14" tabindex="-1"></a>l_w1 <span class="ot">&lt;-</span> <span class="fu">layout_with_mds</span>(graph_w1_sel)</span>
-<span id="cb12-15"><a href="#cb12-15" tabindex="-1"></a></span>
-<span id="cb12-16"><a href="#cb12-16" tabindex="-1"></a><span class="fu">plot</span>(graph_w1_sel, <span class="at">layout =</span> l_w1,</span>
-<span id="cb12-17"><a href="#cb12-17" tabindex="-1"></a>     <span class="at">vertex.color =</span> <span class="fu">ifelse</span>(ego_iso_w1<span class="sc">$</span>Universiteit1<span class="fl">.22</span> <span class="sc">==</span> <span class="st">&quot;RU&quot;</span>, <span class="st">&quot;red&quot;</span>, <span class="st">&quot;gold&quot;</span>), <span class="co">#now, I can use actor attributes for plotting. </span></span>
-<span id="cb12-18"><a href="#cb12-18" tabindex="-1"></a>     <span class="at">vertex.shape =</span> <span class="fu">ifelse</span>(ego_iso_w1<span class="sc">$</span>plot_gen <span class="sc">==</span> <span class="st">&quot;Male&quot;</span>, <span class="st">&quot;square&quot;</span>, <span class="st">&quot;circle&quot;</span>),</span>
-<span id="cb12-19"><a href="#cb12-19" tabindex="-1"></a>     <span class="at">vertex.size =</span> igraph<span class="sc">::</span><span class="fu">degree</span>(graph_w1_sel, <span class="at">mode =</span> <span class="st">&quot;all&quot;</span>) <span class="sc">*</span> <span class="fl">1.5</span>,</span>
-<span id="cb12-20"><a href="#cb12-20" tabindex="-1"></a>     <span class="at">vertex.label =</span> <span class="cn">NA</span>,</span>
-<span id="cb12-21"><a href="#cb12-21" tabindex="-1"></a>     <span class="at">edge.width =</span> .<span class="dv">8</span>,</span>
-<span id="cb12-22"><a href="#cb12-22" tabindex="-1"></a>     <span class="at">edge.curved =</span> <span class="fl">0.5</span>,</span>
-<span id="cb12-23"><a href="#cb12-23" tabindex="-1"></a>     <span class="at">edge.arrow.size =</span><span class="fl">0.2</span>,</span>
-<span id="cb12-24"><a href="#cb12-24" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">&quot;Gender Distribution of Two Sociology Departments 2022&quot;</span>)</span>
-<span id="cb12-25"><a href="#cb12-25" tabindex="-1"></a></span>
-<span id="cb12-26"><a href="#cb12-26" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;topleft&quot;</span>, <span class="fu">c</span>(<span class="st">&quot;Radboud&quot;</span>, <span class="st">&quot;Utrecht University&quot;</span>, <span class="st">&quot;Male&quot;</span>, <span class="st">&quot;Female&quot;</span>), <span class="at">pch =</span> <span class="fu">c</span>(<span class="dv">21</span>,<span class="dv">21</span>,<span class="dv">15</span>,<span class="dv">20</span>), <span class="at">col =</span> <span class="st">&quot;#777777&quot;</span>, <span class="at">pt.bg =</span> <span class="fu">c</span>(<span class="st">&quot;red&quot;</span>, <span class="st">&quot;gold&quot;</span>), <span class="at">pt.cex =</span> <span class="dv">1</span>,</span>
+<span id="cb12-11"><a href="#cb12-11" tabindex="-1"></a>ego_iso_w2 <span class="ot">&lt;-</span> df_ego[noisolates,]</span>
+<span id="cb12-12"><a href="#cb12-12" tabindex="-1"></a></span>
+<span id="cb12-13"><a href="#cb12-13" tabindex="-1"></a><span class="co">#---- Graph without Isolates ----</span></span>
+<span id="cb12-14"><a href="#cb12-14" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2345</span>)</span>
+<span id="cb12-15"><a href="#cb12-15" tabindex="-1"></a>l_w2 <span class="ot">&lt;-</span> <span class="fu">layout_nicely</span>(graph_w2_sel)</span>
+<span id="cb12-16"><a href="#cb12-16" tabindex="-1"></a></span>
+<span id="cb12-17"><a href="#cb12-17" tabindex="-1"></a><span class="fu">plot</span>(graph_w2_sel, <span class="at">layout =</span> l_w2,</span>
+<span id="cb12-18"><a href="#cb12-18" tabindex="-1"></a>     <span class="at">vertex.color =</span> <span class="fu">ifelse</span>(ego_iso_w2<span class="sc">$</span>University_24 <span class="sc">==</span> <span class="st">&quot;RU&quot;</span>, <span class="st">&quot;red&quot;</span>, <span class="st">&quot;gold&quot;</span>), <span class="co">#now, I can use actor attributes for plotting. </span></span>
+<span id="cb12-19"><a href="#cb12-19" tabindex="-1"></a>     <span class="at">vertex.shape =</span> <span class="fu">ifelse</span>(ego_iso_w2<span class="sc">$</span>plot_gen <span class="sc">==</span> <span class="st">&quot;Male&quot;</span>, <span class="st">&quot;square&quot;</span>, <span class="st">&quot;circle&quot;</span>),</span>
+<span id="cb12-20"><a href="#cb12-20" tabindex="-1"></a>     <span class="at">vertex.size =</span> igraph<span class="sc">::</span><span class="fu">degree</span>(graph_w2_sel, <span class="at">mode =</span> <span class="st">&quot;in&quot;</span>) <span class="sc">*</span> <span class="fl">1.5</span>,</span>
+<span id="cb12-21"><a href="#cb12-21" tabindex="-1"></a>     <span class="at">vertex.label =</span> <span class="cn">NA</span>,</span>
+<span id="cb12-22"><a href="#cb12-22" tabindex="-1"></a>     <span class="at">edge.width =</span> <span class="fl">0.8</span>,</span>
+<span id="cb12-23"><a href="#cb12-23" tabindex="-1"></a>     <span class="at">edge.curved =</span> <span class="fl">0.5</span>,</span>
+<span id="cb12-24"><a href="#cb12-24" tabindex="-1"></a>     <span class="at">edge.arrow.size =</span><span class="fl">0.2</span>)</span>
+<span id="cb12-25"><a href="#cb12-25" tabindex="-1"></a>     <span class="co"># main = &quot;Gender Distribution of Two Sociology Departments 2024&quot;)</span></span>
+<span id="cb12-26"><a href="#cb12-26" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;topleft&quot;</span>, <span class="fu">c</span>(<span class="st">&quot;RU&quot;</span>, <span class="st">&quot;UU&quot;</span>, <span class="st">&quot;Male&quot;</span>, <span class="st">&quot;Female&quot;</span>), <span class="at">pch =</span> <span class="fu">c</span>(<span class="dv">21</span>,<span class="dv">21</span>,<span class="dv">15</span>,<span class="dv">20</span>), <span class="at">col =</span> <span class="st">&quot;#777777&quot;</span>, <span class="at">pt.bg =</span> <span class="fu">c</span>(<span class="st">&quot;red&quot;</span>, <span class="st">&quot;gold&quot;</span>), <span class="at">pt.cex =</span> <span class="dv">1</span>,</span>
 <span id="cb12-27"><a href="#cb12-27" tabindex="-1"></a>       <span class="at">cex =</span> <span class="fl">0.8</span>, <span class="at">bty =</span> <span class="st">&quot;n&quot;</span>, <span class="at">ncol =</span> <span class="dv">1</span>)</span></code></pre></div>
-<p><img src="Descriptives_files/figure-html/unnamed-chunk-10-2.png" width="672" /></p>
+<p><img src="Descriptives_files/figure-html/unnamed-chunk-13-1.png" width="864" /></p>
 </div>
-<div id="wave-2" class="section level2" number="5.4">
-<h2><span class="header-section-number">5.4</span> Wave 2</h2>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="co">#---- Full network including Isolates ----</span></span>
-<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2345</span>)</span>
-<span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a>l_w2 <span class="ot">&lt;-</span> <span class="fu">layout_nicely</span>(graph_w2)</span>
-<span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a></span>
-<span id="cb13-5"><a href="#cb13-5" tabindex="-1"></a><span class="fu">plot</span>(graph_w2, <span class="at">layout =</span> l_w2,</span>
-<span id="cb13-6"><a href="#cb13-6" tabindex="-1"></a>     <span class="at">vertex.color =</span> <span class="fu">ifelse</span>(df_ego<span class="sc">$</span>Universiteit1<span class="fl">.24</span> <span class="sc">==</span> <span class="st">&quot;RU&quot;</span>, <span class="st">&quot;red&quot;</span>, <span class="st">&quot;gold&quot;</span>), <span class="co">#now, I can use actor attributes for plotting. </span></span>
-<span id="cb13-7"><a href="#cb13-7" tabindex="-1"></a>     <span class="at">vertex.shape =</span> <span class="fu">ifelse</span>(df_ego<span class="sc">$</span>plot_gen <span class="sc">==</span> <span class="st">&quot;Male&quot;</span>, <span class="st">&quot;square&quot;</span>, <span class="st">&quot;circle&quot;</span>),</span>
-<span id="cb13-8"><a href="#cb13-8" tabindex="-1"></a>     <span class="at">vertex.size =</span> igraph<span class="sc">::</span><span class="fu">degree</span>(graph_w2, <span class="at">mode =</span> <span class="st">&quot;all&quot;</span>) <span class="sc">*</span> <span class="fl">1.5</span>,</span>
-<span id="cb13-9"><a href="#cb13-9" tabindex="-1"></a>     <span class="at">vertex.label =</span> <span class="cn">NA</span>,</span>
-<span id="cb13-10"><a href="#cb13-10" tabindex="-1"></a>     <span class="at">edge.width =</span> <span class="fl">0.8</span>,</span>
-<span id="cb13-11"><a href="#cb13-11" tabindex="-1"></a>     <span class="at">edge.curved =</span> <span class="fl">0.5</span>,</span>
-<span id="cb13-12"><a href="#cb13-12" tabindex="-1"></a>     <span class="at">edge.arrow.size =</span><span class="fl">0.2</span>,</span>
-<span id="cb13-13"><a href="#cb13-13" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">&quot;Gender Distribution of Two Sociology Departments 2022&quot;</span>)</span>
-<span id="cb13-14"><a href="#cb13-14" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;topleft&quot;</span>, <span class="fu">c</span>(<span class="st">&quot;Radboud&quot;</span>, <span class="st">&quot;Utrecht University&quot;</span>, <span class="st">&quot;Male&quot;</span>, <span class="st">&quot;Female&quot;</span>), <span class="at">pch =</span> <span class="fu">c</span>(<span class="dv">21</span>,<span class="dv">21</span>,<span class="dv">15</span>,<span class="dv">20</span>), <span class="at">col =</span> <span class="st">&quot;#777777&quot;</span>, <span class="at">pt.bg =</span> <span class="fu">c</span>(<span class="st">&quot;red&quot;</span>, <span class="st">&quot;gold&quot;</span>), <span class="at">pt.cex =</span> <span class="dv">1</span>,</span>
-<span id="cb13-15"><a href="#cb13-15" tabindex="-1"></a>       <span class="at">cex =</span> <span class="fl">0.8</span>, <span class="at">bty =</span> <span class="st">&quot;n&quot;</span>, <span class="at">ncol =</span> <span class="dv">1</span>)</span></code></pre></div>
-<p><img src="Descriptives_files/figure-html/unnamed-chunk-11-1.png" width="768" /></p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a><span class="co">#---- Remove Isolates ----</span></span>
-<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a><span class="fu">diag</span>(soc_data<span class="sc">$</span>nets[<span class="dv">2</span>,,]) <span class="ot">&lt;-</span> <span class="dv">0</span></span>
-<span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a></span>
-<span id="cb14-4"><a href="#cb14-4" tabindex="-1"></a>noisolates <span class="ot">&lt;-</span> <span class="fu">rowSums</span>(soc_data<span class="sc">$</span>nets[<span class="dv">2</span>,,], <span class="at">na.rm =</span> T) <span class="sc">&gt;</span> <span class="dv">0</span></span>
-<span id="cb14-5"><a href="#cb14-5" tabindex="-1"></a></span>
-<span id="cb14-6"><a href="#cb14-6" tabindex="-1"></a>soc_w2_sel <span class="ot">&lt;-</span> soc_data<span class="sc">$</span>nets[<span class="dv">2</span>,,][noisolates, noisolates]</span>
-<span id="cb14-7"><a href="#cb14-7" tabindex="-1"></a></span>
-<span id="cb14-8"><a href="#cb14-8" tabindex="-1"></a>graph_w2_sel <span class="ot">&lt;-</span> <span class="fu">graph_from_adjacency_matrix</span>(soc_w2_sel, <span class="at">mode =</span> <span class="st">&quot;directed&quot;</span>, <span class="at">weighted =</span> <span class="cn">NULL</span>, <span class="at">diag =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb14-9"><a href="#cb14-9" tabindex="-1"></a>                                            <span class="at">add.colnames =</span> <span class="cn">NA</span>, <span class="at">add.rownames =</span> <span class="cn">NA</span>)</span>
-<span id="cb14-10"><a href="#cb14-10" tabindex="-1"></a></span>
-<span id="cb14-11"><a href="#cb14-11" tabindex="-1"></a>ego_iso_w2 <span class="ot">&lt;-</span> df_ego[noisolates,]</span>
-<span id="cb14-12"><a href="#cb14-12" tabindex="-1"></a></span>
-<span id="cb14-13"><a href="#cb14-13" tabindex="-1"></a><span class="co">#---- Graph without Isolates ----</span></span>
-<span id="cb14-14"><a href="#cb14-14" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2345</span>)</span>
-<span id="cb14-15"><a href="#cb14-15" tabindex="-1"></a>l_w2 <span class="ot">&lt;-</span> <span class="fu">layout_nicely</span>(graph_w2_sel)</span>
-<span id="cb14-16"><a href="#cb14-16" tabindex="-1"></a></span>
-<span id="cb14-17"><a href="#cb14-17" tabindex="-1"></a><span class="fu">plot</span>(graph_w2_sel, <span class="at">layout =</span> l_w2,</span>
-<span id="cb14-18"><a href="#cb14-18" tabindex="-1"></a>     <span class="at">vertex.color =</span> <span class="fu">ifelse</span>(ego_iso_w2<span class="sc">$</span>Universiteit1<span class="fl">.24</span> <span class="sc">==</span> <span class="st">&quot;RU&quot;</span>, <span class="st">&quot;red&quot;</span>, <span class="st">&quot;gold&quot;</span>), <span class="co">#now, I can use actor attributes for plotting. </span></span>
-<span id="cb14-19"><a href="#cb14-19" tabindex="-1"></a>     <span class="at">vertex.shape =</span> <span class="fu">ifelse</span>(ego_iso_w2<span class="sc">$</span>plot_gen <span class="sc">==</span> <span class="st">&quot;Male&quot;</span>, <span class="st">&quot;square&quot;</span>, <span class="st">&quot;circle&quot;</span>),</span>
-<span id="cb14-20"><a href="#cb14-20" tabindex="-1"></a>     <span class="at">vertex.size =</span> igraph<span class="sc">::</span><span class="fu">degree</span>(graph_w2_sel, <span class="at">mode =</span> <span class="st">&quot;all&quot;</span>) <span class="sc">*</span> <span class="fl">1.5</span>,</span>
-<span id="cb14-21"><a href="#cb14-21" tabindex="-1"></a>     <span class="at">vertex.label =</span> <span class="cn">NA</span>,</span>
-<span id="cb14-22"><a href="#cb14-22" tabindex="-1"></a>     <span class="at">edge.width =</span> <span class="fl">0.8</span>,</span>
-<span id="cb14-23"><a href="#cb14-23" tabindex="-1"></a>     <span class="at">edge.curved =</span> <span class="fl">0.5</span>,</span>
-<span id="cb14-24"><a href="#cb14-24" tabindex="-1"></a>     <span class="at">edge.arrow.size =</span><span class="fl">0.2</span>,</span>
-<span id="cb14-25"><a href="#cb14-25" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">&quot;Gender Distribution of Two Sociology Departments 2022&quot;</span>)</span>
-<span id="cb14-26"><a href="#cb14-26" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;topleft&quot;</span>, <span class="fu">c</span>(<span class="st">&quot;Radboud&quot;</span>, <span class="st">&quot;Utrecht University&quot;</span>, <span class="st">&quot;Male&quot;</span>, <span class="st">&quot;Female&quot;</span>), <span class="at">pch =</span> <span class="fu">c</span>(<span class="dv">21</span>,<span class="dv">21</span>,<span class="dv">15</span>,<span class="dv">20</span>), <span class="at">col =</span> <span class="st">&quot;#777777&quot;</span>, <span class="at">pt.bg =</span> <span class="fu">c</span>(<span class="st">&quot;red&quot;</span>, <span class="st">&quot;gold&quot;</span>), <span class="at">pt.cex =</span> <span class="dv">1</span>,</span>
-<span id="cb14-27"><a href="#cb14-27" tabindex="-1"></a>       <span class="at">cex =</span> <span class="fl">0.8</span>, <span class="at">bty =</span> <span class="st">&quot;n&quot;</span>, <span class="at">ncol =</span> <span class="dv">1</span>)</span></code></pre></div>
-<p><img src="Descriptives_files/figure-html/unnamed-chunk-11-2.png" width="768" /></p>
 </div>
-<div id="network-statistics" class="section level2" number="5.5">
-<h2><span class="header-section-number">5.5</span> Network
-Statistics</h2>
-<ul>
-<li>I am working on making a nice table that adds all relevant
-descriptive Network Statistics
-<ul>
-<li>Jaccard</li>
-<li>Hamming</li>
-<li>Indegrees and outdegrees</li>
-<li>Moran’s I for Prestige ()</li>
-</ul></li>
-</ul>
-<div id="calculate-network-statistics" class="section level3"
-number="5.5.1">
-<h3><span class="header-section-number">5.5.1</span> Calculate Network
+<div id="network-statistics" class="section level3" number="5.1.5">
+<h3><span class="header-section-number">5.1.5</span> Network
 Statistics</h3>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="co">#---- Extract networks ----</span></span>
-<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a>wave_1 <span class="ot">&lt;-</span> soc_data<span class="sc">$</span>nets[<span class="dv">1</span>,,]</span>
-<span id="cb15-3"><a href="#cb15-3" tabindex="-1"></a>wave_2 <span class="ot">&lt;-</span> soc_data<span class="sc">$</span>nets[<span class="dv">2</span>,,]</span>
-<span id="cb15-4"><a href="#cb15-4" tabindex="-1"></a></span>
-<span id="cb15-5"><a href="#cb15-5" tabindex="-1"></a><span class="co">#---- Jaccard, Hamming &amp; Density ----</span></span>
-<span id="cb15-6"><a href="#cb15-6" tabindex="-1"></a>jac <span class="ot">&lt;-</span> <span class="fu">fjac</span>(wave_1, wave_2)</span>
-<span id="cb15-7"><a href="#cb15-7" tabindex="-1"></a>ham <span class="ot">&lt;-</span> <span class="fu">fham</span>(wave_1, wave_2)</span>
-<span id="cb15-8"><a href="#cb15-8" tabindex="-1"></a></span>
-<span id="cb15-9"><a href="#cb15-9" tabindex="-1"></a>dens1 <span class="ot">&lt;-</span> <span class="fu">fdens</span>(<span class="fu">nrow</span>(wave_1),wave_1) </span>
-<span id="cb15-10"><a href="#cb15-10" tabindex="-1"></a>dens2 <span class="ot">&lt;-</span> <span class="fu">fdens</span>(<span class="fu">nrow</span>(wave_2),wave_2)</span>
-<span id="cb15-11"><a href="#cb15-11" tabindex="-1"></a></span>
-<span id="cb15-12"><a href="#cb15-12" tabindex="-1"></a><span class="co">#---- Indegree distribution ----</span></span>
-<span id="cb15-13"><a href="#cb15-13" tabindex="-1"></a><span class="fu">hist</span>(<span class="fu">table</span>(igraph<span class="sc">::</span><span class="fu">degree</span>(graph_w1, <span class="at">mode =</span> <span class="st">&quot;in&quot;</span>)), <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">0</span>, <span class="at">to =</span> <span class="dv">100</span>, <span class="at">by =</span> <span class="dv">5</span>),<span class="at">xlab=</span><span class="st">&#39;indegree&#39;</span>, <span class="at">main=</span> <span class="st">&#39;Histogram of indegree&#39;</span>)</span></code></pre></div>
-<p><img src="Descriptives_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a><span class="fu">hist</span>(<span class="fu">table</span>(igraph<span class="sc">::</span><span class="fu">degree</span>(graph_w2, <span class="at">mode =</span> <span class="st">&quot;in&quot;</span>)), <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">0</span>, <span class="at">to =</span> <span class="dv">100</span>, <span class="at">by =</span> <span class="dv">5</span>), <span class="at">xlab=</span><span class="st">&#39;indegree&#39;</span>, <span class="at">main=</span> <span class="st">&#39;Histogram of indegree&#39;</span>)</span></code></pre></div>
-<p><img src="Descriptives_files/figure-html/unnamed-chunk-12-2.png" width="672" /></p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a><span class="co">#---- Outdegree distribution ----</span></span>
-<span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a><span class="fu">hist</span>(<span class="fu">table</span>(igraph<span class="sc">::</span><span class="fu">degree</span>(graph_w1, <span class="at">mode =</span> <span class="st">&quot;out&quot;</span>)), <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">0</span>, <span class="at">to =</span> <span class="dv">100</span>, <span class="at">by =</span> <span class="dv">1</span>), <span class="at">xlab=</span><span class="st">&#39;outdegree&#39;</span>, <span class="at">main=</span> <span class="st">&#39;Histogram of outdegree&#39;</span>)</span></code></pre></div>
-<p><img src="Descriptives_files/figure-html/unnamed-chunk-12-3.png" width="672" /></p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a><span class="fu">hist</span>(<span class="fu">table</span>(igraph<span class="sc">::</span><span class="fu">degree</span>(graph_w2, <span class="at">mode =</span> <span class="st">&quot;out&quot;</span>)), <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">0</span>, <span class="at">to =</span> <span class="dv">100</span>, <span class="at">by =</span> <span class="dv">1</span>), <span class="at">xlab=</span><span class="st">&#39;outdegree&#39;</span>, <span class="at">main=</span> <span class="st">&#39;Histogram of outdegree&#39;</span>)</span></code></pre></div>
-<p><img src="Descriptives_files/figure-html/unnamed-chunk-12-4.png" width="672" /></p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a><span class="co">#---- Moran&#39;s I for Prestige ----</span></span>
-<span id="cb19-2"><a href="#cb19-2" tabindex="-1"></a><span class="co"># Wave 1</span></span>
-<span id="cb19-3"><a href="#cb19-3" tabindex="-1"></a>geodistances <span class="ot">&lt;-</span> <span class="fu">geodist</span>(wave_1, <span class="at">count.paths =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb19-4"><a href="#cb19-4" tabindex="-1"></a>geodistances <span class="ot">&lt;-</span> geodistances<span class="sc">$</span>gdist</span>
-<span id="cb19-5"><a href="#cb19-5" tabindex="-1"></a></span>
-<span id="cb19-6"><a href="#cb19-6" tabindex="-1"></a><span class="co"># first define a nb based on distance 1.</span></span>
-<span id="cb19-7"><a href="#cb19-7" tabindex="-1"></a>weights1 <span class="ot">&lt;-</span> geodistances <span class="sc">==</span> <span class="dv">1</span></span>
-<span id="cb19-8"><a href="#cb19-8" tabindex="-1"></a></span>
-<span id="cb19-9"><a href="#cb19-9" tabindex="-1"></a>MI_pres_1 <span class="ot">&lt;-</span> <span class="fu">fMoran.I</span>(df_ego<span class="sc">$</span>Q1.W1, <span class="at">scaled =</span> <span class="cn">FALSE</span>, <span class="at">weight =</span> weights1, <span class="at">na.rm =</span> <span class="cn">TRUE</span>, <span class="at">rowstandardize =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb19-10"><a href="#cb19-10" tabindex="-1"></a>MI_pres_1</span></code></pre></div>
+<div id="calculate-network-statistics" class="section level4"
+number="5.1.5.1">
+<h4><span class="header-section-number">5.1.5.1</span> Calculate Network
+Statistics</h4>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="co">#---- Extract networks ----</span></span>
+<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a>wave_1 <span class="ot">&lt;-</span> soc_data<span class="sc">$</span>nets[<span class="dv">1</span>,,]</span>
+<span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a>wave_2 <span class="ot">&lt;-</span> soc_data<span class="sc">$</span>nets[<span class="dv">2</span>,,]</span>
+<span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a></span>
+<span id="cb13-5"><a href="#cb13-5" tabindex="-1"></a><span class="co">#---- Jaccard, Hamming, Transitivity &amp; Density ----</span></span>
+<span id="cb13-6"><a href="#cb13-6" tabindex="-1"></a>jac <span class="ot">&lt;-</span> <span class="fu">fjac</span>(wave_1, wave_2)</span>
+<span id="cb13-7"><a href="#cb13-7" tabindex="-1"></a>ham <span class="ot">&lt;-</span> <span class="fu">fham</span>(wave_1, wave_2)</span>
+<span id="cb13-8"><a href="#cb13-8" tabindex="-1"></a></span>
+<span id="cb13-9"><a href="#cb13-9" tabindex="-1"></a>dens1 <span class="ot">&lt;-</span> <span class="fu">fdens</span>(<span class="fu">nrow</span>(wave_1),wave_1) </span>
+<span id="cb13-10"><a href="#cb13-10" tabindex="-1"></a>dens2 <span class="ot">&lt;-</span> <span class="fu">fdens</span>(<span class="fu">nrow</span>(wave_2),wave_2)</span>
+<span id="cb13-11"><a href="#cb13-11" tabindex="-1"></a></span>
+<span id="cb13-12"><a href="#cb13-12" tabindex="-1"></a></span>
+<span id="cb13-13"><a href="#cb13-13" tabindex="-1"></a>triad_1 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(sna<span class="sc">::</span><span class="fu">triad.census</span>(wave_1))</span>
+<span id="cb13-14"><a href="#cb13-14" tabindex="-1"></a>trans_1 <span class="ot">&lt;-</span> (<span class="dv">3</span> <span class="sc">*</span> triad_1<span class="sc">$</span>X300)<span class="sc">/</span>(triad_1<span class="sc">$</span>X201 <span class="sc">+</span> <span class="dv">3</span> <span class="sc">*</span> triad_1<span class="sc">$</span>X300)</span>
+<span id="cb13-15"><a href="#cb13-15" tabindex="-1"></a>triad_2 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(sna<span class="sc">::</span><span class="fu">triad.census</span>(wave_2))</span>
+<span id="cb13-16"><a href="#cb13-16" tabindex="-1"></a>trans_2 <span class="ot">&lt;-</span> (<span class="dv">3</span> <span class="sc">*</span> triad_2<span class="sc">$</span>X300)<span class="sc">/</span>(triad_2<span class="sc">$</span>X201 <span class="sc">+</span> <span class="dv">3</span> <span class="sc">*</span> triad_2<span class="sc">$</span>X300)</span>
+<span id="cb13-17"><a href="#cb13-17" tabindex="-1"></a></span>
+<span id="cb13-18"><a href="#cb13-18" tabindex="-1"></a><span class="co">#---- Indegree distribution ----</span></span>
+<span id="cb13-19"><a href="#cb13-19" tabindex="-1"></a><span class="fu">hist</span>(<span class="fu">table</span>(igraph<span class="sc">::</span><span class="fu">degree</span>(graph_w1, <span class="at">mode =</span> <span class="st">&quot;in&quot;</span>)), <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">0</span>, <span class="at">to =</span> <span class="dv">100</span>, <span class="at">by =</span> <span class="dv">5</span>),<span class="at">xlab=</span><span class="st">&#39;indegree&#39;</span>, <span class="at">main=</span> <span class="st">&#39;Histogram of indegree&#39;</span>)</span></code></pre></div>
+<p><img src="Descriptives_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a><span class="fu">hist</span>(<span class="fu">table</span>(igraph<span class="sc">::</span><span class="fu">degree</span>(graph_w2, <span class="at">mode =</span> <span class="st">&quot;in&quot;</span>)), <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">0</span>, <span class="at">to =</span> <span class="dv">100</span>, <span class="at">by =</span> <span class="dv">5</span>), <span class="at">xlab=</span><span class="st">&#39;indegree&#39;</span>, <span class="at">main=</span> <span class="st">&#39;Histogram of indegree&#39;</span>)</span></code></pre></div>
+<p><img src="Descriptives_files/figure-html/unnamed-chunk-14-2.png" width="672" /></p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="co">#---- Outdegree distribution ----</span></span>
+<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a><span class="fu">hist</span>(<span class="fu">table</span>(igraph<span class="sc">::</span><span class="fu">degree</span>(graph_w1, <span class="at">mode =</span> <span class="st">&quot;out&quot;</span>)), <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">0</span>, <span class="at">to =</span> <span class="dv">100</span>, <span class="at">by =</span> <span class="dv">1</span>), <span class="at">xlab=</span><span class="st">&#39;outdegree&#39;</span>, <span class="at">main=</span> <span class="st">&#39;Histogram of outdegree&#39;</span>)</span></code></pre></div>
+<p><img src="Descriptives_files/figure-html/unnamed-chunk-14-3.png" width="672" /></p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a><span class="fu">hist</span>(<span class="fu">table</span>(igraph<span class="sc">::</span><span class="fu">degree</span>(graph_w2, <span class="at">mode =</span> <span class="st">&quot;out&quot;</span>)), <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">0</span>, <span class="at">to =</span> <span class="dv">100</span>, <span class="at">by =</span> <span class="dv">1</span>), <span class="at">xlab=</span><span class="st">&#39;outdegree&#39;</span>, <span class="at">main=</span> <span class="st">&#39;Histogram of outdegree&#39;</span>)</span></code></pre></div>
+<p><img src="Descriptives_files/figure-html/unnamed-chunk-14-4.png" width="672" /></p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a><span class="co">#---- Moran&#39;s I for Prestige ----</span></span>
+<span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a><span class="co"># Wave 1</span></span>
+<span id="cb17-3"><a href="#cb17-3" tabindex="-1"></a>geodistances <span class="ot">&lt;-</span> <span class="fu">geodist</span>(wave_1, <span class="at">count.paths =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb17-4"><a href="#cb17-4" tabindex="-1"></a>geodistances <span class="ot">&lt;-</span> geodistances<span class="sc">$</span>gdist</span>
+<span id="cb17-5"><a href="#cb17-5" tabindex="-1"></a></span>
+<span id="cb17-6"><a href="#cb17-6" tabindex="-1"></a><span class="co"># first define a nb based on distance 1.</span></span>
+<span id="cb17-7"><a href="#cb17-7" tabindex="-1"></a>weights1 <span class="ot">&lt;-</span> geodistances <span class="sc">==</span> <span class="dv">1</span></span>
+<span id="cb17-8"><a href="#cb17-8" tabindex="-1"></a></span>
+<span id="cb17-9"><a href="#cb17-9" tabindex="-1"></a>MI_pres_1 <span class="ot">&lt;-</span> <span class="fu">fMoran.I</span>(df_ego<span class="sc">$</span>Q1.W1, <span class="at">scaled =</span> <span class="cn">FALSE</span>, <span class="at">weight =</span> weights1, <span class="at">na.rm =</span> <span class="cn">TRUE</span>, <span class="at">rowstandardize =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb17-10"><a href="#cb17-10" tabindex="-1"></a>MI_pres_1</span></code></pre></div>
 <pre><code>## $observed
 ## [1] 0.2113287
 ## 
@@ -1207,15 +1285,15 @@ Statistics</h3>
 ## 
 ## $p.value
 ## [1] 0.08036308</code></pre>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" tabindex="-1"></a><span class="co"># Wave 2</span></span>
-<span id="cb21-2"><a href="#cb21-2" tabindex="-1"></a>geodistances <span class="ot">&lt;-</span> <span class="fu">geodist</span>(wave_2, <span class="at">count.paths =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb21-3"><a href="#cb21-3" tabindex="-1"></a>geodistances <span class="ot">&lt;-</span> geodistances<span class="sc">$</span>gdist</span>
-<span id="cb21-4"><a href="#cb21-4" tabindex="-1"></a></span>
-<span id="cb21-5"><a href="#cb21-5" tabindex="-1"></a><span class="co"># first define a nb based on distance 1.</span></span>
-<span id="cb21-6"><a href="#cb21-6" tabindex="-1"></a>weights1 <span class="ot">&lt;-</span> geodistances <span class="sc">==</span> <span class="dv">1</span></span>
-<span id="cb21-7"><a href="#cb21-7" tabindex="-1"></a></span>
-<span id="cb21-8"><a href="#cb21-8" tabindex="-1"></a>MI_pres_2 <span class="ot">&lt;-</span> <span class="fu">fMoran.I</span>(df_ego<span class="sc">$</span>Q1.W2, <span class="at">scaled =</span> <span class="cn">FALSE</span>, <span class="at">weight =</span> weights1, <span class="at">na.rm =</span> <span class="cn">TRUE</span>, <span class="at">rowstandardize =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb21-9"><a href="#cb21-9" tabindex="-1"></a>MI_pres_2</span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a><span class="co"># Wave 2</span></span>
+<span id="cb19-2"><a href="#cb19-2" tabindex="-1"></a>geodistances <span class="ot">&lt;-</span> <span class="fu">geodist</span>(wave_2, <span class="at">count.paths =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb19-3"><a href="#cb19-3" tabindex="-1"></a>geodistances <span class="ot">&lt;-</span> geodistances<span class="sc">$</span>gdist</span>
+<span id="cb19-4"><a href="#cb19-4" tabindex="-1"></a></span>
+<span id="cb19-5"><a href="#cb19-5" tabindex="-1"></a><span class="co"># first define a nb based on distance 1.</span></span>
+<span id="cb19-6"><a href="#cb19-6" tabindex="-1"></a>weights1 <span class="ot">&lt;-</span> geodistances <span class="sc">==</span> <span class="dv">1</span></span>
+<span id="cb19-7"><a href="#cb19-7" tabindex="-1"></a></span>
+<span id="cb19-8"><a href="#cb19-8" tabindex="-1"></a>MI_pres_2 <span class="ot">&lt;-</span> <span class="fu">fMoran.I</span>(df_ego<span class="sc">$</span>Q1.W2, <span class="at">scaled =</span> <span class="cn">FALSE</span>, <span class="at">weight =</span> weights1, <span class="at">na.rm =</span> <span class="cn">TRUE</span>, <span class="at">rowstandardize =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb19-9"><a href="#cb19-9" tabindex="-1"></a>MI_pres_2</span></code></pre></div>
 <pre><code>## $observed
 ## [1] 0.0636469
 ## 
@@ -1227,16 +1305,16 @@ Statistics</h3>
 ## 
 ## $p.value
 ## [1] 0.4114901</code></pre>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" tabindex="-1"></a><span class="co">#---- Moran&#39;s I for gender ----</span></span>
-<span id="cb23-2"><a href="#cb23-2" tabindex="-1"></a><span class="co"># Wave 1</span></span>
-<span id="cb23-3"><a href="#cb23-3" tabindex="-1"></a>geodistances <span class="ot">&lt;-</span> <span class="fu">geodist</span>(wave_1, <span class="at">count.paths =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb23-4"><a href="#cb23-4" tabindex="-1"></a>geodistances <span class="ot">&lt;-</span> geodistances<span class="sc">$</span>gdist</span>
-<span id="cb23-5"><a href="#cb23-5" tabindex="-1"></a></span>
-<span id="cb23-6"><a href="#cb23-6" tabindex="-1"></a><span class="co"># first define a nb based on distance 1.</span></span>
-<span id="cb23-7"><a href="#cb23-7" tabindex="-1"></a>weights1 <span class="ot">&lt;-</span> geodistances <span class="sc">==</span> <span class="dv">1</span></span>
-<span id="cb23-8"><a href="#cb23-8" tabindex="-1"></a></span>
-<span id="cb23-9"><a href="#cb23-9" tabindex="-1"></a>MI_gen_1 <span class="ot">&lt;-</span> <span class="fu">fMoran.I</span>(df_ego<span class="sc">$</span>perc_female, <span class="at">scaled =</span> <span class="cn">FALSE</span>, <span class="at">weight =</span> weights1, <span class="at">na.rm =</span> <span class="cn">TRUE</span>, <span class="at">rowstandardize =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb23-10"><a href="#cb23-10" tabindex="-1"></a>MI_gen_1</span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" tabindex="-1"></a><span class="co">#---- Moran&#39;s I for gender ----</span></span>
+<span id="cb21-2"><a href="#cb21-2" tabindex="-1"></a><span class="co"># Wave 1</span></span>
+<span id="cb21-3"><a href="#cb21-3" tabindex="-1"></a>geodistances <span class="ot">&lt;-</span> <span class="fu">geodist</span>(wave_1, <span class="at">count.paths =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb21-4"><a href="#cb21-4" tabindex="-1"></a>geodistances <span class="ot">&lt;-</span> geodistances<span class="sc">$</span>gdist</span>
+<span id="cb21-5"><a href="#cb21-5" tabindex="-1"></a></span>
+<span id="cb21-6"><a href="#cb21-6" tabindex="-1"></a><span class="co"># first define a nb based on distance 1.</span></span>
+<span id="cb21-7"><a href="#cb21-7" tabindex="-1"></a>weights1 <span class="ot">&lt;-</span> geodistances <span class="sc">==</span> <span class="dv">1</span></span>
+<span id="cb21-8"><a href="#cb21-8" tabindex="-1"></a></span>
+<span id="cb21-9"><a href="#cb21-9" tabindex="-1"></a>MI_gen_1 <span class="ot">&lt;-</span> <span class="fu">fMoran.I</span>(df_ego<span class="sc">$</span>perc_female, <span class="at">scaled =</span> <span class="cn">FALSE</span>, <span class="at">weight =</span> weights1, <span class="at">na.rm =</span> <span class="cn">TRUE</span>, <span class="at">rowstandardize =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb21-10"><a href="#cb21-10" tabindex="-1"></a>MI_gen_1</span></code></pre></div>
 <pre><code>## $observed
 ## [1] 0.2154872
 ## 
@@ -1248,15 +1326,15 @@ Statistics</h3>
 ## 
 ## $p.value
 ## [1] 0.09179144</code></pre>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" tabindex="-1"></a><span class="co"># Wave 2</span></span>
-<span id="cb25-2"><a href="#cb25-2" tabindex="-1"></a>geodistances <span class="ot">&lt;-</span> <span class="fu">geodist</span>(wave_2, <span class="at">count.paths =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb25-3"><a href="#cb25-3" tabindex="-1"></a>geodistances <span class="ot">&lt;-</span> geodistances<span class="sc">$</span>gdist</span>
-<span id="cb25-4"><a href="#cb25-4" tabindex="-1"></a></span>
-<span id="cb25-5"><a href="#cb25-5" tabindex="-1"></a><span class="co"># first define a nb based on distance 1.</span></span>
-<span id="cb25-6"><a href="#cb25-6" tabindex="-1"></a>weights1 <span class="ot">&lt;-</span> geodistances <span class="sc">==</span> <span class="dv">1</span></span>
-<span id="cb25-7"><a href="#cb25-7" tabindex="-1"></a></span>
-<span id="cb25-8"><a href="#cb25-8" tabindex="-1"></a>MI_gen_2 <span class="ot">&lt;-</span> <span class="fu">fMoran.I</span>(df_ego<span class="sc">$</span>perc_female, <span class="at">scaled =</span> <span class="cn">FALSE</span>, <span class="at">weight =</span> weights1, <span class="at">na.rm =</span> <span class="cn">TRUE</span>, <span class="at">rowstandardize =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb25-9"><a href="#cb25-9" tabindex="-1"></a>MI_gen_2</span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" tabindex="-1"></a><span class="co"># Wave 2</span></span>
+<span id="cb23-2"><a href="#cb23-2" tabindex="-1"></a>geodistances <span class="ot">&lt;-</span> <span class="fu">geodist</span>(wave_2, <span class="at">count.paths =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb23-3"><a href="#cb23-3" tabindex="-1"></a>geodistances <span class="ot">&lt;-</span> geodistances<span class="sc">$</span>gdist</span>
+<span id="cb23-4"><a href="#cb23-4" tabindex="-1"></a></span>
+<span id="cb23-5"><a href="#cb23-5" tabindex="-1"></a><span class="co"># first define a nb based on distance 1.</span></span>
+<span id="cb23-6"><a href="#cb23-6" tabindex="-1"></a>weights1 <span class="ot">&lt;-</span> geodistances <span class="sc">==</span> <span class="dv">1</span></span>
+<span id="cb23-7"><a href="#cb23-7" tabindex="-1"></a></span>
+<span id="cb23-8"><a href="#cb23-8" tabindex="-1"></a>MI_gen_2 <span class="ot">&lt;-</span> <span class="fu">fMoran.I</span>(df_ego<span class="sc">$</span>perc_female, <span class="at">scaled =</span> <span class="cn">FALSE</span>, <span class="at">weight =</span> weights1, <span class="at">na.rm =</span> <span class="cn">TRUE</span>, <span class="at">rowstandardize =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb23-9"><a href="#cb23-9" tabindex="-1"></a>MI_gen_2</span></code></pre></div>
 <pre><code>## $observed
 ## [1] 0.1396191
 ## 
@@ -1269,27 +1347,29 @@ Statistics</h3>
 ## $p.value
 ## [1] 0.1043047</code></pre>
 </div>
-<div id="create-df" class="section level3" number="5.5.2">
-<h3><span class="header-section-number">5.5.2</span> Create DF</h3>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Network_size_W1 =</span> <span class="fu">nrow</span>(wave_1),</span>
-<span id="cb27-2"><a href="#cb27-2" tabindex="-1"></a>                 <span class="at">Jaccard_Index =</span> <span class="fu">round</span>(jac, <span class="at">digits =</span> <span class="dv">3</span>),</span>
-<span id="cb27-3"><a href="#cb27-3" tabindex="-1"></a>                 <span class="at">Hamming_Distance =</span> <span class="fu">round</span>(ham, <span class="at">digits =</span> <span class="dv">3</span>),</span>
-<span id="cb27-4"><a href="#cb27-4" tabindex="-1"></a>                 <span class="at">Density_w1 =</span> <span class="fu">round</span>(dens1, <span class="at">digits =</span> <span class="dv">3</span>),</span>
-<span id="cb27-5"><a href="#cb27-5" tabindex="-1"></a>                 <span class="at">Density_w2 =</span> <span class="fu">round</span>(dens2, <span class="at">digits =</span> <span class="dv">3</span>),</span>
-<span id="cb27-6"><a href="#cb27-6" tabindex="-1"></a>                 <span class="at">MoranI_pres_1 =</span> <span class="fu">round</span>(MI_pres_1[[<span class="dv">1</span>]], <span class="at">digits =</span> <span class="dv">3</span>),</span>
-<span id="cb27-7"><a href="#cb27-7" tabindex="-1"></a>                 <span class="at">MoranI_pres_2 =</span> <span class="fu">round</span>(MI_pres_2[[<span class="dv">1</span>]], <span class="at">digits =</span> <span class="dv">3</span>),</span>
-<span id="cb27-8"><a href="#cb27-8" tabindex="-1"></a>                 <span class="at">MoranI_gender_1 =</span> <span class="fu">round</span>(MI_gen_1[[<span class="dv">1</span>]], <span class="at">digits =</span> <span class="dv">3</span>),</span>
-<span id="cb27-9"><a href="#cb27-9" tabindex="-1"></a>                 <span class="at">MoranI_gender_2 =</span> <span class="fu">round</span>(MI_gen_2[[<span class="dv">1</span>]], <span class="at">digits =</span> <span class="dv">3</span>))</span>
-<span id="cb27-10"><a href="#cb27-10" tabindex="-1"></a></span>
-<span id="cb27-11"><a href="#cb27-11" tabindex="-1"></a><span class="fu">rownames</span>(df) <span class="ot">&lt;-</span> <span class="cn">NULL</span></span></code></pre></div>
+<div id="create-df" class="section level4" number="5.1.5.2">
+<h4><span class="header-section-number">5.1.5.2</span> Create DF</h4>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" tabindex="-1"></a>df_stat <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Network_size_W1 =</span> <span class="fu">nrow</span>(wave_1),</span>
+<span id="cb25-2"><a href="#cb25-2" tabindex="-1"></a>                      <span class="at">Jaccard_Index =</span> <span class="fu">round</span>(jac, <span class="at">digits =</span> <span class="dv">3</span>),</span>
+<span id="cb25-3"><a href="#cb25-3" tabindex="-1"></a>                      <span class="at">Hamming_Distance =</span> <span class="fu">round</span>(ham, <span class="at">digits =</span> <span class="dv">3</span>),</span>
+<span id="cb25-4"><a href="#cb25-4" tabindex="-1"></a>                      <span class="at">Density_w1 =</span> <span class="fu">round</span>(dens1, <span class="at">digits =</span> <span class="dv">3</span>),</span>
+<span id="cb25-5"><a href="#cb25-5" tabindex="-1"></a>                      <span class="at">Density_w2 =</span> <span class="fu">round</span>(dens2, <span class="at">digits =</span> <span class="dv">3</span>),</span>
+<span id="cb25-6"><a href="#cb25-6" tabindex="-1"></a>                      <span class="at">Transitivity_W1 =</span> <span class="fu">round</span>(trans_1, <span class="at">digits =</span> <span class="dv">3</span>),</span>
+<span id="cb25-7"><a href="#cb25-7" tabindex="-1"></a>                      <span class="at">Transitivity_W2 =</span> <span class="fu">round</span>(trans_2, <span class="at">digits =</span> <span class="dv">3</span>))</span></code></pre></div>
 </div>
-<div id="add-data-to-appendix" class="section level3" number="5.5.3">
-<h3><span class="header-section-number">5.5.3</span> Add data to
-appendix</h3>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" tabindex="-1"></a>DT<span class="sc">::</span><span class="fu">datatable</span>(df)</span></code></pre></div>
-<div id="htmlwidget-549b2c7b016f48b1b88e" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-549b2c7b016f48b1b88e">{"x":{"filter":"none","vertical":false,"data":[["1"],[100],[0.142],[151],[0.006],[0.012],[0.211],[0.064],[0.215],[0.14]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Network_size_W1<\/th>\n      <th>Jaccard_Index<\/th>\n      <th>Hamming_Distance<\/th>\n      <th>Density_w1<\/th>\n      <th>Density_w2<\/th>\n      <th>MoranI_pres_1<\/th>\n      <th>MoranI_pres_2<\/th>\n      <th>MoranI_gender_1<\/th>\n      <th>MoranI_gender_2<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5,6,7,8,9]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" tabindex="-1"></a><span class="fu">fshowdf</span>(<span class="fu">ts_dyads_evo</span>(wave_2, wave_1))</span></code></pre></div>
+<div id="table-1---network-statistics" class="section level4"
+number="5.1.5.3">
+<h4><span class="header-section-number">5.1.5.3</span> Table 1 - Network
+Statistics</h4>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" tabindex="-1"></a>DT<span class="sc">::</span><span class="fu">datatable</span>(df_stat)</span></code></pre></div>
+<div id="htmlwidget-18030ddcc5b4136e811c" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-18030ddcc5b4136e811c">{"x":{"filter":"none","vertical":false,"data":[["1"],[100],[0.142],[151],[0.006],[0.012],[0],[0.667]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Network_size_W1<\/th>\n      <th>Jaccard_Index<\/th>\n      <th>Hamming_Distance<\/th>\n      <th>Density_w1<\/th>\n      <th>Density_w2<\/th>\n      <th>Transitivity_W1<\/th>\n      <th>Transitivity_W2<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5,6,7]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+</div>
+<div id="table-2---dyad-triad-census" class="section level4"
+number="5.1.5.4">
+<h4><span class="header-section-number">5.1.5.4</span> Table 2 - Dyad
+&amp; Triad Census</h4>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" tabindex="-1"></a><span class="fu">fshowdf</span>(<span class="fu">ts_dyads_evo</span>(wave_2, wave_1))</span></code></pre></div>
 <div
 style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:300px; overflow-x: scroll; width:100%; ">
 <table class="table table-striped table-hover" style="margin-left: auto; margin-right: auto;">
@@ -1453,11 +1533,252 @@ Mutual…Null
 </tbody>
 </table>
 </div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" tabindex="-1"></a><span class="fu">fshowdf</span>(<span class="fu">rbind</span>(sna<span class="sc">::</span><span class="fu">triad.census</span>(wave_1),</span>
+<span id="cb28-2"><a href="#cb28-2" tabindex="-1"></a>              sna<span class="sc">::</span><span class="fu">triad.census</span>(wave_2)))</span></code></pre></div>
+<div
+style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:300px; overflow-x: scroll; width:100%; ">
+<table class="table table-striped table-hover" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+003
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+012
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+102
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+021D
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+021U
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+021C
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+111D
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+111U
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+030T
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+030C
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+201
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+120D
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+120U
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+120C
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+210
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+300
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+156292
+</td>
+<td style="text-align:right;">
+4686
+</td>
+<td style="text-align:right;">
+551
+</td>
+<td style="text-align:right;">
+35
+</td>
+<td style="text-align:right;">
+63
+</td>
+<td style="text-align:right;">
+32
+</td>
+<td style="text-align:right;">
+23
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+150190
+</td>
+<td style="text-align:right;">
+9641
+</td>
+<td style="text-align:right;">
+1449
+</td>
+<td style="text-align:right;">
+48
+</td>
+<td style="text-align:right;">
+193
+</td>
+<td style="text-align:right;">
+51
+</td>
+<td style="text-align:right;">
+80
+</td>
+<td style="text-align:right;">
+19
+</td>
+<td style="text-align:right;">
+17
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+2
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="table-3---morans-i" class="section level4" number="5.1.5.5">
+<h4><span class="header-section-number">5.1.5.5</span> Table 3 - Moran’s
+I</h4>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" tabindex="-1"></a>df_moran <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">MoranI_pres_1 =</span> <span class="fu">round</span>(MI_pres_1[[<span class="dv">1</span>]], <span class="at">digits =</span> <span class="dv">3</span>),</span>
+<span id="cb29-2"><a href="#cb29-2" tabindex="-1"></a>                       <span class="at">MoranI_pres_2 =</span> <span class="fu">round</span>(MI_pres_2[[<span class="dv">1</span>]], <span class="at">digits =</span> <span class="dv">3</span>),</span>
+<span id="cb29-3"><a href="#cb29-3" tabindex="-1"></a>                       <span class="at">MoranI_gender_1 =</span> <span class="fu">round</span>(MI_gen_1[[<span class="dv">1</span>]], <span class="at">digits =</span> <span class="dv">3</span>),</span>
+<span id="cb29-4"><a href="#cb29-4" tabindex="-1"></a>                       <span class="at">MoranI_gender_2 =</span> <span class="fu">round</span>(MI_gen_2[[<span class="dv">1</span>]], <span class="at">digits =</span> <span class="dv">3</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" tabindex="-1"></a><span class="fu">fshowdf</span>(df_moran)</span></code></pre></div>
+<div
+style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:300px; overflow-x: scroll; width:100%; ">
+<table class="table table-striped table-hover" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+MoranI_pres_1
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+MoranI_pres_2
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+MoranI_gender_1
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+MoranI_gender_2
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+0.21
+</td>
+<td style="text-align:right;">
+0.06
+</td>
+<td style="text-align:right;">
+0.22
+</td>
+<td style="text-align:right;">
+0.14
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="table-4---testing-the-difference-of-morans-i-on-gender"
+class="section level4" number="5.1.5.6">
+<h4><span class="header-section-number">5.1.5.6</span> Table 4 - Testing
+the difference of Moran’s I on gender</h4>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" tabindex="-1"></a>psych<span class="sc">::</span><span class="fu">paired.r</span>(df_moran<span class="sc">$</span>MoranI_gender_1, df_moran<span class="sc">$</span>MoranI_gender_2, <span class="at">n =</span> <span class="dv">100</span>)</span></code></pre></div>
+<pre><code>## Call: psych::paired.r(xy = df_moran$MoranI_gender_1, xz = df_moran$MoranI_gender_2, 
+##     n = 100)
+## [1] &quot;test of difference between two independent correlations&quot;
+## z = 0.54  With probability =  0.59</code></pre>
+</div>
+<div id="table-5---testing-the-difference-of-morans-i-on-prestige"
+class="section level4" number="5.1.5.7">
+<h4><span class="header-section-number">5.1.5.7</span> Table 5 - Testing
+the difference of Moran’s I on prestige</h4>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" tabindex="-1"></a>psych<span class="sc">::</span><span class="fu">paired.r</span>(df_moran<span class="sc">$</span>MoranI_pres_1, df_moran<span class="sc">$</span>MoranI_pres_2, <span class="at">n =</span> <span class="dv">100</span>)</span></code></pre></div>
+<pre><code>## Call: psych::paired.r(xy = df_moran$MoranI_pres_1, xz = df_moran$MoranI_pres_2, 
+##     n = 100)
+## [1] &quot;test of difference between two independent correlations&quot;
+## z = 1.05  With probability =  0.3</code></pre>
+<div id="refs" class="references csl-bib-body hanging-indent"
+entry-spacing="0">
+<div id="ref-ripley2011manual" class="csl-entry">
+Ripley, Ruth M, Tom AB Snijders, Zsófia Boda, András Vörös, and Paulina
+Preciado. 2011. <span>“Manual for RSIENA.”</span> <em>University of
+Oxford, Department of Statistics, Nuffield College</em> 1: 2011.
+</div>
+<div id="ref-SNASS" class="csl-entry">
+Tolsma, Jochem, and Bas Hofstra. 2022. <em>Social Network Analysis for
+Social Scientists</em>. <a
+href="https://jtolsma.nl/SNASS/">https://jtolsma.nl/SNASS/</a>.
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>
 
-<div id="rmd-source-code">LS0tDQp0aXRsZTogIk5ldHdvcmsgRGVzY3JpcHRpdmVzIg0KI2JpYmxpb2dyYXBoeTogcmVmZXJlbmNlcy5iaWINCmF1dGhvcjogIk5pZWxzIFZ1bGxpbmdzIg0KYmlibGlvZ3JhcGh5OiByZWZlcmVuY2VzLmJpYg0KLS0tDQoNCmBgYHtyLCBlY2hvPUZBTFNFfQ0Kcm0obGlzdCA9IGxzKCkpDQpgYGANCg0KIyBMb2FkIFVERg0KDQpgYGB7cn0NCmNvbG9yaXplIDwtIGZ1bmN0aW9uKHgsIGNvbG9yKSB7c3ByaW50ZigiPHNwYW4gc3R5bGU9J2NvbG9yOiAlczsnPiVzPC9zcGFuPiIsIGNvbG9yLCB4KSB9DQoNCmZwYWNrYWdlLmNoZWNrIDwtIGZ1bmN0aW9uKHBhY2thZ2VzKSB7DQogIGxhcHBseShwYWNrYWdlcywgRlVOID0gZnVuY3Rpb24oeCkgew0KICAgIGlmICghcmVxdWlyZSh4LCBjaGFyYWN0ZXIub25seSA9IFRSVUUpKSB7DQogICAgICBpbnN0YWxsLnBhY2thZ2VzKHgsIGRlcGVuZGVuY2llcyA9IFRSVUUpDQogICAgICBsaWJyYXJ5KHgsIGNoYXJhY3Rlci5vbmx5ID0gVFJVRSkNCiAgICB9DQogIH0pDQp9DQoNCmZzYXZlIDwtIGZ1bmN0aW9uKHgsIGZpbGUgPSBOVUxMLCBsb2NhdGlvbiA9ICIuL2RhdGEvcHJvY2Vzc2VkLyIpIHsNCiAgaWZlbHNlKCFkaXIuZXhpc3RzKCJkYXRhIiksIGRpci5jcmVhdGUoImRhdGEiKSwgRkFMU0UpDQogIGlmZWxzZSghZGlyLmV4aXN0cygiZGF0YS9wcm9jZXNzZWQiKSwgZGlyLmNyZWF0ZSgiZGF0YS9wcm9jZXNzZWQiKSwgRkFMU0UpDQogIGlmIChpcy5udWxsKGZpbGUpKQ0KICAgIGZpbGUgPSBkZXBhcnNlKHN1YnN0aXR1dGUoeCkpDQogIGRhdGVuYW1lIDwtIHN1YnN0cihnc3ViKCJbOi1dIiwgIiIsIFN5cy50aW1lKCkpLCAxLCA4KQ0KICB0b3RhbG5hbWUgPC0gcGFzdGUobG9jYXRpb24sIGRhdGVuYW1lLCBmaWxlLCAiLnJkYSIsIHNlcCA9ICIiKQ0KICBzYXZlKHgsIGZpbGUgPSB0b3RhbG5hbWUpICAjbmVlZCB0byBmaXggaWYgZmlsZSBpcyByZWxvYWRlZCBhcyBpbnB1dCBuYW1lLCBub3QgYXMgeC4gDQp9DQoNCmZsb2FkIDwtIGZ1bmN0aW9uKGZpbGVuYW1lKSB7DQogIGxvYWQoZmlsZW5hbWUpDQogIGdldChscygpW2xzKCkgIT0gImZpbGVuYW1lIl0pDQp9DQoNCmZzaG93ZGYgPC0gZnVuY3Rpb24oeCwgLi4uKSB7DQogIGtuaXRyOjprYWJsZSh4LCBkaWdpdHMgPSAyLCAiaHRtbCIsIC4uLikgJT4lDQogICAga2FibGVFeHRyYTo6a2FibGVfc3R5bGluZyhib290c3RyYXBfb3B0aW9ucyA9IGMoInN0cmlwZWQiLCAiaG92ZXIiKSkgJT4lDQogICAga2FibGVFeHRyYTo6c2Nyb2xsX2JveCh3aWR0aCA9ICIxMDAlIiwgaGVpZ2h0ID0gIjMwMHB4IikNCn0NCg0KYGBgDQoNCiMjIE5ldHdvcmsgU3RhdGlzdGljcyBmdW5jdGlvbnMNCg0KYGBge3J9DQoNCiMtLS0tIEphY2NhcmQgSW5kZXggLS0tLQ0KZmphYyA8LSBmdW5jdGlvbihuZXQxLCBuZXQyKSB7DQogIA0KICBkaWFnKG5ldDEpIDwtIE5BDQogIGRpYWcobmV0MikgPC0gTkENCiAgdGogPC0gdGFibGUoYXMubnVtZXJpYyhuZXQxKSwgYXMubnVtZXJpYyhuZXQyKSkgDQogIGphY2NhcmQgPC0gdGpbMiwyXSAvKHRqWzEsMl0gKyB0alsyLDFdICsgdGpbMiwyXSkNCiAgaGFtbWluZyA8LSB0alsyLDFdICsgdGpbMSwyXQ0KICANCiAgcmV0dXJuKGphY2NhcmQpDQogIA0KfQ0KDQojLS0tLSBIYW1taW5nIERpc3RhbmNlIC0tLS0NCmZoYW0gPC0gZnVuY3Rpb24obmV0MSwgbmV0Mikgew0KICBkaWFnKG5ldDEpIDwtIE5BDQogIGRpYWcobmV0MikgPC0gTkENCiAgdGogPC0gdGFibGUoYXMubnVtZXJpYyhuZXQxKSwgYXMubnVtZXJpYyhuZXQyKSkgDQogIGhhbW1pbmcgPC0gdGpbMiwxXSArIHRqWzEsMl0NCiAgDQogIHJldHVybihoYW1taW5nKQ0KICANCn0NCg0KIy0tLS0gRGVuc2l0eSAtLS0tDQpmZGVucyA8LSBmdW5jdGlvbihOLCBkYXRhID0gbmV0LCBkaXJlY3RlZCA9IFRSVUUpIHsNCiAgDQogIGlmIChkaXJlY3RlZCA9PSBUUlVFKSB7DQogICAgcG9zX3RpZSA8LSAoTiAqIChOIC0gMSkpDQogIH0gZWxzZSB7DQogICAgcG9zX3RpZSA8LSAoTiAqIChOIC0gMSkpLzINCiAgICANCiAgfQ0KICANCiAgb2JzX3RpZSA8LSBzdW0oc25hOjpkeWFkLmNlbnN1cyhkYXRhKVsxOjJdKQ0KICBkZW5zIDwtIG9ic190aWUvcG9zX3RpZQ0KICANCiAgcmV0dXJuKGRlbnMpDQp9DQoNCiMtLS0tIE1vcmFuJ3MgSSAtLS0tDQpmTW9yYW4uSSA8LSBmdW5jdGlvbih4LCB3ZWlnaHQsIHNjYWxlZCA9IEZBTFNFLCBuYS5ybSA9IEZBTFNFLCBhbHRlcm5hdGl2ZSA9ICJ0d28uc2lkZWQiLCByb3dzdGFuZGFyZGl6ZSA9IFRSVUUpIHsNCiAgaWYgKHJvd3N0YW5kYXJkaXplKSB7DQogICAgaWYgKGRpbSh3ZWlnaHQpWzFdICE9IGRpbSh3ZWlnaHQpWzJdKQ0KICAgICAgc3RvcCgiJ3dlaWdodCcgbXVzdCBiZSBhIHNxdWFyZSBtYXRyaXgiKQ0KICAgIG4gPC0gbGVuZ3RoKHgpDQogICAgaWYgKGRpbSh3ZWlnaHQpWzFdICE9IG4pDQogICAgICBzdG9wKCInd2VpZ2h0JyBtdXN0IGhhdmUgYXMgbWFueSByb3dzIGFzIG9ic2VydmF0aW9ucyBpbiAneCciKQ0KICAgIGVpIDwtIC0xLyhuIC0gMSkNCiAgICBuYXMgPC0gaXMubmEoeCkNCiAgICBpZiAoYW55KG5hcykpIHsNCiAgICAgIGlmIChuYS5ybSkgew0KICAgICAgICB4IDwtIHhbIW5hc10NCiAgICAgICAgbiA8LSBsZW5ndGgoeCkNCiAgICAgICAgd2VpZ2h0IDwtIHdlaWdodFshbmFzLCAhbmFzXQ0KICAgICAgfSBlbHNlIHsNCiAgICAgICAgd2FybmluZygiJ3gnIGhhcyBtaXNzaW5nIHZhbHVlczogbWF5YmUgeW91IHdhbnRlZCB0byBzZXQgbmEucm0gPSBUUlVFPyIpDQogICAgICAgIHJldHVybihsaXN0KG9ic2VydmVkID0gTkEsIGV4cGVjdGVkID0gZWksIHNkID0gTkEsIHAudmFsdWUgPSBOQSkpDQogICAgICB9DQogICAgfQ0KICAgIFJPV1NVTSA8LSByb3dTdW1zKHdlaWdodCkNCiAgICBST1dTVU1bUk9XU1VNID09IDBdIDwtIDENCiAgICB3ZWlnaHQgPC0gd2VpZ2h0L1JPV1NVTQ0KICAgIHMgPC0gc3VtKHdlaWdodCkNCiAgICBtIDwtIG1lYW4oeCkNCiAgICB5IDwtIHggLSBtDQogICAgY3YgPC0gc3VtKHdlaWdodCAqIHkgJW8lIHkpDQogICAgdiA8LSBzdW0oeV4yKQ0KICAgIG9icyA8LSAobi9zKSAqIChjdi92KQ0KICAgIGlmIChzY2FsZWQpIHsNCiAgICAgIGkubWF4IDwtIChuL3MpICogKHNkKHJvd1N1bXMod2VpZ2h0KSAqIHkpL3NxcnQodi8obiAtIDEpKSkNCiAgICAgIG9icyA8LSBvYnMvaS5tYXgNCiAgICB9DQogICAgUzEgPC0gMC41ICogc3VtKCh3ZWlnaHQgKyB0KHdlaWdodCkpXjIpDQogICAgUzIgPC0gc3VtKChhcHBseSh3ZWlnaHQsIDEsIHN1bSkgKyBhcHBseSh3ZWlnaHQsIDIsIHN1bSkpXjIpDQogICAgcy5zcSA8LSBzXjINCiAgICBrIDwtIChzdW0oeV40KS9uKS8odi9uKV4yDQogICAgc2RpIDwtIHNxcnQoKG4gKiAoKG5eMiAtIDMgKiBuICsgMykgKiBTMSAtIG4gKiBTMiArIDMgKiBzLnNxKSAtIGsgKiAobiAqIChuIC0gMSkgKiBTMSAtIDIgKiBuICoNCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFMyICsgNiAqIHMuc3EpKS8oKG4gLSAxKSAqIChuIC0gMikgKiAobiAtIDMpICogcy5zcSkgLSAxLygobiAtIDEpXjIpKQ0KICAgIGFsdGVybmF0aXZlIDwtIG1hdGNoLmFyZyhhbHRlcm5hdGl2ZSwgYygidHdvLnNpZGVkIiwgImxlc3MiLCAiZ3JlYXRlciIpKQ0KICAgIHB2IDwtIHBub3JtKG9icywgbWVhbiA9IGVpLCBzZCA9IHNkaSkNCiAgICBpZiAoYWx0ZXJuYXRpdmUgPT0gInR3by5zaWRlZCIpDQogICAgICBwdiA8LSBpZiAob2JzIDw9IGVpKQ0KICAgICAgICAyICogcHYgZWxzZSAyICogKDEgLSBwdikNCiAgICBpZiAoYWx0ZXJuYXRpdmUgPT0gImdyZWF0ZXIiKQ0KICAgICAgcHYgPC0gMSAtIHB2DQogICAgbGlzdChvYnNlcnZlZCA9IG9icywgZXhwZWN0ZWQgPSBlaSwgc2QgPSBzZGksIHAudmFsdWUgPSBwdikNCiAgfSBlbHNlIHsNCiAgICBpZiAoZGltKHdlaWdodClbMV0gIT0gZGltKHdlaWdodClbMl0pDQogICAgICBzdG9wKCInd2VpZ2h0JyBtdXN0IGJlIGEgc3F1YXJlIG1hdHJpeCIpDQogICAgbiA8LSBsZW5ndGgoeCkNCiAgICBpZiAoZGltKHdlaWdodClbMV0gIT0gbikNCiAgICAgIHN0b3AoIid3ZWlnaHQnIG11c3QgaGF2ZSBhcyBtYW55IHJvd3MgYXMgb2JzZXJ2YXRpb25zIGluICd4JyIpDQogICAgZWkgPC0gLTEvKG4gLSAxKQ0KICAgIG5hcyA8LSBpcy5uYSh4KQ0KICAgIGlmIChhbnkobmFzKSkgew0KICAgICAgaWYgKG5hLnJtKSB7DQogICAgICAgIHggPC0geFshbmFzXQ0KICAgICAgICBuIDwtIGxlbmd0aCh4KQ0KICAgICAgICB3ZWlnaHQgPC0gd2VpZ2h0WyFuYXMsICFuYXNdDQogICAgICB9IGVsc2Ugew0KICAgICAgICB3YXJuaW5nKCIneCcgaGFzIG1pc3NpbmcgdmFsdWVzOiBtYXliZSB5b3Ugd2FudGVkIHRvIHNldCBuYS5ybSA9IFRSVUU/IikNCiAgICAgICAgcmV0dXJuKGxpc3Qob2JzZXJ2ZWQgPSBOQSwgZXhwZWN0ZWQgPSBlaSwgc2QgPSBOQSwgcC52YWx1ZSA9IE5BKSkNCiAgICAgIH0NCiAgICB9DQogICAgIyBST1dTVU0gPC0gcm93U3Vtcyh3ZWlnaHQpIFJPV1NVTVtST1dTVU0gPT0gMF0gPC0gMSB3ZWlnaHQgPC0gd2VpZ2h0L1JPV1NVTQ0KICAgIHMgPC0gc3VtKHdlaWdodCkNCiAgICBtIDwtIG1lYW4oeCkNCiAgICB5IDwtIHggLSBtDQogICAgY3YgPC0gc3VtKHdlaWdodCAqIHkgJW8lIHkpDQogICAgdiA8LSBzdW0oeV4yKQ0KICAgIG9icyA8LSAobi9zKSAqIChjdi92KQ0KICAgIGlmIChzY2FsZWQpIHsNCiAgICAgIGkubWF4IDwtIChuL3MpICogKHNkKHJvd1N1bXMod2VpZ2h0KSAqIHkpL3NxcnQodi8obiAtIDEpKSkNCiAgICAgIG9icyA8LSBvYnMvaS5tYXgNCiAgICB9DQogICAgUzEgPC0gMC41ICogc3VtKCh3ZWlnaHQgKyB0KHdlaWdodCkpXjIpDQogICAgUzIgPC0gc3VtKChhcHBseSh3ZWlnaHQsIDEsIHN1bSkgKyBhcHBseSh3ZWlnaHQsIDIsIHN1bSkpXjIpDQogICAgcy5zcSA8LSBzXjINCiAgICBrIDwtIChzdW0oeV40KS9uKS8odi9uKV4yDQogICAgc2RpIDwtIHNxcnQoKG4gKiAoKG5eMiAtIDMgKiBuICsgMykgKiBTMSAtIG4gKiBTMiArIDMgKiBzLnNxKSAtIGsgKiAobiAqIChuIC0gMSkgKiBTMSAtIDIgKiBuICoNCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFMyICsgNiAqIHMuc3EpKS8oKG4gLSAxKSAqIChuIC0gMikgKiAobiAtIDMpICogcy5zcSkgLSAxLygobiAtIDEpXjIpKQ0KICAgIGFsdGVybmF0aXZlIDwtIG1hdGNoLmFyZyhhbHRlcm5hdGl2ZSwgYygidHdvLnNpZGVkIiwgImxlc3MiLCAiZ3JlYXRlciIpKQ0KICAgIHB2IDwtIHBub3JtKG9icywgbWVhbiA9IGVpLCBzZCA9IHNkaSkNCiAgICBpZiAoYWx0ZXJuYXRpdmUgPT0gInR3by5zaWRlZCIpDQogICAgICBwdiA8LSBpZiAob2JzIDw9IGVpKQ0KICAgICAgICAyICogcHYgZWxzZSAyICogKDEgLSBwdikNCiAgICBpZiAoYWx0ZXJuYXRpdmUgPT0gImdyZWF0ZXIiKQ0KICAgICAgcHYgPC0gMSAtIHB2DQogICAgbGlzdChvYnNlcnZlZCA9IG9icywgZXhwZWN0ZWQgPSBlaSwgc2QgPSBzZGksIHAudmFsdWUgPSBwdikNCiAgfQ0KICANCiAgDQp9DQpgYGANCg0KIyMgQ3VzdG9tIER5YWQgJiBUcmlhZCBjZW5zdXMgZnVuY3Rpb24NCg0KYGBge3J9DQojLS0tLSBEeWFkIGNlbnN1cyAtLS0tDQp0c19keWFkc19ldm8gPC0gZnVuY3Rpb24gKHNpbXMsIG5ldDEsIHNpbXR5cGUgPSAibm90eXBlc3BlY2lmaWVkIiwgZm9ycGxvdCA9IFRSVUUpIHsNCiAgDQogIA0KICBpZiAoaXMubGlzdChzaW1zKSA9PSBUUlVFKSB7DQogICAgbnNpbXMgPC0gbGVuZ3RoKHNpbXMpDQogIH0NCiAgZWxzZSB7DQogICAgbnNpbXMgPC0gMQ0KICB9DQogIGRmIDwtIGZvcmVhY2g6OmZvcmVhY2goMTpuc2ltcywgaSA9IGl0ZXJhdG9yczo6aWNvdW50KCksIA0KICAgICAgICAgICAgICAgICAgICAgICAgIC5jb21iaW5lID0gInJiaW5kIikgJWRvcGFyJSB7DQogICAgICAgICAgICAgICAgICAgICAgICAgICANCiAgICAgICAgICAgICAgICAgICAgICAgICAgIGlmIChpcy5saXN0KHNpbXMpID09IFRSVUUpIHsNCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgbmV0MiA8LSBzaW1zW1tpXV0NCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgDQogICAgICAgICAgICAgICAgICAgICAgICAgICB9DQogICAgICAgICAgICAgICAgICAgICAgICAgICBlbHNlIHsNCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgbmV0MiA8LSBzaW1zDQogICAgICAgICAgICAgICAgICAgICAgICAgICB9DQogICAgICAgICAgICAgICAgICAgICAgICAgICANCiAgICAgICAgICAgICAgICAgICAgICAgICAgICNmaW5kIHdoaWNoIHZhbHVlcyBpbiB0aGUgbWF0cml4IGFyZSBtaXNzaW5nDQogICAgICAgICAgICAgICAgICAgICAgICAgICBOX05BIDwtIHVuaXF1ZSh3aGljaChpcy5uYShuZXQxKSB8IGlzLm5hKG5ldDIpLCBhcnIuaW5kID0gVFJVRSlbLDFdKSAjIElkZW50aWZ5IG5vcm1hbCBOQSB2YWx1ZXMNCiAgICAgICAgICAgICAgICAgICAgICAgICAgIFNfTkEgPC0gYXMuZGF0YS5mcmFtZSh0YWJsZSh3aGljaChuZXQxID09IDEwIHwgbmV0MiA9PSAxMCwgYXJyLmluZCA9IFRSVUUpWywxXSkpICMgSWRlbnRpZnkgU3RydWN0dXJhbCBOQXMNCiAgICAgICAgICAgICAgICAgICAgICAgICAgIFNfTkEgPC0gd2hpY2goU19OQSRGcmVxID09IG5yb3cobmV0MSkpDQogICAgICAgICAgICAgICAgICAgICAgICAgICBOQV9yb3dzIDwtIGMoYXMudmVjdG9yKE5fTkEpLCBhcy52ZWN0b3IoU19OQSkpICMgc2F2ZSBhbGwgYWN0b3JzIGluIDEgdmVjdG9yDQogICAgICAgICAgICAgICAgICAgICAgICAgICANCiAgICAgICAgICAgICAgICAgICAgICAgICAgIGlmKGxlbmd0aChOQV9yb3dzKT4gMCl7DQogICAgICAgICAgICAgICAgICAgICAgICAgICAgIA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICB3YXJuaW5nKG5jb2wobmV0MSktIGxlbmd0aChOQV9yb3dzKSwiIGFjdG9ycyB3aWxsIGJlIGFuYWx5c2VkIGR1ZSB0byBtaXNzaW5nIHZhbHVlcy4gRm9sbG93aW5nICIsIGxlbmd0aChOQV9yb3dzKSwgIiBhY3RvcnMgaGF2ZSBiZWVuIGxpc3R3aXNlIGRlbGV0ZWQ6ICIscGFzdGUoTkFfcm93cywgY29sbGFwc2U9IiwiKSkNCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIyBEZWxldGUgYm90aCByb3dzIGFuZCBjb2x1bW5zIG9mIGFjdG9ycyB0aGF0IGFyZSBtaXNzaW5nIChOQSkNCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgbmV0MSA8LSBuZXQxWy1OQV9yb3dzLC1OQV9yb3dzXQ0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICANCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgbmV0MiA8LSBuZXQyWy1OQV9yb3dzLC1OQV9yb3dzXQ0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICANCiAgICAgICAgICAgICAgICAgICAgICAgICAgIH0NCiAgICAgICAgICAgICAgICAgICAgICAgICAgIGRpYWcobmV0MSkgPC0gTkENCiAgICAgICAgICAgICAgICAgICAgICAgICAgIGRpYWcobmV0MikgPC0gTkENCiAgICAgICAgICAgICAgICAgICAgICAgICAgIGZsaXBzIDwtIG5ldDEgKyB0KG5ldDIpIC0gbmV0Mg0KICAgICAgICAgICAgICAgICAgICAgICAgICAganVtcHN0MSA8LSBuZXQxICsgdChuZXQxKQ0KICAgICAgICAgICAgICAgICAgICAgICAgICAgc3RhYmxldDEgPC0ganVtcHN0MQ0KICAgICAgICAgICAgICAgICAgICAgICAgICAganVtcHN0MVtsb3dlci50cmkoanVtcHN0MSldIDwtIE5BDQogICAgICAgICAgICAgICAgICAgICAgICAgICBqdW1wc3QyIDwtIG5ldDIgKyB0KG5ldDIpDQogICAgICAgICAgICAgICAgICAgICAgICAgICBzdGFibGV0MiA8LSBqdW1wc3QyDQogICAgICAgICAgICAgICAgICAgICAgICAgICBqdW1wc3QyW2xvd2VyLnRyaShqdW1wc3QyKV0gPC0gTkENCiAgICAgICAgICAgICAgICAgICAgICAgICAgIHN0YWJsZTAwIDwtIGFzLmRhdGEuZnJhbWUod2hpY2goanVtcHN0MSA9PSAwICYganVtcHN0MiA9PSANCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAwLCBhcnIuaW5kID0gVFJVRSkpDQogICAgICAgICAgICAgICAgICAgICAgICAgICBzdGFibGUwMSA8LSBhcy5kYXRhLmZyYW1lKHdoaWNoKGZsaXBzID09IDAgJiBzdGFibGV0MSA9PSANCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAxICYgc3RhYmxldDIgPT0gMSwgYXJyLmluZCA9IFRSVUUpKQ0KICAgICAgICAgICAgICAgICAgICAgICAgICAgc3RhYmxlMTEgPC0gYXMuZGF0YS5mcmFtZSh3aGljaChqdW1wc3QxID09IDIgJiBqdW1wc3QyID09IA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDIsIGFyci5pbmQgPSBUUlVFKSkNCiAgICAgICAgICAgICAgICAgICAgICAgICAgIE51bGxfQXNzeW0gPC0gYXMuZGF0YS5mcmFtZSh3aGljaChqdW1wc3QxID09IDAgJiBzdGFibGV0MiA9PSANCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDEsIGFyci5pbmQgPSBUUlVFKSkNCiAgICAgICAgICAgICAgICAgICAgICAgICAgIEFzc3ltX051bGwgPC0gYXMuZGF0YS5mcmFtZSh3aGljaChmbGlwcyA9PSAwICYgc3RhYmxldDEgPT0gDQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAxICYgc3RhYmxldDIgPT0gMCwgYXJyLmluZCA9IFRSVUUpKQ0KICAgICAgICAgICAgICAgICAgICAgICAgICAgQXNzeW1fTXV0IDwtIGFzLmRhdGEuZnJhbWUod2hpY2goc3RhYmxldDEgPT0gMSAmIGp1bXBzdDIgPT0gDQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDIsIGFyci5pbmQgPSBUUlVFKSkNCiAgICAgICAgICAgICAgICAgICAgICAgICAgIE11dF9Bc3N5bSA8LSBhcy5kYXRhLmZyYW1lKHdoaWNoKGp1bXBzdDEgPT0gMiAmIGp1bXBzdDIgPT0gDQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDEsIGFyci5pbmQgPSBUUlVFKSkNCiAgICAgICAgICAgICAgICAgICAgICAgICAgIGZsaXAgPC0gYXMuZGF0YS5mcmFtZSh3aGljaChmbGlwcyA9PSAyICYgc3RhYmxldDEgIT0gDQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAyICYgc3RhYmxldDIgIT0gMiwgYXJyLmluZCA9IFRSVUUpKQ0KICAgICAgICAgICAgICAgICAgICAgICAgICAganVtcDAyIDwtIGFzLmRhdGEuZnJhbWUod2hpY2goanVtcHN0MSA9PSAwICYganVtcHN0MiA9PSANCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgMiwgYXJyLmluZCA9IFRSVUUpKQ0KICAgICAgICAgICAgICAgICAgICAgICAgICAganVtcDIwIDwtIGFzLmRhdGEuZnJhbWUod2hpY2goanVtcHN0MSA9PSAyICYganVtcHN0MiA9PSANCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgMCwgYXJyLmluZCA9IFRSVUUpKQ0KICAgICAgICAgICAgICAgICAgICAgICAgICAgdGFibGUgPC0gY2JpbmQobnJvdyhzdGFibGUwMCksIG5yb3coc3RhYmxlMDEpLCBucm93KHN0YWJsZTExKSwgDQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBucm93KE51bGxfQXNzeW0pLCBucm93KEFzc3ltX051bGwpLCBucm93KEFzc3ltX011dCksIA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgbnJvdyhNdXRfQXNzeW0pLCBucm93KGZsaXApLCBucm93KGp1bXAwMiksIG5yb3coanVtcDIwKSkNCiAgICAgICAgICAgICAgICAgICAgICAgICAgIGNvbG5hbWVzKHRhYmxlKSA8LSBjKCJOdWxsID4gTnVsbCIsICJBc3N5bSA+IEFzc3ltIiwgIk11dHVhbCA+IE11dHVhbCIsIA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIk51bGwgPiBBc3N5bSIsICJBc3N5bSA+IE51bGwiLCAiQXNzeW0gPiBNdXR1YWwiLCAiTXV0dWFsID4gQXNzeW0iLCANCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJUaWUgZmxpcCIsICJOdWxsID4gTXV0dWFsIiwgIk11dHVhbCA+IE51bGwiKQ0KICAgICAgICAgICAgICAgICAgICAgICAgICAgc2ltbmV0IDwtIE5VTEwNCiAgICAgICAgICAgICAgICAgICAgICAgICAgIHJldHVybihkYXRhLmZyYW1lKHNpbW5ldCA9IGksIHRhYmxlKSkNCiAgICAgICAgICAgICAgICAgICAgICAgICB9DQogIGRmIDwtIGFzLmRhdGEuZnJhbWUoZGYpDQogIHR5cGUgPC0gTlVMTA0KICBkZiR0eXBlIDwtIHNpbXR5cGUNCiAgaWYgKGZvcnBsb3QgPT0gVFJVRSkgew0KICAgIGRmIDwtIHRpZHlyOjpwaXZvdF9sb25nZXIoZGYsIGNvbHMgPSAhYyhzaW1uZXQsIHR5cGUpLCANCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIG5hbWVzX3RvID0gIngiLCB2YWx1ZXNfdG8gPSAieSIpDQogIH0NCiAgcmV0dXJuKGRmKQ0KfQ0KDQojLS0tLSBUcmlhZCBjZW5zdXMgLS0tLQ0KdHNfdHJpYWRzX2V2byA8LSBmdW5jdGlvbiAoc2ltcywgbmV0MSwgc2ltdHlwZSA9ICJub3R5cGVzcGVjaWZpZWQiLCBmb3JwbG90ID0gVFJVRSkgew0KICANCiAgDQogIHggPC0gaiA8LSBrIDwtIGExIDwtIGEyIDwtIGEzIDwtIHRpZV9jaGFuZ2UgPC0gRnJlcSA8LSBzaW1uZXQgPC0gdHlwZSA8LSBOVUxMDQogIGlmIChpcy5saXN0KHNpbXMpID09IFRSVUUpIHsNCiAgICBuc2ltcyA8LSBsZW5ndGgoc2ltcykNCiAgfQ0KICBlbHNlIHsNCiAgICBuc2ltcyA8LSAxDQogIH0NCiAgZGYgPC0gZm9yZWFjaDo6Zm9yZWFjaCgxOm5zaW1zLCB4ID0gaXRlcmF0b3JzOjppY291bnQoKSwuY29tYmluZSA9ICJyYmluZCIpICVkb3BhciUgew0KICAgIA0KICAgIGlmIChpcy5saXN0KHNpbXMpID09IFRSVUUpIHsNCiAgICAgIG5ldDIgPC0gc2ltc1tbeF1dDQogICAgICANCiAgICAgICNmaW5kIHdoaWNoIHZhbHVlcyBpbiB0aGUgbWF0cml4IGFyZSBtaXNzaW5nDQogICAgICBOX05BIDwtIHVuaXF1ZSh3aGljaChpcy5uYShuZXQxKSB8IGlzLm5hKG5ldDIpLCBhcnIuaW5kID0gVFJVRSlbLDFdKSAjIElkZW50aWZ5IG5vcm1hbCBOQSB2YWx1ZXMNCiAgICAgIFNfTkEgPC0gYXMuZGF0YS5mcmFtZSh0YWJsZSh3aGljaChuZXQxID09IDEwIHwgbmV0MiA9PSAxMCwgYXJyLmluZCA9IFRSVUUpWywxXSkpICMgSWRlbnRpZnkgU3RydWN0dXJhbCBOQXMNCiAgICAgIFNfTkEgPC0gd2hpY2goU19OQSRGcmVxID09IG5yb3cobmV0MSkpDQogICAgICBOQV9yb3dzIDwtIGMoYXMudmVjdG9yKE5fTkEpLCBhcy52ZWN0b3IoU19OQSkpICMgc2F2ZSBhbGwgYWN0b3JzIGluIDEgdmVjdG9yDQogICAgICANCiAgICAgIGlmKGxlbmd0aChOQV9yb3dzKT4gMCl7DQogICAgICAgIA0KICAgICAgICB3YXJuaW5nKG5jb2wobmV0MSktIGxlbmd0aChOQV9yb3dzKSwiIGFjdG9ycyB3aWxsIGJlIGFuYWx5c2VkIGR1ZSB0byBtaXNzaW5nIHZhbHVlcy4gRm9sbG93aW5nICIsIGxlbmd0aChOQV9yb3dzKSwgIiBhY3RvcnMgaGF2ZSBiZWVuIGxpc3R3aXNlIGRlbGV0ZWQ6ICIscGFzdGUoTkFfcm93cywgY29sbGFwc2U9IiwiKSkNCiAgICAgICAgIyBEZWxldGUgYm90aCByb3dzIGFuZCBjb2x1bW5zIG9mIGFjdG9ycyB0aGF0IGFyZSBtaXNzaW5nIChOQSkNCiAgICAgICAgbmV0MSA8LSBuZXQxWy1OQV9yb3dzLC1OQV9yb3dzXQ0KICAgICAgICANCiAgICAgICAgbmV0MiA8LSBuZXQyWy1OQV9yb3dzLC1OQV9yb3dzXQ0KICAgICAgICANCiAgICAgIH0NCiAgICAgIA0KICAgIH0NCiAgICBlbHNlIHsNCiAgICAgIG5ldDIgPC0gc2ltcw0KICAgICAgDQogICAgICAjZmluZCB3aGljaCB2YWx1ZXMgaW4gdGhlIG1hdHJpeCBhcmUgbWlzc2luZw0KICAgICAgTkFfcm93IDwtIHVuaXF1ZSh3aGljaChpcy5uYShuZXQxKSB8IGlzLm5hKG5ldDIpLCBhcnIuaW5kID0gVFJVRSlbLDFdKSANCiAgICAgIA0KICAgICAgI2ZpbmQgd2hpY2ggdmFsdWVzIGluIHRoZSBtYXRyaXggYXJlIG1pc3NpbmcNCiAgICAgIE5fTkEgPC0gdW5pcXVlKHdoaWNoKGlzLm5hKG5ldDEpIHwgaXMubmEobmV0MiksIGFyci5pbmQgPSBUUlVFKVssMV0pICMgSWRlbnRpZnkgbm9ybWFsIE5BIHZhbHVlcw0KICAgICAgU19OQSA8LSBhcy5kYXRhLmZyYW1lKHRhYmxlKHdoaWNoKG5ldDEgPT0gMTAgfCBuZXQyID09IDEwLCBhcnIuaW5kID0gVFJVRSlbLDFdKSkgIyBJZGVudGlmeSBTdHJ1Y3R1cmFsIE5Bcw0KICAgICAgU19OQSA8LSB3aGljaChTX05BJEZyZXEgPT0gbnJvdyhuZXQxKSkNCiAgICAgIE5BX3Jvd3MgPC0gYyhhcy52ZWN0b3IoTl9OQSksIGFzLnZlY3RvcihTX05BKSkgIyBzYXZlIGFsbCBhY3RvcnMgaW4gMSB2ZWN0b3INCiAgICAgIA0KICAgICAgaWYobGVuZ3RoKE5BX3Jvd3MpPiAwKXsNCiAgICAgICAgDQogICAgICAgIHdhcm5pbmcobmNvbChuZXQxKS0gbGVuZ3RoKE5BX3Jvd3MpLCIgYWN0b3JzIHdpbGwgYmUgYW5hbHlzZWQgZHVlIHRvIG1pc3NpbmcgdmFsdWVzLiBGb2xsb3dpbmcgIiwgbGVuZ3RoKE5BX3Jvd3MpLCAiIGFjdG9ycyBoYXZlIGJlZW4gbGlzdHdpc2UgZGVsZXRlZDogIixwYXN0ZShOQV9yb3dzLCBjb2xsYXBzZT0iLCIpKQ0KICAgICAgICAjIERlbGV0ZSBib3RoIHJvd3MgYW5kIGNvbHVtbnMgb2YgYWN0b3JzIHRoYXQgYXJlIG1pc3NpbmcgKE5BKQ0KICAgICAgICBuZXQxIDwtIG5ldDFbLU5BX3Jvd3MsLU5BX3Jvd3NdDQogICAgICAgIA0KICAgICAgICBuZXQyIDwtIG5ldDJbLU5BX3Jvd3MsLU5BX3Jvd3NdDQogICAgICAgIA0KICAgICAgfQ0KICAgIH0NCiAgICANCiAgICB0cmlhZHMgPC0gYygiWDAwMyIsICJYMDEyIiwgIlgxMDIiLCAiWDAyMUQiLCAiWDAyMVUiLCANCiAgICAgICAgICAgICAgICAiWDAyMUMiLCAiWDExMUQiLCAiWDExMVUiLCAiWDAzMFQiLCAiWDAzMEMiLCAiWDIwMSIsIA0KICAgICAgICAgICAgICAgICJYMTIwRCIsICJYMTIwVSIsICJYMTIwQyIsICJYMjEwIiwgIlgzMDAiKQ0KICAgIA0KICAgIGRmIDwtIGZvcmVhY2g6OmZvcmVhY2goYTEgPSAxOm5yb3cobmV0MSksIGkgPSBpdGVyYXRvcnM6Omljb3VudCgpLC5jb21iaW5lID0gInJiaW5kIikgJTolIA0KICAgICAgZm9yZWFjaDo6Zm9yZWFjaChhMiA9IDE6bnJvdyhuZXQxKSwgaiA9IGl0ZXJhdG9yczo6aWNvdW50KCksIC5jb21iaW5lID0gInJiaW5kIikgJTolIA0KICAgICAgZm9yZWFjaDo6Zm9yZWFjaChhMyA9IDE6bnJvdyhuZXQxKSwgayA9IGl0ZXJhdG9yczo6aWNvdW50KCksLmNvbWJpbmUgPSAicmJpbmQiKSAlZG8lIHsNCiAgICAgICAgaWYgKGkgPiBqICYgaiA+IGspIHsNCiAgICAgICAgICBkYXRhLmZyYW1lKGkgPSBpLCBqID0gaiwgayA9IGssIA0KICAgICAgICAgICAgICAgICAgICAgdDFfaWogPSBhcy5jaGFyYWN0ZXIobmV0MVthMSxhMl0pLCB0MV9qaSA9IGFzLmNoYXJhY3RlcihuZXQxW2EyLCBhMV0pLCANCiAgICAgICAgICAgICAgICAgICAgIHQxX2lrID0gYXMuY2hhcmFjdGVyKG5ldDFbYTEsYTNdKSwgdDFfa2kgPSBhcy5jaGFyYWN0ZXIobmV0MVthMywgYTFdKSwgDQogICAgICAgICAgICAgICAgICAgICB0MV9qayA9IGFzLmNoYXJhY3RlcihuZXQxW2EyLGEzXSksIHQxX2tqID0gYXMuY2hhcmFjdGVyKG5ldDFbYTMsIGEyXSksIA0KICAgICAgICAgICAgICAgICAgICAgdHlwZVQxID0gdHJpYWRzW3doaWNoKHNuYTo6dHJpYWQuY2Vuc3VzKG5ldDFbYyhhMSxhMiwgYTMpLCBjKGExLCBhMiwgYTMpXSkgPT0gMSldLCANCiAgICAgICAgICAgICAgICAgICAgIHQyX2lqID0gYXMuY2hhcmFjdGVyKG5ldDJbYTEsIGEyXSksIHQyX2ppID0gYXMuY2hhcmFjdGVyKG5ldDJbYTIsIGExXSksIA0KICAgICAgICAgICAgICAgICAgICAgdDJfaWsgPSBhcy5jaGFyYWN0ZXIobmV0MlthMSwgYTNdKSwgdDJfa2kgPSBhcy5jaGFyYWN0ZXIobmV0MlthMywgYTFdKSwgDQogICAgICAgICAgICAgICAgICAgICB0Ml9qayA9IGFzLmNoYXJhY3RlcihuZXQyW2EyLCBhM10pLCB0Ml9raiA9IGFzLmNoYXJhY3RlcihuZXQyW2EzLCBhMl0pLCANCiAgICAgICAgICAgICAgICAgICAgIHR5cGVUMiA9IHRyaWFkc1t3aGljaChzbmE6OnRyaWFkLmNlbnN1cyhuZXQyW2MoYTEsIGEyLCBhMyksIGMoYTEsIGEyLCBhMyldKSA9PSAxKV0sIA0KICAgICAgICAgICAgICAgICAgICAgdGllX2NoYW5nZSA9IHN1bShjKG5ldDFbYTEsIGEyXSwgbmV0MVthMiwgYTFdLCBuZXQxW2ExLCBhM10sIG5ldDFbYTMsIGExXSwgbmV0MVthMiwgYTNdLCBuZXQxW2EzLCBhMl0pICE9IGMobmV0MlthMSwgYTJdLCBuZXQyW2EyLCBhMV0sIG5ldDJbYTEsIGEzXSwgbmV0MlthMywgYTFdLCBuZXQyW2EyLCBhM10sIG5ldDJbYTMsIGEyXSkpKQ0KICAgICAgICB9DQogICAgICB9DQogICAgDQogICAgDQogICAgZGYkbmFtZSA8LSBwYXN0ZTAoZGYkaSwgIi4iLCBkZiRqLCAiLiIsIGRmJGspDQogICAgZGYgPC0gc3Vic2V0KGRmLCBzZWxlY3QgPSBjKHRpZV9jaGFuZ2UpKQ0KICAgIA0KICAgICMtLS0tICEhTkVXISEgQXNzaWduIGxldmVscyB0byBjb3VudGVyIG1pc3NpbmcgY29sdW1ucyAtLS0tDQogICAgZGYkdGllX2NoYW5nZSA8LSBhcy5mYWN0b3IoZGYkdGllX2NoYW5nZSkNCiAgICBsZXZlbHMoZGYkdGllX2NoYW5nZSkgPC0gYygiMCIsICIxIiwiMiIsICIzIiwiNCIsICI1IiwiNiIpDQogICAgIy0tLS0gRml4ZXMgaXNzdWVzIHdpdGggc2ltdWxhdGVkIG5ldHdvcmtzIC0tLS0NCiAgICANCiAgICBkZiA8LSBkYXRhLmZyYW1lKHNpbW5ldCA9IHgsIHRhYmxlKGRmKSkNCiAgICBkZiA8LSB0aWR5cjo6cGl2b3Rfd2lkZXIoZGYsIG5hbWVzX2Zyb20gPSB0aWVfY2hhbmdlLA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICB2YWx1ZXNfZnJvbSA9IEZyZXEpDQogICAgDQogIH0NCiAgDQogIGRmIDwtIGFzLmRhdGEuZnJhbWUoZGYpDQogIGRmJHR5cGUgPC0gc2ltdHlwZQ0KICANCiAgaWYgKGZvcnBsb3QgPT0gVFJVRSkgew0KICAgIGRmIDwtIHRpZHlyOjpwaXZvdF9sb25nZXIoZGYsIGNvbHMgPSAhYyhzaW1uZXQsIHR5cGUpLCANCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIG5hbWVzX3RvID0gIngiLCB2YWx1ZXNfdG8gPSAieSIpDQogIH0NCiAgDQogIHJldHVybihkZikNCiAgDQp9DQoNCmBgYA0KDQojIExvYWQgUGFja2FnZXMNCg0KYGBge3IsIHdhcm5pbmc9RkFMU0UsIG1lc3NhZ2U9RkFMU0UsIHJlc3VsdHM9J2hpZGUnfQ0KcGFja2FnZXMgPC0gYygidGlkeXZlcnNlIiwgInNuYSIsICJpZ3JhcGgiLCAiUnNpZW5hVHdvU3RlcCIsICJhcGUiLCAiaXRlcmF0b3JzIiwgImRvUGFyYWxsZWwiKQ0KDQpmcGFja2FnZS5jaGVjayhwYWNrYWdlcykNCmBgYA0KDQojIFNldCB1cCBwYXJhbGxlbCBjbHVzdGVyDQoNCmBgYHtyfQ0Kbm9fY29yZXMgPC0gZGV0ZWN0Q29yZXMoKSAtIDENCm15Y2wgPC0gbWFrZUNsdXN0ZXIocmVwKCJsb2NhbGhvc3QiLCBub19jb3JlcykpDQpjbHVzdGVyRXZhbFEobXljbCwgbGlicmFyeShSc2llbmFUd29TdGVwKSkNCnJlZ2lzdGVyRG9QYXJhbGxlbChteWNsKQ0KIyBzdG9wQ2x1c3RlcihteWNsKQ0KDQpgYGANCg0KIyBMb2FkIERhdGENCg0KYGBge3J9DQpsb2FkKCJkYXRhL3Byb2Nlc3NlZC9SVV9VVV9lZ28uUkRhdGEiKQ0KDQpsb2FkKCJkYXRhL3Byb2Nlc3NlZC9zb2NfZGF0YV9yYXcuUkRhdGEiKQ0KYGBgDQoNCjxicj4NCg0KLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tDQoNCiMgTmV0d29ya3MNCg0KIyMgTWFrZSB0aGUgZ3JhcGggb2JqZWN0DQoNCmBgYHtyfQ0KDQojLS0tLSBXYXZlIDIgLS0tLQ0KZ3JhcGhfdzEgPC0gaWdyYXBoOjpncmFwaF9mcm9tX2FkamFjZW5jeV9tYXRyaXgoDQogIHNvY19kYXRhJG5ldHNbMSwsXSwgI25vdywgSSB0YWtlIHRoZSBzZWNvbmQgd2F2ZQ0KICBtb2RlID0gYygiZGlyZWN0ZWQiKSwNCiAgd2VpZ2h0ZWQgPSBOVUxMLA0KICBkaWFnID0gRkFMU0UsDQogIGFkZC5jb2xuYW1lcyA9IE5VTEwNCikNCg0KIy0tLS0gV2F2ZSAyIC0tLS0NCmdyYXBoX3cyIDwtIGlncmFwaDo6Z3JhcGhfZnJvbV9hZGphY2VuY3lfbWF0cml4KA0KICBzb2NfZGF0YSRuZXRzWzIsLF0sICNub3csIEkgdGFrZSB0aGUgc2Vjb25kIHdhdmUNCiAgbW9kZSA9IGMoImRpcmVjdGVkIiksDQogIHdlaWdodGVkID0gTlVMTCwNCiAgZGlhZyA9IEZBTFNFLA0KICBhZGQuY29sbmFtZXMgPSBOVUxMDQopDQoNCmBgYA0KDQojIyBOZXR3b3JrIFZpc3VhbGlzYXRpb25zDQoNCmBgYHtyfQ0KIyBNYWtlIGEgcGxvdGFibGUgZ2VuZGVyIHZhcmlhYmxlIHRvIGZpeCBwcm9ibGVtcyB3aXRoIHZlcnRleC5zaGFwZQ0KZGZfZWdvIDwtIGRmX2VnbyAlPiUgbXV0YXRlKHBsb3RfZ2VuID0gY2FzZV93aGVuKHBlcmNfZmVtYWxlID49IDAuODAgfiAiRmVtYWxlIiwNCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAuZGVmYXVsdCA9ICJNYWxlIikpDQojIGRmX2VnbyAlPiUgY291bnQocGxvdF9nZW4pDQpgYGANCg0KIyMgV2F2ZSAxIHsudGFic2V0fQ0KDQpgYGB7cn0NCiMtLS0tIEZ1bGwgbmV0d29yayBpbmNsdWRpbmcgSXNvbGF0ZXMgLS0tLQ0Kc2V0LnNlZWQoMjM0NSkNCmxfdzEgPC0gbGF5b3V0X3dpdGhfbWRzKGdyYXBoX3cxKQ0KDQpwbG90KGdyYXBoX3cxLCBsYXlvdXQgPSBsX3cxLA0KICAgICB2ZXJ0ZXguY29sb3IgPSBpZmVsc2UoZGZfZWdvJFVuaXZlcnNpdGVpdDEuMjIgPT0gIlJVIiwgInJlZCIsICJnb2xkIiksICNub3csIEkgY2FuIHVzZSBhY3RvciBhdHRyaWJ1dGVzIGZvciBwbG90dGluZy4gDQogICAgIHZlcnRleC5zaGFwZSA9IGlmZWxzZShkZl9lZ28kcGxvdF9nZW4gPT0gIk1hbGUiLCAic3F1YXJlIiwgImNpcmNsZSIpLA0KICAgICB2ZXJ0ZXguc2l6ZSA9IGlncmFwaDo6ZGVncmVlKGdyYXBoX3cxLCBtb2RlID0gImFsbCIpICogMS41LA0KICAgICB2ZXJ0ZXgubGFiZWwgPSBOQSwNCiAgICAgZWRnZS53aWR0aCA9IC44LA0KICAgICBlZGdlLmN1cnZlZCA9IDAuNSwNCiAgICAgZWRnZS5hcnJvdy5zaXplID0wLjIsDQogICAgIG1haW4gPSAiR2VuZGVyIERpc3RyaWJ1dGlvbiBvZiBUd28gU29jaW9sb2d5IERlcGFydG1lbnRzIDIwMjIiKQ0KDQpsZWdlbmQoInRvcGxlZnQiLCBjKCJSYWRib3VkIiwgIlV0cmVjaHQgVW5pdmVyc2l0eSIsICJNYWxlIiwgIkZlbWFsZSIpLCBwY2ggPSBjKDIxLDIxLDE1LDIwKSwgY29sID0gIiM3Nzc3NzciLCBwdC5iZyA9IGMoInJlZCIsICJnb2xkIiksIHB0LmNleCA9IDEsDQogICAgICAgY2V4ID0gMC44LCBidHkgPSAibiIsIG5jb2wgPSAxKQ0KDQojLS0tLSBSZW1vdmUgSXNvbGF0ZXMgLS0tLQ0KZGlhZyhzb2NfZGF0YSRuZXRzWzEsLF0pIDwtIDANCg0Kbm9pc29sYXRlcyA8LSByb3dTdW1zKHNvY19kYXRhJG5ldHNbMSwsXSwgbmEucm0gPSBUKSA+IDANCg0Kc29jX3cxX3NlbCA8LSBzb2NfZGF0YSRuZXRzWzEsLF1bbm9pc29sYXRlcywgbm9pc29sYXRlc10NCg0KZ3JhcGhfdzFfc2VsIDwtIGdyYXBoX2Zyb21fYWRqYWNlbmN5X21hdHJpeChzb2NfdzFfc2VsLCBtb2RlID0gImRpcmVjdGVkIiwgd2VpZ2h0ZWQgPSBOVUxMLCBkaWFnID0gVFJVRSwNCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgYWRkLmNvbG5hbWVzID0gTkEsIGFkZC5yb3duYW1lcyA9IE5BKQ0KDQplZ29faXNvX3cxIDwtIGRmX2Vnb1tub2lzb2xhdGVzLF0NCiMtLS0tIEdyYXBoIHdpdGhvdXQgSXNvbGF0ZXMgLS0tLQ0Kc2V0LnNlZWQoMjM0NSkNCmxfdzEgPC0gbGF5b3V0X3dpdGhfbWRzKGdyYXBoX3cxX3NlbCkNCg0KcGxvdChncmFwaF93MV9zZWwsIGxheW91dCA9IGxfdzEsDQogICAgIHZlcnRleC5jb2xvciA9IGlmZWxzZShlZ29faXNvX3cxJFVuaXZlcnNpdGVpdDEuMjIgPT0gIlJVIiwgInJlZCIsICJnb2xkIiksICNub3csIEkgY2FuIHVzZSBhY3RvciBhdHRyaWJ1dGVzIGZvciBwbG90dGluZy4gDQogICAgIHZlcnRleC5zaGFwZSA9IGlmZWxzZShlZ29faXNvX3cxJHBsb3RfZ2VuID09ICJNYWxlIiwgInNxdWFyZSIsICJjaXJjbGUiKSwNCiAgICAgdmVydGV4LnNpemUgPSBpZ3JhcGg6OmRlZ3JlZShncmFwaF93MV9zZWwsIG1vZGUgPSAiYWxsIikgKiAxLjUsDQogICAgIHZlcnRleC5sYWJlbCA9IE5BLA0KICAgICBlZGdlLndpZHRoID0gLjgsDQogICAgIGVkZ2UuY3VydmVkID0gMC41LA0KICAgICBlZGdlLmFycm93LnNpemUgPTAuMiwNCiAgICAgbWFpbiA9ICJHZW5kZXIgRGlzdHJpYnV0aW9uIG9mIFR3byBTb2Npb2xvZ3kgRGVwYXJ0bWVudHMgMjAyMiIpDQoNCmxlZ2VuZCgidG9wbGVmdCIsIGMoIlJhZGJvdWQiLCAiVXRyZWNodCBVbml2ZXJzaXR5IiwgIk1hbGUiLCAiRmVtYWxlIiksIHBjaCA9IGMoMjEsMjEsMTUsMjApLCBjb2wgPSAiIzc3Nzc3NyIsIHB0LmJnID0gYygicmVkIiwgImdvbGQiKSwgcHQuY2V4ID0gMSwNCiAgICAgICBjZXggPSAwLjgsIGJ0eSA9ICJuIiwgbmNvbCA9IDEpDQpgYGANCg0KIyMgV2F2ZSAyDQoNCmBgYHtyLCBmaWcud2lkdGggPSA4fQ0KIy0tLS0gRnVsbCBuZXR3b3JrIGluY2x1ZGluZyBJc29sYXRlcyAtLS0tDQpzZXQuc2VlZCgyMzQ1KQ0KbF93MiA8LSBsYXlvdXRfbmljZWx5KGdyYXBoX3cyKQ0KDQpwbG90KGdyYXBoX3cyLCBsYXlvdXQgPSBsX3cyLA0KICAgICB2ZXJ0ZXguY29sb3IgPSBpZmVsc2UoZGZfZWdvJFVuaXZlcnNpdGVpdDEuMjQgPT0gIlJVIiwgInJlZCIsICJnb2xkIiksICNub3csIEkgY2FuIHVzZSBhY3RvciBhdHRyaWJ1dGVzIGZvciBwbG90dGluZy4gDQogICAgIHZlcnRleC5zaGFwZSA9IGlmZWxzZShkZl9lZ28kcGxvdF9nZW4gPT0gIk1hbGUiLCAic3F1YXJlIiwgImNpcmNsZSIpLA0KICAgICB2ZXJ0ZXguc2l6ZSA9IGlncmFwaDo6ZGVncmVlKGdyYXBoX3cyLCBtb2RlID0gImFsbCIpICogMS41LA0KICAgICB2ZXJ0ZXgubGFiZWwgPSBOQSwNCiAgICAgZWRnZS53aWR0aCA9IDAuOCwNCiAgICAgZWRnZS5jdXJ2ZWQgPSAwLjUsDQogICAgIGVkZ2UuYXJyb3cuc2l6ZSA9MC4yLA0KICAgICBtYWluID0gIkdlbmRlciBEaXN0cmlidXRpb24gb2YgVHdvIFNvY2lvbG9neSBEZXBhcnRtZW50cyAyMDIyIikNCmxlZ2VuZCgidG9wbGVmdCIsIGMoIlJhZGJvdWQiLCAiVXRyZWNodCBVbml2ZXJzaXR5IiwgIk1hbGUiLCAiRmVtYWxlIiksIHBjaCA9IGMoMjEsMjEsMTUsMjApLCBjb2wgPSAiIzc3Nzc3NyIsIHB0LmJnID0gYygicmVkIiwgImdvbGQiKSwgcHQuY2V4ID0gMSwNCiAgICAgICBjZXggPSAwLjgsIGJ0eSA9ICJuIiwgbmNvbCA9IDEpDQoNCiMtLS0tIFJlbW92ZSBJc29sYXRlcyAtLS0tDQpkaWFnKHNvY19kYXRhJG5ldHNbMiwsXSkgPC0gMA0KDQpub2lzb2xhdGVzIDwtIHJvd1N1bXMoc29jX2RhdGEkbmV0c1syLCxdLCBuYS5ybSA9IFQpID4gMA0KDQpzb2NfdzJfc2VsIDwtIHNvY19kYXRhJG5ldHNbMiwsXVtub2lzb2xhdGVzLCBub2lzb2xhdGVzXQ0KDQpncmFwaF93Ml9zZWwgPC0gZ3JhcGhfZnJvbV9hZGphY2VuY3lfbWF0cml4KHNvY193Ml9zZWwsIG1vZGUgPSAiZGlyZWN0ZWQiLCB3ZWlnaHRlZCA9IE5VTEwsIGRpYWcgPSBUUlVFLA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBhZGQuY29sbmFtZXMgPSBOQSwgYWRkLnJvd25hbWVzID0gTkEpDQoNCmVnb19pc29fdzIgPC0gZGZfZWdvW25vaXNvbGF0ZXMsXQ0KDQojLS0tLSBHcmFwaCB3aXRob3V0IElzb2xhdGVzIC0tLS0NCnNldC5zZWVkKDIzNDUpDQpsX3cyIDwtIGxheW91dF9uaWNlbHkoZ3JhcGhfdzJfc2VsKQ0KDQpwbG90KGdyYXBoX3cyX3NlbCwgbGF5b3V0ID0gbF93MiwNCiAgICAgdmVydGV4LmNvbG9yID0gaWZlbHNlKGVnb19pc29fdzIkVW5pdmVyc2l0ZWl0MS4yNCA9PSAiUlUiLCAicmVkIiwgImdvbGQiKSwgI25vdywgSSBjYW4gdXNlIGFjdG9yIGF0dHJpYnV0ZXMgZm9yIHBsb3R0aW5nLiANCiAgICAgdmVydGV4LnNoYXBlID0gaWZlbHNlKGVnb19pc29fdzIkcGxvdF9nZW4gPT0gIk1hbGUiLCAic3F1YXJlIiwgImNpcmNsZSIpLA0KICAgICB2ZXJ0ZXguc2l6ZSA9IGlncmFwaDo6ZGVncmVlKGdyYXBoX3cyX3NlbCwgbW9kZSA9ICJhbGwiKSAqIDEuNSwNCiAgICAgdmVydGV4LmxhYmVsID0gTkEsDQogICAgIGVkZ2Uud2lkdGggPSAwLjgsDQogICAgIGVkZ2UuY3VydmVkID0gMC41LA0KICAgICBlZGdlLmFycm93LnNpemUgPTAuMiwNCiAgICAgbWFpbiA9ICJHZW5kZXIgRGlzdHJpYnV0aW9uIG9mIFR3byBTb2Npb2xvZ3kgRGVwYXJ0bWVudHMgMjAyMiIpDQpsZWdlbmQoInRvcGxlZnQiLCBjKCJSYWRib3VkIiwgIlV0cmVjaHQgVW5pdmVyc2l0eSIsICJNYWxlIiwgIkZlbWFsZSIpLCBwY2ggPSBjKDIxLDIxLDE1LDIwKSwgY29sID0gIiM3Nzc3NzciLCBwdC5iZyA9IGMoInJlZCIsICJnb2xkIiksIHB0LmNleCA9IDEsDQogICAgICAgY2V4ID0gMC44LCBidHkgPSAibiIsIG5jb2wgPSAxKQ0KYGBgDQoNCiMjIE5ldHdvcmsgU3RhdGlzdGljcw0KDQotICAgSSBhbSB3b3JraW5nIG9uIG1ha2luZyBhIG5pY2UgdGFibGUgdGhhdCBhZGRzIGFsbCByZWxldmFudCBkZXNjcmlwdGl2ZSBOZXR3b3JrIFN0YXRpc3RpY3MNCiAgICAtICAgSmFjY2FyZA0KICAgIC0gICBIYW1taW5nDQogICAgLSAgIEluZGVncmVlcyBhbmQgb3V0ZGVncmVlcw0KICAgIC0gICBNb3JhbidzIEkgZm9yIFByZXN0aWdlICgpDQoNCiMjIyBDYWxjdWxhdGUgTmV0d29yayBTdGF0aXN0aWNzDQoNCmBgYHtyfQ0KIy0tLS0gRXh0cmFjdCBuZXR3b3JrcyAtLS0tDQp3YXZlXzEgPC0gc29jX2RhdGEkbmV0c1sxLCxdDQp3YXZlXzIgPC0gc29jX2RhdGEkbmV0c1syLCxdDQoNCiMtLS0tIEphY2NhcmQsIEhhbW1pbmcgJiBEZW5zaXR5IC0tLS0NCmphYyA8LSBmamFjKHdhdmVfMSwgd2F2ZV8yKQ0KaGFtIDwtIGZoYW0od2F2ZV8xLCB3YXZlXzIpDQoNCmRlbnMxIDwtIGZkZW5zKG5yb3cod2F2ZV8xKSx3YXZlXzEpIA0KZGVuczIgPC0gZmRlbnMobnJvdyh3YXZlXzIpLHdhdmVfMikNCg0KIy0tLS0gSW5kZWdyZWUgZGlzdHJpYnV0aW9uIC0tLS0NCmhpc3QodGFibGUoaWdyYXBoOjpkZWdyZWUoZ3JhcGhfdzEsIG1vZGUgPSAiaW4iKSksIGJyZWFrcyA9IHNlcShmcm9tID0gMCwgdG8gPSAxMDAsIGJ5ID0gNSkseGxhYj0naW5kZWdyZWUnLCBtYWluPSAnSGlzdG9ncmFtIG9mIGluZGVncmVlJykNCmhpc3QodGFibGUoaWdyYXBoOjpkZWdyZWUoZ3JhcGhfdzIsIG1vZGUgPSAiaW4iKSksIGJyZWFrcyA9IHNlcShmcm9tID0gMCwgdG8gPSAxMDAsIGJ5ID0gNSksIHhsYWI9J2luZGVncmVlJywgbWFpbj0gJ0hpc3RvZ3JhbSBvZiBpbmRlZ3JlZScpDQoNCiMtLS0tIE91dGRlZ3JlZSBkaXN0cmlidXRpb24gLS0tLQ0KaGlzdCh0YWJsZShpZ3JhcGg6OmRlZ3JlZShncmFwaF93MSwgbW9kZSA9ICJvdXQiKSksIGJyZWFrcyA9IHNlcShmcm9tID0gMCwgdG8gPSAxMDAsIGJ5ID0gMSksIHhsYWI9J291dGRlZ3JlZScsIG1haW49ICdIaXN0b2dyYW0gb2Ygb3V0ZGVncmVlJykNCmhpc3QodGFibGUoaWdyYXBoOjpkZWdyZWUoZ3JhcGhfdzIsIG1vZGUgPSAib3V0IikpLCBicmVha3MgPSBzZXEoZnJvbSA9IDAsIHRvID0gMTAwLCBieSA9IDEpLCB4bGFiPSdvdXRkZWdyZWUnLCBtYWluPSAnSGlzdG9ncmFtIG9mIG91dGRlZ3JlZScpDQoNCiMtLS0tIE1vcmFuJ3MgSSBmb3IgUHJlc3RpZ2UgLS0tLQ0KIyBXYXZlIDENCmdlb2Rpc3RhbmNlcyA8LSBnZW9kaXN0KHdhdmVfMSwgY291bnQucGF0aHMgPSBUUlVFKQ0KZ2VvZGlzdGFuY2VzIDwtIGdlb2Rpc3RhbmNlcyRnZGlzdA0KDQojIGZpcnN0IGRlZmluZSBhIG5iIGJhc2VkIG9uIGRpc3RhbmNlIDEuDQp3ZWlnaHRzMSA8LSBnZW9kaXN0YW5jZXMgPT0gMQ0KDQpNSV9wcmVzXzEgPC0gZk1vcmFuLkkoZGZfZWdvJFExLlcxLCBzY2FsZWQgPSBGQUxTRSwgd2VpZ2h0ID0gd2VpZ2h0czEsIG5hLnJtID0gVFJVRSwgcm93c3RhbmRhcmRpemUgPSBGQUxTRSkNCk1JX3ByZXNfMQ0KDQojIFdhdmUgMg0KZ2VvZGlzdGFuY2VzIDwtIGdlb2Rpc3Qod2F2ZV8yLCBjb3VudC5wYXRocyA9IFRSVUUpDQpnZW9kaXN0YW5jZXMgPC0gZ2VvZGlzdGFuY2VzJGdkaXN0DQoNCiMgZmlyc3QgZGVmaW5lIGEgbmIgYmFzZWQgb24gZGlzdGFuY2UgMS4NCndlaWdodHMxIDwtIGdlb2Rpc3RhbmNlcyA9PSAxDQoNCk1JX3ByZXNfMiA8LSBmTW9yYW4uSShkZl9lZ28kUTEuVzIsIHNjYWxlZCA9IEZBTFNFLCB3ZWlnaHQgPSB3ZWlnaHRzMSwgbmEucm0gPSBUUlVFLCByb3dzdGFuZGFyZGl6ZSA9IEZBTFNFKQ0KTUlfcHJlc18yDQoNCiMtLS0tIE1vcmFuJ3MgSSBmb3IgZ2VuZGVyIC0tLS0NCiMgV2F2ZSAxDQpnZW9kaXN0YW5jZXMgPC0gZ2VvZGlzdCh3YXZlXzEsIGNvdW50LnBhdGhzID0gVFJVRSkNCmdlb2Rpc3RhbmNlcyA8LSBnZW9kaXN0YW5jZXMkZ2Rpc3QNCg0KIyBmaXJzdCBkZWZpbmUgYSBuYiBiYXNlZCBvbiBkaXN0YW5jZSAxLg0Kd2VpZ2h0czEgPC0gZ2VvZGlzdGFuY2VzID09IDENCg0KTUlfZ2VuXzEgPC0gZk1vcmFuLkkoZGZfZWdvJHBlcmNfZmVtYWxlLCBzY2FsZWQgPSBGQUxTRSwgd2VpZ2h0ID0gd2VpZ2h0czEsIG5hLnJtID0gVFJVRSwgcm93c3RhbmRhcmRpemUgPSBGQUxTRSkNCk1JX2dlbl8xDQoNCiMgV2F2ZSAyDQpnZW9kaXN0YW5jZXMgPC0gZ2VvZGlzdCh3YXZlXzIsIGNvdW50LnBhdGhzID0gVFJVRSkNCmdlb2Rpc3RhbmNlcyA8LSBnZW9kaXN0YW5jZXMkZ2Rpc3QNCg0KIyBmaXJzdCBkZWZpbmUgYSBuYiBiYXNlZCBvbiBkaXN0YW5jZSAxLg0Kd2VpZ2h0czEgPC0gZ2VvZGlzdGFuY2VzID09IDENCg0KTUlfZ2VuXzIgPC0gZk1vcmFuLkkoZGZfZWdvJHBlcmNfZmVtYWxlLCBzY2FsZWQgPSBGQUxTRSwgd2VpZ2h0ID0gd2VpZ2h0czEsIG5hLnJtID0gVFJVRSwgcm93c3RhbmRhcmRpemUgPSBGQUxTRSkNCk1JX2dlbl8yDQoNCmBgYA0KDQojIyMgQ3JlYXRlIERGDQoNCmBgYHtyfQ0KDQpkZiA8LSBkYXRhLmZyYW1lKE5ldHdvcmtfc2l6ZV9XMSA9IG5yb3cod2F2ZV8xKSwNCiAgICAgICAgICAgICAgICAgSmFjY2FyZF9JbmRleCA9IHJvdW5kKGphYywgZGlnaXRzID0gMyksDQogICAgICAgICAgICAgICAgIEhhbW1pbmdfRGlzdGFuY2UgPSByb3VuZChoYW0sIGRpZ2l0cyA9IDMpLA0KICAgICAgICAgICAgICAgICBEZW5zaXR5X3cxID0gcm91bmQoZGVuczEsIGRpZ2l0cyA9IDMpLA0KICAgICAgICAgICAgICAgICBEZW5zaXR5X3cyID0gcm91bmQoZGVuczIsIGRpZ2l0cyA9IDMpLA0KICAgICAgICAgICAgICAgICBNb3JhbklfcHJlc18xID0gcm91bmQoTUlfcHJlc18xW1sxXV0sIGRpZ2l0cyA9IDMpLA0KICAgICAgICAgICAgICAgICBNb3JhbklfcHJlc18yID0gcm91bmQoTUlfcHJlc18yW1sxXV0sIGRpZ2l0cyA9IDMpLA0KICAgICAgICAgICAgICAgICBNb3JhbklfZ2VuZGVyXzEgPSByb3VuZChNSV9nZW5fMVtbMV1dLCBkaWdpdHMgPSAzKSwNCiAgICAgICAgICAgICAgICAgTW9yYW5JX2dlbmRlcl8yID0gcm91bmQoTUlfZ2VuXzJbWzFdXSwgZGlnaXRzID0gMykpDQoNCnJvd25hbWVzKGRmKSA8LSBOVUxMDQoNCmBgYA0KDQojIyMgQWRkIGRhdGEgdG8gYXBwZW5kaXgNCg0KYGBge3J9DQoNCkRUOjpkYXRhdGFibGUoZGYpDQoNCmBgYA0KDQpgYGB7cn0NCmZzaG93ZGYodHNfZHlhZHNfZXZvKHdhdmVfMiwgd2F2ZV8xKSkNCmBgYA0K</div>
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIkRlc2NyaXB0aXZlIEFuYWx5c2lzIg0KI2JpYmxpb2dyYXBoeTogcmVmZXJlbmNlcy5iaWINCmF1dGhvcjogIk5pZWxzIFZ1bGxpbmdzIg0KYmlibGlvZ3JhcGh5OiByZWZlcmVuY2VzLmJpYg0KLS0tDQoNCmBgYHtyLCBlY2hvPUZBTFNFfQ0Kcm0obGlzdCA9IGxzKCkpDQpgYGANCg0KIyBMb2FkIFVERg0KDQpgYGB7cn0NCmNvbG9yaXplIDwtIGZ1bmN0aW9uKHgsIGNvbG9yKSB7c3ByaW50ZigiPHNwYW4gc3R5bGU9J2NvbG9yOiAlczsnPiVzPC9zcGFuPiIsIGNvbG9yLCB4KSB9DQoNCmZwYWNrYWdlLmNoZWNrIDwtIGZ1bmN0aW9uKHBhY2thZ2VzKSB7DQogIGxhcHBseShwYWNrYWdlcywgRlVOID0gZnVuY3Rpb24oeCkgew0KICAgIGlmICghcmVxdWlyZSh4LCBjaGFyYWN0ZXIub25seSA9IFRSVUUpKSB7DQogICAgICBpbnN0YWxsLnBhY2thZ2VzKHgsIGRlcGVuZGVuY2llcyA9IFRSVUUpDQogICAgICBsaWJyYXJ5KHgsIGNoYXJhY3Rlci5vbmx5ID0gVFJVRSkNCiAgICB9DQogIH0pDQp9DQoNCmZzYXZlIDwtIGZ1bmN0aW9uKHgsIGZpbGUgPSBOVUxMLCBsb2NhdGlvbiA9ICIuL2RhdGEvcHJvY2Vzc2VkLyIpIHsNCiAgaWZlbHNlKCFkaXIuZXhpc3RzKCJkYXRhIiksIGRpci5jcmVhdGUoImRhdGEiKSwgRkFMU0UpDQogIGlmZWxzZSghZGlyLmV4aXN0cygiZGF0YS9wcm9jZXNzZWQiKSwgZGlyLmNyZWF0ZSgiZGF0YS9wcm9jZXNzZWQiKSwgRkFMU0UpDQogIGlmIChpcy5udWxsKGZpbGUpKQ0KICAgIGZpbGUgPSBkZXBhcnNlKHN1YnN0aXR1dGUoeCkpDQogIGRhdGVuYW1lIDwtIHN1YnN0cihnc3ViKCJbOi1dIiwgIiIsIFN5cy50aW1lKCkpLCAxLCA4KQ0KICB0b3RhbG5hbWUgPC0gcGFzdGUobG9jYXRpb24sIGRhdGVuYW1lLCBmaWxlLCAiLnJkYSIsIHNlcCA9ICIiKQ0KICBzYXZlKHgsIGZpbGUgPSB0b3RhbG5hbWUpICAjbmVlZCB0byBmaXggaWYgZmlsZSBpcyByZWxvYWRlZCBhcyBpbnB1dCBuYW1lLCBub3QgYXMgeC4gDQp9DQoNCmZsb2FkIDwtIGZ1bmN0aW9uKGZpbGVuYW1lKSB7DQogIGxvYWQoZmlsZW5hbWUpDQogIGdldChscygpW2xzKCkgIT0gImZpbGVuYW1lIl0pDQp9DQoNCmZzaG93ZGYgPC0gZnVuY3Rpb24oeCwgLi4uKSB7DQogIGtuaXRyOjprYWJsZSh4LCBkaWdpdHMgPSAyLCAiaHRtbCIsIC4uLikgJT4lDQogICAga2FibGVFeHRyYTo6a2FibGVfc3R5bGluZyhib290c3RyYXBfb3B0aW9ucyA9IGMoInN0cmlwZWQiLCAiaG92ZXIiKSkgJT4lDQogICAga2FibGVFeHRyYTo6c2Nyb2xsX2JveCh3aWR0aCA9ICIxMDAlIiwgaGVpZ2h0ID0gIjMwMHB4IikNCn0NCg0KYGBgDQoNCiMjIE5ldHdvcmsgU3RhdGlzdGljcyBmdW5jdGlvbnMNCg0KYGBge3J9DQoNCiMtLS0tIEphY2NhcmQgSW5kZXggLS0tLQ0KZmphYyA8LSBmdW5jdGlvbihuZXQxLCBuZXQyKSB7DQogIA0KICBkaWFnKG5ldDEpIDwtIE5BDQogIGRpYWcobmV0MikgPC0gTkENCiAgdGogPC0gdGFibGUoYXMubnVtZXJpYyhuZXQxKSwgYXMubnVtZXJpYyhuZXQyKSkgDQogIGphY2NhcmQgPC0gdGpbMiwyXSAvKHRqWzEsMl0gKyB0alsyLDFdICsgdGpbMiwyXSkNCiAgaGFtbWluZyA8LSB0alsyLDFdICsgdGpbMSwyXQ0KICANCiAgcmV0dXJuKGphY2NhcmQpDQogIA0KfQ0KDQojLS0tLSBIYW1taW5nIERpc3RhbmNlIC0tLS0NCmZoYW0gPC0gZnVuY3Rpb24obmV0MSwgbmV0Mikgew0KICBkaWFnKG5ldDEpIDwtIE5BDQogIGRpYWcobmV0MikgPC0gTkENCiAgdGogPC0gdGFibGUoYXMubnVtZXJpYyhuZXQxKSwgYXMubnVtZXJpYyhuZXQyKSkgDQogIGhhbW1pbmcgPC0gdGpbMiwxXSArIHRqWzEsMl0NCiAgDQogIHJldHVybihoYW1taW5nKQ0KICANCn0NCg0KIy0tLS0gRGVuc2l0eSAtLS0tDQpmZGVucyA8LSBmdW5jdGlvbihOLCBkYXRhID0gbmV0LCBkaXJlY3RlZCA9IFRSVUUpIHsNCiAgDQogIGlmIChkaXJlY3RlZCA9PSBUUlVFKSB7DQogICAgcG9zX3RpZSA8LSAoTiAqIChOIC0gMSkpDQogIH0gZWxzZSB7DQogICAgcG9zX3RpZSA8LSAoTiAqIChOIC0gMSkpLzINCiAgICANCiAgfQ0KICANCiAgb2JzX3RpZSA8LSBzdW0oc25hOjpkeWFkLmNlbnN1cyhkYXRhKVsxOjJdKQ0KICBkZW5zIDwtIG9ic190aWUvcG9zX3RpZQ0KICANCiAgcmV0dXJuKGRlbnMpDQp9DQoNCiMtLS0tIE1vcmFuJ3MgSSAtLS0tDQpmTW9yYW4uSSA8LSBmdW5jdGlvbih4LCB3ZWlnaHQsIHNjYWxlZCA9IEZBTFNFLCBuYS5ybSA9IEZBTFNFLCBhbHRlcm5hdGl2ZSA9ICJ0d28uc2lkZWQiLCByb3dzdGFuZGFyZGl6ZSA9IFRSVUUpIHsNCiAgaWYgKHJvd3N0YW5kYXJkaXplKSB7DQogICAgaWYgKGRpbSh3ZWlnaHQpWzFdICE9IGRpbSh3ZWlnaHQpWzJdKQ0KICAgICAgc3RvcCgiJ3dlaWdodCcgbXVzdCBiZSBhIHNxdWFyZSBtYXRyaXgiKQ0KICAgIG4gPC0gbGVuZ3RoKHgpDQogICAgaWYgKGRpbSh3ZWlnaHQpWzFdICE9IG4pDQogICAgICBzdG9wKCInd2VpZ2h0JyBtdXN0IGhhdmUgYXMgbWFueSByb3dzIGFzIG9ic2VydmF0aW9ucyBpbiAneCciKQ0KICAgIGVpIDwtIC0xLyhuIC0gMSkNCiAgICBuYXMgPC0gaXMubmEoeCkNCiAgICBpZiAoYW55KG5hcykpIHsNCiAgICAgIGlmIChuYS5ybSkgew0KICAgICAgICB4IDwtIHhbIW5hc10NCiAgICAgICAgbiA8LSBsZW5ndGgoeCkNCiAgICAgICAgd2VpZ2h0IDwtIHdlaWdodFshbmFzLCAhbmFzXQ0KICAgICAgfSBlbHNlIHsNCiAgICAgICAgd2FybmluZygiJ3gnIGhhcyBtaXNzaW5nIHZhbHVlczogbWF5YmUgeW91IHdhbnRlZCB0byBzZXQgbmEucm0gPSBUUlVFPyIpDQogICAgICAgIHJldHVybihsaXN0KG9ic2VydmVkID0gTkEsIGV4cGVjdGVkID0gZWksIHNkID0gTkEsIHAudmFsdWUgPSBOQSkpDQogICAgICB9DQogICAgfQ0KICAgIFJPV1NVTSA8LSByb3dTdW1zKHdlaWdodCkNCiAgICBST1dTVU1bUk9XU1VNID09IDBdIDwtIDENCiAgICB3ZWlnaHQgPC0gd2VpZ2h0L1JPV1NVTQ0KICAgIHMgPC0gc3VtKHdlaWdodCkNCiAgICBtIDwtIG1lYW4oeCkNCiAgICB5IDwtIHggLSBtDQogICAgY3YgPC0gc3VtKHdlaWdodCAqIHkgJW8lIHkpDQogICAgdiA8LSBzdW0oeV4yKQ0KICAgIG9icyA8LSAobi9zKSAqIChjdi92KQ0KICAgIGlmIChzY2FsZWQpIHsNCiAgICAgIGkubWF4IDwtIChuL3MpICogKHNkKHJvd1N1bXMod2VpZ2h0KSAqIHkpL3NxcnQodi8obiAtIDEpKSkNCiAgICAgIG9icyA8LSBvYnMvaS5tYXgNCiAgICB9DQogICAgUzEgPC0gMC41ICogc3VtKCh3ZWlnaHQgKyB0KHdlaWdodCkpXjIpDQogICAgUzIgPC0gc3VtKChhcHBseSh3ZWlnaHQsIDEsIHN1bSkgKyBhcHBseSh3ZWlnaHQsIDIsIHN1bSkpXjIpDQogICAgcy5zcSA8LSBzXjINCiAgICBrIDwtIChzdW0oeV40KS9uKS8odi9uKV4yDQogICAgc2RpIDwtIHNxcnQoKG4gKiAoKG5eMiAtIDMgKiBuICsgMykgKiBTMSAtIG4gKiBTMiArIDMgKiBzLnNxKSAtIGsgKiAobiAqIChuIC0gMSkgKiBTMSAtIDIgKiBuICoNCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFMyICsgNiAqIHMuc3EpKS8oKG4gLSAxKSAqIChuIC0gMikgKiAobiAtIDMpICogcy5zcSkgLSAxLygobiAtIDEpXjIpKQ0KICAgIGFsdGVybmF0aXZlIDwtIG1hdGNoLmFyZyhhbHRlcm5hdGl2ZSwgYygidHdvLnNpZGVkIiwgImxlc3MiLCAiZ3JlYXRlciIpKQ0KICAgIHB2IDwtIHBub3JtKG9icywgbWVhbiA9IGVpLCBzZCA9IHNkaSkNCiAgICBpZiAoYWx0ZXJuYXRpdmUgPT0gInR3by5zaWRlZCIpDQogICAgICBwdiA8LSBpZiAob2JzIDw9IGVpKQ0KICAgICAgICAyICogcHYgZWxzZSAyICogKDEgLSBwdikNCiAgICBpZiAoYWx0ZXJuYXRpdmUgPT0gImdyZWF0ZXIiKQ0KICAgICAgcHYgPC0gMSAtIHB2DQogICAgbGlzdChvYnNlcnZlZCA9IG9icywgZXhwZWN0ZWQgPSBlaSwgc2QgPSBzZGksIHAudmFsdWUgPSBwdikNCiAgfSBlbHNlIHsNCiAgICBpZiAoZGltKHdlaWdodClbMV0gIT0gZGltKHdlaWdodClbMl0pDQogICAgICBzdG9wKCInd2VpZ2h0JyBtdXN0IGJlIGEgc3F1YXJlIG1hdHJpeCIpDQogICAgbiA8LSBsZW5ndGgoeCkNCiAgICBpZiAoZGltKHdlaWdodClbMV0gIT0gbikNCiAgICAgIHN0b3AoIid3ZWlnaHQnIG11c3QgaGF2ZSBhcyBtYW55IHJvd3MgYXMgb2JzZXJ2YXRpb25zIGluICd4JyIpDQogICAgZWkgPC0gLTEvKG4gLSAxKQ0KICAgIG5hcyA8LSBpcy5uYSh4KQ0KICAgIGlmIChhbnkobmFzKSkgew0KICAgICAgaWYgKG5hLnJtKSB7DQogICAgICAgIHggPC0geFshbmFzXQ0KICAgICAgICBuIDwtIGxlbmd0aCh4KQ0KICAgICAgICB3ZWlnaHQgPC0gd2VpZ2h0WyFuYXMsICFuYXNdDQogICAgICB9IGVsc2Ugew0KICAgICAgICB3YXJuaW5nKCIneCcgaGFzIG1pc3NpbmcgdmFsdWVzOiBtYXliZSB5b3Ugd2FudGVkIHRvIHNldCBuYS5ybSA9IFRSVUU/IikNCiAgICAgICAgcmV0dXJuKGxpc3Qob2JzZXJ2ZWQgPSBOQSwgZXhwZWN0ZWQgPSBlaSwgc2QgPSBOQSwgcC52YWx1ZSA9IE5BKSkNCiAgICAgIH0NCiAgICB9DQogICAgIyBST1dTVU0gPC0gcm93U3Vtcyh3ZWlnaHQpIFJPV1NVTVtST1dTVU0gPT0gMF0gPC0gMSB3ZWlnaHQgPC0gd2VpZ2h0L1JPV1NVTQ0KICAgIHMgPC0gc3VtKHdlaWdodCkNCiAgICBtIDwtIG1lYW4oeCkNCiAgICB5IDwtIHggLSBtDQogICAgY3YgPC0gc3VtKHdlaWdodCAqIHkgJW8lIHkpDQogICAgdiA8LSBzdW0oeV4yKQ0KICAgIG9icyA8LSAobi9zKSAqIChjdi92KQ0KICAgIGlmIChzY2FsZWQpIHsNCiAgICAgIGkubWF4IDwtIChuL3MpICogKHNkKHJvd1N1bXMod2VpZ2h0KSAqIHkpL3NxcnQodi8obiAtIDEpKSkNCiAgICAgIG9icyA8LSBvYnMvaS5tYXgNCiAgICB9DQogICAgUzEgPC0gMC41ICogc3VtKCh3ZWlnaHQgKyB0KHdlaWdodCkpXjIpDQogICAgUzIgPC0gc3VtKChhcHBseSh3ZWlnaHQsIDEsIHN1bSkgKyBhcHBseSh3ZWlnaHQsIDIsIHN1bSkpXjIpDQogICAgcy5zcSA8LSBzXjINCiAgICBrIDwtIChzdW0oeV40KS9uKS8odi9uKV4yDQogICAgc2RpIDwtIHNxcnQoKG4gKiAoKG5eMiAtIDMgKiBuICsgMykgKiBTMSAtIG4gKiBTMiArIDMgKiBzLnNxKSAtIGsgKiAobiAqIChuIC0gMSkgKiBTMSAtIDIgKiBuICoNCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFMyICsgNiAqIHMuc3EpKS8oKG4gLSAxKSAqIChuIC0gMikgKiAobiAtIDMpICogcy5zcSkgLSAxLygobiAtIDEpXjIpKQ0KICAgIGFsdGVybmF0aXZlIDwtIG1hdGNoLmFyZyhhbHRlcm5hdGl2ZSwgYygidHdvLnNpZGVkIiwgImxlc3MiLCAiZ3JlYXRlciIpKQ0KICAgIHB2IDwtIHBub3JtKG9icywgbWVhbiA9IGVpLCBzZCA9IHNkaSkNCiAgICBpZiAoYWx0ZXJuYXRpdmUgPT0gInR3by5zaWRlZCIpDQogICAgICBwdiA8LSBpZiAob2JzIDw9IGVpKQ0KICAgICAgICAyICogcHYgZWxzZSAyICogKDEgLSBwdikNCiAgICBpZiAoYWx0ZXJuYXRpdmUgPT0gImdyZWF0ZXIiKQ0KICAgICAgcHYgPC0gMSAtIHB2DQogICAgbGlzdChvYnNlcnZlZCA9IG9icywgZXhwZWN0ZWQgPSBlaSwgc2QgPSBzZGksIHAudmFsdWUgPSBwdikNCiAgfQ0KICANCiAgDQp9DQpgYGANCg0KIyMgQ3VzdG9tIER5YWQgJiBUcmlhZCBjZW5zdXMgZnVuY3Rpb24NCg0KYGBge3J9DQojLS0tLSBEeWFkIGNlbnN1cyAtLS0tDQp0c19keWFkc19ldm8gPC0gZnVuY3Rpb24gKHNpbXMsIG5ldDEsIHNpbXR5cGUgPSAibm90eXBlc3BlY2lmaWVkIiwgZm9ycGxvdCA9IFRSVUUpIHsNCiAgDQogIA0KICBpZiAoaXMubGlzdChzaW1zKSA9PSBUUlVFKSB7DQogICAgbnNpbXMgPC0gbGVuZ3RoKHNpbXMpDQogIH0NCiAgZWxzZSB7DQogICAgbnNpbXMgPC0gMQ0KICB9DQogIGRmIDwtIGZvcmVhY2g6OmZvcmVhY2goMTpuc2ltcywgaSA9IGl0ZXJhdG9yczo6aWNvdW50KCksIA0KICAgICAgICAgICAgICAgICAgICAgICAgIC5jb21iaW5lID0gInJiaW5kIikgJWRvcGFyJSB7DQogICAgICAgICAgICAgICAgICAgICAgICAgICANCiAgICAgICAgICAgICAgICAgICAgICAgICAgIGlmIChpcy5saXN0KHNpbXMpID09IFRSVUUpIHsNCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgbmV0MiA8LSBzaW1zW1tpXV0NCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgDQogICAgICAgICAgICAgICAgICAgICAgICAgICB9DQogICAgICAgICAgICAgICAgICAgICAgICAgICBlbHNlIHsNCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgbmV0MiA8LSBzaW1zDQogICAgICAgICAgICAgICAgICAgICAgICAgICB9DQogICAgICAgICAgICAgICAgICAgICAgICAgICANCiAgICAgICAgICAgICAgICAgICAgICAgICAgICNmaW5kIHdoaWNoIHZhbHVlcyBpbiB0aGUgbWF0cml4IGFyZSBtaXNzaW5nDQogICAgICAgICAgICAgICAgICAgICAgICAgICBOX05BIDwtIHVuaXF1ZSh3aGljaChpcy5uYShuZXQxKSB8IGlzLm5hKG5ldDIpLCBhcnIuaW5kID0gVFJVRSlbLDFdKSAjIElkZW50aWZ5IG5vcm1hbCBOQSB2YWx1ZXMNCiAgICAgICAgICAgICAgICAgICAgICAgICAgIFNfTkEgPC0gYXMuZGF0YS5mcmFtZSh0YWJsZSh3aGljaChuZXQxID09IDEwIHwgbmV0MiA9PSAxMCwgYXJyLmluZCA9IFRSVUUpWywxXSkpICMgSWRlbnRpZnkgU3RydWN0dXJhbCBOQXMNCiAgICAgICAgICAgICAgICAgICAgICAgICAgIFNfTkEgPC0gd2hpY2goU19OQSRGcmVxID09IG5yb3cobmV0MSkpDQogICAgICAgICAgICAgICAgICAgICAgICAgICBOQV9yb3dzIDwtIGMoYXMudmVjdG9yKE5fTkEpLCBhcy52ZWN0b3IoU19OQSkpICMgc2F2ZSBhbGwgYWN0b3JzIGluIDEgdmVjdG9yDQogICAgICAgICAgICAgICAgICAgICAgICAgICANCiAgICAgICAgICAgICAgICAgICAgICAgICAgIGlmKGxlbmd0aChOQV9yb3dzKT4gMCl7DQogICAgICAgICAgICAgICAgICAgICAgICAgICAgIA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICB3YXJuaW5nKG5jb2wobmV0MSktIGxlbmd0aChOQV9yb3dzKSwiIGFjdG9ycyB3aWxsIGJlIGFuYWx5c2VkIGR1ZSB0byBtaXNzaW5nIHZhbHVlcy4gRm9sbG93aW5nICIsIGxlbmd0aChOQV9yb3dzKSwgIiBhY3RvcnMgaGF2ZSBiZWVuIGxpc3R3aXNlIGRlbGV0ZWQ6ICIscGFzdGUoTkFfcm93cywgY29sbGFwc2U9IiwiKSkNCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIyBEZWxldGUgYm90aCByb3dzIGFuZCBjb2x1bW5zIG9mIGFjdG9ycyB0aGF0IGFyZSBtaXNzaW5nIChOQSkNCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgbmV0MSA8LSBuZXQxWy1OQV9yb3dzLC1OQV9yb3dzXQ0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICANCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgbmV0MiA8LSBuZXQyWy1OQV9yb3dzLC1OQV9yb3dzXQ0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICANCiAgICAgICAgICAgICAgICAgICAgICAgICAgIH0NCiAgICAgICAgICAgICAgICAgICAgICAgICAgIGRpYWcobmV0MSkgPC0gTkENCiAgICAgICAgICAgICAgICAgICAgICAgICAgIGRpYWcobmV0MikgPC0gTkENCiAgICAgICAgICAgICAgICAgICAgICAgICAgIGZsaXBzIDwtIG5ldDEgKyB0KG5ldDIpIC0gbmV0Mg0KICAgICAgICAgICAgICAgICAgICAgICAgICAganVtcHN0MSA8LSBuZXQxICsgdChuZXQxKQ0KICAgICAgICAgICAgICAgICAgICAgICAgICAgc3RhYmxldDEgPC0ganVtcHN0MQ0KICAgICAgICAgICAgICAgICAgICAgICAgICAganVtcHN0MVtsb3dlci50cmkoanVtcHN0MSldIDwtIE5BDQogICAgICAgICAgICAgICAgICAgICAgICAgICBqdW1wc3QyIDwtIG5ldDIgKyB0KG5ldDIpDQogICAgICAgICAgICAgICAgICAgICAgICAgICBzdGFibGV0MiA8LSBqdW1wc3QyDQogICAgICAgICAgICAgICAgICAgICAgICAgICBqdW1wc3QyW2xvd2VyLnRyaShqdW1wc3QyKV0gPC0gTkENCiAgICAgICAgICAgICAgICAgICAgICAgICAgIHN0YWJsZTAwIDwtIGFzLmRhdGEuZnJhbWUod2hpY2goanVtcHN0MSA9PSAwICYganVtcHN0MiA9PSANCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAwLCBhcnIuaW5kID0gVFJVRSkpDQogICAgICAgICAgICAgICAgICAgICAgICAgICBzdGFibGUwMSA8LSBhcy5kYXRhLmZyYW1lKHdoaWNoKGZsaXBzID09IDAgJiBzdGFibGV0MSA9PSANCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAxICYgc3RhYmxldDIgPT0gMSwgYXJyLmluZCA9IFRSVUUpKQ0KICAgICAgICAgICAgICAgICAgICAgICAgICAgc3RhYmxlMTEgPC0gYXMuZGF0YS5mcmFtZSh3aGljaChqdW1wc3QxID09IDIgJiBqdW1wc3QyID09IA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDIsIGFyci5pbmQgPSBUUlVFKSkNCiAgICAgICAgICAgICAgICAgICAgICAgICAgIE51bGxfQXNzeW0gPC0gYXMuZGF0YS5mcmFtZSh3aGljaChqdW1wc3QxID09IDAgJiBzdGFibGV0MiA9PSANCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDEsIGFyci5pbmQgPSBUUlVFKSkNCiAgICAgICAgICAgICAgICAgICAgICAgICAgIEFzc3ltX051bGwgPC0gYXMuZGF0YS5mcmFtZSh3aGljaChmbGlwcyA9PSAwICYgc3RhYmxldDEgPT0gDQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAxICYgc3RhYmxldDIgPT0gMCwgYXJyLmluZCA9IFRSVUUpKQ0KICAgICAgICAgICAgICAgICAgICAgICAgICAgQXNzeW1fTXV0IDwtIGFzLmRhdGEuZnJhbWUod2hpY2goc3RhYmxldDEgPT0gMSAmIGp1bXBzdDIgPT0gDQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDIsIGFyci5pbmQgPSBUUlVFKSkNCiAgICAgICAgICAgICAgICAgICAgICAgICAgIE11dF9Bc3N5bSA8LSBhcy5kYXRhLmZyYW1lKHdoaWNoKGp1bXBzdDEgPT0gMiAmIGp1bXBzdDIgPT0gDQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDEsIGFyci5pbmQgPSBUUlVFKSkNCiAgICAgICAgICAgICAgICAgICAgICAgICAgIGZsaXAgPC0gYXMuZGF0YS5mcmFtZSh3aGljaChmbGlwcyA9PSAyICYgc3RhYmxldDEgIT0gDQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAyICYgc3RhYmxldDIgIT0gMiwgYXJyLmluZCA9IFRSVUUpKQ0KICAgICAgICAgICAgICAgICAgICAgICAgICAganVtcDAyIDwtIGFzLmRhdGEuZnJhbWUod2hpY2goanVtcHN0MSA9PSAwICYganVtcHN0MiA9PSANCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgMiwgYXJyLmluZCA9IFRSVUUpKQ0KICAgICAgICAgICAgICAgICAgICAgICAgICAganVtcDIwIDwtIGFzLmRhdGEuZnJhbWUod2hpY2goanVtcHN0MSA9PSAyICYganVtcHN0MiA9PSANCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgMCwgYXJyLmluZCA9IFRSVUUpKQ0KICAgICAgICAgICAgICAgICAgICAgICAgICAgdGFibGUgPC0gY2JpbmQobnJvdyhzdGFibGUwMCksIG5yb3coc3RhYmxlMDEpLCBucm93KHN0YWJsZTExKSwgDQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBucm93KE51bGxfQXNzeW0pLCBucm93KEFzc3ltX051bGwpLCBucm93KEFzc3ltX011dCksIA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgbnJvdyhNdXRfQXNzeW0pLCBucm93KGZsaXApLCBucm93KGp1bXAwMiksIG5yb3coanVtcDIwKSkNCiAgICAgICAgICAgICAgICAgICAgICAgICAgIGNvbG5hbWVzKHRhYmxlKSA8LSBjKCJOdWxsID4gTnVsbCIsICJBc3N5bSA+IEFzc3ltIiwgIk11dHVhbCA+IE11dHVhbCIsIA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIk51bGwgPiBBc3N5bSIsICJBc3N5bSA+IE51bGwiLCAiQXNzeW0gPiBNdXR1YWwiLCAiTXV0dWFsID4gQXNzeW0iLCANCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJUaWUgZmxpcCIsICJOdWxsID4gTXV0dWFsIiwgIk11dHVhbCA+IE51bGwiKQ0KICAgICAgICAgICAgICAgICAgICAgICAgICAgc2ltbmV0IDwtIE5VTEwNCiAgICAgICAgICAgICAgICAgICAgICAgICAgIHJldHVybihkYXRhLmZyYW1lKHNpbW5ldCA9IGksIHRhYmxlKSkNCiAgICAgICAgICAgICAgICAgICAgICAgICB9DQogIGRmIDwtIGFzLmRhdGEuZnJhbWUoZGYpDQogIHR5cGUgPC0gTlVMTA0KICBkZiR0eXBlIDwtIHNpbXR5cGUNCiAgaWYgKGZvcnBsb3QgPT0gVFJVRSkgew0KICAgIGRmIDwtIHRpZHlyOjpwaXZvdF9sb25nZXIoZGYsIGNvbHMgPSAhYyhzaW1uZXQsIHR5cGUpLCANCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIG5hbWVzX3RvID0gIngiLCB2YWx1ZXNfdG8gPSAieSIpDQogIH0NCiAgcmV0dXJuKGRmKQ0KfQ0KDQojLS0tLSBUcmlhZCBjZW5zdXMgLS0tLQ0KdHNfdHJpYWRzX2V2byA8LSBmdW5jdGlvbiAoc2ltcywgbmV0MSwgc2ltdHlwZSA9ICJub3R5cGVzcGVjaWZpZWQiLCBmb3JwbG90ID0gVFJVRSkgew0KICANCiAgDQogIHggPC0gaiA8LSBrIDwtIGExIDwtIGEyIDwtIGEzIDwtIHRpZV9jaGFuZ2UgPC0gRnJlcSA8LSBzaW1uZXQgPC0gdHlwZSA8LSBOVUxMDQogIGlmIChpcy5saXN0KHNpbXMpID09IFRSVUUpIHsNCiAgICBuc2ltcyA8LSBsZW5ndGgoc2ltcykNCiAgfQ0KICBlbHNlIHsNCiAgICBuc2ltcyA8LSAxDQogIH0NCiAgZGYgPC0gZm9yZWFjaDo6Zm9yZWFjaCgxOm5zaW1zLCB4ID0gaXRlcmF0b3JzOjppY291bnQoKSwuY29tYmluZSA9ICJyYmluZCIpICVkb3BhciUgew0KICAgIA0KICAgIGlmIChpcy5saXN0KHNpbXMpID09IFRSVUUpIHsNCiAgICAgIG5ldDIgPC0gc2ltc1tbeF1dDQogICAgICANCiAgICAgICNmaW5kIHdoaWNoIHZhbHVlcyBpbiB0aGUgbWF0cml4IGFyZSBtaXNzaW5nDQogICAgICBOX05BIDwtIHVuaXF1ZSh3aGljaChpcy5uYShuZXQxKSB8IGlzLm5hKG5ldDIpLCBhcnIuaW5kID0gVFJVRSlbLDFdKSAjIElkZW50aWZ5IG5vcm1hbCBOQSB2YWx1ZXMNCiAgICAgIFNfTkEgPC0gYXMuZGF0YS5mcmFtZSh0YWJsZSh3aGljaChuZXQxID09IDEwIHwgbmV0MiA9PSAxMCwgYXJyLmluZCA9IFRSVUUpWywxXSkpICMgSWRlbnRpZnkgU3RydWN0dXJhbCBOQXMNCiAgICAgIFNfTkEgPC0gd2hpY2goU19OQSRGcmVxID09IG5yb3cobmV0MSkpDQogICAgICBOQV9yb3dzIDwtIGMoYXMudmVjdG9yKE5fTkEpLCBhcy52ZWN0b3IoU19OQSkpICMgc2F2ZSBhbGwgYWN0b3JzIGluIDEgdmVjdG9yDQogICAgICANCiAgICAgIGlmKGxlbmd0aChOQV9yb3dzKT4gMCl7DQogICAgICAgIA0KICAgICAgICB3YXJuaW5nKG5jb2wobmV0MSktIGxlbmd0aChOQV9yb3dzKSwiIGFjdG9ycyB3aWxsIGJlIGFuYWx5c2VkIGR1ZSB0byBtaXNzaW5nIHZhbHVlcy4gRm9sbG93aW5nICIsIGxlbmd0aChOQV9yb3dzKSwgIiBhY3RvcnMgaGF2ZSBiZWVuIGxpc3R3aXNlIGRlbGV0ZWQ6ICIscGFzdGUoTkFfcm93cywgY29sbGFwc2U9IiwiKSkNCiAgICAgICAgIyBEZWxldGUgYm90aCByb3dzIGFuZCBjb2x1bW5zIG9mIGFjdG9ycyB0aGF0IGFyZSBtaXNzaW5nIChOQSkNCiAgICAgICAgbmV0MSA8LSBuZXQxWy1OQV9yb3dzLC1OQV9yb3dzXQ0KICAgICAgICANCiAgICAgICAgbmV0MiA8LSBuZXQyWy1OQV9yb3dzLC1OQV9yb3dzXQ0KICAgICAgICANCiAgICAgIH0NCiAgICAgIA0KICAgIH0NCiAgICBlbHNlIHsNCiAgICAgIG5ldDIgPC0gc2ltcw0KICAgICAgDQogICAgICAjZmluZCB3aGljaCB2YWx1ZXMgaW4gdGhlIG1hdHJpeCBhcmUgbWlzc2luZw0KICAgICAgTkFfcm93IDwtIHVuaXF1ZSh3aGljaChpcy5uYShuZXQxKSB8IGlzLm5hKG5ldDIpLCBhcnIuaW5kID0gVFJVRSlbLDFdKSANCiAgICAgIA0KICAgICAgI2ZpbmQgd2hpY2ggdmFsdWVzIGluIHRoZSBtYXRyaXggYXJlIG1pc3NpbmcNCiAgICAgIE5fTkEgPC0gdW5pcXVlKHdoaWNoKGlzLm5hKG5ldDEpIHwgaXMubmEobmV0MiksIGFyci5pbmQgPSBUUlVFKVssMV0pICMgSWRlbnRpZnkgbm9ybWFsIE5BIHZhbHVlcw0KICAgICAgU19OQSA8LSBhcy5kYXRhLmZyYW1lKHRhYmxlKHdoaWNoKG5ldDEgPT0gMTAgfCBuZXQyID09IDEwLCBhcnIuaW5kID0gVFJVRSlbLDFdKSkgIyBJZGVudGlmeSBTdHJ1Y3R1cmFsIE5Bcw0KICAgICAgU19OQSA8LSB3aGljaChTX05BJEZyZXEgPT0gbnJvdyhuZXQxKSkNCiAgICAgIE5BX3Jvd3MgPC0gYyhhcy52ZWN0b3IoTl9OQSksIGFzLnZlY3RvcihTX05BKSkgIyBzYXZlIGFsbCBhY3RvcnMgaW4gMSB2ZWN0b3INCiAgICAgIA0KICAgICAgaWYobGVuZ3RoKE5BX3Jvd3MpPiAwKXsNCiAgICAgICAgDQogICAgICAgIHdhcm5pbmcobmNvbChuZXQxKS0gbGVuZ3RoKE5BX3Jvd3MpLCIgYWN0b3JzIHdpbGwgYmUgYW5hbHlzZWQgZHVlIHRvIG1pc3NpbmcgdmFsdWVzLiBGb2xsb3dpbmcgIiwgbGVuZ3RoKE5BX3Jvd3MpLCAiIGFjdG9ycyBoYXZlIGJlZW4gbGlzdHdpc2UgZGVsZXRlZDogIixwYXN0ZShOQV9yb3dzLCBjb2xsYXBzZT0iLCIpKQ0KICAgICAgICAjIERlbGV0ZSBib3RoIHJvd3MgYW5kIGNvbHVtbnMgb2YgYWN0b3JzIHRoYXQgYXJlIG1pc3NpbmcgKE5BKQ0KICAgICAgICBuZXQxIDwtIG5ldDFbLU5BX3Jvd3MsLU5BX3Jvd3NdDQogICAgICAgIA0KICAgICAgICBuZXQyIDwtIG5ldDJbLU5BX3Jvd3MsLU5BX3Jvd3NdDQogICAgICAgIA0KICAgICAgfQ0KICAgIH0NCiAgICANCiAgICB0cmlhZHMgPC0gYygiWDAwMyIsICJYMDEyIiwgIlgxMDIiLCAiWDAyMUQiLCAiWDAyMVUiLCANCiAgICAgICAgICAgICAgICAiWDAyMUMiLCAiWDExMUQiLCAiWDExMVUiLCAiWDAzMFQiLCAiWDAzMEMiLCAiWDIwMSIsIA0KICAgICAgICAgICAgICAgICJYMTIwRCIsICJYMTIwVSIsICJYMTIwQyIsICJYMjEwIiwgIlgzMDAiKQ0KICAgIA0KICAgIGRmIDwtIGZvcmVhY2g6OmZvcmVhY2goYTEgPSAxOm5yb3cobmV0MSksIGkgPSBpdGVyYXRvcnM6Omljb3VudCgpLC5jb21iaW5lID0gInJiaW5kIikgJTolIA0KICAgICAgZm9yZWFjaDo6Zm9yZWFjaChhMiA9IDE6bnJvdyhuZXQxKSwgaiA9IGl0ZXJhdG9yczo6aWNvdW50KCksIC5jb21iaW5lID0gInJiaW5kIikgJTolIA0KICAgICAgZm9yZWFjaDo6Zm9yZWFjaChhMyA9IDE6bnJvdyhuZXQxKSwgayA9IGl0ZXJhdG9yczo6aWNvdW50KCksLmNvbWJpbmUgPSAicmJpbmQiKSAlZG8lIHsNCiAgICAgICAgaWYgKGkgPiBqICYgaiA+IGspIHsNCiAgICAgICAgICBkYXRhLmZyYW1lKGkgPSBpLCBqID0gaiwgayA9IGssIA0KICAgICAgICAgICAgICAgICAgICAgdDFfaWogPSBhcy5jaGFyYWN0ZXIobmV0MVthMSxhMl0pLCB0MV9qaSA9IGFzLmNoYXJhY3RlcihuZXQxW2EyLCBhMV0pLCANCiAgICAgICAgICAgICAgICAgICAgIHQxX2lrID0gYXMuY2hhcmFjdGVyKG5ldDFbYTEsYTNdKSwgdDFfa2kgPSBhcy5jaGFyYWN0ZXIobmV0MVthMywgYTFdKSwgDQogICAgICAgICAgICAgICAgICAgICB0MV9qayA9IGFzLmNoYXJhY3RlcihuZXQxW2EyLGEzXSksIHQxX2tqID0gYXMuY2hhcmFjdGVyKG5ldDFbYTMsIGEyXSksIA0KICAgICAgICAgICAgICAgICAgICAgdHlwZVQxID0gdHJpYWRzW3doaWNoKHNuYTo6dHJpYWQuY2Vuc3VzKG5ldDFbYyhhMSxhMiwgYTMpLCBjKGExLCBhMiwgYTMpXSkgPT0gMSldLCANCiAgICAgICAgICAgICAgICAgICAgIHQyX2lqID0gYXMuY2hhcmFjdGVyKG5ldDJbYTEsIGEyXSksIHQyX2ppID0gYXMuY2hhcmFjdGVyKG5ldDJbYTIsIGExXSksIA0KICAgICAgICAgICAgICAgICAgICAgdDJfaWsgPSBhcy5jaGFyYWN0ZXIobmV0MlthMSwgYTNdKSwgdDJfa2kgPSBhcy5jaGFyYWN0ZXIobmV0MlthMywgYTFdKSwgDQogICAgICAgICAgICAgICAgICAgICB0Ml9qayA9IGFzLmNoYXJhY3RlcihuZXQyW2EyLCBhM10pLCB0Ml9raiA9IGFzLmNoYXJhY3RlcihuZXQyW2EzLCBhMl0pLCANCiAgICAgICAgICAgICAgICAgICAgIHR5cGVUMiA9IHRyaWFkc1t3aGljaChzbmE6OnRyaWFkLmNlbnN1cyhuZXQyW2MoYTEsIGEyLCBhMyksIGMoYTEsIGEyLCBhMyldKSA9PSAxKV0sIA0KICAgICAgICAgICAgICAgICAgICAgdGllX2NoYW5nZSA9IHN1bShjKG5ldDFbYTEsIGEyXSwgbmV0MVthMiwgYTFdLCBuZXQxW2ExLCBhM10sIG5ldDFbYTMsIGExXSwgbmV0MVthMiwgYTNdLCBuZXQxW2EzLCBhMl0pICE9IGMobmV0MlthMSwgYTJdLCBuZXQyW2EyLCBhMV0sIG5ldDJbYTEsIGEzXSwgbmV0MlthMywgYTFdLCBuZXQyW2EyLCBhM10sIG5ldDJbYTMsIGEyXSkpKQ0KICAgICAgICB9DQogICAgICB9DQogICAgDQogICAgDQogICAgZGYkbmFtZSA8LSBwYXN0ZTAoZGYkaSwgIi4iLCBkZiRqLCAiLiIsIGRmJGspDQogICAgZGYgPC0gc3Vic2V0KGRmLCBzZWxlY3QgPSBjKHRpZV9jaGFuZ2UpKQ0KICAgIA0KICAgICMtLS0tICEhTkVXISEgQXNzaWduIGxldmVscyB0byBjb3VudGVyIG1pc3NpbmcgY29sdW1ucyAtLS0tDQogICAgZGYkdGllX2NoYW5nZSA8LSBhcy5mYWN0b3IoZGYkdGllX2NoYW5nZSkNCiAgICBsZXZlbHMoZGYkdGllX2NoYW5nZSkgPC0gYygiMCIsICIxIiwiMiIsICIzIiwiNCIsICI1IiwiNiIpDQogICAgIy0tLS0gRml4ZXMgaXNzdWVzIHdpdGggc2ltdWxhdGVkIG5ldHdvcmtzIC0tLS0NCiAgICANCiAgICBkZiA8LSBkYXRhLmZyYW1lKHNpbW5ldCA9IHgsIHRhYmxlKGRmKSkNCiAgICBkZiA8LSB0aWR5cjo6cGl2b3Rfd2lkZXIoZGYsIG5hbWVzX2Zyb20gPSB0aWVfY2hhbmdlLA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICB2YWx1ZXNfZnJvbSA9IEZyZXEpDQogICAgDQogIH0NCiAgDQogIGRmIDwtIGFzLmRhdGEuZnJhbWUoZGYpDQogIGRmJHR5cGUgPC0gc2ltdHlwZQ0KICANCiAgaWYgKGZvcnBsb3QgPT0gVFJVRSkgew0KICAgIGRmIDwtIHRpZHlyOjpwaXZvdF9sb25nZXIoZGYsIGNvbHMgPSAhYyhzaW1uZXQsIHR5cGUpLCANCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIG5hbWVzX3RvID0gIngiLCB2YWx1ZXNfdG8gPSAieSIpDQogIH0NCiAgDQogIHJldHVybihkZikNCiAgDQp9DQoNCmBgYA0KDQojIExvYWQgUGFja2FnZXMNCg0KYGBge3IsIHdhcm5pbmc9RkFMU0UsIG1lc3NhZ2U9RkFMU0UsIHJlc3VsdHM9J2hpZGUnfQ0KcGFja2FnZXMgPC0gYygidGlkeXZlcnNlIiwgInNuYSIsICJpZ3JhcGgiLCAiUnNpZW5hVHdvU3RlcCIsICJhcGUiLCAiaXRlcmF0b3JzIiwgImRvUGFyYWxsZWwiLCAicnN0YXRpeCIpDQoNCmZwYWNrYWdlLmNoZWNrKHBhY2thZ2VzKQ0KYGBgDQoNCiMgU2V0IHVwIHBhcmFsbGVsIGNsdXN0ZXINCg0KYGBge3IsIHJlc3VsdHM9J2hpZGUnLCBtZXNzYWdlPUZBTFNFfQ0Kbm9fY29yZXMgPC0gZGV0ZWN0Q29yZXMoKSAtIDENCm15Y2wgPC0gbWFrZUNsdXN0ZXIocmVwKCJsb2NhbGhvc3QiLCBub19jb3JlcykpDQpjbHVzdGVyRXZhbFEobXljbCwgbGlicmFyeShSc2llbmFUd29TdGVwKSkNCnJlZ2lzdGVyRG9QYXJhbGxlbChteWNsKQ0KIyBzdG9wQ2x1c3RlcihteWNsKQ0KDQpgYGANCg0KIyBMb2FkIERhdGENCg0KYGBge3J9DQpsb2FkKCJkYXRhL3Byb2Nlc3NlZC9SVV9VVV9lZ28uUkRhdGEiKQ0KDQpsb2FkKCJkYXRhL3Byb2Nlc3NlZC9zb2NfZGF0YV9yYXcuUkRhdGEiKQ0KYGBgDQoNCjxicj4NCg0KLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tDQoNCiMgRGVzY3JpcHRpdmUgQW5hbHlzaXMNCg0KVG8gcGFydGlhbGx5IGFuc3dlciB0aGUgZmlyc3QgdHdvIHJlc2VhcmNoIHF1ZXN0aW9ucyBvZiB0aGlzIHN0dWR5LCBJIHdpbGwgZnVydGhlciBkZXNjcmliZSBhbmQgYXNzZXNzIHRoZSBkYXRhIGJ5IHZpc3VhbGlzaW5nIHRoZSBjb2xsYWJvcmF0aW9uIG5ldHdvcmtzIG9mIHNvY2lvbG9naXN0cyBhdCBSYWRib3VkIFVuaXZlcnNpdHkgYW5kIFV0cmVjaHQgVW5pdmVyc2l0eS4gVGhlc2UgbmV0d29ya3MgZ2l2ZSB1cyBpbnRlcmVzdGluZyBpbnNpZ2h0cyBpbnRvIHRoZSBjb2xsYWJvcmF0aW9uIHByYWN0aWNlcyBvZiBzb2Npb2xvZ2lzdHMgYXQgUmFkYm91ZCBVbml2ZXJzaXR5IChSVSkgYW5kIFV0cmVjaHQgVW5pdmVyc2l0eSAoVVUpLiBGaXJzdCBvZiBhbGwsIHRoZSBzaXplIG9mIHRoZSBub2RlcyBpbiBkZXRlcm1pbmVkIGJ5IHRoZSBhbW91bnQgb2YgaW5kZWdyZWVzIGEgc2Nob2xhciBoYXMsIG9yIGluIG90aGVyIHdvcmRzLCB3aXRoIGhvdyBtYW55IG90aGVyIHNvY2lvbG9naXN0cyBhIHBlcnNvbiBoYXMgY29sbGFib3JhdGVkLiBUaGUgZ3JhcGggb2Ygd2F2ZSAxIHNob3dzIHRoYXQgYXQgUmFkYm91ZCBVbml2ZXJzaXR5LCBpdCBpcyBtb3N0bHkgbWVuIHdobyBjb2xsYWJvcmF0ZSB3aXRoIGVhY2ggb3RoZXIsIHdpdGggdGhlIGluY2x1c2lvbiBvZiBzb21lIGZlbWFsZSBzb2Npb2xvZ2lzdHMgd2hvIHNlbmQgdGllcywgYnV0IGRvIG5vdCByZWNlaXZlIGFueS4gRm9yIFV0cmVjaHQgVW5pdmVyc2l0eSwgdGhlcmUgaXMgYSBzbWFsbCBncm91cCBvZiBmb3VyIG1hbGUgc29jaW9sb2dpc3RzIHdobyBjb2xsYWJvcmF0ZSB3aXRoIGVhY2ggb3RoZXIuIEludGVyZXN0aW5nbHksIHRoZXJlIGFyZSBhbHNvIHR3byBmZW1hbGUgc29jaW9sb2dpc3RzIHdobyB3b3JrIHRvZ2V0aGVyIHdpdGggc29jaW9sb2dpc3RzIGF0IFJhZGJvdWQgVW5pdmVyc2l0eS4gT3ZlcmFsbCwgdGhlIG5ldHdvcmsgYXQgd2F2ZSAxIGlzIG5vdCB2ZXJ5IGRlbnNlLCB3aGljaCBpcyBhbHNvIHZpc2libGUgaW4gdGhlIGRlbnNpdHkgc2NvcmUgb2YgVGFibGUgMS4gVGhlIGdyYXBoIG9mIHdhdmUgMiBzaG93cyBhIGRpZmZlcmVudCBwaWN0dXJlLiBUaGlzIG5ldHdvcmsgaXMgbXVjaCBsZXNzIHNwYXJzZSBhbmQgc2hvd3MgbW9yZSBkaXZlcnNpdHkgaW4gdGVybXMgb2YgYm90aCBnZW5kZXIgYW5kIGRlcGFydG1lbnQuIEF0IGJvdGggUmFkYm91ZCBVbml2ZXJzaXR5IGFuZCBVdHJlY2h0IFVuaXZlcnNpdHksIHRoZSBzb2Npb2xvZ2lzdHMgd2l0aCB0aGUgbW9zdCBpbmRlZ3JlZXMgYXJlIG1vc3RseSBtYWxlLCB3aXRoIHRoZSBleGNlcHRpb24gb2Ygb25lIGZlbWFsZSBzb2Npb2xvZ2lzdCBhdCBVdHJlY2h0IFVuaXZlcnNpdHksIHdobyBzZWVtaW5nbHkgaGFzIHRoZSBtb3N0IGluZGVncmVlcyBvZiBhbnlvbmUgaW4gdGhlIG5ldHdvcmsuIFRoaXMgc2Nob2xhciwgY29tYmluZWQgd2l0aCB0aGUgbW9zdCBwb3B1bGFyIHNjaG9sYXIgYXQgUmFkYm91ZCBVbml2ZXJzaXR5LCBib3RoIHNlcnZlIGEgImh1YiItIGZ1bmN0aW9uLCBhcyB0aGUgbmV0d29yayBzZWVtcyB0byBiZSBjZW50ZXJlZCBhcm91bmQgdGhlbS4gSW4gdGVybXMgb2YgZ2VuZGVyLCBpdCBzZWVtcyB0aGF0IG1hbGUgc29jaW9sb2dpc3RzIHNlZW0gdG8gZ2V0IHNsaWdodGx5IG1vcmUgaW5kZWdyZWVzIG9uIGF2ZXJhZ2UgY29tcGFyZWQgdG8gd29tZW4uIFRoaXMgaXMgaG93ZXZlciBsZXNzIHByZXZhbGVudCB0aGFuIGF0IHdhdmUgMSwgaW1wbHlpbmcgdGhhdCB0aGUgY29sbGFib3JhdGlvbiBuZXR3b3JrIG1pZ2h0IGJlIG1vcmUgZWdhbGl0YXJpYW4uXA0K4oCDIExvb2tpbmcgYXQgdGhlIG5ldHdvcmsgc3RhdGlzdGljcyBvZiB0aGVzZSBuZXR3b3Jrcywgd2UgZmlyc3Qgb2YgYWxsIHNlZSB0aGF0IHRoZSBqYWNjYXJkLXNpbWlsYXJpdHkgaW5kZXggKDAuMTQyKSBpcyByZWxhdGl2ZWx5IGxvdywgd2hpY2ggaW5kaWNhdGVzIHRoYXQgdGhlIG5ldHdvcmsgZG9lcyBub3QgY2hhbmdlIG11Y2ggb3ZlciB0aW1lIChUYWJsZSAxKSBbQHJpcGxleTIwMTFtYW51YWxdLiBBcyBzYWlkIGJlZm9yZSwgdGhlIGRlbnNpdHkgb2YgdGhlIG5ldHdvcmtzIGlzIHF1aXRlIHNtYWxsLiBUaGlzIG1pZ2h0IGNhdXNlIHNvbWUgaXNzdWVzIGZvciB0aGUgZXN0aW1hdGlvbiBwcm9jZXNzIGluIFJTaWVuYSwgYnV0IGlzIHN0aWxsIHdpdGhpbiByYW5nZSBmb3IgdmFsaWQgZXN0aW1hdGlvbiBbQHJpcGxleTIwMTFtYW51YWxdLiBUbyBnZXQgYSBwcmVsaW1pbmFyeSBpZGVhIG9mIGhvdyB0aGUgbmV0d29yayBldm9sdmVzLCBhIGR5YWQgY2Vuc3VzIHdhcyBjYWxjdWxhdGVkLiBUaGlzIHNwZWNpZmljIGR5YWQgY2Vuc3VzIHRyYWNrcyBkeWFkcyBiZXR3ZWVuIHRoZSB3YXZlcyBhbmQgc3VtcyB1cCB0aGUgc3BlY2lmaWMgY2hhbmdlIGEgZHlhZCBoYXMgdW5kZXJnb25lLCB3aGljaCBvZmZlcnMgbW9yZSBpbnNpZ2h0IHRoYW4gdGhlIGNvbnZlbnRpb25hbCBkeWFkIGNlbnN1cywgd2hpY2ggb25seSB0YWtlcyBhIG1hY3JvIHBlcnNwZWN0aXZlIChUYWJsZSAyKS4gVW5zdXJwcmlzaW5nbHksIG1vc3QgZHlhZHMgaW4gdGhlIG5ldHdvcmsgYXJlIE51bGwgYXQgd2F2ZSAxIGFuZCB3YXZlIDIsIHdoaWNoIG1lYW5zIHRoZXJlIGFyZSBubyB0aWVzIGJlaW5nIHNlbnQuIFdoZW4gd2UgbG9vayBhdCBhY3R1YWwgdGllcywgd2Ugc2VlIHRoYXQgdGhlcmUgYXJlIDgzIGFzc3ltZXRyaWMgdGllcyB0aGF0IHdlcmUgc2VudCBhdCB3YXZlIDIsIHdoaWNoIHdpbGwgbGlrZWx5IGJlIGp1bmlvciBzY2hvbGFycyB3aG8gbWFuYWdlZCB0byBnZXQgdGhlaXIgZmlyc3QgcGFwZXIgcHVibGlzaGVkLCBvciBzY2hvbGFycyB3aG8gd2VyZSBuZXcgdG8gdGhlaXIgcmVzcGVjdGl2ZSBkZXBhcnRtZW50cy4gQ29udmVyc2VseSwgMjkgYXNzeW1ldHJpYyB0aWVzIHdoaWNoIHdlcmUgcHJlc2VudCBhdCB3YXZlIDEgd2VyZSBnb25lIGF0IHdhdmUgMi4gQW5vdGhlciBmaW5kaW5nIHdvcnRoIG5vdGluZyBpcyB0aGUgZmFjdCB0aGF0IDExIGR5YWRzIGhhZCBubyB0aWVzIGF0IHdhdmUgMSwgYnV0IGhhZCBhIG11dHVhbCBjb2xsYWJvcmF0aW9uIGF0IHdhdmUgMiwgaW1wbHlpbmcgdGhhdCB0aGV5IGJvdGggY29hdXRob3JlZCBvbiBhdCBsZWFzdCBvbmUgb2YgZWFjaCBvZiB0aGVpciBwYXBlcnMgaW4gd2F2ZSAyLiBUaGlzIGZvcm0gb2YgY29sbGFib3JhdGlvbiBpcyBpbnRlcmVzdGluZywgYmVjYXVzZSBpdCBpbXBsaWVzIGEgc3BvbnRhbmVvdXMgY29sbGFib3JhdGlvbiwgaW5zdGVhZCBvZiBhICJ0aXQgZm9yIHRhdCItYXBwcm9hY2guXA0K4oCDIExhc3RseSwgdG8gZ2l2ZSBhIG1vcmUgY29uY3JldGUgYW5zd2VyIHRvIHRoZSBmaXJzdCBhbmQgc2Vjb25kIHJlc2VhcmNoIHF1ZXN0aW9uLCB0aGUgTW9yYW4ncyBJIHdhcyBjYWxjdWxhdGVkIGZvciBib3RoIGdlbmRlciBhbmQgcHJlc3RpZ2UuIE1vcmFuJ3MgSSBpcyBhIG1lYXN1cmUgb2Ygc2VncmVnYXRpb24gaW4gc29jaWFsIG5ldHdvcmtzLCB3aGljaCBtZWFzdXJlcyB0aGUgZXh0ZW50IHRvIHdoaWNoIHNjaG9sYXJzIHdobyBhcmUgY29ubmVjdGVkIHRvIGVhY2ggb3RoZXIgYXJlIGFsc28gbW9yZSBzaW1pbGFyIHRvIGVhY2ggb3RoZXIgW0BTTkFTU10uIEluIHNpbXBsZXIgd29yZHMsIGFyZSBtZW4gbW9yZSBjb25uZWN0ZWQgdG8gb3RoZXIgbWVuIGFuZCBhcmUgd29tZW4gbW9yZSBjb25uZWN0ZWQgdG8gb3RoZXIgd29tZW4uIFRoZSBNb3JhbidzIEkgd2FzIGNhbGN1bGF0ZWQgdXNpbmcgdGhlICIqZk1vcmFuLmkqIi1mdW5jdGlvbiwgZGVyaXZlZCBmcm9tIEBTTkFTUy4gVGhlIGNob2ljZSB3YXMgbWFkZSB0byBub3Qgcm93IHN0YW5kYXJkaXplIHRoZSBNb3JhbidzIEksIGFzIHRoZSBtb3JlIGNvbm5lY3Rpb25zIHlvdSBoYXZlIHRvIG90aGVycyB3aG8gYXJlIHNpbWlsYXIgaW5mbHVlbmNlcyB5b3UgZGlmZmVyZW50bHkgdGhlbiB3aGVuIGl0IGlzIG9ubHkgYSBmZXcuIEF0IHdhdmUgMSwgdGhlIE1vcmFuJ3MgSSBpcyAwLjIyLCB3aGljaCBtZWFuIHRoYXQgbm9kZXMgd2hvIGFyZSBjb25uZWN0ZWQgYXJlIGluZGVlZCBtb3JlIGFsaWtlLCBhdCBsZWFzdCB0byBzb21lIGV4dGVudC4gQXQgd2F2ZSAyLCB0aGUgTW9yYW4ncyBJIGlzIDAuMTQsIGltcGx5aW5nIHRoYXQgdGhlIGNvcnJlbGF0aW9uIGJldHdlZW4gY29ubmVjdGlvbiBhbmQgc2ltaWxhcml0eSBpcyBkZWNyZWFzaW5nLiBIb3dldmVyLCB0aGlzIG9ic2VydmVkIGRpZmZlcmVuY2UgYmV0d2VlbiB3YXZlIDEgYW5kIHdhdmUgMiBpcyByYXRoZXIgc21hbGwgKCRcRGVsdGEkID0gMC4wNzUpLiBXaGVuIHRlc3RpbmcgZm9yIHRoZSBzaWduaWZpY2FuY2Ugb2YgdGhpcyBkaWZmZXJlbmNlLCBpdCBpcyBub3QgZm91bmQgdG8gYmUgc2lnbmlmaWNhbnQgZm9yIGFuIGFscGhhIG9mIDAuMDUgKFRhYmxlIDQpLCBtZWFuaW5nIHRoYXQgaXQgY2FuIG5vdCBiZSBleGNsdWRlZCB0aGF0IHRoaXMgZGlmZmVyZW5jZSBpcyBkdWUgdG8gY2hhbmNlIGFsb25lLiBBbHRob3VnaCB0aGUgcmVzdWx0cyBzaG91bGQgYmUgaW50ZXJwcmV0ZWQgd2l0aCBjYXV0aW9uLCBpdCBpcyBmb3VuZCB0aGF0IHRoZXJlIGlzIHNvbWUgZGVncmVlIG9mIGdlbmRlciBjbHVzdGVyaW5nIHRha2luZyBwbGFjZSBpbiB0aGUgbmV0d29yay4gQ29sbGFib3JhdGlvbiBiZXR3ZWVuIHNjaG9sYXJzIGF0IFJhZGJvdWQgVW5pdmVyc2l0eSBhbmQgVXRyZWNodCBVbml2ZXJzaXR5IGlzIHBhcnRpYWxseSBkZXRlcm1pbmVkIGJ5IGdlbmRlciBjbHVzdGVyaW5nLCB3aGljaCBtZWFucyBoeXBvdGhlc2lzIDEgZmluZHMgYXQgbGVhc3QgcGFydGlhbCBzdXBwb3J0LiBJbiBjb250cmFzdCwgZHVlIHRvIHRoZSBzbWFsbCBkaWZmZXJlbmNlcyBhbmQgbGFjayBvZiBzaWduaWZpY2FudCBmaW5kaW5ncywgaXQgY2Fubm90IGJlIGNvbmNsdXNpdmVseSBwcm92ZW4gdGhhdCBnZW5kZXIgY2x1c3RlcmluZyBoYXMgZGVjcmVhc2VkIG92ZXIgdGltZS4gVGh1cywgaHlwb3RoZXNpcyAyIGhhcyB0byBiZSByZWplY3RlZC4NCg0KIyMgTmV0d29ya3MNCg0KIyMjIE1ha2UgdGhlIGdyYXBoIG9iamVjdA0KDQpgYGB7cn0NCg0KIy0tLS0gV2F2ZSAyIC0tLS0NCmdyYXBoX3cxIDwtIGlncmFwaDo6Z3JhcGhfZnJvbV9hZGphY2VuY3lfbWF0cml4KA0KICBzb2NfZGF0YSRuZXRzWzEsLF0sICNub3csIEkgdGFrZSB0aGUgc2Vjb25kIHdhdmUNCiAgbW9kZSA9IGMoImRpcmVjdGVkIiksDQogIHdlaWdodGVkID0gTlVMTCwNCiAgZGlhZyA9IEZBTFNFLA0KICBhZGQuY29sbmFtZXMgPSBOVUxMDQopDQoNCiMtLS0tIFdhdmUgMiAtLS0tDQpncmFwaF93MiA8LSBpZ3JhcGg6OmdyYXBoX2Zyb21fYWRqYWNlbmN5X21hdHJpeCgNCiAgc29jX2RhdGEkbmV0c1syLCxdLCAjbm93LCBJIHRha2UgdGhlIHNlY29uZCB3YXZlDQogIG1vZGUgPSBjKCJkaXJlY3RlZCIpLA0KICB3ZWlnaHRlZCA9IE5VTEwsDQogIGRpYWcgPSBGQUxTRSwNCiAgYWRkLmNvbG5hbWVzID0gTlVMTA0KKQ0KDQpgYGANCg0KIyMjIE5ldHdvcmsgVmlzdWFsaXNhdGlvbnMNCg0KYGBge3J9DQojIE1ha2UgYSBwbG90YWJsZSBnZW5kZXIgdmFyaWFibGUgdG8gZml4IHByb2JsZW1zIHdpdGggdmVydGV4LnNoYXBlDQpkZl9lZ28gPC0gZGZfZWdvICU+JSBtdXRhdGUocGxvdF9nZW4gPSBjYXNlX3doZW4ocGVyY19mZW1hbGUgPj0gMC43MCB+ICJGZW1hbGUiLA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIC5kZWZhdWx0ID0gIk1hbGUiKSkNCg0KZGZfZWdvIDwtIGRmX2VnbyAlPiUgbXV0YXRlKFVuaXZlcnNpdHlfMjIgPSBjYXNlX3doZW4oc3RyX2RldGVjdChVbml2ZXJzaXRlaXQuMjIsICJSVSIpIH4gIlJVIiwNCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgc3RyX2RldGVjdChVbml2ZXJzaXRlaXQuMjIsICJVVSIpIH4gIlVVIiwNCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgLmRlZmF1bHQgPSAiTm90IGluIERlcGFydG1lbnQiKSwNCiAgICAgICAgICAgICAgICAgICAgICAgICAgICBVbml2ZXJzaXR5XzI0ID0gY2FzZV93aGVuKHN0cl9kZXRlY3QoVW5pdmVyc2l0ZWl0LjI0LCAiUlUiKSB+ICJSVSIsDQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHN0cl9kZXRlY3QoVW5pdmVyc2l0ZWl0LjI0LCAiVVUiKSB+ICJVVSIsDQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIC5kZWZhdWx0ID0gIk5vdCBpbiBEZXBhcnRtZW50IikpDQoNCmRmX2Vnb1t3aGljaChzdHJfZGV0ZWN0KGRmX2VnbyROYWFtLCAiV2V2ZXJ0aG9uIikpLF0kcGxvdF9nZW4gPC0gIk1hbGUiICMgRml4IG1pc3Npbmcgb24gZ2VuZGVyDQojIGRmX2VnbyAlPiUgY291bnQocGxvdF9nZW4pDQpgYGANCg0KIyMjIFdhdmUgMSB7LnRhYnNldH0NCg0KIyMjIyBXaXRoIElzb2xhdGVzDQoNCmBgYHtyLCBmaWcud2lkdGg9OX0NCiMtLS0tIEZ1bGwgbmV0d29yayBpbmNsdWRpbmcgSXNvbGF0ZXMgLS0tLQ0Kc2V0LnNlZWQoMjM0NSkNCmxfdzEgPC0gbGF5b3V0X25pY2VseShncmFwaF93MSkNCg0KcGxvdChncmFwaF93MSwgbGF5b3V0ID0gbF93MSwNCiAgICAgdmVydGV4LmNvbG9yID0gaWZlbHNlKGRmX2VnbyRVbml2ZXJzaXR5XzIyID09ICJSVSIsICJyZWQiLCAiZ29sZCIpLCAjbm93LCBJIGNhbiB1c2UgYWN0b3IgYXR0cmlidXRlcyBmb3IgcGxvdHRpbmcuIA0KICAgICB2ZXJ0ZXguc2hhcGUgPSBpZmVsc2UoZGZfZWdvJHBsb3RfZ2VuID09ICJNYWxlIiwgInNxdWFyZSIsICJjaXJjbGUiKSwNCiAgICAgdmVydGV4LnNpemUgPSBpZ3JhcGg6OmRlZ3JlZShncmFwaF93MSwgbW9kZSA9ICJpbiIpICogMS41LA0KICAgICB2ZXJ0ZXgubGFiZWwgPSBOQSwNCiAgICAgZWRnZS53aWR0aCA9IC44LA0KICAgICBlZGdlLmN1cnZlZCA9IDAuNSwNCiAgICAgZWRnZS5hcnJvdy5zaXplID0wLjIpDQogICAgICMgbWFpbiA9ICJHZW5kZXIgRGlzdHJpYnV0aW9uIG9mIFR3byBTb2Npb2xvZ3kgRGVwYXJ0bWVudHMgMjAyMiIpDQoNCmxlZ2VuZCgidG9wbGVmdCIsIGMoIlJVIiwgIlVVIiwgIk1hbGUiLCAiRmVtYWxlIiksIHBjaCA9IGMoMjEsMjEsMTUsMjApLCBjb2wgPSAiIzc3Nzc3NyIsIHB0LmJnID0gYygicmVkIiwgImdvbGQiKSwgcHQuY2V4ID0gMSwNCiAgICAgICBjZXggPSAwLjgsIGJ0eSA9ICJuIiwgbmNvbCA9IDEpDQoNCmBgYA0KDQojIyMjIFdpdGhvdXQgSXNvbGF0ZXMNCg0KYGBge3IsIGZpZy53aWR0aD05fQ0KIy0tLS0gUmVtb3ZlIElzb2xhdGVzIC0tLS0NCmRpYWcoc29jX2RhdGEkbmV0c1sxLCxdKSA8LSAwDQoNCm5vaXNvbGF0ZXMgPC0gcm93U3Vtcyhzb2NfZGF0YSRuZXRzWzEsLF0sIG5hLnJtID0gVCkgPiAwDQoNCnNvY193MV9zZWwgPC0gc29jX2RhdGEkbmV0c1sxLCxdW25vaXNvbGF0ZXMsIG5vaXNvbGF0ZXNdDQoNCmdyYXBoX3cxX3NlbCA8LSBncmFwaF9mcm9tX2FkamFjZW5jeV9tYXRyaXgoc29jX3cxX3NlbCwgbW9kZSA9ICJkaXJlY3RlZCIsIHdlaWdodGVkID0gTlVMTCwgZGlhZyA9IFRSVUUsDQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIGFkZC5jb2xuYW1lcyA9IE5BLCBhZGQucm93bmFtZXMgPSBOQSkNCg0KZWdvX2lzb193MSA8LSBkZl9lZ29bbm9pc29sYXRlcyxdDQojLS0tLSBHcmFwaCB3aXRob3V0IElzb2xhdGVzIC0tLS0NCnNldC5zZWVkKDIzNDUpDQpsX3cxIDwtIGxheW91dF9uaWNlbHkoZ3JhcGhfdzFfc2VsKQ0KDQpwbG90KGdyYXBoX3cxX3NlbCwgbGF5b3V0ID0gbF93MSwNCiAgICAgdmVydGV4LmNvbG9yID0gaWZlbHNlKGVnb19pc29fdzEkVW5pdmVyc2l0eV8yMiA9PSAiUlUiLCAicmVkIiwgImdvbGQiKSwgI25vdywgSSBjYW4gdXNlIGFjdG9yIGF0dHJpYnV0ZXMgZm9yIHBsb3R0aW5nLiANCiAgICAgdmVydGV4LnNoYXBlID0gaWZlbHNlKGVnb19pc29fdzEkcGxvdF9nZW4gPT0gIk1hbGUiLCAic3F1YXJlIiwgImNpcmNsZSIpLA0KICAgICB2ZXJ0ZXguc2l6ZSA9IGlncmFwaDo6ZGVncmVlKGdyYXBoX3cxX3NlbCwgbW9kZSA9ICJpbiIpICogMS41LA0KICAgICB2ZXJ0ZXgubGFiZWwgPSBOQSwNCiAgICAgZWRnZS53aWR0aCA9IC44LA0KICAgICBlZGdlLmN1cnZlZCA9IDAuNSwNCiAgICAgZWRnZS5hcnJvdy5zaXplID0wLjIpDQogICAgICMgbWFpbiA9ICJHZW5kZXIgRGlzdHJpYnV0aW9uIG9mIFR3byBTb2Npb2xvZ3kgRGVwYXJ0bWVudHMgMjAyMiIpDQoNCmxlZ2VuZCgidG9wbGVmdCIsIGMoIlJVIiwgIlVVIiwgIk1hbGUiLCAiRmVtYWxlIiksIHBjaCA9IGMoMjEsMjEsMTUsMjApLCBjb2wgPSAiIzc3Nzc3NyIsIHB0LmJnID0gYygicmVkIiwgImdvbGQiKSwgcHQuY2V4ID0gMSwNCiAgICAgICBjZXggPSAwLjgsIGJ0eSA9ICJuIiwgbmNvbCA9IDEpDQpgYGANCg0KIyMjIFdhdmUgMiB7LnRhYnNldH0NCg0KIyMjIyBXaXRoIElzb2xhdGVzDQoNCmBgYHtyLCBmaWcud2lkdGggPSA4fQ0KIy0tLS0gRnVsbCBuZXR3b3JrIGluY2x1ZGluZyBJc29sYXRlcyAtLS0tDQpzZXQuc2VlZCgyMzQ1KQ0KbF93MiA8LSBsYXlvdXRfbmljZWx5KGdyYXBoX3cyKQ0KDQpwbG90KGdyYXBoX3cyLCBsYXlvdXQgPSBsX3cyLA0KICAgICB2ZXJ0ZXguY29sb3IgPSBpZmVsc2UoZGZfZWdvJFVuaXZlcnNpdHlfMjQgPT0gIlJVIiwgInJlZCIsICJnb2xkIiksICNub3csIEkgY2FuIHVzZSBhY3RvciBhdHRyaWJ1dGVzIGZvciBwbG90dGluZy4gDQogICAgIHZlcnRleC5zaGFwZSA9IGlmZWxzZShkZl9lZ28kcGxvdF9nZW4gPT0gIk1hbGUiLCAic3F1YXJlIiwgImNpcmNsZSIpLA0KICAgICB2ZXJ0ZXguc2l6ZSA9IGlncmFwaDo6ZGVncmVlKGdyYXBoX3cyLCBtb2RlID0gImluIikgKiAxLjUsDQogICAgIHZlcnRleC5sYWJlbCA9IE5BLA0KICAgICBlZGdlLndpZHRoID0gMC44LA0KICAgICBlZGdlLmN1cnZlZCA9IDAuNSwNCiAgICAgZWRnZS5hcnJvdy5zaXplID0wLjIpDQogICAgICMgbWFpbiA9ICJHZW5kZXIgRGlzdHJpYnV0aW9uIG9mIFR3byBTb2Npb2xvZ3kgRGVwYXJ0bWVudHMgMjAyNCIpDQpsZWdlbmQoInRvcGxlZnQiLCBjKCJSVSIsICJVVSIsICJNYWxlIiwgIkZlbWFsZSIpLCBwY2ggPSBjKDIxLDIxLDE1LDIwKSwgY29sID0gIiM3Nzc3NzciLCBwdC5iZyA9IGMoInJlZCIsICJnb2xkIiksIHB0LmNleCA9IDEsDQogICAgICAgY2V4ID0gMC44LCBidHkgPSAibiIsIG5jb2wgPSAxKQ0KDQpgYGANCg0KIyMjIyBXaXRob3V0IElzb2xhdGVzDQoNCmBgYHtyLCBmaWcud2lkdGggPSA5fQ0KDQojLS0tLSBSZW1vdmUgSXNvbGF0ZXMgLS0tLQ0KZGlhZyhzb2NfZGF0YSRuZXRzWzIsLF0pIDwtIDANCg0Kbm9pc29sYXRlcyA8LSByb3dTdW1zKHNvY19kYXRhJG5ldHNbMiwsXSwgbmEucm0gPSBUKSA+IDANCg0Kc29jX3cyX3NlbCA8LSBzb2NfZGF0YSRuZXRzWzIsLF1bbm9pc29sYXRlcywgbm9pc29sYXRlc10NCg0KZ3JhcGhfdzJfc2VsIDwtIGdyYXBoX2Zyb21fYWRqYWNlbmN5X21hdHJpeChzb2NfdzJfc2VsLCBtb2RlID0gImRpcmVjdGVkIiwgd2VpZ2h0ZWQgPSBOVUxMLCBkaWFnID0gVFJVRSwNCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgYWRkLmNvbG5hbWVzID0gTkEsIGFkZC5yb3duYW1lcyA9IE5BKQ0KDQplZ29faXNvX3cyIDwtIGRmX2Vnb1tub2lzb2xhdGVzLF0NCg0KIy0tLS0gR3JhcGggd2l0aG91dCBJc29sYXRlcyAtLS0tDQpzZXQuc2VlZCgyMzQ1KQ0KbF93MiA8LSBsYXlvdXRfbmljZWx5KGdyYXBoX3cyX3NlbCkNCg0KcGxvdChncmFwaF93Ml9zZWwsIGxheW91dCA9IGxfdzIsDQogICAgIHZlcnRleC5jb2xvciA9IGlmZWxzZShlZ29faXNvX3cyJFVuaXZlcnNpdHlfMjQgPT0gIlJVIiwgInJlZCIsICJnb2xkIiksICNub3csIEkgY2FuIHVzZSBhY3RvciBhdHRyaWJ1dGVzIGZvciBwbG90dGluZy4gDQogICAgIHZlcnRleC5zaGFwZSA9IGlmZWxzZShlZ29faXNvX3cyJHBsb3RfZ2VuID09ICJNYWxlIiwgInNxdWFyZSIsICJjaXJjbGUiKSwNCiAgICAgdmVydGV4LnNpemUgPSBpZ3JhcGg6OmRlZ3JlZShncmFwaF93Ml9zZWwsIG1vZGUgPSAiaW4iKSAqIDEuNSwNCiAgICAgdmVydGV4LmxhYmVsID0gTkEsDQogICAgIGVkZ2Uud2lkdGggPSAwLjgsDQogICAgIGVkZ2UuY3VydmVkID0gMC41LA0KICAgICBlZGdlLmFycm93LnNpemUgPTAuMikNCiAgICAgIyBtYWluID0gIkdlbmRlciBEaXN0cmlidXRpb24gb2YgVHdvIFNvY2lvbG9neSBEZXBhcnRtZW50cyAyMDI0IikNCmxlZ2VuZCgidG9wbGVmdCIsIGMoIlJVIiwgIlVVIiwgIk1hbGUiLCAiRmVtYWxlIiksIHBjaCA9IGMoMjEsMjEsMTUsMjApLCBjb2wgPSAiIzc3Nzc3NyIsIHB0LmJnID0gYygicmVkIiwgImdvbGQiKSwgcHQuY2V4ID0gMSwNCiAgICAgICBjZXggPSAwLjgsIGJ0eSA9ICJuIiwgbmNvbCA9IDEpDQpgYGANCg0KIyMjIE5ldHdvcmsgU3RhdGlzdGljcw0KDQojIyMjIENhbGN1bGF0ZSBOZXR3b3JrIFN0YXRpc3RpY3MNCg0KYGBge3J9DQojLS0tLSBFeHRyYWN0IG5ldHdvcmtzIC0tLS0NCndhdmVfMSA8LSBzb2NfZGF0YSRuZXRzWzEsLF0NCndhdmVfMiA8LSBzb2NfZGF0YSRuZXRzWzIsLF0NCg0KIy0tLS0gSmFjY2FyZCwgSGFtbWluZywgVHJhbnNpdGl2aXR5ICYgRGVuc2l0eSAtLS0tDQpqYWMgPC0gZmphYyh3YXZlXzEsIHdhdmVfMikNCmhhbSA8LSBmaGFtKHdhdmVfMSwgd2F2ZV8yKQ0KDQpkZW5zMSA8LSBmZGVucyhucm93KHdhdmVfMSksd2F2ZV8xKSANCmRlbnMyIDwtIGZkZW5zKG5yb3cod2F2ZV8yKSx3YXZlXzIpDQoNCg0KdHJpYWRfMSA8LSBkYXRhLmZyYW1lKHNuYTo6dHJpYWQuY2Vuc3VzKHdhdmVfMSkpDQp0cmFuc18xIDwtICgzICogdHJpYWRfMSRYMzAwKS8odHJpYWRfMSRYMjAxICsgMyAqIHRyaWFkXzEkWDMwMCkNCnRyaWFkXzIgPC0gZGF0YS5mcmFtZShzbmE6OnRyaWFkLmNlbnN1cyh3YXZlXzIpKQ0KdHJhbnNfMiA8LSAoMyAqIHRyaWFkXzIkWDMwMCkvKHRyaWFkXzIkWDIwMSArIDMgKiB0cmlhZF8yJFgzMDApDQoNCiMtLS0tIEluZGVncmVlIGRpc3RyaWJ1dGlvbiAtLS0tDQpoaXN0KHRhYmxlKGlncmFwaDo6ZGVncmVlKGdyYXBoX3cxLCBtb2RlID0gImluIikpLCBicmVha3MgPSBzZXEoZnJvbSA9IDAsIHRvID0gMTAwLCBieSA9IDUpLHhsYWI9J2luZGVncmVlJywgbWFpbj0gJ0hpc3RvZ3JhbSBvZiBpbmRlZ3JlZScpDQpoaXN0KHRhYmxlKGlncmFwaDo6ZGVncmVlKGdyYXBoX3cyLCBtb2RlID0gImluIikpLCBicmVha3MgPSBzZXEoZnJvbSA9IDAsIHRvID0gMTAwLCBieSA9IDUpLCB4bGFiPSdpbmRlZ3JlZScsIG1haW49ICdIaXN0b2dyYW0gb2YgaW5kZWdyZWUnKQ0KDQojLS0tLSBPdXRkZWdyZWUgZGlzdHJpYnV0aW9uIC0tLS0NCmhpc3QodGFibGUoaWdyYXBoOjpkZWdyZWUoZ3JhcGhfdzEsIG1vZGUgPSAib3V0IikpLCBicmVha3MgPSBzZXEoZnJvbSA9IDAsIHRvID0gMTAwLCBieSA9IDEpLCB4bGFiPSdvdXRkZWdyZWUnLCBtYWluPSAnSGlzdG9ncmFtIG9mIG91dGRlZ3JlZScpDQpoaXN0KHRhYmxlKGlncmFwaDo6ZGVncmVlKGdyYXBoX3cyLCBtb2RlID0gIm91dCIpKSwgYnJlYWtzID0gc2VxKGZyb20gPSAwLCB0byA9IDEwMCwgYnkgPSAxKSwgeGxhYj0nb3V0ZGVncmVlJywgbWFpbj0gJ0hpc3RvZ3JhbSBvZiBvdXRkZWdyZWUnKQ0KDQojLS0tLSBNb3JhbidzIEkgZm9yIFByZXN0aWdlIC0tLS0NCiMgV2F2ZSAxDQpnZW9kaXN0YW5jZXMgPC0gZ2VvZGlzdCh3YXZlXzEsIGNvdW50LnBhdGhzID0gVFJVRSkNCmdlb2Rpc3RhbmNlcyA8LSBnZW9kaXN0YW5jZXMkZ2Rpc3QNCg0KIyBmaXJzdCBkZWZpbmUgYSBuYiBiYXNlZCBvbiBkaXN0YW5jZSAxLg0Kd2VpZ2h0czEgPC0gZ2VvZGlzdGFuY2VzID09IDENCg0KTUlfcHJlc18xIDwtIGZNb3Jhbi5JKGRmX2VnbyRRMS5XMSwgc2NhbGVkID0gRkFMU0UsIHdlaWdodCA9IHdlaWdodHMxLCBuYS5ybSA9IFRSVUUsIHJvd3N0YW5kYXJkaXplID0gRkFMU0UpDQpNSV9wcmVzXzENCg0KIyBXYXZlIDINCmdlb2Rpc3RhbmNlcyA8LSBnZW9kaXN0KHdhdmVfMiwgY291bnQucGF0aHMgPSBUUlVFKQ0KZ2VvZGlzdGFuY2VzIDwtIGdlb2Rpc3RhbmNlcyRnZGlzdA0KDQojIGZpcnN0IGRlZmluZSBhIG5iIGJhc2VkIG9uIGRpc3RhbmNlIDEuDQp3ZWlnaHRzMSA8LSBnZW9kaXN0YW5jZXMgPT0gMQ0KDQpNSV9wcmVzXzIgPC0gZk1vcmFuLkkoZGZfZWdvJFExLlcyLCBzY2FsZWQgPSBGQUxTRSwgd2VpZ2h0ID0gd2VpZ2h0czEsIG5hLnJtID0gVFJVRSwgcm93c3RhbmRhcmRpemUgPSBGQUxTRSkNCk1JX3ByZXNfMg0KDQojLS0tLSBNb3JhbidzIEkgZm9yIGdlbmRlciAtLS0tDQojIFdhdmUgMQ0KZ2VvZGlzdGFuY2VzIDwtIGdlb2Rpc3Qod2F2ZV8xLCBjb3VudC5wYXRocyA9IFRSVUUpDQpnZW9kaXN0YW5jZXMgPC0gZ2VvZGlzdGFuY2VzJGdkaXN0DQoNCiMgZmlyc3QgZGVmaW5lIGEgbmIgYmFzZWQgb24gZGlzdGFuY2UgMS4NCndlaWdodHMxIDwtIGdlb2Rpc3RhbmNlcyA9PSAxDQoNCk1JX2dlbl8xIDwtIGZNb3Jhbi5JKGRmX2VnbyRwZXJjX2ZlbWFsZSwgc2NhbGVkID0gRkFMU0UsIHdlaWdodCA9IHdlaWdodHMxLCBuYS5ybSA9IFRSVUUsIHJvd3N0YW5kYXJkaXplID0gRkFMU0UpDQpNSV9nZW5fMQ0KDQojIFdhdmUgMg0KZ2VvZGlzdGFuY2VzIDwtIGdlb2Rpc3Qod2F2ZV8yLCBjb3VudC5wYXRocyA9IFRSVUUpDQpnZW9kaXN0YW5jZXMgPC0gZ2VvZGlzdGFuY2VzJGdkaXN0DQoNCiMgZmlyc3QgZGVmaW5lIGEgbmIgYmFzZWQgb24gZGlzdGFuY2UgMS4NCndlaWdodHMxIDwtIGdlb2Rpc3RhbmNlcyA9PSAxDQoNCk1JX2dlbl8yIDwtIGZNb3Jhbi5JKGRmX2VnbyRwZXJjX2ZlbWFsZSwgc2NhbGVkID0gRkFMU0UsIHdlaWdodCA9IHdlaWdodHMxLCBuYS5ybSA9IFRSVUUsIHJvd3N0YW5kYXJkaXplID0gRkFMU0UpDQpNSV9nZW5fMg0KDQpgYGANCg0KIyMjIyBDcmVhdGUgREYNCg0KYGBge3J9DQoNCmRmX3N0YXQgPC0gZGF0YS5mcmFtZShOZXR3b3JrX3NpemVfVzEgPSBucm93KHdhdmVfMSksDQogICAgICAgICAgICAgICAgICAgICAgSmFjY2FyZF9JbmRleCA9IHJvdW5kKGphYywgZGlnaXRzID0gMyksDQogICAgICAgICAgICAgICAgICAgICAgSGFtbWluZ19EaXN0YW5jZSA9IHJvdW5kKGhhbSwgZGlnaXRzID0gMyksDQogICAgICAgICAgICAgICAgICAgICAgRGVuc2l0eV93MSA9IHJvdW5kKGRlbnMxLCBkaWdpdHMgPSAzKSwNCiAgICAgICAgICAgICAgICAgICAgICBEZW5zaXR5X3cyID0gcm91bmQoZGVuczIsIGRpZ2l0cyA9IDMpLA0KICAgICAgICAgICAgICAgICAgICAgIFRyYW5zaXRpdml0eV9XMSA9IHJvdW5kKHRyYW5zXzEsIGRpZ2l0cyA9IDMpLA0KICAgICAgICAgICAgICAgICAgICAgIFRyYW5zaXRpdml0eV9XMiA9IHJvdW5kKHRyYW5zXzIsIGRpZ2l0cyA9IDMpKQ0KDQpgYGANCg0KIyMjIyBUYWJsZSAxIC0gTmV0d29yayBTdGF0aXN0aWNzDQoNCmBgYHtyfQ0KRFQ6OmRhdGF0YWJsZShkZl9zdGF0KQ0KYGBgDQoNCiMjIyMgVGFibGUgMiAtIER5YWQgJiBUcmlhZCBDZW5zdXMNCg0KYGBge3J9DQpmc2hvd2RmKHRzX2R5YWRzX2V2byh3YXZlXzIsIHdhdmVfMSkpDQoNCmZzaG93ZGYocmJpbmQoc25hOjp0cmlhZC5jZW5zdXMod2F2ZV8xKSwNCiAgICAgICAgICAgICAgc25hOjp0cmlhZC5jZW5zdXMod2F2ZV8yKSkpDQpgYGANCg0KIyMjIyBUYWJsZSAzIC0gTW9yYW4ncyBJDQoNCmBgYHtyfQ0KZGZfbW9yYW4gPC0gZGF0YS5mcmFtZShNb3JhbklfcHJlc18xID0gcm91bmQoTUlfcHJlc18xW1sxXV0sIGRpZ2l0cyA9IDMpLA0KICAgICAgICAgICAgICAgICAgICAgICBNb3JhbklfcHJlc18yID0gcm91bmQoTUlfcHJlc18yW1sxXV0sIGRpZ2l0cyA9IDMpLA0KICAgICAgICAgICAgICAgICAgICAgICBNb3JhbklfZ2VuZGVyXzEgPSByb3VuZChNSV9nZW5fMVtbMV1dLCBkaWdpdHMgPSAzKSwNCiAgICAgICAgICAgICAgICAgICAgICAgTW9yYW5JX2dlbmRlcl8yID0gcm91bmQoTUlfZ2VuXzJbWzFdXSwgZGlnaXRzID0gMykpDQpgYGANCg0KYGBge3J9DQpmc2hvd2RmKGRmX21vcmFuKQ0KYGBgDQoNCiMjIyMgVGFibGUgNCAtIFRlc3RpbmcgdGhlIGRpZmZlcmVuY2Ugb2YgTW9yYW4ncyBJIG9uIGdlbmRlcg0KDQpgYGB7cn0NCnBzeWNoOjpwYWlyZWQucihkZl9tb3JhbiRNb3JhbklfZ2VuZGVyXzEsIGRmX21vcmFuJE1vcmFuSV9nZW5kZXJfMiwgbiA9IDEwMCkNCmBgYA0KDQojIyMjIFRhYmxlIDUgLSBUZXN0aW5nIHRoZSBkaWZmZXJlbmNlIG9mIE1vcmFuJ3MgSSBvbiBwcmVzdGlnZQ0KDQpgYGB7cn0NCnBzeWNoOjpwYWlyZWQucihkZl9tb3JhbiRNb3JhbklfcHJlc18xLCBkZl9tb3JhbiRNb3JhbklfcHJlc18yLCBuID0gMTAwKQ0KYGBgDQo=</div>
 
 
 </div>
