@@ -47,15 +47,13 @@ navbar:
       - text: "Theory"
         href: Theory.html
       - text: "Data"
-        menu:
-        - text: "Data"
-          href: Data.html
+        href: Data.html
       - text: "Results"
         menu:
         - text: "Descriptive Results"
           href: Descriptives.html
         - text: "RSiena Models"
-          href: Siena_Results(final).html
+          href: Siena_Results_final.html
         - text: "RSiena GoF"
           href: Siena_GOF.html
         - text: "Rsiena Behavior"
