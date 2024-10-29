@@ -4,11 +4,13 @@ title: "Results - Goodness of Fit"
 author: "Niels Vullings"
 bibliography: references.bib
 ---
+
 ```{r, echo=FALSE}
 rm(list = ls())
 ```
 
 # Load UDF
+
 ```{r}
 colorize <- function(x, color) {sprintf("<span style='color: %s;'>%s</span>", color, x) }
 
@@ -64,6 +66,7 @@ getNet <- function(N, edgeList) { # get simulated network from SIENA
 ```
 
 ## Custom Dyad & Triad census function
+
 ```{r}
 #---- Dyad census ----
 ts_dyads_evo <- function (sims, net1, simtype = "notypespecified", forplot = TRUE) {
@@ -238,6 +241,7 @@ ts_triads_evo <- function (sims, net1, simtype = "notypespecified", forplot = TR
 }
 
 ```
+
 # Load Packages
 
 ```{r, warning=FALSE, results='hide', message=FALSE}
@@ -245,6 +249,7 @@ packages <- c("tidyverse", "sna", "igraph", "RSiena", "iterators", "doParallel")
 
 fpackage.check(packages)
 ```
+
 # Set up parallel cluster
 
 ```{r, results='hide'}
@@ -256,59 +261,76 @@ registerDoParallel(mycl)
 
 ```
 
+------------------------------------------------------------------------
+
 # Load Data
+
 ```{r}
 df_ego <- fload("./data/processed/RU_UU_ego.RData")
 soc_data <- fload("./data/processed/soc_data_raw.RData")
 ```
 
+## Extract networks for better memory usage
+
+```{r}
+wave_1 <- soc_data$nets[1,,]
+wave_2 <- soc_data$nets[2,,]
+
+rm(soc_data)
+```
+
 # Load Models
+
 ```{r}
 ans_M0 <- fload("./results/processed/20241024-ans_M0.rda")
 ans_M1 <- fload("./results/processed/20241024-ans_M1_2.rda")
 ans_M2 <- fload("./results/processed/20241024-ans_M2_2.rda")
 ans_M2.5 <- fload("./results/processed/20241024-ans_M2.5.rda")
-ans_M3 <- fload("./results/processed/20241024-ans_M3.rda")
+ans_M3 <- fload("./results/processed/20241029-ans_M3.rda")
 ans_M4 <- fload("./results/processed/20241024-ans_M4.rda")
-ans_M5 <- fload("./results/processed/20241025-ans_M5.rda")
-
-
+ans_M5 <- fload("./results/processed/20241029-ans_M5.rda")
 ```
 
 # RSiena - Goodness of Fit {.tabset}
+
+Apart from the convergence of the model and the significance of the estimates, the Goodness of Fit plays a critical role in assessing whether a model estimated in RSiena is representative of the observed data. As RSiena is a method that uses simulation, it is important to check whether the structure of the simulated networks resembles the changes visible in the observed network [@ripley2011manual]. While many auxiliary functions are available to test the Goodness of fit of a model, I chose to use two types: the distribution of indegrees and a dyad evolution census. The indegree distribution is available in RSiena and measures the extent to which the simulated networks follow the indegree distribution of the observed network. The dyad evolution census is function that is written by myself, as part of the RsienaTwoStep-project [@tolsma2024twostep]. Using the R package ggplot2, it is create a Goodness of Fit plot for this census. The grey violinplot is the distribution of the simulated networks for a specific triad transition from wave 1 to wave 2. The red point including the tails is the mean of the simulated network census including the confidence intervals ($\mu \pm 1.96* \sigma$). The green point is the observed value for a specific transition. Logically, the closer the red and green points are to each other, the better this transition was estimated in the simulations. When the green point is within the tails, it is significant for a alpha of 0.05. Below I will assess the Goodness of Fit of each model and its consequences for the results.
+
 ## Model 0
+
+The Goodness of Fit for the indegree distribution is 0, indicating very a significant deviation between the expected and observed indegree distribution. The amount of actors with 0 or 1 observed indegrees is (severly) underestimated. The amount of actors with 2 indegrees is quite accurately estimated. Actors with 3 or more indegrees are all overestimated. Given the fact that this model does not include any structural effects apart from the standard network statistics in RSiena, this makes sense. \
+&emsp; Regarding the dyad census, most observed transitions are within 1.96 the standard deviation of the simulated networks. However, the transition "*Null \> Assym*" and "*Assym \> Null"* are in the lower bounds of the distribution, which indicates that there is room for improvement. The observed transitions for stable mutual dyads "*Mutual \> Mutual*" is overestimated, while the transition "*Mutual \> Assym*" and "*Tie flips"* are both underestimated in this model.
+
 ```{r}
 
-simNets_M0 <- list()
+simNets <- list()
 for (i in 1:1000) {
   
-  simNets_M0[[i]] = getNet(100, ans_M0$sims[[i]][["Data1"]][["net"]][["1"]])
+  simNets[[i]] = getNet(100, ans_M0$sims[[i]][["Data1"]][["net"]][["1"]])
   
 }
 
 ```
 
-
 ```{r}
 GOF_M0 <- sienaGOF(ans_M0, IndegreeDistribution, verbose = FALSE, join = TRUE, varName = "net")
 
-plot(GOF_M0, main = "Degree Distribution Model 0")
+plot(GOF_M0, main = "Indegree Distribution Model 0")
 
 ```
 
 ```{r}
 
-GOF_dyads <- ts_dyads_evo(simNets_M0, soc_data$nets[1,,]) %>% filter(x != "Null...Null") %>% group_by(simnet) %>% mutate(stand = y/sum(y))
+GOF_dyads <- ts_dyads_evo(simNets, wave_1) %>% filter(x != "Null...Null") %>% group_by(simnet) %>% mutate(stand = y/sum(y))
 
-OBS_dyads <- ts_dyads_evo(soc_data$nets[2,,], soc_data$nets[1,,]) %>% filter(x != "Null...Null") %>% mutate(stand = y/sum(y)) %>% select(x,y,stand)
+OBS_dyads <- ts_dyads_evo(wave_2, wave_1) %>% filter(x != "Null...Null") %>% mutate(stand = y/sum(y)) %>% select(x,y,stand)
 
 
-GOF_plot <- GOF_dyads %>% left_join(OBS_dyads, by = "x")
+GOF_plot_M0 <- GOF_dyads %>% left_join(OBS_dyads, by = "x")
 ```
 
 ```{r, fig.width=9}
 
-p_M0 <- ggplot(GOF_plot, aes(x=x, y=y.x) ) + 
+p_M0 <- ggplot(GOF_plot_M0, aes(x=x, y=y.x) ) + 
   geom_violin(fill = "grey", position=position_dodge(.8)) +
   stat_summary(fun = mean,
                geom = "errorbar",
@@ -332,38 +354,40 @@ p_M0
 ```
 
 ## Model 1
+
+Model 1, which includes the structural effects, has a Goodness of Fit - value for the indegree distribution of 0.016. The inclusion of the IsolateNet statistic decreased the overestimation of the isolates, but the amount of actors with 0 indegrees is still underestimated. The amount of actors with 1 indegrees is similarly underestimated, while actors with 2 or more indegrees is overestimated. The GOF of the dyad census is similar to the GOF of Model 0, indicating the not much changed between these models, which is also visible by the small increase in the p-value of the indegree distribution plot.
+
 ```{r}
 
-simNets_M1 <- list()
+simNets <- list()
 for (i in 1:1000) {
   
-  simNets_M1[[i]] = getNet(100, ans_M1$sims[[i]][["Data1"]][["net"]][["1"]])
+  simNets[[i]] = getNet(100, ans_M1$sims[[i]][["Data1"]][["net"]][["1"]])
   
 }
 
 ```
 
-
 ```{r}
 GOF_M1 <- sienaGOF(ans_M1, IndegreeDistribution, verbose = FALSE, join = TRUE, varName = "net")
 
-plot(GOF_M1, main = "Degree Distribution Model 1")
+plot(GOF_M1, main = "Indegree Distribution Model 1")
 
 ```
 
 ```{r}
 
-GOF_dyads <- ts_dyads_evo(simNets_M1, soc_data$nets[1,,]) %>% filter(x != "Null...Null") %>% group_by(simnet) %>% mutate(stand = y/sum(y))
+GOF_dyads <- ts_dyads_evo(simNets, wave_1) %>% filter(x != "Null...Null") %>% group_by(simnet) %>% mutate(stand = y/sum(y))
 
-OBS_dyads <- ts_dyads_evo(soc_data$nets[2,,], soc_data$nets[1,,]) %>% filter(x != "Null...Null") %>% mutate(stand = y/sum(y)) %>% select(x,y,stand)
+OBS_dyads <- ts_dyads_evo(wave_2, wave_1) %>% filter(x != "Null...Null") %>% mutate(stand = y/sum(y)) %>% select(x,y,stand)
 
 
-GOF_plot <- GOF_dyads %>% left_join(OBS_dyads, by = "x")
+GOF_plot_M1 <- GOF_dyads %>% left_join(OBS_dyads, by = "x")
 ```
 
 ```{r, fig.width=9}
 
-p_M1 <- ggplot(GOF_plot, aes(x=x, y=y.x) ) + 
+p_M1 <- ggplot(GOF_plot_M1, aes(x=x, y=y.x) ) + 
   geom_violin(fill = "grey", position=position_dodge(.8)) +
   stat_summary(fun = mean,
                geom = "errorbar",
@@ -376,7 +400,7 @@ p_M1 <- ggplot(GOF_plot, aes(x=x, y=y.x) ) +
                color="red", position=position_dodge(.8)) + 
   stat_summary( aes(x=x, y=y.y, group = 1), fun = mean,
                 geom = "point",
-                color="green", shape=10, position=position_dodge(.8)) + 
+                color="green", size = 3, shape=10, position=position_dodge(.8)) + 
   labs(x = "Dyad Census", y = "N") +
   # scale_x_discrete(guide = guide_axis(n.dodge = 2)) +
   theme(axis.text.x = element_text(angle = 60,  vjust = 0.5)) +   
@@ -387,38 +411,40 @@ p_M1
 ```
 
 ## Model 2
+
+Model 2 shows some increase in the p-value of the indegree distribution (p = 0.184), indicating that the GOF is improving. This is mainly visible for actors with 2 or more indegrees, who are not as overestimated as in the previous models. The GOF for the dyad census is similar to the other models in terms of the differences between the observed and expected transitions. However, the violin plots are getting smaller, indicating there there is less variability between the simulations.
+
 ```{r}
 
-simNets_M2 <- list()
+simNets <- list()
 for (i in 1:1000) {
   
-  simNets_M2[[i]] = getNet(100, ans_M2$sims[[i]][["Data1"]][["net"]][["1"]])
+  simNets[[i]] = getNet(100, ans_M2$sims[[i]][["Data1"]][["net"]][["1"]])
   
 }
 
 ```
 
-
 ```{r}
 GOF_M2 <- sienaGOF(ans_M2, IndegreeDistribution, verbose = FALSE, join = TRUE, varName = "net")
 
-plot(GOF_M2, main = "Degree Distribution Model 2")
+plot(GOF_M2, main = "Indegree Distribution Model 2")
 
 ```
 
 ```{r}
 
-GOF_dyads <- ts_dyads_evo(simNets_M2, soc_data$nets[1,,]) %>% filter(x != "Null...Null") %>% group_by(simnet) %>% mutate(stand = y/sum(y))
+GOF_dyads <- ts_dyads_evo(simNets, wave_1) %>% filter(x != "Null...Null") %>% group_by(simnet) %>% mutate(stand = y/sum(y))
 
-OBS_dyads <- ts_dyads_evo(soc_data$nets[2,,], soc_data$nets[1,,]) %>% filter(x != "Null...Null") %>% mutate(stand = y/sum(y)) %>% select(x,y,stand)
+OBS_dyads <- ts_dyads_evo(wave_2, wave_1) %>% filter(x != "Null...Null") %>% mutate(stand = y/sum(y)) %>% select(x,y,stand)
 
 
-GOF_plot <- GOF_dyads %>% left_join(OBS_dyads, by = "x")
+GOF_plot_M2 <- GOF_dyads %>% left_join(OBS_dyads, by = "x")
 ```
 
 ```{r, fig.width=9}
 
-p_M2 <- ggplot(GOF_plot, aes(x=x, y=y.x) ) + 
+p_M2 <- ggplot(GOF_plot_M2, aes(x=x, y=y.x) ) + 
   geom_violin(fill = "grey", position=position_dodge(.8)) +
   stat_summary(fun = mean,
                geom = "errorbar",
@@ -431,7 +457,7 @@ p_M2 <- ggplot(GOF_plot, aes(x=x, y=y.x) ) +
                color="red", position=position_dodge(.8)) + 
   stat_summary( aes(x=x, y=y.y), fun = mean,
                 geom = "point",
-                color="green", shape=10, position=position_dodge(.8)) + 
+                color="green", size = 3, shape=10, position=position_dodge(.8)) + 
   labs(x = "Dyad Census", y = "N") +
   # scale_x_discrete(guide = guide_axis(n.dodge = 2)) +
   theme(axis.text.x = element_text(angle = 45,  vjust = 0.5,)) +   
@@ -442,38 +468,41 @@ p_M2
 ```
 
 ## Model 2.5
+
+As stated in the result section, Model 2.5 has a significant increase in the GOF, due to the indegree popularity squared parameter, which is known to have a better fit than the normal version [@ripley2011manual]. This model has a p-value of 0.891 for the indegree distribution, with all actors with 1 or more indegrees being estimated correctly (or at least within Q1-Q3). The only exception are the isolates, which are still underestimated. However, it should be noted that the difference between the observed and expected isolates is much lower than the previous models.\
+&emsp; Model 2.5 is less accurate with regard to the GOF of the dyad census. Apart from the transition "*Assym \> Assym*" and "*Mutual \> Null*", all observed dyadic transitions are not within 1 standard deviation of the simulated transitions. The model is particularly bad at estimating the transition from "*Assym \> Null*" and *"Null \> Assym",* which are both overestimated compared to the observed transistions*.*
+
 ```{r}
 
-simNets_M2.5 <- list()
+simNets <- list()
 for (i in 1:1000) {
   
-  simNets_M2.5[[i]] = getNet(100, ans_M2.5$sims[[i]][["Data1"]][["net"]][["1"]])
+  simNets[[i]] = getNet(100, ans_M2.5$sims[[i]][["Data1"]][["net"]][["1"]])
   
 }
 
 ```
 
-
 ```{r}
 GOF_M2.5 <- sienaGOF(ans_M2.5, IndegreeDistribution, verbose = FALSE, join = TRUE, varName = "net")
 
-plot(GOF_M2.5, main = "Degree Distribution Model 2.5")
+plot(GOF_M2.5, main = "Indegree Distribution Model 2.5")
 
 ```
 
 ```{r}
 
-GOF_dyads <- ts_dyads_evo(simNets_M2.5, soc_data$nets[1,,]) %>% filter(x != "Null...Null") %>% group_by(simnet) %>% mutate(stand = y/sum(y))
+GOF_dyads <- ts_dyads_evo(simNets, wave_1) %>% filter(x != "Null...Null") %>% group_by(simnet) %>% mutate(stand = y/sum(y))
 
-OBS_dyads <- ts_dyads_evo(soc_data$nets[2,,], soc_data$nets[1,,]) %>% filter(x != "Null...Null") %>% mutate(stand = y/sum(y)) %>% select(x,y,stand)
+OBS_dyads <- ts_dyads_evo(wave_2, wave_1) %>% filter(x != "Null...Null") %>% mutate(stand = y/sum(y)) %>% select(x,y,stand)
 
 
-GOF_plot <- GOF_dyads %>% left_join(OBS_dyads, by = "x")
+GOF_plot_M2.5 <- GOF_dyads %>% left_join(OBS_dyads, by = "x")
 ```
 
 ```{r, fig.width=9}
 
-p_M2.5 <- ggplot(GOF_plot, aes(x=x, y=y.x) ) + 
+p_M2.5 <- ggplot(GOF_plot_M2.5, aes(x=x, y=y.x) ) + 
   geom_violin(fill = "grey", position=position_dodge(.8)) +
   stat_summary(fun = mean,
                geom = "errorbar",
@@ -486,7 +515,7 @@ p_M2.5 <- ggplot(GOF_plot, aes(x=x, y=y.x) ) +
                color="red", position=position_dodge(.8)) + 
   stat_summary( aes(x=x, y=y.y), fun = mean,
                 geom = "point",
-                color="green", shape=10, position=position_dodge(.8)) + 
+                color="green", size = 3, shape=10, position=position_dodge(.8)) + 
   labs(x = "Dyad Census", y = "N") +
   # scale_x_discrete(guide = guide_axis(n.dodge = 2)) +
   theme(axis.text.x = element_text(angle = 45,  vjust = 0.5,)) +   
@@ -497,38 +526,38 @@ p_M2.5
 ```
 
 ## Model 3
+
 ```{r}
 
-simNets_M3 <- list()
+simNets <- list()
 for (i in 1:1000) {
   
-  simNets_M3[[i]] = getNet(100, ans_M3$sims[[i]][["Data1"]][["net"]][["1"]])
+  simNets[[i]] = getNet(100, ans_M3$sims[[i]][["Data1"]][["net"]][["1"]])
   
 }
 
 ```
 
-
 ```{r}
 GOF_M3 <- sienaGOF(ans_M3, IndegreeDistribution, verbose = FALSE, join = TRUE, varName = "net")
 
-plot(GOF_M3, main = "Degree Distribution Model 3")
+plot(GOF_M3, main = "Indegree Distribution Model 3")
 
 ```
 
 ```{r}
 
-GOF_dyads <- ts_dyads_evo(simNets_M3, soc_data$nets[1,,]) %>% filter(x != "Null...Null") %>% group_by(simnet) %>% mutate(stand = y/sum(y))
+GOF_dyads <- ts_dyads_evo(simNets, wave_1) %>% filter(x != "Null...Null") %>% group_by(simnet) %>% mutate(stand = y/sum(y))
 
-OBS_dyads <- ts_dyads_evo(soc_data$nets[2,,], soc_data$nets[1,,]) %>% filter(x != "Null...Null") %>% mutate(stand = y/sum(y)) %>% select(x,y,stand)
+OBS_dyads <- ts_dyads_evo(wave_2, wave_1) %>% filter(x != "Null...Null") %>% mutate(stand = y/sum(y)) %>% select(x,y,stand)
 
 
-GOF_plot <- GOF_dyads %>% left_join(OBS_dyads, by = "x")
+GOF_plot_M3 <- GOF_dyads %>% left_join(OBS_dyads, by = "x")
 ```
 
 ```{r, fig.width=9}
 
-p_M3 <- ggplot(GOF_plot, aes(x=x, y=y.x) ) + 
+p_M3 <- ggplot(GOF_plot_M3, aes(x=x, y=y.x) ) + 
   geom_violin(fill = "grey", position=position_dodge(.8)) +
   stat_summary(fun = mean,
                geom = "errorbar",
@@ -541,7 +570,7 @@ p_M3 <- ggplot(GOF_plot, aes(x=x, y=y.x) ) +
                color="red", position=position_dodge(.8)) + 
   stat_summary( aes(x=x, y=y.y), fun = mean,
                 geom = "point",
-                color="green", shape=10, position=position_dodge(.8)) + 
+                color="green", size = 3, shape=10, position=position_dodge(.8)) + 
   labs(x = "Dyad Census", y = "N") +
   # scale_x_discrete(guide = guide_axis(n.dodge = 2)) +
   theme(axis.text.x = element_text(angle = 45, vjust = 0.5,)) +
@@ -552,12 +581,13 @@ p_M3
 ```
 
 ## Model 4
+
 ```{r}
 
-simNets_M4 <- list()
+simNets <- list()
 for (i in 1:1000) {
   
-  simNets_M4[[i]] = getNet(100, ans_M4$sims[[i]][["Data1"]][["net"]][["1"]])
+  simNets[[i]] = getNet(100, ans_M4$sims[[i]][["Data1"]][["net"]][["1"]])
   
 }
 
@@ -566,23 +596,23 @@ for (i in 1:1000) {
 ```{r}
 GOF_M4 <- sienaGOF(ans_M4, IndegreeDistribution, verbose = FALSE, join = TRUE, varName = "net")
 
-plot(GOF_M4, main = "Degree Distribution Model 4")
+plot(GOF_M4, main = "Indegree Distribution Model 4")
 
 ```
 
 ```{r}
 
-GOF_dyads <- ts_dyads_evo(simNets_M4, soc_data$nets[1,,]) %>% filter(x != "Null...Null") %>% group_by(simnet) %>% mutate(stand = y/sum(y))
+GOF_dyads <- ts_dyads_evo(simNets, wave_1) %>% filter(x != "Null...Null") %>% group_by(simnet) %>% mutate(stand = y/sum(y))
 
-OBS_dyads <- ts_dyads_evo(soc_data$nets[2,,], soc_data$nets[1,,]) %>% filter(x != "Null...Null") %>% mutate(stand = y/sum(y)) %>% select(x,y,stand)
+OBS_dyads <- ts_dyads_evo(wave_2, wave_1) %>% filter(x != "Null...Null") %>% mutate(stand = y/sum(y)) %>% select(x,y,stand)
 
 
-GOF_plot <- GOF_dyads %>% left_join(OBS_dyads, by = "x")
+GOF_plot_M4 <- GOF_dyads %>% left_join(OBS_dyads, by = "x")
 ```
 
 ```{r, fig.width=9}
 
-p_M4 <- ggplot(GOF_plot, aes(x=x, y=y.x) ) + 
+p_M4 <- ggplot(GOF_plot_M4, aes(x=x, y=y.x) ) + 
   geom_violin(fill = "grey", position=position_dodge(.8)) +
   stat_summary(fun = mean,
                geom = "errorbar",
@@ -595,7 +625,7 @@ p_M4 <- ggplot(GOF_plot, aes(x=x, y=y.x) ) +
                color="red", position=position_dodge(.8)) + 
   stat_summary( aes(x=x, y=y.y), fun = mean,
                 geom = "point",
-                color="green", shape=10, position=position_dodge(.8)) + 
+                color="green", size = 3, shape=10, position=position_dodge(.8)) + 
   labs(x = "Dyad Census", y = "N") +
   # scale_x_discrete(guide = guide_axis(n.dodge = 2)) +
   theme(axis.text.x = element_text(angle = 45,  vjust = 0.5,)) +   
@@ -606,12 +636,13 @@ p_M4
 ```
 
 ## Model 5
+
 ```{r}
 
-simNets_M5 <- list()
+simNets <- list()
 for (i in 1:1000) {
   
-  simNets_M5[[i]] = getNet(100, ans_M5$sims[[i]][["Data1"]][["net"]][["1"]])
+  simNets[[i]] = getNet(100, ans_M5$sims[[i]][["Data1"]][["net"]][["1"]])
   
 }
 
@@ -620,23 +651,23 @@ for (i in 1:1000) {
 ```{r}
 GOF_M5 <- sienaGOF(ans_M5, IndegreeDistribution, verbose = FALSE, join = TRUE, varName = "net")
 
-plot(GOF_M5, main = "Degree Distribution Model 4")
+plot(GOF_M5, main = "Indegree Distribution Model 5")
 
 ```
 
 ```{r}
 
-GOF_dyads <- ts_dyads_evo(simNets_M5, soc_data$nets[1,,]) %>% filter(x != "Null...Null") %>% group_by(simnet) %>% mutate(stand = y/sum(y))
+GOF_dyads <- ts_dyads_evo(simNets, wave_1) %>% filter(x != "Null...Null") %>% group_by(simnet) %>% mutate(stand = y/sum(y))
 
-OBS_dyads <- ts_dyads_evo(soc_data$nets[2,,], soc_data$nets[1,,]) %>% filter(x != "Null...Null") %>% mutate(stand = y/sum(y)) %>% select(x,y,stand)
+OBS_dyads <- ts_dyads_evo(wave_2, wave_1) %>% filter(x != "Null...Null") %>% mutate(stand = y/sum(y)) %>% select(x,y,stand)
 
 
-GOF_plot <- GOF_dyads %>% left_join(OBS_dyads, by = "x")
+GOF_plot_M5 <- GOF_dyads %>% left_join(OBS_dyads, by = "x")
 ```
 
 ```{r, fig.width=9}
 
-p_M5 <- ggplot(GOF_plot, aes(x=x, y=y.x) ) + 
+p_M5 <- ggplot(GOF_plot_M5, aes(x=x, y=y.x) ) + 
   geom_violin(fill = "grey", position=position_dodge(.8)) +
   stat_summary(fun = mean,
                geom = "errorbar",
@@ -649,7 +680,7 @@ p_M5 <- ggplot(GOF_plot, aes(x=x, y=y.x) ) +
                color="red", position=position_dodge(.8)) + 
   stat_summary( aes(x=x, y=y.y), fun = mean,
                 geom = "point",
-                color="green", shape=10, position=position_dodge(.8)) + 
+                color="green", size = 3, shape=10, position=position_dodge(.8)) + 
   labs(x = "Dyad Census", y = "N") +
   # scale_x_discrete(guide = guide_axis(n.dodge = 2)) +
   theme(axis.text.x = element_text(angle = 45,  vjust = 0.5,)) +   
@@ -658,7 +689,6 @@ p_M5 <- ggplot(GOF_plot, aes(x=x, y=y.x) ) +
 p_M5
 
 ```
-
 
 ```{r}
 # TEST
@@ -683,4 +713,3 @@ p_M5
 # 
 # p_M1
 ```
-

@@ -59,7 +59,7 @@ navbar:
         - text: "Rsiena Behavior"
           href: Siena_Behavior.html
       - text: "Conclusion"
-        href:
+        href: Conclusion.html
         
         
         # here, other .Rmds can be added

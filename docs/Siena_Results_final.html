@@ -36,6 +36,10 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <script src="site_libs/navigation-1.1/codefolding.js"></script>
 <script src="site_libs/navigation-1.1/sourceembed.js"></script>
+<script src="site_libs/clipboard-1.7.1/clipboard.min.js"></script>
+<link href="site_libs/primer-tooltips-1.4.0/build.css" rel="stylesheet" />
+<link href="site_libs/klippy-0.0.0.9500/css/klippy.min.css" rel="stylesheet" />
+<script src="site_libs/klippy-0.0.0.9500/js/klippy.min.js"></script>
 <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
 
@@ -172,6 +176,29 @@ code span.wa { color: #bf0303; } /* Warning */
 }
 </style>
 
+<style type="text/css">
+/* for pandoc --citeproc since 2.11 */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
 
 <link rel="stylesheet" href="tweaks.css" type="text/css" />
 
@@ -534,7 +561,9 @@ div.tocify {
         </li>
       </ul>
     </li>
-    <li class="dropdown-header">Conclusion</li>
+    <li>
+      <a href="Conclusion.html">Conclusion</a>
+    </li>
   </ul>
 </li>
       </ul>
@@ -570,49 +599,69 @@ div.tocify {
 </div>
 
 
+<style>
+body {
+text-align: justify;
+font-family: Times;
+}
+
+h1, .h1, h2, .h2, h3, .h3 {
+margin-top: 24px;
+font-family: Times;
+}
+</style>
+<script>
+  addClassKlippyTo("pre.r, pre.markdown");
+  addKlippy('right', 'top', 'auto', '1', 'Copy code', 'Copied!');
+</script>
 <div id="load-udf" class="section level1" number="1">
 <h1><span class="header-section-number">1</span> Load UDF</h1>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>colorize <span class="ot">&lt;-</span> <span class="cf">function</span>(x, color) {<span class="fu">sprintf</span>(<span class="st">&quot;&lt;span style=&#39;color: %s;&#39;&gt;%s&lt;/span&gt;&quot;</span>, color, x) }</span>
-<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>fpackage.check <span class="ot">&lt;-</span> <span class="cf">function</span>(packages) {</span>
-<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>  <span class="fu">lapply</span>(packages, <span class="at">FUN =</span> <span class="cf">function</span>(x) {</span>
-<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a>    <span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(x, <span class="at">character.only =</span> <span class="cn">TRUE</span>)) {</span>
-<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a>      <span class="fu">install.packages</span>(x, <span class="at">dependencies =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a>      <span class="fu">library</span>(x, <span class="at">character.only =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a>    }</span>
-<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a>  })</span>
-<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a>}</span>
-<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a></span>
-<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a>fsave <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">file =</span> <span class="cn">NULL</span>, <span class="at">location =</span> <span class="st">&quot;./results/processed/&quot;</span>) {</span>
-<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a>  <span class="fu">ifelse</span>(<span class="sc">!</span><span class="fu">dir.exists</span>(<span class="st">&quot;results&quot;</span>), <span class="fu">dir.create</span>(<span class="st">&quot;data&quot;</span>), <span class="cn">FALSE</span>)</span>
-<span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a>  <span class="fu">ifelse</span>(<span class="sc">!</span><span class="fu">dir.exists</span>(<span class="st">&quot;results/processed&quot;</span>), <span class="fu">dir.create</span>(<span class="st">&quot;results/processed&quot;</span>), <span class="cn">FALSE</span>)</span>
-<span id="cb1-15"><a href="#cb1-15" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">is.null</span>(file))</span>
-<span id="cb1-16"><a href="#cb1-16" tabindex="-1"></a>    file <span class="ot">=</span> <span class="fu">deparse</span>(<span class="fu">substitute</span>(x))</span>
-<span id="cb1-17"><a href="#cb1-17" tabindex="-1"></a>  datename <span class="ot">&lt;-</span> <span class="fu">substr</span>(<span class="fu">gsub</span>(<span class="st">&quot;[:-]&quot;</span>, <span class="st">&quot;&quot;</span>, <span class="fu">Sys.time</span>()), <span class="dv">1</span>, <span class="dv">8</span>)</span>
-<span id="cb1-18"><a href="#cb1-18" tabindex="-1"></a>  totalname <span class="ot">&lt;-</span> <span class="fu">paste</span>(location, datename, file, <span class="st">&quot;.rda&quot;</span>, <span class="at">sep =</span> <span class="st">&quot;&quot;</span>)</span>
-<span id="cb1-19"><a href="#cb1-19" tabindex="-1"></a>  <span class="fu">save</span>(x, <span class="at">file =</span> totalname)  <span class="co">#need to fix if file is reloaded as input name, not as x. </span></span>
-<span id="cb1-20"><a href="#cb1-20" tabindex="-1"></a>}</span>
-<span id="cb1-21"><a href="#cb1-21" tabindex="-1"></a></span>
-<span id="cb1-22"><a href="#cb1-22" tabindex="-1"></a>fload <span class="ot">&lt;-</span> <span class="cf">function</span>(filename) {</span>
-<span id="cb1-23"><a href="#cb1-23" tabindex="-1"></a>  <span class="fu">load</span>(filename)</span>
-<span id="cb1-24"><a href="#cb1-24" tabindex="-1"></a>  <span class="fu">get</span>(<span class="fu">ls</span>()[<span class="fu">ls</span>() <span class="sc">!=</span> <span class="st">&quot;filename&quot;</span>])</span>
-<span id="cb1-25"><a href="#cb1-25" tabindex="-1"></a>}</span>
-<span id="cb1-26"><a href="#cb1-26" tabindex="-1"></a></span>
-<span id="cb1-27"><a href="#cb1-27" tabindex="-1"></a>fshowdf <span class="ot">&lt;-</span> <span class="cf">function</span>(x, ...) {</span>
-<span id="cb1-28"><a href="#cb1-28" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(x, <span class="at">digits =</span> <span class="dv">2</span>, <span class="st">&quot;html&quot;</span>, ...) <span class="sc">%&gt;%</span></span>
-<span id="cb1-29"><a href="#cb1-29" tabindex="-1"></a>    kableExtra<span class="sc">::</span><span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="fu">c</span>(<span class="st">&quot;striped&quot;</span>, <span class="st">&quot;hover&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb1-30"><a href="#cb1-30" tabindex="-1"></a>    kableExtra<span class="sc">::</span><span class="fu">scroll_box</span>(<span class="at">width =</span> <span class="st">&quot;100%&quot;</span>, <span class="at">height =</span> <span class="st">&quot;300px&quot;</span>)</span>
-<span id="cb1-31"><a href="#cb1-31" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>colorize <span class="ot">&lt;-</span> <span class="cf">function</span>(x, color) {</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>    <span class="fu">sprintf</span>(<span class="st">&quot;&lt;span style=&#39;color: %s;&#39;&gt;%s&lt;/span&gt;&quot;</span>, color, x)</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>}</span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a>fpackage.check <span class="ot">&lt;-</span> <span class="cf">function</span>(packages) {</span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a>    <span class="fu">lapply</span>(packages, <span class="at">FUN =</span> <span class="cf">function</span>(x) {</span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a>        <span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(x, <span class="at">character.only =</span> <span class="cn">TRUE</span>)) {</span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a>            <span class="fu">install.packages</span>(x, <span class="at">dependencies =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a>            <span class="fu">library</span>(x, <span class="at">character.only =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a>        }</span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a>    })</span>
+<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a>}</span>
+<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a>fsave <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">file =</span> <span class="cn">NULL</span>, <span class="at">location =</span> <span class="st">&quot;./results/processed/&quot;</span>) {</span>
+<span id="cb1-15"><a href="#cb1-15" tabindex="-1"></a>    <span class="fu">ifelse</span>(<span class="sc">!</span><span class="fu">dir.exists</span>(<span class="st">&quot;results&quot;</span>), <span class="fu">dir.create</span>(<span class="st">&quot;data&quot;</span>), <span class="cn">FALSE</span>)</span>
+<span id="cb1-16"><a href="#cb1-16" tabindex="-1"></a>    <span class="fu">ifelse</span>(<span class="sc">!</span><span class="fu">dir.exists</span>(<span class="st">&quot;results/processed&quot;</span>), <span class="fu">dir.create</span>(<span class="st">&quot;results/processed&quot;</span>), <span class="cn">FALSE</span>)</span>
+<span id="cb1-17"><a href="#cb1-17" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">is.null</span>(file))</span>
+<span id="cb1-18"><a href="#cb1-18" tabindex="-1"></a>        file <span class="ot">=</span> <span class="fu">deparse</span>(<span class="fu">substitute</span>(x))</span>
+<span id="cb1-19"><a href="#cb1-19" tabindex="-1"></a>    datename <span class="ot">&lt;-</span> <span class="fu">substr</span>(<span class="fu">gsub</span>(<span class="st">&quot;[:-]&quot;</span>, <span class="st">&quot;&quot;</span>, <span class="fu">Sys.time</span>()), <span class="dv">1</span>, <span class="dv">8</span>)</span>
+<span id="cb1-20"><a href="#cb1-20" tabindex="-1"></a>    totalname <span class="ot">&lt;-</span> <span class="fu">paste</span>(location, datename, file, <span class="st">&quot;.rda&quot;</span>, <span class="at">sep =</span> <span class="st">&quot;&quot;</span>)</span>
+<span id="cb1-21"><a href="#cb1-21" tabindex="-1"></a>    <span class="fu">save</span>(x, <span class="at">file =</span> totalname)  <span class="co">#need to fix if file is reloaded as input name, not as x. </span></span>
+<span id="cb1-22"><a href="#cb1-22" tabindex="-1"></a>}</span>
+<span id="cb1-23"><a href="#cb1-23" tabindex="-1"></a></span>
+<span id="cb1-24"><a href="#cb1-24" tabindex="-1"></a>fload <span class="ot">&lt;-</span> <span class="cf">function</span>(filename) {</span>
+<span id="cb1-25"><a href="#cb1-25" tabindex="-1"></a>    <span class="fu">load</span>(filename)</span>
+<span id="cb1-26"><a href="#cb1-26" tabindex="-1"></a>    <span class="fu">get</span>(<span class="fu">ls</span>()[<span class="fu">ls</span>() <span class="sc">!=</span> <span class="st">&quot;filename&quot;</span>])</span>
+<span id="cb1-27"><a href="#cb1-27" tabindex="-1"></a>}</span>
+<span id="cb1-28"><a href="#cb1-28" tabindex="-1"></a></span>
+<span id="cb1-29"><a href="#cb1-29" tabindex="-1"></a>fshowdf <span class="ot">&lt;-</span> <span class="cf">function</span>(x, ...) {</span>
+<span id="cb1-30"><a href="#cb1-30" tabindex="-1"></a>    knitr<span class="sc">::</span><span class="fu">kable</span>(x, <span class="at">digits =</span> <span class="dv">2</span>, <span class="st">&quot;html&quot;</span>, ...) <span class="sc">%&gt;%</span></span>
+<span id="cb1-31"><a href="#cb1-31" tabindex="-1"></a>        kableExtra<span class="sc">::</span><span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="fu">c</span>(<span class="st">&quot;striped&quot;</span>, <span class="st">&quot;hover&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb1-32"><a href="#cb1-32" tabindex="-1"></a>        kableExtra<span class="sc">::</span><span class="fu">scroll_box</span>(<span class="at">width =</span> <span class="st">&quot;100%&quot;</span>, <span class="at">height =</span> <span class="st">&quot;300px&quot;</span>)</span>
+<span id="cb1-33"><a href="#cb1-33" tabindex="-1"></a>}</span></code></pre></div>
 </div>
 <div id="load-packages" class="section level1" number="2">
 <h1><span class="header-section-number">2</span> Load Packages</h1>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>packages <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;tidyverse&quot;</span>, <span class="st">&quot;sna&quot;</span>, <span class="st">&quot;igraph&quot;</span>, <span class="st">&quot;RSiena&quot;</span>, <span class="st">&quot;iterators&quot;</span>, <span class="st">&quot;doParallel&quot;</span>)</span>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>packages <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;tidyverse&quot;</span>, <span class="st">&quot;sna&quot;</span>, <span class="st">&quot;igraph&quot;</span>, <span class="st">&quot;RSiena&quot;</span>, <span class="st">&quot;iterators&quot;</span>, <span class="st">&quot;doParallel&quot;</span>)</span>
 <span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a></span>
 <span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a><span class="fu">fpackage.check</span>(packages)</span></code></pre></div>
 </div>
 <div id="load-data" class="section level1" number="3">
 <h1><span class="header-section-number">3</span> Load Data</h1>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="co"># Load Ego data</span></span>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="co"># Load Ego data</span></span>
 <span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;data/processed/RU_UU_ego.RData&quot;</span>)</span>
 <span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a></span>
 <span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a><span class="co"># Load Works data</span></span>
@@ -625,41 +674,60 @@ div.tocify {
 number="4">
 <h1><span class="header-section-number">4</span> Make network data for
 RSiena</h1>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste0</span>(<span class="st">&quot;&quot;</span>, <span class="fu">dim</span>(soc_data<span class="sc">$</span>nets)))</span></code></pre></div>
-<pre><code>## [1] &quot;2&quot;   &quot;100&quot; &quot;100&quot;</code></pre>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>wave_1 <span class="ot">&lt;-</span> soc_data<span class="sc">$</span>nets[<span class="dv">1</span>,,]</span>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste0</span>(<span class="st">&quot;&quot;</span>, <span class="fu">dim</span>(soc_data<span class="sc">$</span>nets)))</span></code></pre></div>
+<pre class="test2"><code>#&gt; [1] &quot;2&quot;   &quot;100&quot; &quot;100&quot;</code></pre>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>wave_1 <span class="ot">&lt;-</span> soc_data<span class="sc">$</span>nets[<span class="dv">1</span>, , ]</span>
 <span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a><span class="fu">diag</span>(wave_1) <span class="ot">&lt;-</span> <span class="dv">0</span></span>
 <span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a></span>
-<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>wave_2 <span class="ot">&lt;-</span> soc_data<span class="sc">$</span>nets[<span class="dv">2</span>,,]</span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>wave_2 <span class="ot">&lt;-</span> soc_data<span class="sc">$</span>nets[<span class="dv">2</span>, , ]</span>
 <span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a><span class="fu">diag</span>(wave_2) <span class="ot">&lt;-</span> <span class="dv">0</span></span>
 <span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a></span>
 <span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a>net_soc_array <span class="ot">&lt;-</span> <span class="fu">array</span>(<span class="at">data =</span> <span class="fu">c</span>(wave_1, wave_2), <span class="at">dim =</span> <span class="fu">c</span>(<span class="fu">dim</span>(wave_1), <span class="dv">2</span>))</span>
 <span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a><span class="fu">dim</span>(net_soc_array)</span></code></pre></div>
-<pre><code>## [1] 100 100   2</code></pre>
+<pre class="test2"><code>#&gt; [1] 100 100   2</code></pre>
+<hr />
 </div>
 <div id="analysis" class="section level1 tabset" number="5">
 <h1 class="tabset"><span class="header-section-number">5</span>
 Analysis</h1>
 <div id="model-0" class="section level2" number="5.1">
 <h2><span class="header-section-number">5.1</span> Model 0</h2>
-<p>TEXT</p>
+<p>The Null model, containing reciprocity and density, has a convergence
+of 0.057 and a Goodness of Fit on the indegree distribution of 0,
+indicating that the model fits the data very badly. This makes sense,
+given that the model does not include any network statistics. Both
+reciprocity and density are significant for an alpha of 0.05. It is
+important to mention that significance in RSiena means something
+different than in conventional statistics. In normal statistics, such as
+OLS-regression, significance of estimates refers to the fact that they
+are not 0, In RSiena, however, it refers to the fact that the estimates
+were precisely determined <span class="citation">(Ripley et al.
+2011)</span>. Going forward with this chapter, significance will refer
+to this definition of significance. The density parameter has a value of
+-2.44, which means that people generally do not want to have a dense
+network. The reciprocity parameter has a value of 2.24, which means that
+people like to send ties back to people who have sent a tie to them.</p>
 <div id="create-sienadata" class="section level3" number="5.1.1">
 <h3><span class="header-section-number">5.1.1</span> Create
 SienaData</h3>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="co">#---- Dependent ----</span></span>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="co">#---- Dependent ----</span></span>
 <span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>net <span class="ot">&lt;-</span> <span class="fu">sienaDependent</span>(net_soc_array)</span>
 <span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a></span>
 <span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a><span class="co">#---- Make Siena df ----</span></span>
-<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a>mydata <span class="ot">&lt;-</span> <span class="fu">sienaDataCreate</span>(net)</span></code></pre></div>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a>mydata_M0 <span class="ot">&lt;-</span> <span class="fu">sienaDataCreate</span>(net)</span></code></pre></div>
 </div>
 <div id="create-effects-object" class="section level3" number="5.1.2">
 <h3><span class="header-section-number">5.1.2</span> Create Effects
 object</h3>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a>myeff_M0 <span class="ot">&lt;-</span> <span class="fu">getEffects</span>(mydata)</span>
-<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a><span class="fu">print01Report</span>(mydata, <span class="at">modelname =</span> <span class="st">&quot;./results/Collab_M0&quot;</span>)</span>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a>myeff_M0 <span class="ot">&lt;-</span> <span class="fu">getEffects</span>(mydata_M0)</span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a><span class="fu">print01Report</span>(mydata_M0, <span class="at">modelname =</span> <span class="st">&quot;./results/Collab_M0&quot;</span>)</span>
 <span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a></span>
-<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a><span class="co"># ts_dyads_evo(sims = wave_2, net1 = wave_1, forplot = TRUE)</span></span>
-<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a><span class="co"># ts_triads_evo(sims = wave_2, net1 = wave_1, forplot = TRUE)</span></span></code></pre></div>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a><span class="co"># ts_dyads_evo(sims = wave_2, net1 = wave_1, forplot = TRUE) ts_triads_evo(sims = wave_2, net1 =</span></span>
+<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a><span class="co"># wave_1, forplot = TRUE)</span></span></code></pre></div>
 </div>
 <div id="add-effects" class="section level3" number="5.1.3">
 <h3><span class="header-section-number">5.1.3</span> Add Effects</h3>
@@ -668,36 +736,37 @@ object</h3>
 number="5.1.4">
 <h3><span class="header-section-number">5.1.4</span> Create and Run the
 Algorithm</h3>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>myAlgorithm <span class="ot">&lt;-</span> <span class="fu">sienaAlgorithmCreate</span>(<span class="at">projname =</span> <span class="st">&quot;./results/Collab_M0&quot;</span>)</span>
-<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>ans_M0 <span class="ot">&lt;-</span> <span class="fu">siena07</span>(myAlgorithm, <span class="at">data =</span> mydata, <span class="at">effects =</span> myeff_M0, <span class="at">returnDeps =</span> <span class="cn">TRUE</span>)</span>
+<div class="sourceCode" id="cb10"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>myAlgorithm_M0 <span class="ot">&lt;-</span> <span class="fu">sienaAlgorithmCreate</span>(<span class="at">projname =</span> <span class="st">&quot;./results/Collab_M0&quot;</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>ans_M0 <span class="ot">&lt;-</span> <span class="fu">siena07</span>(myAlgorithm_M0, <span class="at">data =</span> mydata_M0, <span class="at">effects =</span> myeff_M0, <span class="at">returnDeps =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a>ans_M0</span>
 <span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a></span>
 <span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a><span class="fu">fsave</span>(ans_M0, <span class="at">file =</span> <span class="st">&quot;-ans_M0&quot;</span>)</span>
 <span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a></span>
-<span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a><span class="co"># if necessary estimate again!  </span></span>
-<span id="cb10-8"><a href="#cb10-8" tabindex="-1"></a><span class="co"># ans_M1_2 &lt;- siena07(myAlgorithm, data = mydata, effects = myeff, prevans_ = ans_M1, returnDeps=TRUE)</span></span>
-<span id="cb10-9"><a href="#cb10-9" tabindex="-1"></a><span class="co"># ans_M1_2</span></span></code></pre></div>
-<pre><code>## Estimates, standard errors and convergence t-ratios
-## 
-##                               Estimate   Standard   Convergence 
-##                                            Error      t-ratio   
-## 
-## Rate parameters: 
-##   0       Rate parameter       3.7909  ( 0.5568   )             
-## 
-## Other parameters: 
-##   1. eval outdegree (density) -2.4432  ( 0.0973   )   0.0524    
-##   2. eval reciprocity          2.2383  ( 0.2719   )   0.0433    
-## 
-## Overall maximum convergence ratio:    0.0573 
-## 
-## 
-## Total of 1800 iteration steps.</code></pre>
+<span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a><span class="co"># if necessary estimate again!  ans_M1_2 &lt;- siena07(myAlgorithm, data = mydata, effects = myeff,</span></span>
+<span id="cb10-8"><a href="#cb10-8" tabindex="-1"></a><span class="co"># prevans_ = ans_M1, returnDeps=TRUE) ans_M1_2</span></span></code></pre></div>
+<pre class="test2"><code>#&gt; Estimates, standard errors and convergence t-ratios
+#&gt; 
+#&gt;                               Estimate   Standard   Convergence 
+#&gt;                                            Error      t-ratio   
+#&gt; 
+#&gt; Rate parameters: 
+#&gt;   0       Rate parameter       3.7909  ( 0.5568   )             
+#&gt; 
+#&gt; Other parameters: 
+#&gt;   1. eval outdegree (density) -2.4432  ( 0.0973   )   0.0524    
+#&gt;   2. eval reciprocity          2.2383  ( 0.2719   )   0.0433    
+#&gt; 
+#&gt; Overall maximum convergence ratio:    0.0573 
+#&gt; 
+#&gt; 
+#&gt; Total of 1800 iteration steps.</code></pre>
 </div>
 <div id="goodness-of-fit" class="section level3" number="5.1.5">
 <h3><span class="header-section-number">5.1.5</span> Goodness of
 Fit</h3>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a>GOF <span class="ot">&lt;-</span> <span class="fu">sienaGOF</span>(ans_M0, IndegreeDistribution, <span class="at">verbose =</span> <span class="cn">FALSE</span>, <span class="at">join =</span> <span class="cn">TRUE</span>, <span class="at">varName =</span> <span class="st">&quot;net&quot;</span>)</span>
+<div class="sourceCode" id="cb12"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a>GOF <span class="ot">&lt;-</span> <span class="fu">sienaGOF</span>(ans_M0, IndegreeDistribution, <span class="at">verbose =</span> <span class="cn">FALSE</span>, <span class="at">join =</span> <span class="cn">TRUE</span>, <span class="at">varName =</span> <span class="st">&quot;net&quot;</span>)</span>
 <span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a></span>
 <span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a><span class="fu">plot</span>(GOF, <span class="at">main =</span> <span class="st">&quot;&quot;</span>)</span></code></pre></div>
 <p><img src="Siena_Results_final_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
@@ -705,72 +774,86 @@ Fit</h3>
 </div>
 <div id="model-1" class="section level2" number="5.2">
 <h2><span class="header-section-number">5.2</span> Model 1</h2>
-<p>TEXT</p>
+<p>This model includes the relevant network statistics: InPop, outAct,
+isolateNet. It has a convergence of 0.17 and a Goodness of Fit on the
+indegree distribution of 0.016. Indegree Popularity (inPop) is defined
+as the extent to which people who have a lot of indegrees are more
+popular to connect with. This parameter is 0.18, meaning that actors
+have a preference to connect with actors who have a lot of indegrees.
+The parameter is significant for an alpha of 0.05. Outdegree Activity
+(outAct) has a value of -0.13, but is not significant. IsolateNet is
+significant andhas a value of 3.91 and refers to the preference of
+remaining an isolate. As this value is positive, it means that people
+prefer to be an isolate in the network.</p>
 <div id="create-sienadata-1" class="section level3" number="5.2.1">
 <h3><span class="header-section-number">5.2.1</span> Create
 SienaData</h3>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="co">#---- Dependent ----</span></span>
+<div class="sourceCode" id="cb13"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="co">#---- Dependent ----</span></span>
 <span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a>net <span class="ot">&lt;-</span> <span class="fu">sienaDependent</span>(net_soc_array)</span>
 <span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a></span>
 <span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a><span class="co">#---- Make Siena df ----</span></span>
-<span id="cb13-5"><a href="#cb13-5" tabindex="-1"></a>mydata <span class="ot">&lt;-</span> <span class="fu">sienaDataCreate</span>(net)</span></code></pre></div>
+<span id="cb13-5"><a href="#cb13-5" tabindex="-1"></a>mydata_M1 <span class="ot">&lt;-</span> <span class="fu">sienaDataCreate</span>(net)</span></code></pre></div>
 </div>
 <div id="create-effects-object-1" class="section level3" number="5.2.2">
 <h3><span class="header-section-number">5.2.2</span> Create Effects
 object</h3>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a>myeff_M1 <span class="ot">&lt;-</span> <span class="fu">getEffects</span>(mydata)</span>
-<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a><span class="fu">print01Report</span>(mydata, <span class="at">modelname =</span> <span class="st">&quot;./results/Collab_M1&quot;</span>)</span>
+<div class="sourceCode" id="cb14"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a>myeff_M1 <span class="ot">&lt;-</span> <span class="fu">getEffects</span>(mydata_M1)</span>
+<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a><span class="fu">print01Report</span>(mydata_M1, <span class="at">modelname =</span> <span class="st">&quot;./results/Collab_M1&quot;</span>)</span>
 <span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a></span>
-<span id="cb14-4"><a href="#cb14-4" tabindex="-1"></a><span class="co"># ts_dyads_evo(sims = wave_2, net1 = wave_1, forplot = TRUE)</span></span>
-<span id="cb14-5"><a href="#cb14-5" tabindex="-1"></a><span class="co"># ts_triads_evo(sims = wave_2, net1 = wave_1, forplot = TRUE)</span></span></code></pre></div>
+<span id="cb14-4"><a href="#cb14-4" tabindex="-1"></a><span class="co"># ts_dyads_evo(sims = wave_2, net1 = wave_1, forplot = TRUE) ts_triads_evo(sims = wave_2, net1 =</span></span>
+<span id="cb14-5"><a href="#cb14-5" tabindex="-1"></a><span class="co"># wave_1, forplot = TRUE)</span></span></code></pre></div>
 </div>
 <div id="add-effects-1" class="section level3" number="5.2.3">
 <h3><span class="header-section-number">5.2.3</span> Add Effects</h3>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a>myeff_M1 <span class="ot">&lt;-</span> <span class="fu">includeEffects</span>(myeff_M1, isolateNet, inPop, outAct)</span></code></pre></div>
-<pre><code>##   effectName            include fix   test  initialValue parm
-## 1 indegree - popularity TRUE    FALSE FALSE          0   0   
-## 2 outdegree - activity  TRUE    FALSE FALSE          0   0   
-## 3 network-isolate       TRUE    FALSE FALSE          0   0</code></pre>
+<div class="sourceCode" id="cb15"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a>myeff_M1 <span class="ot">&lt;-</span> <span class="fu">includeEffects</span>(myeff_M1, isolateNet, inPop, outAct)</span></code></pre></div>
+<pre class="test2"><code>#&gt;   effectName            include fix   test  initialValue parm
+#&gt; 1 indegree - popularity TRUE    FALSE FALSE          0   0   
+#&gt; 2 outdegree - activity  TRUE    FALSE FALSE          0   0   
+#&gt; 3 network-isolate       TRUE    FALSE FALSE          0   0</code></pre>
 </div>
 <div id="create-and-run-the-algorithm-1" class="section level3"
 number="5.2.4">
 <h3><span class="header-section-number">5.2.4</span> Create and Run the
 Algorithm</h3>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a>myAlgorithm <span class="ot">&lt;-</span> <span class="fu">sienaAlgorithmCreate</span>(<span class="at">projname =</span> <span class="st">&quot;./results/Collab_M1&quot;</span>)</span>
-<span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a>ans_M1 <span class="ot">&lt;-</span> <span class="fu">siena07</span>(myAlgorithm, <span class="at">data =</span> mydata, <span class="at">effects =</span> myeff_M1, <span class="at">returnDeps =</span> <span class="cn">TRUE</span>)</span>
+<div class="sourceCode" id="cb17"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a>myAlgorithm_M1 <span class="ot">&lt;-</span> <span class="fu">sienaAlgorithmCreate</span>(<span class="at">projname =</span> <span class="st">&quot;./results/Collab_M1&quot;</span>)</span>
+<span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a>ans_M1 <span class="ot">&lt;-</span> <span class="fu">siena07</span>(myAlgorithm_M1, <span class="at">data =</span> mydata_M1, <span class="at">effects =</span> myeff_M1, <span class="at">returnDeps =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb17-3"><a href="#cb17-3" tabindex="-1"></a>ans_M1</span>
 <span id="cb17-4"><a href="#cb17-4" tabindex="-1"></a></span>
-<span id="cb17-5"><a href="#cb17-5" tabindex="-1"></a><span class="co"># fsave(ans_M1, file = &quot;-ans_M1&quot;)</span></span>
+<span id="cb17-5"><a href="#cb17-5" tabindex="-1"></a><span class="co"># fsave(ans_M1, file = &#39;-ans_M1&#39;)</span></span>
 <span id="cb17-6"><a href="#cb17-6" tabindex="-1"></a></span>
-<span id="cb17-7"><a href="#cb17-7" tabindex="-1"></a><span class="co"># if necessary estimate again!  </span></span>
-<span id="cb17-8"><a href="#cb17-8" tabindex="-1"></a>ans_M1_2 <span class="ot">&lt;-</span> <span class="fu">siena07</span>(myAlgorithm, <span class="at">data =</span> mydata, <span class="at">effects =</span> myeff_M1, <span class="at">prevAns =</span> ans_M1, <span class="at">returnDeps=</span><span class="cn">TRUE</span>)</span>
-<span id="cb17-9"><a href="#cb17-9" tabindex="-1"></a>ans_M1_2</span>
-<span id="cb17-10"><a href="#cb17-10" tabindex="-1"></a></span>
-<span id="cb17-11"><a href="#cb17-11" tabindex="-1"></a><span class="fu">fsave</span>(ans_M1_2, <span class="at">file =</span> <span class="st">&quot;-ans_M1_2&quot;</span>)</span></code></pre></div>
-<pre><code>## Estimates, standard errors and convergence t-ratios
-## 
-##                                 Estimate   Standard   Convergence 
-##                                              Error      t-ratio   
-## 
-## Rate parameters: 
-##   0       Rate parameter         4.9146  ( 0.7690   )             
-## 
-## Other parameters: 
-##   1. eval outdegree (density)   -2.0204  ( 0.6039   )    0.1504   
-##   2. eval reciprocity            1.9155  ( 0.2709   )    0.0451   
-##   3. eval indegree - popularity  0.1847  ( 0.0380   )    0.0426   
-##   4. eval outdegree - activity  -0.1320  ( 0.1118   )    0.1220   
-##   5. eval network-isolate        3.9125  ( 1.3059   )   -0.0821   
-## 
-## Overall maximum convergence ratio:    0.1650 
-## 
-## 
-## Total of 2275 iteration steps.</code></pre>
+<span id="cb17-7"><a href="#cb17-7" tabindex="-1"></a><span class="co"># if necessary estimate again!  ans_M1_2 &lt;- siena07(myAlgorithm_M1, data = mydata_M1, effects =</span></span>
+<span id="cb17-8"><a href="#cb17-8" tabindex="-1"></a><span class="co"># myeff_M1, prevAns = ans_M1, returnDeps=TRUE) ans_M1_2</span></span>
+<span id="cb17-9"><a href="#cb17-9" tabindex="-1"></a></span>
+<span id="cb17-10"><a href="#cb17-10" tabindex="-1"></a><span class="co"># fsave(ans_M1_2, file = &#39;-ans_M1_2&#39;)</span></span></code></pre></div>
+<pre class="test2"><code>#&gt; Estimates, standard errors and convergence t-ratios
+#&gt; 
+#&gt;                                 Estimate   Standard   Convergence 
+#&gt;                                              Error      t-ratio   
+#&gt; 
+#&gt; Rate parameters: 
+#&gt;   0       Rate parameter         4.9146  ( 0.7690   )             
+#&gt; 
+#&gt; Other parameters: 
+#&gt;   1. eval outdegree (density)   -2.0204  ( 0.6039   )    0.1504   
+#&gt;   2. eval reciprocity            1.9155  ( 0.2709   )    0.0451   
+#&gt;   3. eval indegree - popularity  0.1847  ( 0.0380   )    0.0426   
+#&gt;   4. eval outdegree - activity  -0.1320  ( 0.1118   )    0.1220   
+#&gt;   5. eval network-isolate        3.9125  ( 1.3059   )   -0.0821   
+#&gt; 
+#&gt; Overall maximum convergence ratio:    0.1650 
+#&gt; 
+#&gt; 
+#&gt; Total of 2275 iteration steps.</code></pre>
 </div>
 <div id="goodness-of-fit-1" class="section level3" number="5.2.5">
 <h3><span class="header-section-number">5.2.5</span> Goodness of
 Fit</h3>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a>GOF <span class="ot">&lt;-</span> <span class="fu">sienaGOF</span>(ans_M1, IndegreeDistribution, <span class="at">verbose =</span> <span class="cn">FALSE</span>, <span class="at">join =</span> <span class="cn">TRUE</span>, <span class="at">varName =</span> <span class="st">&quot;net&quot;</span>)</span>
+<div class="sourceCode" id="cb19"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a>GOF <span class="ot">&lt;-</span> <span class="fu">sienaGOF</span>(ans_M1, IndegreeDistribution, <span class="at">verbose =</span> <span class="cn">FALSE</span>, <span class="at">join =</span> <span class="cn">TRUE</span>, <span class="at">varName =</span> <span class="st">&quot;net&quot;</span>)</span>
 <span id="cb19-2"><a href="#cb19-2" tabindex="-1"></a></span>
 <span id="cb19-3"><a href="#cb19-3" tabindex="-1"></a><span class="fu">plot</span>(GOF, <span class="at">main =</span> <span class="st">&quot;&quot;</span>)</span></code></pre></div>
 <p><img src="Siena_Results_final_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
@@ -780,11 +863,27 @@ Fit</h3>
 number="5.3">
 <h2><span class="header-section-number">5.3</span> Model 2 - Add Gender
 (dropped)</h2>
-<p>TEXT</p>
+<p>Model 2 builds on Model 1 and includes the network statistics for
+gender: diffX, diffXTransTrip, egoX &amp; altX. This model has a
+convergence of 0.23 and a Goodness of Fit on the indegree distribution
+of 0.184. For the structural network statistics we find similar results,
+in terms of estimate size and significance, as in Model 1. However, the
+outdegree activity parameter almost reaches significance (-1.7135484).
+With regard to the covariate network statistics, we find that the gender
+of ego (egoX), the gender of alter (altX) and the difference between ego
+and alter (diffX) is not significant and thus the estimate cannot be
+trusted. The transtrip for different gender (diffXTransTrip) is positive
+and significant, which implies that an ego prefers to close triads with
+alters who have a different gender score than theirs. This is an
+interesting finding, because it implies that their is a tendency towards
+diverse collaboration. However, when compared to the level of gender
+clustering and the fact that this clustering decreased, this finding
+does make sense.</p>
 <div id="create-sienadata-2" class="section level3" number="5.3.1">
 <h3><span class="header-section-number">5.3.1</span> Create
 SienaData</h3>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a><span class="co">#---- Dependent ----</span></span>
+<div class="sourceCode" id="cb20"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a><span class="co">#---- Dependent ----</span></span>
 <span id="cb20-2"><a href="#cb20-2" tabindex="-1"></a>net <span class="ot">&lt;-</span> <span class="fu">sienaDependent</span>(net_soc_array)</span>
 <span id="cb20-3"><a href="#cb20-3" tabindex="-1"></a></span>
 <span id="cb20-4"><a href="#cb20-4" tabindex="-1"></a><span class="co">#---- Independent ----</span></span>
@@ -793,71 +892,76 @@ SienaData</h3>
 <span id="cb20-7"><a href="#cb20-7" tabindex="-1"></a></span>
 <span id="cb20-8"><a href="#cb20-8" tabindex="-1"></a></span>
 <span id="cb20-9"><a href="#cb20-9" tabindex="-1"></a><span class="co">#---- Make Siena df ----</span></span>
-<span id="cb20-10"><a href="#cb20-10" tabindex="-1"></a>mydata <span class="ot">&lt;-</span> <span class="fu">sienaDataCreate</span>(net, gender)</span></code></pre></div>
+<span id="cb20-10"><a href="#cb20-10" tabindex="-1"></a>mydata_M2 <span class="ot">&lt;-</span> <span class="fu">sienaDataCreate</span>(net, gender)</span></code></pre></div>
 </div>
 <div id="create-effects-object-2" class="section level3" number="5.3.2">
 <h3><span class="header-section-number">5.3.2</span> Create Effects
 object</h3>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" tabindex="-1"></a>myeff_M2 <span class="ot">&lt;-</span> <span class="fu">getEffects</span>(mydata)</span>
-<span id="cb21-2"><a href="#cb21-2" tabindex="-1"></a><span class="fu">print01Report</span>(mydata, <span class="at">modelname =</span> <span class="st">&quot;./results/Collab_M2&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" tabindex="-1"></a>myeff_M2 <span class="ot">&lt;-</span> <span class="fu">getEffects</span>(mydata_M2)</span>
+<span id="cb21-2"><a href="#cb21-2" tabindex="-1"></a><span class="fu">print01Report</span>(mydata_M2, <span class="at">modelname =</span> <span class="st">&quot;./results/Collab_M2&quot;</span>)</span></code></pre></div>
 </div>
 <div id="add-effects-2" class="section level3" number="5.3.3">
 <h3><span class="header-section-number">5.3.3</span> Add Effects</h3>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" tabindex="-1"></a>myeff_M2 <span class="ot">&lt;-</span> <span class="fu">includeEffects</span>(myeff_M2, isolateNet, inPop, outAct)</span></code></pre></div>
-<pre><code>##   effectName            include fix   test  initialValue parm
-## 1 indegree - popularity TRUE    FALSE FALSE          0   0   
-## 2 outdegree - activity  TRUE    FALSE FALSE          0   0   
-## 3 network-isolate       TRUE    FALSE FALSE          0   0</code></pre>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" tabindex="-1"></a>myeff_M2 <span class="ot">&lt;-</span> <span class="fu">includeEffects</span>(myeff_M2, diffX, diffXTransTrip, egoX, altX, <span class="at">interaction1 =</span> <span class="st">&quot;gender&quot;</span>)</span></code></pre></div>
-<pre><code>##   effectName                       include fix   test  initialValue parm
-## 1 gender alter                     TRUE    FALSE FALSE          0   0   
-## 2 gender ego                       TRUE    FALSE FALSE          0   0   
-## 3 gender difference                TRUE    FALSE FALSE          0   0   
-## 4 transitive triplets diff. gender TRUE    FALSE FALSE          0   0</code></pre>
+<div class="sourceCode" id="cb22"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" tabindex="-1"></a>myeff_M2 <span class="ot">&lt;-</span> <span class="fu">includeEffects</span>(myeff_M2, isolateNet, inPop, outAct)</span></code></pre></div>
+<pre class="test2"><code>#&gt;   effectName            include fix   test  initialValue parm
+#&gt; 1 indegree - popularity TRUE    FALSE FALSE          0   0   
+#&gt; 2 outdegree - activity  TRUE    FALSE FALSE          0   0   
+#&gt; 3 network-isolate       TRUE    FALSE FALSE          0   0</code></pre>
+<div class="sourceCode" id="cb24"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" tabindex="-1"></a>myeff_M2 <span class="ot">&lt;-</span> <span class="fu">includeEffects</span>(myeff_M2, diffX, diffXTransTrip, egoX, altX, <span class="at">interaction1 =</span> <span class="st">&quot;gender&quot;</span>)</span></code></pre></div>
+<pre class="test2"><code>#&gt;   effectName                       include fix   test  initialValue parm
+#&gt; 1 gender alter                     TRUE    FALSE FALSE          0   0   
+#&gt; 2 gender ego                       TRUE    FALSE FALSE          0   0   
+#&gt; 3 gender difference                TRUE    FALSE FALSE          0   0   
+#&gt; 4 transitive triplets diff. gender TRUE    FALSE FALSE          0   0</code></pre>
 </div>
 <div id="create-and-run-the-algorithm-2" class="section level3"
 number="5.3.4">
 <h3><span class="header-section-number">5.3.4</span> Create and Run the
 Algorithm</h3>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" tabindex="-1"></a>myAlgorithm <span class="ot">&lt;-</span> <span class="fu">sienaAlgorithmCreate</span>(<span class="at">projname =</span> <span class="st">&quot;./results/Collab_M2&quot;</span>)</span>
-<span id="cb26-2"><a href="#cb26-2" tabindex="-1"></a>ans_M2 <span class="ot">&lt;-</span> <span class="fu">siena07</span>(myAlgorithm, <span class="at">data =</span> mydata, <span class="at">effects =</span> myeff_M2, <span class="at">returnDeps =</span> <span class="cn">TRUE</span>)</span>
+<div class="sourceCode" id="cb26"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" tabindex="-1"></a>myAlgorithm_M2 <span class="ot">&lt;-</span> <span class="fu">sienaAlgorithmCreate</span>(<span class="at">projname =</span> <span class="st">&quot;./results/Collab_M2&quot;</span>)</span>
+<span id="cb26-2"><a href="#cb26-2" tabindex="-1"></a>ans_M2 <span class="ot">&lt;-</span> <span class="fu">siena07</span>(myAlgorithm_M2, <span class="at">data =</span> mydata_M2, <span class="at">effects =</span> myeff_M2, <span class="at">returnDeps =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb26-3"><a href="#cb26-3" tabindex="-1"></a>ans_M2</span>
 <span id="cb26-4"><a href="#cb26-4" tabindex="-1"></a></span>
-<span id="cb26-5"><a href="#cb26-5" tabindex="-1"></a><span class="co"># fsave(ans_M2, file = &quot;-ans_M2&quot;)</span></span>
+<span id="cb26-5"><a href="#cb26-5" tabindex="-1"></a><span class="co"># fsave(ans_M2, file = &#39;-ans_M2&#39;)</span></span>
 <span id="cb26-6"><a href="#cb26-6" tabindex="-1"></a></span>
 <span id="cb26-7"><a href="#cb26-7" tabindex="-1"></a></span>
-<span id="cb26-8"><a href="#cb26-8" tabindex="-1"></a><span class="co"># if necessary estimate again!  </span></span>
-<span id="cb26-9"><a href="#cb26-9" tabindex="-1"></a>ans_M2_2 <span class="ot">&lt;-</span> <span class="fu">siena07</span>(myAlgorithm, <span class="at">data =</span> mydata, <span class="at">effects =</span> myeff_M2, <span class="at">prevAns =</span> ans_M2, <span class="at">returnDeps=</span><span class="cn">TRUE</span>)</span>
+<span id="cb26-8"><a href="#cb26-8" tabindex="-1"></a><span class="co"># if necessary estimate again!</span></span>
+<span id="cb26-9"><a href="#cb26-9" tabindex="-1"></a>ans_M2_2 <span class="ot">&lt;-</span> <span class="fu">siena07</span>(myAlgorithm, <span class="at">data =</span> mydata_M2, <span class="at">effects =</span> myeff_M2, <span class="at">prevAns =</span> ans_M2, <span class="at">returnDeps =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb26-10"><a href="#cb26-10" tabindex="-1"></a>ans_M2_2</span>
 <span id="cb26-11"><a href="#cb26-11" tabindex="-1"></a><span class="fu">fsave</span>(ans_M2_2, <span class="at">file =</span> <span class="st">&quot;-ans_M2_2&quot;</span>)</span></code></pre></div>
-<pre><code>## Estimates, standard errors and convergence t-ratios
-## 
-##                                            Estimate   Standard   Convergence 
-##                                                         Error      t-ratio   
-## 
-## Rate parameters: 
-##   0       Rate parameter                    4.6291  (  0.6630  )             
-## 
-## Other parameters: 
-##   1. eval outdegree (density)              -1.6770  (  0.7257  )    0.0321   
-##   2. eval reciprocity                       2.0153  (  0.3034  )   -0.0277   
-##   3. eval indegree - popularity             0.1832  (  0.0417  )    0.0255   
-##   4. eval outdegree - activity             -0.2656  (  0.1550  )   -0.0131   
-##   5. eval network-isolate                   3.7684  (  1.2157  )   -0.0927   
-##   6. eval gender alter                      0.8203  ( 21.2389  )   -0.0332   
-##   7. eval gender ego                       -0.0624  ( 21.2480  )    0.0006   
-##   8. eval gender difference                -0.7987  ( 21.2507  )   -0.0176   
-##   9. eval transitive triplets diff. gender  1.4267  (  0.4234  )   -0.0226   
-## 
-## Overall maximum convergence ratio:    0.2259 
-## 
-## 
-## Total of 2627 iteration steps.</code></pre>
+<pre class="test2"><code>#&gt; Estimates, standard errors and convergence t-ratios
+#&gt; 
+#&gt;                                            Estimate   Standard   Convergence 
+#&gt;                                                         Error      t-ratio   
+#&gt; 
+#&gt; Rate parameters: 
+#&gt;   0       Rate parameter                    4.6291  (  0.6630  )             
+#&gt; 
+#&gt; Other parameters: 
+#&gt;   1. eval outdegree (density)              -1.6770  (  0.7257  )    0.0321   
+#&gt;   2. eval reciprocity                       2.0153  (  0.3034  )   -0.0277   
+#&gt;   3. eval indegree - popularity             0.1832  (  0.0417  )    0.0255   
+#&gt;   4. eval outdegree - activity             -0.2656  (  0.1550  )   -0.0131   
+#&gt;   5. eval network-isolate                   3.7684  (  1.2157  )   -0.0927   
+#&gt;   6. eval gender alter                      0.8203  ( 21.2389  )   -0.0332   
+#&gt;   7. eval gender ego                       -0.0624  ( 21.2480  )    0.0006   
+#&gt;   8. eval gender difference                -0.7987  ( 21.2507  )   -0.0176   
+#&gt;   9. eval transitive triplets diff. gender  1.4267  (  0.4234  )   -0.0226   
+#&gt; 
+#&gt; Overall maximum convergence ratio:    0.2259 
+#&gt; 
+#&gt; 
+#&gt; Total of 2627 iteration steps.</code></pre>
 </div>
 <div id="goodness-of-fit-2" class="section level3" number="5.3.5">
 <h3><span class="header-section-number">5.3.5</span> Goodness of
 Fit</h3>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" tabindex="-1"></a>GOF <span class="ot">&lt;-</span> <span class="fu">sienaGOF</span>(ans_M2, IndegreeDistribution, <span class="at">verbose =</span> <span class="cn">FALSE</span>, <span class="at">join =</span> <span class="cn">TRUE</span>, <span class="at">varName =</span> <span class="st">&quot;net&quot;</span>)</span>
+<div class="sourceCode" id="cb28"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" tabindex="-1"></a>GOF <span class="ot">&lt;-</span> <span class="fu">sienaGOF</span>(ans_M2, IndegreeDistribution, <span class="at">verbose =</span> <span class="cn">FALSE</span>, <span class="at">join =</span> <span class="cn">TRUE</span>, <span class="at">varName =</span> <span class="st">&quot;net&quot;</span>)</span>
 <span id="cb28-2"><a href="#cb28-2" tabindex="-1"></a></span>
 <span id="cb28-3"><a href="#cb28-3" tabindex="-1"></a><span class="fu">plot</span>(GOF, <span class="at">main =</span> <span class="st">&quot;&quot;</span>)</span></code></pre></div>
 <p><img src="Siena_Results_final_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
@@ -866,11 +970,24 @@ Fit</h3>
 <div id="model-2.5---add-gender" class="section level2" number="5.4">
 <h2><span class="header-section-number">5.4</span> Model 2.5 - Add
 Gender</h2>
-<p>TEXT</p>
+<p>Model 2.5 is practically the same model as Model 2, but with
+inPopSqrt (indegree popularity squared) instead of inPop. These models
+were estimated to check which had the better Goodness of Fit, which
+according to the RSiena Manual should be inPopSqrt <span
+class="citation">(Ripley et al. 2011)</span>. This model has a
+convergence ratio of 0.21 and a Goodness of Fit on the indegree
+distribution of 0.89, implying a much better fit with the data. Overall,
+the estimates of this model were similar to Model 2. There is some
+variability in the sizes of the estimates and standard errors, but this
+is due to the simulation process, which does not produce identical
+estimates. Yet, the general direction of the effect and the significance
+is not different between these models and are thus have consistent
+findings.</p>
 <div id="create-sienadata-3" class="section level3" number="5.4.1">
 <h3><span class="header-section-number">5.4.1</span> Create
 SienaData</h3>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" tabindex="-1"></a><span class="co">#---- Dependent ----</span></span>
+<div class="sourceCode" id="cb29"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" tabindex="-1"></a><span class="co">#---- Dependent ----</span></span>
 <span id="cb29-2"><a href="#cb29-2" tabindex="-1"></a>net <span class="ot">&lt;-</span> <span class="fu">sienaDependent</span>(net_soc_array)</span>
 <span id="cb29-3"><a href="#cb29-3" tabindex="-1"></a></span>
 <span id="cb29-4"><a href="#cb29-4" tabindex="-1"></a><span class="co">#---- Independent ----</span></span>
@@ -879,70 +996,74 @@ SienaData</h3>
 <span id="cb29-7"><a href="#cb29-7" tabindex="-1"></a></span>
 <span id="cb29-8"><a href="#cb29-8" tabindex="-1"></a></span>
 <span id="cb29-9"><a href="#cb29-9" tabindex="-1"></a><span class="co">#---- Make Siena df ----</span></span>
-<span id="cb29-10"><a href="#cb29-10" tabindex="-1"></a>mydata <span class="ot">&lt;-</span> <span class="fu">sienaDataCreate</span>(net, gender)</span></code></pre></div>
+<span id="cb29-10"><a href="#cb29-10" tabindex="-1"></a>mydata_M2<span class="fl">.5</span> <span class="ot">&lt;-</span> <span class="fu">sienaDataCreate</span>(net, gender)</span></code></pre></div>
 </div>
 <div id="create-effects-object-3" class="section level3" number="5.4.2">
 <h3><span class="header-section-number">5.4.2</span> Create Effects
 object</h3>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" tabindex="-1"></a>myeff_M2<span class="fl">.5</span> <span class="ot">&lt;-</span> <span class="fu">getEffects</span>(mydata)</span>
-<span id="cb30-2"><a href="#cb30-2" tabindex="-1"></a><span class="fu">print01Report</span>(mydata, <span class="at">modelname =</span> <span class="st">&quot;./results/Collab_M2.5&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb30"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" tabindex="-1"></a>myeff_M2<span class="fl">.5</span> <span class="ot">&lt;-</span> <span class="fu">getEffects</span>(mydata_M2<span class="fl">.5</span>)</span>
+<span id="cb30-2"><a href="#cb30-2" tabindex="-1"></a><span class="fu">print01Report</span>(mydata_M2<span class="fl">.5</span>, <span class="at">modelname =</span> <span class="st">&quot;./results/Collab_M2.5&quot;</span>)</span></code></pre></div>
 </div>
 <div id="add-effects-3" class="section level3" number="5.4.3">
 <h3><span class="header-section-number">5.4.3</span> Add Effects</h3>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" tabindex="-1"></a>myeff_M2<span class="fl">.5</span> <span class="ot">&lt;-</span> <span class="fu">includeEffects</span>(myeff_M2<span class="fl">.5</span>, isolateNet, inPopSqrt, outAct)</span></code></pre></div>
-<pre><code>##   effectName                   include fix   test  initialValue parm
-## 1 indegree - popularity (sqrt) TRUE    FALSE FALSE          0   0   
-## 2 outdegree - activity         TRUE    FALSE FALSE          0   0   
-## 3 network-isolate              TRUE    FALSE FALSE          0   0</code></pre>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" tabindex="-1"></a>myeff_M2<span class="fl">.5</span> <span class="ot">&lt;-</span> <span class="fu">includeEffects</span>(myeff_M2<span class="fl">.5</span>, diffX, diffXTransTrip, egoX, altX, <span class="at">interaction1 =</span> <span class="st">&quot;gender&quot;</span>)</span></code></pre></div>
-<pre><code>##   effectName                       include fix   test  initialValue parm
-## 1 gender alter                     TRUE    FALSE FALSE          0   0   
-## 2 gender ego                       TRUE    FALSE FALSE          0   0   
-## 3 gender difference                TRUE    FALSE FALSE          0   0   
-## 4 transitive triplets diff. gender TRUE    FALSE FALSE          0   0</code></pre>
+<div class="sourceCode" id="cb31"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" tabindex="-1"></a>myeff_M2<span class="fl">.5</span> <span class="ot">&lt;-</span> <span class="fu">includeEffects</span>(myeff_M2<span class="fl">.5</span>, isolateNet, inPopSqrt, outAct)</span></code></pre></div>
+<pre class="test2"><code>#&gt;   effectName                   include fix   test  initialValue parm
+#&gt; 1 indegree - popularity (sqrt) TRUE    FALSE FALSE          0   0   
+#&gt; 2 outdegree - activity         TRUE    FALSE FALSE          0   0   
+#&gt; 3 network-isolate              TRUE    FALSE FALSE          0   0</code></pre>
+<div class="sourceCode" id="cb33"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" tabindex="-1"></a>myeff_M2<span class="fl">.5</span> <span class="ot">&lt;-</span> <span class="fu">includeEffects</span>(myeff_M2<span class="fl">.5</span>, diffX, diffXTransTrip, egoX, altX, <span class="at">interaction1 =</span> <span class="st">&quot;gender&quot;</span>)</span></code></pre></div>
+<pre class="test2"><code>#&gt;   effectName                       include fix   test  initialValue parm
+#&gt; 1 gender alter                     TRUE    FALSE FALSE          0   0   
+#&gt; 2 gender ego                       TRUE    FALSE FALSE          0   0   
+#&gt; 3 gender difference                TRUE    FALSE FALSE          0   0   
+#&gt; 4 transitive triplets diff. gender TRUE    FALSE FALSE          0   0</code></pre>
 </div>
 <div id="create-and-run-the-algorithm-3" class="section level3"
 number="5.4.4">
 <h3><span class="header-section-number">5.4.4</span> Create and Run the
 Algorithm</h3>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" tabindex="-1"></a>myAlgorithm <span class="ot">&lt;-</span> <span class="fu">sienaAlgorithmCreate</span>(<span class="at">projname =</span> <span class="st">&quot;./results/Collab_M2.5&quot;</span>)</span>
-<span id="cb35-2"><a href="#cb35-2" tabindex="-1"></a>ans_M2<span class="fl">.5</span> <span class="ot">&lt;-</span> <span class="fu">siena07</span>(myAlgorithm, <span class="at">data =</span> mydata, <span class="at">effects =</span> myeff_M2<span class="fl">.5</span>, <span class="at">returnDeps =</span> <span class="cn">TRUE</span>)</span>
+<div class="sourceCode" id="cb35"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" tabindex="-1"></a>myAlgorithm_M2<span class="fl">.5</span> <span class="ot">&lt;-</span> <span class="fu">sienaAlgorithmCreate</span>(<span class="at">projname =</span> <span class="st">&quot;./results/Collab_M2.5&quot;</span>)</span>
+<span id="cb35-2"><a href="#cb35-2" tabindex="-1"></a>ans_M2<span class="fl">.5</span> <span class="ot">&lt;-</span> <span class="fu">siena07</span>(myAlgorithm_M2<span class="fl">.5</span>, <span class="at">data =</span> mydata_M2<span class="fl">.5</span>, <span class="at">effects =</span> myeff_M2<span class="fl">.5</span>, <span class="at">returnDeps =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb35-3"><a href="#cb35-3" tabindex="-1"></a>ans_M2<span class="fl">.5</span></span>
 <span id="cb35-4"><a href="#cb35-4" tabindex="-1"></a></span>
 <span id="cb35-5"><a href="#cb35-5" tabindex="-1"></a><span class="fu">fsave</span>(ans_M2<span class="fl">.5</span>, <span class="at">file =</span> <span class="st">&quot;-ans_M2.5&quot;</span>)</span>
 <span id="cb35-6"><a href="#cb35-6" tabindex="-1"></a></span>
-<span id="cb35-7"><a href="#cb35-7" tabindex="-1"></a><span class="co"># if necessary estimate again!  </span></span>
-<span id="cb35-8"><a href="#cb35-8" tabindex="-1"></a><span class="co"># ans_M2.5_2 &lt;- siena07(myAlgorithm, data = mydata, effects = myeff_M2.5, prevAns = ans_M2.5, returnDeps=TRUE)</span></span>
-<span id="cb35-9"><a href="#cb35-9" tabindex="-1"></a><span class="co"># ans_M2.5_2</span></span>
-<span id="cb35-10"><a href="#cb35-10" tabindex="-1"></a><span class="co"># fsave(ans_M2.5_2, file = &quot;-ans_M2.5_2&quot;)</span></span></code></pre></div>
-<pre><code>## Estimates, standard errors and convergence t-ratios
-## 
-##                                            Estimate   Standard   Convergence 
-##                                                         Error      t-ratio   
-## 
-## Rate parameters: 
-##   0       Rate parameter                    4.6839  (  0.7500  )             
-## 
-## Other parameters: 
-##   1. eval outdegree (density)              -2.9587  (  0.6997  )   -0.0212   
-##   2. eval reciprocity                       2.0810  (  0.3019  )   -0.0231   
-##   3. eval indegree - popularity (sqrt)      0.9106  (  0.1242  )   -0.0198   
-##   4. eval outdegree - activity             -0.2019  (  0.1291  )   -0.0614   
-##   5. eval network-isolate                   2.8937  (  1.2358  )   -0.0156   
-##   6. eval gender alter                      0.3514  ( 20.0817  )   -0.0150   
-##   7. eval gender ego                        0.3397  ( 20.0594  )   -0.0279   
-##   8. eval gender difference                -0.2874  ( 20.0914  )    0.0114   
-##   9. eval transitive triplets diff. gender  1.1681  (  0.3948  )   -0.0409   
-## 
-## Overall maximum convergence ratio:    0.2064 
-## 
-## 
-## Total of 2551 iteration steps.</code></pre>
+<span id="cb35-7"><a href="#cb35-7" tabindex="-1"></a><span class="co"># if necessary estimate again!  ans_M2.5_2 &lt;- siena07(myAlgorithm, data = mydata, effects =</span></span>
+<span id="cb35-8"><a href="#cb35-8" tabindex="-1"></a><span class="co"># myeff_M2.5, prevAns = ans_M2.5, returnDeps=TRUE) ans_M2.5_2 fsave(ans_M2.5_2, file =</span></span>
+<span id="cb35-9"><a href="#cb35-9" tabindex="-1"></a><span class="co"># &#39;-ans_M2.5_2&#39;)</span></span></code></pre></div>
+<pre class="test2"><code>#&gt; Estimates, standard errors and convergence t-ratios
+#&gt; 
+#&gt;                                            Estimate   Standard   Convergence 
+#&gt;                                                         Error      t-ratio   
+#&gt; 
+#&gt; Rate parameters: 
+#&gt;   0       Rate parameter                    4.6839  (  0.7500  )             
+#&gt; 
+#&gt; Other parameters: 
+#&gt;   1. eval outdegree (density)              -2.9587  (  0.6997  )   -0.0212   
+#&gt;   2. eval reciprocity                       2.0810  (  0.3019  )   -0.0231   
+#&gt;   3. eval indegree - popularity (sqrt)      0.9106  (  0.1242  )   -0.0198   
+#&gt;   4. eval outdegree - activity             -0.2019  (  0.1291  )   -0.0614   
+#&gt;   5. eval network-isolate                   2.8937  (  1.2358  )   -0.0156   
+#&gt;   6. eval gender alter                      0.3514  ( 20.0817  )   -0.0150   
+#&gt;   7. eval gender ego                        0.3397  ( 20.0594  )   -0.0279   
+#&gt;   8. eval gender difference                -0.2874  ( 20.0914  )    0.0114   
+#&gt;   9. eval transitive triplets diff. gender  1.1681  (  0.3948  )   -0.0409   
+#&gt; 
+#&gt; Overall maximum convergence ratio:    0.2064 
+#&gt; 
+#&gt; 
+#&gt; Total of 2551 iteration steps.</code></pre>
 </div>
 <div id="goodness-of-fit-3" class="section level3" number="5.4.5">
 <h3><span class="header-section-number">5.4.5</span> Goodness of
 Fit</h3>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" tabindex="-1"></a>GOF <span class="ot">&lt;-</span> <span class="fu">sienaGOF</span>(ans_M2<span class="fl">.5</span>, IndegreeDistribution, <span class="at">verbose =</span> <span class="cn">FALSE</span>, <span class="at">join =</span> <span class="cn">TRUE</span>, <span class="at">varName =</span> <span class="st">&quot;net&quot;</span>)</span>
+<div class="sourceCode" id="cb37"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" tabindex="-1"></a>GOF <span class="ot">&lt;-</span> <span class="fu">sienaGOF</span>(ans_M2<span class="fl">.5</span>, IndegreeDistribution, <span class="at">verbose =</span> <span class="cn">FALSE</span>, <span class="at">join =</span> <span class="cn">TRUE</span>, <span class="at">varName =</span> <span class="st">&quot;net&quot;</span>)</span>
 <span id="cb37-2"><a href="#cb37-2" tabindex="-1"></a></span>
 <span id="cb37-3"><a href="#cb37-3" tabindex="-1"></a><span class="fu">plot</span>(GOF, <span class="at">main =</span> <span class="st">&quot;&quot;</span>)</span></code></pre></div>
 <p><img src="Siena_Results_final_files/figure-html/unnamed-chunk-30-1.png" width="672" /></p>
@@ -951,139 +1072,167 @@ Fit</h3>
 <div id="model-3---add-prestige" class="section level2" number="5.5">
 <h2><span class="header-section-number">5.5</span> Model 3 - Add
 Prestige</h2>
-<p>TEXT</p>
+<p>Model 3 includes the covariate network statistics for Prestige: egoX,
+altX and inPopX. This model has a convergence ratio of 0.23 and a a
+Goodness of Fit on the indegree distribution of 0.64. In this model, the
+parameters for density and reciprocity are still significant, with
+values of -1.98 (se = 0.71) and 2.59 (se = 0.38) respectively, meaning
+that actors prefer sparse networks, but do prefer to send ties to alters
+who have sent ties to them. IsolateNet is still significant with a value
+of 3.23 (se = 1.06), implying that actors prefer to be isolates. In this
+model, indegree popularity squared (b = 0.17, se = 0.21) is no longer
+significant, implying that this might be explained by other network
+statistics in the model. The covariate statistics for gender show
+similar findings as Model 2 &amp; Model 2.5, namely that actors prefer
+to close triads with alters that have a different score for gender (b =
+1.51, se = 0.44). the ego effect and alter effect for gender are
+non-significant, as was the case in Model 2 &amp; Model 2.5.<br />
+  Lastly, Model 3 shows some significant results with regards to the
+covariate network statistics for prestige. The prestige effect for
+alters is positive, implying that people prefer to send ties to people
+who have a higher amount of prestige (b = 0.042, se = 0.0089).
+Additionally, the prestige effect for egos is negative, which indicates
+that people who have higher prestige send less ties (b = -0.030, se =
+0.015). This is in line with theories of preferential attachment and
+upward mobility, because as egos with higher prestige will are more
+likely to receive request for collaboration rather then sending request
+for collaboration. Interestingly enough, the indegree popularity
+statistic for prestige is not significant (b = -0.012, se = 0.023),
+implying that actors who are more prestigious do not receive more
+indegrees.</p>
 <div id="create-sienadata-4" class="section level3" number="5.5.1">
 <h3><span class="header-section-number">5.5.1</span> Create
 SienaData</h3>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" tabindex="-1"></a><span class="co">#---- Dependent ----</span></span>
+<div class="sourceCode" id="cb38"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" tabindex="-1"></a><span class="co">#---- Dependent ----</span></span>
 <span id="cb38-2"><a href="#cb38-2" tabindex="-1"></a>net <span class="ot">&lt;-</span> <span class="fu">sienaDependent</span>(net_soc_array)</span>
 <span id="cb38-3"><a href="#cb38-3" tabindex="-1"></a></span>
 <span id="cb38-4"><a href="#cb38-4" tabindex="-1"></a><span class="co">#---- Independent ----</span></span>
-<span id="cb38-5"><a href="#cb38-5" tabindex="-1"></a><span class="co"># gender &lt;- df_ego$perc_female</span></span>
-<span id="cb38-6"><a href="#cb38-6" tabindex="-1"></a><span class="co"># gender &lt;- coCovar(gender)</span></span>
+<span id="cb38-5"><a href="#cb38-5" tabindex="-1"></a>gender <span class="ot">&lt;-</span> df_ego<span class="sc">$</span>perc_female</span>
+<span id="cb38-6"><a href="#cb38-6" tabindex="-1"></a>gender <span class="ot">&lt;-</span> <span class="fu">coCovar</span>(gender)</span>
 <span id="cb38-7"><a href="#cb38-7" tabindex="-1"></a></span>
-<span id="cb38-8"><a href="#cb38-8" tabindex="-1"></a>prestige <span class="ot">&lt;-</span> df_ego <span class="sc">%&gt;%</span> <span class="fu">select</span>(Q1.W1, Q1.W2) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">mean_pres =</span> (Q1.W1 <span class="sc">+</span> Q1.W2)<span class="sc">/</span><span class="dv">2</span>)</span>
-<span id="cb38-9"><a href="#cb38-9" tabindex="-1"></a>prestige <span class="ot">&lt;-</span> prestige<span class="sc">$</span>mean_pres</span>
-<span id="cb38-10"><a href="#cb38-10" tabindex="-1"></a>prestige <span class="ot">&lt;-</span> <span class="fu">coCovar</span>(prestige)</span>
-<span id="cb38-11"><a href="#cb38-11" tabindex="-1"></a></span>
-<span id="cb38-12"><a href="#cb38-12" tabindex="-1"></a><span class="co"># h_index &lt;- df_ego$h_index</span></span>
-<span id="cb38-13"><a href="#cb38-13" tabindex="-1"></a><span class="co"># h_index &lt;- coCovar(h_index)</span></span>
-<span id="cb38-14"><a href="#cb38-14" tabindex="-1"></a></span>
-<span id="cb38-15"><a href="#cb38-15" tabindex="-1"></a><span class="co">#---- Make Siena df ----</span></span>
-<span id="cb38-16"><a href="#cb38-16" tabindex="-1"></a>mydata_M3 <span class="ot">&lt;-</span> <span class="fu">sienaDataCreate</span>(net, gender, prestige)<span class="co">#, h_index)</span></span></code></pre></div>
+<span id="cb38-8"><a href="#cb38-8" tabindex="-1"></a>prestige <span class="ot">&lt;-</span> df_ego <span class="sc">%&gt;%</span></span>
+<span id="cb38-9"><a href="#cb38-9" tabindex="-1"></a>    <span class="fu">select</span>(Q1.W1, Q1.W2) <span class="sc">%&gt;%</span></span>
+<span id="cb38-10"><a href="#cb38-10" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">mean_pres =</span> (Q1.W1 <span class="sc">+</span> Q1.W2)<span class="sc">/</span><span class="dv">2</span>)</span>
+<span id="cb38-11"><a href="#cb38-11" tabindex="-1"></a>prestige <span class="ot">&lt;-</span> prestige<span class="sc">$</span>mean_pres</span>
+<span id="cb38-12"><a href="#cb38-12" tabindex="-1"></a>prestige <span class="ot">&lt;-</span> <span class="fu">coCovar</span>(prestige)</span>
+<span id="cb38-13"><a href="#cb38-13" tabindex="-1"></a></span>
+<span id="cb38-14"><a href="#cb38-14" tabindex="-1"></a><span class="co"># h_index &lt;- df_ego$h_index h_index &lt;- coCovar(h_index)</span></span>
+<span id="cb38-15"><a href="#cb38-15" tabindex="-1"></a></span>
+<span id="cb38-16"><a href="#cb38-16" tabindex="-1"></a><span class="co">#---- Make Siena df ----</span></span>
+<span id="cb38-17"><a href="#cb38-17" tabindex="-1"></a>mydata_M3 <span class="ot">&lt;-</span> <span class="fu">sienaDataCreate</span>(net, gender, prestige)  <span class="co">#, h_index)</span></span></code></pre></div>
 </div>
 <div id="create-effects-object-4" class="section level3" number="5.5.2">
 <h3><span class="header-section-number">5.5.2</span> Create Effects
 object</h3>
-<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" tabindex="-1"></a>myeff_M3 <span class="ot">&lt;-</span> <span class="fu">getEffects</span>(mydata)</span>
-<span id="cb39-2"><a href="#cb39-2" tabindex="-1"></a><span class="fu">print01Report</span>(mydata, <span class="at">modelname =</span> <span class="st">&quot;./results/Collab_M3&quot;</span>)</span>
+<div class="sourceCode" id="cb39"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" tabindex="-1"></a>myeff_M3 <span class="ot">&lt;-</span> <span class="fu">getEffects</span>(mydata_M3)</span>
+<span id="cb39-2"><a href="#cb39-2" tabindex="-1"></a><span class="fu">print01Report</span>(mydata_M3, <span class="at">modelname =</span> <span class="st">&quot;./results/Collab_M3&quot;</span>)</span>
 <span id="cb39-3"><a href="#cb39-3" tabindex="-1"></a></span>
-<span id="cb39-4"><a href="#cb39-4" tabindex="-1"></a><span class="co"># ts_dyads_evo(sims = wave_2, net1 = wave_1, forplot = TRUE)</span></span>
-<span id="cb39-5"><a href="#cb39-5" tabindex="-1"></a><span class="co"># ts_triads_evo(sims = wave_2, net1 = wave_1, forplot = TRUE)</span></span></code></pre></div>
+<span id="cb39-4"><a href="#cb39-4" tabindex="-1"></a><span class="co"># ts_dyads_evo(sims = wave_2, net1 = wave_1, forplot = TRUE) ts_triads_evo(sims = wave_2, net1 =</span></span>
+<span id="cb39-5"><a href="#cb39-5" tabindex="-1"></a><span class="co"># wave_1, forplot = TRUE)</span></span></code></pre></div>
 </div>
 <div id="add-effects-4" class="section level3" number="5.5.3">
 <h3><span class="header-section-number">5.5.3</span> Add Effects</h3>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" tabindex="-1"></a>myeff_M3 <span class="ot">&lt;-</span> <span class="fu">includeEffects</span>(myeff_M3, isolateNet, inPopSqrt, outAct)</span></code></pre></div>
-<pre><code>##   effectName                   include fix   test  initialValue parm
-## 1 indegree - popularity (sqrt) TRUE    FALSE FALSE          0   0   
-## 2 outdegree - activity         TRUE    FALSE FALSE          0   0   
-## 3 network-isolate              TRUE    FALSE FALSE          0   0</code></pre>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" tabindex="-1"></a>myeff_M3 <span class="ot">&lt;-</span> <span class="fu">includeEffects</span>(myeff_M3, diffX, diffXTransTrip, egoX, altX, <span class="at">interaction1 =</span> <span class="st">&quot;gender&quot;</span>)</span></code></pre></div>
-<pre><code>##   effectName                       include fix   test  initialValue parm
-## 1 gender alter                     TRUE    FALSE FALSE          0   0   
-## 2 gender ego                       TRUE    FALSE FALSE          0   0   
-## 3 gender difference                TRUE    FALSE FALSE          0   0   
-## 4 transitive triplets diff. gender TRUE    FALSE FALSE          0   0</code></pre>
-<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" tabindex="-1"></a>myeff_M3 <span class="ot">&lt;-</span> <span class="fu">includeEffects</span>(myeff_M3, altX, inPopX, <span class="at">interaction1 =</span> <span class="st">&quot;prestige&quot;</span>)</span></code></pre></div>
-<pre><code>## There is no effect with short name altX, 
-##  inPopX, 
-## and with interaction1 = &lt;prestige&gt;, interaction2 = &lt;&gt;, and type = &lt;eval&gt;, 
-## for dependent variable net .
-## See effectsDocumentation() for this effects object.</code></pre>
-<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" tabindex="-1"></a><span class="co"># myeff_M3 &lt;- includeEffects(myeff_M3, altX, inpopX, interaction1 = &quot;h_index&quot;)</span></span></code></pre></div>
+<div class="sourceCode" id="cb40"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" tabindex="-1"></a>myeff_M3 <span class="ot">&lt;-</span> <span class="fu">includeEffects</span>(myeff_M3, isolateNet, inPopSqrt, outAct)</span></code></pre></div>
+<pre class="test2"><code>#&gt;   effectName                   include fix   test  initialValue parm
+#&gt; 1 indegree - popularity (sqrt) TRUE    FALSE FALSE          0   0   
+#&gt; 2 outdegree - activity         TRUE    FALSE FALSE          0   0   
+#&gt; 3 network-isolate              TRUE    FALSE FALSE          0   0</code></pre>
+<div class="sourceCode" id="cb42"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" tabindex="-1"></a>myeff_M3 <span class="ot">&lt;-</span> <span class="fu">includeEffects</span>(myeff_M3, diffX, diffXTransTrip, egoX, altX, <span class="at">interaction1 =</span> <span class="st">&quot;gender&quot;</span>)</span></code></pre></div>
+<pre class="test2"><code>#&gt;   effectName                       include fix   test  initialValue parm
+#&gt; 1 gender alter                     TRUE    FALSE FALSE          0   0   
+#&gt; 2 gender ego                       TRUE    FALSE FALSE          0   0   
+#&gt; 3 gender difference                TRUE    FALSE FALSE          0   0   
+#&gt; 4 transitive triplets diff. gender TRUE    FALSE FALSE          0   0</code></pre>
+<div class="sourceCode" id="cb44"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" tabindex="-1"></a>myeff_M3 <span class="ot">&lt;-</span> <span class="fu">includeEffects</span>(myeff_M3, egoX, altX, inPopX, <span class="at">interaction1 =</span> <span class="st">&quot;prestige&quot;</span>)</span></code></pre></div>
+<pre class="test2"><code>#&gt;   effectName                        include fix   test  initialValue parm
+#&gt; 1 prestige alter                    TRUE    FALSE FALSE          0   0   
+#&gt; 2 prestige ego                      TRUE    FALSE FALSE          0   0   
+#&gt; 3 ind. pop.^(1/#) weighted prestige TRUE    FALSE FALSE          0   1</code></pre>
+<div class="sourceCode" id="cb46"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" tabindex="-1"></a><span class="co"># myeff_M3 &lt;- includeEffects(myeff_M3, altX, inpopX, interaction1 = &#39;h_index&#39;)</span></span></code></pre></div>
 </div>
 <div id="create-and-run-the-algorithm-4" class="section level3"
 number="5.5.4">
 <h3><span class="header-section-number">5.5.4</span> Create and Run the
 Algorithm</h3>
-<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" tabindex="-1"></a>myAlgorithm_M3 <span class="ot">&lt;-</span> <span class="fu">sienaAlgorithmCreate</span>(<span class="at">projname =</span> <span class="st">&quot;./results/Collab_M3&quot;</span>)</span>
-<span id="cb47-2"><a href="#cb47-2" tabindex="-1"></a>ans_M3 <span class="ot">&lt;-</span> <span class="fu">siena07</span>(myAlgorithm, <span class="at">data =</span> mydata, <span class="at">effects =</span> myeff_M3, <span class="at">returnDeps =</span> <span class="cn">TRUE</span>)</span>
+<div class="sourceCode" id="cb47"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" tabindex="-1"></a>myAlgorithm_M3 <span class="ot">&lt;-</span> <span class="fu">sienaAlgorithmCreate</span>(<span class="at">projname =</span> <span class="st">&quot;./results/Collab_M3&quot;</span>)</span>
+<span id="cb47-2"><a href="#cb47-2" tabindex="-1"></a>ans_M3 <span class="ot">&lt;-</span> <span class="fu">siena07</span>(myAlgorithm_M3, <span class="at">data =</span> mydata_M3, <span class="at">effects =</span> myeff_M3, <span class="at">returnDeps =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb47-3"><a href="#cb47-3" tabindex="-1"></a>ans_M3</span>
 <span id="cb47-4"><a href="#cb47-4" tabindex="-1"></a></span>
 <span id="cb47-5"><a href="#cb47-5" tabindex="-1"></a><span class="fu">fsave</span>(ans_M3, <span class="at">file =</span> <span class="st">&quot;-ans_M3&quot;</span>)</span>
 <span id="cb47-6"><a href="#cb47-6" tabindex="-1"></a></span>
-<span id="cb47-7"><a href="#cb47-7" tabindex="-1"></a><span class="co"># if necessary estimate again!  </span></span>
-<span id="cb47-8"><a href="#cb47-8" tabindex="-1"></a><span class="co"># ans_M3_2 &lt;- siena07(myAlgorithm, data = mydata, effects = myeff_M3, prevAns = ans_M3, returnDeps=TRUE)</span></span>
-<span id="cb47-9"><a href="#cb47-9" tabindex="-1"></a><span class="co"># ans_M3_2</span></span>
-<span id="cb47-10"><a href="#cb47-10" tabindex="-1"></a><span class="co"># fsave(ans_M2_2, file = &quot;-ans_M2_2&quot;)</span></span></code></pre></div>
-<pre><code>## Estimates, standard errors and convergence t-ratios
-## 
-##                                             Estimate   Standard   Convergence 
-##                                                          Error      t-ratio   
-## 
-## Rate parameters: 
-##   0        Rate parameter                    5.0584  (  0.7825  )             
-## 
-## Other parameters: 
-##    1. eval outdegree (density)              -2.2772  (  0.5108  )   -0.0645   
-##    2. eval reciprocity                       2.0946  (  0.2956  )    0.0098   
-##    3. eval indegree - popularity (sqrt)      0.2460  (  0.1698  )   -0.0475   
-##    4. eval outdegree - activity             -0.1820  (  0.0995  )   -0.0228   
-##    5. eval network-isolate                   2.7564  (  0.8211  )    0.0355   
-##    6. eval gender alter                      0.8158  ( 18.3512  )   -0.0356   
-##    7. eval gender ego                        0.0653  ( 18.3539  )    0.0310   
-##    8. eval gender difference                -0.4605  ( 18.3610  )   -0.0420   
-##    9. eval transitive triplets diff. gender  1.0458  (  0.3360  )   -0.0289   
-##   10. eval prestige alter                    0.0378  (  0.0072  )   -0.0014   
-## 
-## Overall maximum convergence ratio:    0.1949 
-## 
-## 
-## Total of 2499 iteration steps.</code></pre>
-<pre><code>## Estimates, standard errors and convergence t-ratios
-## 
-##                                             Estimate   Standard   Convergence 
-##                                                          Error      t-ratio   
-## 
-## Rate parameters: 
-##   0        Rate parameter                    5.8589  (  0.8708  )             
-## 
-## Other parameters: 
-##    1. eval outdegree (density)               0.4470  (  1.4179  )    0.0223   
-##    2. eval reciprocity                       2.5747  (  0.3741  )   -0.0378   
-##    3. eval indegree - popularity            -0.5734  (  0.1911  )   -0.0528   
-##    4. eval indegree - popularity (sqrt)      2.2678  (  0.7822  )   -0.0336   
-##    5. eval outdegree - activity             -1.0368  (  0.2515  )    0.0381   
-##    6. eval outdegree-trunc(1)               -7.2440  (  1.2364  )    0.0081   
-##    7. eval network-isolate                  -0.6746  (  0.7767  )   -0.0049   
-##    8. eval gender alter                      1.0643  ( 18.6187  )   -0.0481   
-##    9. eval gender ego                       -0.2763  ( 18.6039  )    0.0169   
-##   10. eval gender difference                -0.7851  ( 18.6195  )   -0.0339   
-##   11. eval transitive triplets diff. gender  1.1502  (  0.3106  )   -0.0400   
-##   12. eval prestige alter                    0.0680  (  0.0158  )   -0.0302   
-##   13. eval h_index alter                    -0.0171  (  0.0071  )   -0.0185   
-## 
-## Overall maximum convergence ratio:    0.2461 
-## 
-## 
-## Total of 3091 iteration steps.</code></pre>
+<span id="cb47-7"><a href="#cb47-7" tabindex="-1"></a><span class="co"># if necessary estimate again!</span></span>
+<span id="cb47-8"><a href="#cb47-8" tabindex="-1"></a>ans_M3_2 <span class="ot">&lt;-</span> <span class="fu">siena07</span>(myAlgorithm_M3, <span class="at">data =</span> mydata_M3, <span class="at">effects =</span> myeff_M3, <span class="at">prevAns =</span> ans_M3, <span class="at">returnDeps =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb47-9"><a href="#cb47-9" tabindex="-1"></a>ans_M3_2</span>
+<span id="cb47-10"><a href="#cb47-10" tabindex="-1"></a><span class="co"># fsave(ans_M3_2, file = &#39;-ans_M3&#39;)</span></span></code></pre></div>
+<pre class="test2"><code>#&gt; Estimates, standard errors and convergence t-ratios
+#&gt; 
+#&gt;                                              Estimate   Standard   Convergence 
+#&gt;                                                           Error      t-ratio   
+#&gt; 
+#&gt; Rate parameters: 
+#&gt;   0        Rate parameter                     4.4849  (  0.6263  )             
+#&gt; 
+#&gt; Other parameters: 
+#&gt;    1. eval outdegree (density)               -1.9851  (  0.7113  )   -0.0031   
+#&gt;    2. eval reciprocity                        2.5925  (  0.3753  )   -0.0097   
+#&gt;    3. eval indegree - popularity (sqrt)       0.1703  (  0.2132  )   -0.0411   
+#&gt;    4. eval outdegree - activity              -0.2280  (  0.1295  )   -0.0084   
+#&gt;    5. eval network-isolate                    3.2326  (  1.0649  )    0.0061   
+#&gt;    6. eval gender alter                       0.9904  ( 18.0906  )    0.0135   
+#&gt;    7. eval gender ego                        -0.2849  ( 18.0840  )   -0.0074   
+#&gt;    8. eval gender difference                 -0.6314  ( 18.0936  )    0.0261   
+#&gt;    9. eval transitive triplets diff. gender   1.5079  (  0.4409  )   -0.0537   
+#&gt;   10. eval prestige alter                     0.0423  (  0.0089  )   -0.0135   
+#&gt;   11. eval prestige ego                      -0.0301  (  0.0150  )    0.0174   
+#&gt;   12. eval ind. pop.^(1/1) weighted prestige -0.0106  (  0.0212  )    0.0878   
+#&gt; 
+#&gt; Overall maximum convergence ratio:    0.2288 
+#&gt; 
+#&gt; 
+#&gt; Total of 2948 iteration steps.</code></pre>
+<pre class="test2"><code>#&gt; Estimates, standard errors and convergence t-ratios
+#&gt; 
+#&gt;                                             Estimate   Standard   Convergence 
+#&gt;                                                          Error      t-ratio   
+#&gt; 
+#&gt; Rate parameters: 
+#&gt;   0        Rate parameter                    5.8589  (  0.8708  )             
+#&gt; 
+#&gt; Other parameters: 
+#&gt;    1. eval outdegree (density)               0.4470  (  1.4179  )    0.0223   
+#&gt;    2. eval reciprocity                       2.5747  (  0.3741  )   -0.0378   
+#&gt;    3. eval indegree - popularity            -0.5734  (  0.1911  )   -0.0528   
+#&gt;    4. eval indegree - popularity (sqrt)      2.2678  (  0.7822  )   -0.0336   
+#&gt;    5. eval outdegree - activity             -1.0368  (  0.2515  )    0.0381   
+#&gt;    6. eval outdegree-trunc(1)               -7.2440  (  1.2364  )    0.0081   
+#&gt;    7. eval network-isolate                  -0.6746  (  0.7767  )   -0.0049   
+#&gt;    8. eval gender alter                      1.0643  ( 18.6187  )   -0.0481   
+#&gt;    9. eval gender ego                       -0.2763  ( 18.6039  )    0.0169   
+#&gt;   10. eval gender difference                -0.7851  ( 18.6195  )   -0.0339   
+#&gt;   11. eval transitive triplets diff. gender  1.1502  (  0.3106  )   -0.0400   
+#&gt;   12. eval prestige alter                    0.0680  (  0.0158  )   -0.0302   
+#&gt;   13. eval h_index alter                    -0.0171  (  0.0071  )   -0.0185   
+#&gt; 
+#&gt; Overall maximum convergence ratio:    0.2461 
+#&gt; 
+#&gt; 
+#&gt; Total of 3091 iteration steps.</code></pre>
 </div>
 <div id="goodness-of-fit-4" class="section level3" number="5.5.5">
 <h3><span class="header-section-number">5.5.5</span> Goodness of
 Fit</h3>
-<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" tabindex="-1"></a>GOF <span class="ot">&lt;-</span> <span class="fu">sienaGOF</span>(ans_M3, IndegreeDistribution, <span class="at">verbose =</span> <span class="cn">FALSE</span>, <span class="at">join =</span> <span class="cn">TRUE</span>, <span class="at">varName =</span> <span class="st">&quot;net&quot;</span>)</span>
+<div class="sourceCode" id="cb50"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" tabindex="-1"></a>GOF <span class="ot">&lt;-</span> <span class="fu">sienaGOF</span>(ans_M3, IndegreeDistribution, <span class="at">verbose =</span> <span class="cn">FALSE</span>, <span class="at">join =</span> <span class="cn">TRUE</span>, <span class="at">varName =</span> <span class="st">&quot;net&quot;</span>)</span>
 <span id="cb50-2"><a href="#cb50-2" tabindex="-1"></a></span>
 <span id="cb50-3"><a href="#cb50-3" tabindex="-1"></a><span class="fu">plot</span>(GOF, <span class="at">main =</span> <span class="st">&quot;&quot;</span>)</span></code></pre></div>
 <p><img src="Siena_Results_final_files/figure-html/unnamed-chunk-38-1.png" width="672" /></p>
-<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" tabindex="-1"></a>GOF_str <span class="ot">&lt;-</span> <span class="fu">sienaGOF</span>(ans_M3_strange, IndegreeDistribution, <span class="at">verbose =</span> <span class="cn">FALSE</span>, <span class="at">join =</span> <span class="cn">TRUE</span>, <span class="at">varName =</span> <span class="st">&quot;net&quot;</span>)</span>
-<span id="cb51-2"><a href="#cb51-2" tabindex="-1"></a></span>
-<span id="cb51-3"><a href="#cb51-3" tabindex="-1"></a><span class="fu">plot</span>(GOF_str, <span class="at">main =</span> <span class="st">&quot;&quot;</span>)</span></code></pre></div>
-<p><img src="Siena_Results_final_files/figure-html/unnamed-chunk-38-2.png" width="672" /></p>
-</div>
-<div id="relative-influence" class="section level3" number="5.5.6">
-<h3><span class="header-section-number">5.5.6</span> Relative
-Influence</h3>
-<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" tabindex="-1"></a><span class="co"># RI_M3 &lt;- sienaRI(data = mydata_M3,ans = ans_M3)</span></span></code></pre></div>
 </div>
 </div>
 <div id="model-4---full-model-dropped" class="section level2"
@@ -1093,204 +1242,283 @@ number="5.6">
 <div id="create-sienadata-5" class="section level3" number="5.6.1">
 <h3><span class="header-section-number">5.6.1</span> Create
 SienaData</h3>
-<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" tabindex="-1"></a><span class="co">#---- Dependent ----</span></span>
-<span id="cb53-2"><a href="#cb53-2" tabindex="-1"></a><span class="co"># net &lt;- sienaDependent(net_soc_array)</span></span>
-<span id="cb53-3"><a href="#cb53-3" tabindex="-1"></a></span>
-<span id="cb53-4"><a href="#cb53-4" tabindex="-1"></a><span class="co">#---- Independent ----</span></span>
-<span id="cb53-5"><a href="#cb53-5" tabindex="-1"></a><span class="co"># gender &lt;- df_ego$perc_female</span></span>
-<span id="cb53-6"><a href="#cb53-6" tabindex="-1"></a><span class="co"># gender &lt;- coCovar(gender)</span></span>
-<span id="cb53-7"><a href="#cb53-7" tabindex="-1"></a><span class="co"># </span></span>
-<span id="cb53-8"><a href="#cb53-8" tabindex="-1"></a><span class="co"># prestige &lt;- df_ego %&gt;% select(Q1.W1, Q1.W2) %&gt;% mutate(mean_pres = (Q1.W1 + Q1.W2)/2)</span></span>
-<span id="cb53-9"><a href="#cb53-9" tabindex="-1"></a><span class="co"># prestige &lt;- prestige$mean_pres</span></span>
-<span id="cb53-10"><a href="#cb53-10" tabindex="-1"></a><span class="co"># prestige &lt;- coCovar(prestige)</span></span>
-<span id="cb53-11"><a href="#cb53-11" tabindex="-1"></a><span class="co"># </span></span>
-<span id="cb53-12"><a href="#cb53-12" tabindex="-1"></a><span class="co"># h_index &lt;- df_ego$h_index</span></span>
-<span id="cb53-13"><a href="#cb53-13" tabindex="-1"></a><span class="co"># h_index &lt;- coCovar(h_index)</span></span>
-<span id="cb53-14"><a href="#cb53-14" tabindex="-1"></a></span>
-<span id="cb53-15"><a href="#cb53-15" tabindex="-1"></a>ethnicity <span class="ot">&lt;-</span> df_ego<span class="sc">$</span>ethnicity</span>
-<span id="cb53-16"><a href="#cb53-16" tabindex="-1"></a>ethnicity <span class="ot">&lt;-</span> <span class="fu">coCovar</span>(ethnicity)</span>
-<span id="cb53-17"><a href="#cb53-17" tabindex="-1"></a></span>
-<span id="cb53-18"><a href="#cb53-18" tabindex="-1"></a>career_age <span class="ot">&lt;-</span> <span class="dv">2024</span> <span class="sc">-</span> df_ego<span class="sc">$</span>first_year_pub</span>
-<span id="cb53-19"><a href="#cb53-19" tabindex="-1"></a>career_age <span class="ot">&lt;-</span> <span class="fu">coCovar</span>(career_age)</span>
-<span id="cb53-20"><a href="#cb53-20" tabindex="-1"></a></span>
-<span id="cb53-21"><a href="#cb53-21" tabindex="-1"></a><span class="co">#---- Make Siena df ----</span></span>
-<span id="cb53-22"><a href="#cb53-22" tabindex="-1"></a>mydata <span class="ot">&lt;-</span> <span class="fu">sienaDataCreate</span>(net, gender, prestige, ethnicity, career_age)</span></code></pre></div>
+<div class="sourceCode" id="cb51"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" tabindex="-1"></a><span class="co">#---- Dependent ----</span></span>
+<span id="cb51-2"><a href="#cb51-2" tabindex="-1"></a>net <span class="ot">&lt;-</span> <span class="fu">sienaDependent</span>(net_soc_array)</span>
+<span id="cb51-3"><a href="#cb51-3" tabindex="-1"></a></span>
+<span id="cb51-4"><a href="#cb51-4" tabindex="-1"></a><span class="co">#---- Independent ----</span></span>
+<span id="cb51-5"><a href="#cb51-5" tabindex="-1"></a><span class="co"># gender &lt;- df_ego$perc_female gender &lt;- coCovar(gender) prestige &lt;- df_ego %&gt;% select(Q1.W1,</span></span>
+<span id="cb51-6"><a href="#cb51-6" tabindex="-1"></a><span class="co"># Q1.W2) %&gt;% mutate(mean_pres = (Q1.W1 + Q1.W2)/2) prestige &lt;- prestige$mean_pres prestige &lt;-</span></span>
+<span id="cb51-7"><a href="#cb51-7" tabindex="-1"></a><span class="co"># coCovar(prestige) h_index &lt;- df_ego$h_index h_index &lt;- coCovar(h_index)</span></span>
+<span id="cb51-8"><a href="#cb51-8" tabindex="-1"></a></span>
+<span id="cb51-9"><a href="#cb51-9" tabindex="-1"></a>ethnicity <span class="ot">&lt;-</span> df_ego<span class="sc">$</span>ethnicity</span>
+<span id="cb51-10"><a href="#cb51-10" tabindex="-1"></a>ethnicity <span class="ot">&lt;-</span> <span class="fu">coCovar</span>(ethnicity)</span>
+<span id="cb51-11"><a href="#cb51-11" tabindex="-1"></a></span>
+<span id="cb51-12"><a href="#cb51-12" tabindex="-1"></a>career_age <span class="ot">&lt;-</span> <span class="dv">2024</span> <span class="sc">-</span> df_ego<span class="sc">$</span>first_year_pub</span>
+<span id="cb51-13"><a href="#cb51-13" tabindex="-1"></a>career_age <span class="ot">&lt;-</span> <span class="fu">coCovar</span>(career_age)</span>
+<span id="cb51-14"><a href="#cb51-14" tabindex="-1"></a></span>
+<span id="cb51-15"><a href="#cb51-15" tabindex="-1"></a><span class="co">#---- Make Siena df ----</span></span>
+<span id="cb51-16"><a href="#cb51-16" tabindex="-1"></a>mydata_M4 <span class="ot">&lt;-</span> <span class="fu">sienaDataCreate</span>(net, gender, prestige, ethnicity, career_age)</span></code></pre></div>
 </div>
 <div id="create-effects-object-5" class="section level3" number="5.6.2">
 <h3><span class="header-section-number">5.6.2</span> Create Effects
 object</h3>
-<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" tabindex="-1"></a>myeff_M4 <span class="ot">&lt;-</span> <span class="fu">getEffects</span>(mydata)</span>
-<span id="cb54-2"><a href="#cb54-2" tabindex="-1"></a><span class="fu">print01Report</span>(mydata, <span class="at">modelname =</span> <span class="st">&quot;./results/Collab_M4&quot;</span>)</span>
-<span id="cb54-3"><a href="#cb54-3" tabindex="-1"></a></span>
-<span id="cb54-4"><a href="#cb54-4" tabindex="-1"></a><span class="co"># ts_dyads_evo(sims = wave_2, net1 = wave_1, forplot = TRUE)</span></span>
-<span id="cb54-5"><a href="#cb54-5" tabindex="-1"></a><span class="co"># ts_triads_evo(sims = wave_2, net1 = wave_1, forplot = TRUE)</span></span></code></pre></div>
+<div class="sourceCode" id="cb52"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" tabindex="-1"></a>myeff_M4 <span class="ot">&lt;-</span> <span class="fu">getEffects</span>(mydata_M4)</span>
+<span id="cb52-2"><a href="#cb52-2" tabindex="-1"></a><span class="fu">print01Report</span>(mydata_M4, <span class="at">modelname =</span> <span class="st">&quot;./results/Collab_M4&quot;</span>)</span>
+<span id="cb52-3"><a href="#cb52-3" tabindex="-1"></a></span>
+<span id="cb52-4"><a href="#cb52-4" tabindex="-1"></a><span class="co"># ts_dyads_evo(sims = wave_2, net1 = wave_1, forplot = TRUE) ts_triads_evo(sims = wave_2, net1 =</span></span>
+<span id="cb52-5"><a href="#cb52-5" tabindex="-1"></a><span class="co"># wave_1, forplot = TRUE)</span></span></code></pre></div>
 </div>
 <div id="add-effects-5" class="section level3" number="5.6.3">
 <h3><span class="header-section-number">5.6.3</span> Add Effects</h3>
-<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" tabindex="-1"></a>myeff_M4 <span class="ot">&lt;-</span> <span class="fu">includeEffects</span>(myeff_M4, isolateNet, inPopSqrt, outAct)</span></code></pre></div>
-<pre><code>##   effectName                   include fix   test  initialValue parm
-## 1 indegree - popularity (sqrt) TRUE    FALSE FALSE          0   0   
-## 2 outdegree - activity         TRUE    FALSE FALSE          0   0   
-## 3 network-isolate              TRUE    FALSE FALSE          0   0</code></pre>
-<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" tabindex="-1"></a>myeff_M4 <span class="ot">&lt;-</span> <span class="fu">includeEffects</span>(myeff_M4, diffX, diffSqX, egoX, altX, <span class="at">interaction1 =</span> <span class="st">&quot;gender&quot;</span>)</span></code></pre></div>
-<pre><code>##   effectName           include fix   test  initialValue parm
-## 1 gender alter         TRUE    FALSE FALSE          0   0   
-## 2 gender ego           TRUE    FALSE FALSE          0   0   
-## 3 gender difference    TRUE    FALSE FALSE          0   0   
-## 4 gender diff. squared TRUE    FALSE FALSE          0   0</code></pre>
-<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" tabindex="-1"></a>myeff_M4 <span class="ot">&lt;-</span> <span class="fu">includeEffects</span>(myeff_M4, altX, inPopX, <span class="at">interaction1 =</span> <span class="st">&quot;prestige&quot;</span>)</span></code></pre></div>
-<pre><code>##   effectName                        include fix   test  initialValue parm
-## 1 prestige alter                    TRUE    FALSE FALSE          0   0   
-## 2 ind. pop.^(1/#) weighted prestige TRUE    FALSE FALSE          0   1</code></pre>
-<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" tabindex="-1"></a><span class="co"># myeff_M4 &lt;- includeEffects(myeff_M4, altX, inpopX, interaction1 = &quot;h_index&quot;)</span></span>
-<span id="cb61-2"><a href="#cb61-2" tabindex="-1"></a>myeff_M4 <span class="ot">&lt;-</span> <span class="fu">includeEffects</span>(myeff_M4, sameX, <span class="at">interaction1 =</span> <span class="st">&quot;ethnicity&quot;</span>)</span></code></pre></div>
-<pre><code>##   effectName     include fix   test  initialValue parm
-## 1 same ethnicity TRUE    FALSE FALSE          0   0</code></pre>
-<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" tabindex="-1"></a>myeff_M4 <span class="ot">&lt;-</span> <span class="fu">includeEffects</span>(myeff_M4, altX, egoX, <span class="at">interaction1 =</span> <span class="st">&quot;career_age&quot;</span>)</span></code></pre></div>
-<pre><code>##   effectName       include fix   test  initialValue parm
-## 1 career_age alter TRUE    FALSE FALSE          0   0   
-## 2 career_age ego   TRUE    FALSE FALSE          0   0</code></pre>
+<div class="sourceCode" id="cb53"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" tabindex="-1"></a>myeff_M4 <span class="ot">&lt;-</span> <span class="fu">includeEffects</span>(myeff_M4, isolateNet, inPopSqrt, outAct)</span></code></pre></div>
+<pre class="test2"><code>#&gt;   effectName                   include fix   test  initialValue parm
+#&gt; 1 indegree - popularity (sqrt) TRUE    FALSE FALSE          0   0   
+#&gt; 2 outdegree - activity         TRUE    FALSE FALSE          0   0   
+#&gt; 3 network-isolate              TRUE    FALSE FALSE          0   0</code></pre>
+<div class="sourceCode" id="cb55"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" tabindex="-1"></a>myeff_M4 <span class="ot">&lt;-</span> <span class="fu">includeEffects</span>(myeff_M4, diffX, diffSqX, egoX, altX, <span class="at">interaction1 =</span> <span class="st">&quot;gender&quot;</span>)</span></code></pre></div>
+<pre class="test2"><code>#&gt;   effectName           include fix   test  initialValue parm
+#&gt; 1 gender alter         TRUE    FALSE FALSE          0   0   
+#&gt; 2 gender ego           TRUE    FALSE FALSE          0   0   
+#&gt; 3 gender difference    TRUE    FALSE FALSE          0   0   
+#&gt; 4 gender diff. squared TRUE    FALSE FALSE          0   0</code></pre>
+<div class="sourceCode" id="cb57"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" tabindex="-1"></a>myeff_M4 <span class="ot">&lt;-</span> <span class="fu">includeEffects</span>(myeff_M4, altX, inPopX, <span class="at">interaction1 =</span> <span class="st">&quot;prestige&quot;</span>)</span></code></pre></div>
+<pre class="test2"><code>#&gt;   effectName                        include fix   test  initialValue parm
+#&gt; 1 prestige alter                    TRUE    FALSE FALSE          0   0   
+#&gt; 2 ind. pop.^(1/#) weighted prestige TRUE    FALSE FALSE          0   1</code></pre>
+<div class="sourceCode" id="cb59"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" tabindex="-1"></a><span class="co"># myeff_M4 &lt;- includeEffects(myeff_M4, altX, inpopX, interaction1 = &#39;h_index&#39;)</span></span>
+<span id="cb59-2"><a href="#cb59-2" tabindex="-1"></a>myeff_M4 <span class="ot">&lt;-</span> <span class="fu">includeEffects</span>(myeff_M4, sameX, <span class="at">interaction1 =</span> <span class="st">&quot;ethnicity&quot;</span>)</span></code></pre></div>
+<pre class="test2"><code>#&gt;   effectName     include fix   test  initialValue parm
+#&gt; 1 same ethnicity TRUE    FALSE FALSE          0   0</code></pre>
+<div class="sourceCode" id="cb61"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" tabindex="-1"></a>myeff_M4 <span class="ot">&lt;-</span> <span class="fu">includeEffects</span>(myeff_M4, altX, egoX, <span class="at">interaction1 =</span> <span class="st">&quot;career_age&quot;</span>)</span></code></pre></div>
+<pre class="test2"><code>#&gt;   effectName       include fix   test  initialValue parm
+#&gt; 1 career_age alter TRUE    FALSE FALSE          0   0   
+#&gt; 2 career_age ego   TRUE    FALSE FALSE          0   0</code></pre>
 </div>
 <div id="create-and-run-the-algorithm-5" class="section level3"
 number="5.6.4">
 <h3><span class="header-section-number">5.6.4</span> Create and Run the
 Algorithm</h3>
-<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" tabindex="-1"></a>myAlgorithm_M4 <span class="ot">&lt;-</span> <span class="fu">sienaAlgorithmCreate</span>(<span class="at">projname =</span> <span class="st">&quot;./results/Collab_M4&quot;</span>)</span>
-<span id="cb65-2"><a href="#cb65-2" tabindex="-1"></a>ans_M4 <span class="ot">&lt;-</span> <span class="fu">siena07</span>(myAlgorithm, <span class="at">data =</span> mydata, <span class="at">effects =</span> myeff_M4, <span class="at">returnDeps =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb65-3"><a href="#cb65-3" tabindex="-1"></a>ans_M4</span>
-<span id="cb65-4"><a href="#cb65-4" tabindex="-1"></a></span>
-<span id="cb65-5"><a href="#cb65-5" tabindex="-1"></a><span class="fu">fsave</span>(ans_M4, <span class="at">file =</span> <span class="st">&quot;-ans_M4&quot;</span>)</span>
-<span id="cb65-6"><a href="#cb65-6" tabindex="-1"></a></span>
-<span id="cb65-7"><a href="#cb65-7" tabindex="-1"></a><span class="co"># if necessary estimate again!  </span></span>
-<span id="cb65-8"><a href="#cb65-8" tabindex="-1"></a><span class="co"># ans_M2_2 &lt;- siena07(myAlgorithm, data = mydata, effects = myeff, prevans_ = ans_M1, returnDeps=TRUE)</span></span>
-<span id="cb65-9"><a href="#cb65-9" tabindex="-1"></a><span class="co"># ans_M2_2</span></span></code></pre></div>
-<pre><code>## Estimates, standard errors and convergence t-ratios
-## 
-##                                         Estimate   Standard   Convergence 
-##                                                      Error      t-ratio   
-## 
-## Rate parameters: 
-##   0        Rate parameter                4.2948  (  0.5659  )             
-## 
-## Other parameters: 
-##    1. eval outdegree (density)          -2.1791  (  0.9172  )   -0.0035   
-##    2. eval reciprocity                   2.8409  (  0.3297  )    0.0116   
-##    3. eval indegree - popularity (sqrt)  0.3490  (  0.1628  )   -0.0095   
-##    4. eval outdegree - activity         -0.2630  (  0.1873  )   -0.0016   
-##    5. eval network-isolate               3.4975  (  1.4402  )   -0.0050   
-##    6. eval gender alter                  0.6633  ( 14.8466  )   -0.0297   
-##    7. eval gender ego                   -0.0076  ( 14.8550  )    0.0437   
-##    8. eval gender difference            -0.2756  ( 14.8525  )   -0.0521   
-##    9. eval gender diff. squared         -0.3141  (  0.1666  )   -0.0422   
-##   10. eval prestige alter                0.0389  (  0.0087  )   -0.0005   
-##   11. eval same ethnicity                0.1884  (  0.2428  )   -0.0143   
-##   12. eval career_age alter              0.0008  (  0.0092  )   -0.0262   
-##   13. eval career_age ego               -0.0808  (  0.0251  )    0.0282   
-## 
-## Overall maximum convergence ratio:    0.2266 
-## 
-## 
-## Total of 2984 iteration steps.</code></pre>
+<div class="sourceCode" id="cb63"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" tabindex="-1"></a>myAlgorithm_M4 <span class="ot">&lt;-</span> <span class="fu">sienaAlgorithmCreate</span>(<span class="at">projname =</span> <span class="st">&quot;./results/Collab_M4&quot;</span>)</span>
+<span id="cb63-2"><a href="#cb63-2" tabindex="-1"></a>ans_M4 <span class="ot">&lt;-</span> <span class="fu">siena07</span>(myAlgorithm_M4, <span class="at">data =</span> mydata_M4, <span class="at">effects =</span> myeff_M4, <span class="at">returnDeps =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb63-3"><a href="#cb63-3" tabindex="-1"></a>ans_M4</span>
+<span id="cb63-4"><a href="#cb63-4" tabindex="-1"></a></span>
+<span id="cb63-5"><a href="#cb63-5" tabindex="-1"></a><span class="fu">fsave</span>(ans_M4, <span class="at">file =</span> <span class="st">&quot;-ans_M4&quot;</span>)</span>
+<span id="cb63-6"><a href="#cb63-6" tabindex="-1"></a></span>
+<span id="cb63-7"><a href="#cb63-7" tabindex="-1"></a><span class="co"># if necessary estimate again!  ans_M2_2 &lt;- siena07(myAlgorithm, data = mydata, effects = myeff,</span></span>
+<span id="cb63-8"><a href="#cb63-8" tabindex="-1"></a><span class="co"># prevans_ = ans_M1, returnDeps=TRUE) ans_M2_2</span></span></code></pre></div>
+<pre class="test2"><code>#&gt; Estimates, standard errors and convergence t-ratios
+#&gt; 
+#&gt;                                         Estimate   Standard   Convergence 
+#&gt;                                                      Error      t-ratio   
+#&gt; 
+#&gt; Rate parameters: 
+#&gt;   0        Rate parameter                4.2948  (  0.5659  )             
+#&gt; 
+#&gt; Other parameters: 
+#&gt;    1. eval outdegree (density)          -2.1791  (  0.9172  )   -0.0035   
+#&gt;    2. eval reciprocity                   2.8409  (  0.3297  )    0.0116   
+#&gt;    3. eval indegree - popularity (sqrt)  0.3490  (  0.1628  )   -0.0095   
+#&gt;    4. eval outdegree - activity         -0.2630  (  0.1873  )   -0.0016   
+#&gt;    5. eval network-isolate               3.4975  (  1.4402  )   -0.0050   
+#&gt;    6. eval gender alter                  0.6633  ( 14.8466  )   -0.0297   
+#&gt;    7. eval gender ego                   -0.0076  ( 14.8550  )    0.0437   
+#&gt;    8. eval gender difference            -0.2756  ( 14.8525  )   -0.0521   
+#&gt;    9. eval gender diff. squared         -0.3141  (  0.1666  )   -0.0422   
+#&gt;   10. eval prestige alter                0.0389  (  0.0087  )   -0.0005   
+#&gt;   11. eval same ethnicity                0.1884  (  0.2428  )   -0.0143   
+#&gt;   12. eval career_age alter              0.0008  (  0.0092  )   -0.0262   
+#&gt;   13. eval career_age ego               -0.0808  (  0.0251  )    0.0282   
+#&gt; 
+#&gt; Overall maximum convergence ratio:    0.2266 
+#&gt; 
+#&gt; 
+#&gt; Total of 2984 iteration steps.</code></pre>
 </div>
 <div id="goodness-of-fit-5" class="section level3" number="5.6.5">
 <h3><span class="header-section-number">5.6.5</span> Goodness of
 Fit</h3>
-<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" tabindex="-1"></a>GOF <span class="ot">&lt;-</span> <span class="fu">sienaGOF</span>(ans_M4, IndegreeDistribution, <span class="at">verbose =</span> <span class="cn">FALSE</span>, <span class="at">join =</span> <span class="cn">TRUE</span>, <span class="at">varName =</span> <span class="st">&quot;net&quot;</span>)</span>
-<span id="cb67-2"><a href="#cb67-2" tabindex="-1"></a></span>
-<span id="cb67-3"><a href="#cb67-3" tabindex="-1"></a><span class="fu">plot</span>(GOF, <span class="at">main =</span> <span class="st">&quot;&quot;</span>)</span></code></pre></div>
-<p><img src="Siena_Results_final_files/figure-html/unnamed-chunk-46-1.png" width="672" /></p>
+<div class="sourceCode" id="cb65"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" tabindex="-1"></a>GOF <span class="ot">&lt;-</span> <span class="fu">sienaGOF</span>(ans_M4, IndegreeDistribution, <span class="at">verbose =</span> <span class="cn">FALSE</span>, <span class="at">join =</span> <span class="cn">TRUE</span>, <span class="at">varName =</span> <span class="st">&quot;net&quot;</span>)</span>
+<span id="cb65-2"><a href="#cb65-2" tabindex="-1"></a></span>
+<span id="cb65-3"><a href="#cb65-3" tabindex="-1"></a><span class="fu">plot</span>(GOF, <span class="at">main =</span> <span class="st">&quot;&quot;</span>)</span></code></pre></div>
+<p><img src="Siena_Results_final_files/figure-html/unnamed-chunk-45-1.png" width="672" /></p>
 </div>
 </div>
 <div id="model-5---interaction-model" class="section level2"
 number="5.7">
 <h2><span class="header-section-number">5.7</span> Model 5 - Interaction
 Model</h2>
+<p>Model 5, the final model, contains the network statistics of Model 3,
+and includes an interaction term for gender * prestige. This interaction
+term was centered beforehand to ensure that there was still a meaningful
+0 (i.e. the prestige score of male sociologists). This way, the model
+will estimate how the prestige of female sociologists influences the
+network, using the following network statistics: egoX, altX, inPopX
+&amp; diffXTransTrip. This model has a convergence of 0.22 and a
+Goodness of Fit for the indegree distribution of 0.77. With regard to
+the structural effects, there are only significant estimates for
+reciprocity (b = 2.62, se = 0.39) and isolateNet (b = 3.46, se = 1.58).
+The parameter estimates of density, outdegree activity and indegree
+popularity could not be precisely determined in Model 5.<br />
+  Regarding the covariate network statistics, there are no significant
+estimates, apart from the alter prestige effect (b = 0.067, se = 0.028)
+and the diffXTransTrip statistic of the interaction term (b = 1.14, se =
+0.48). The latter indicates that actors prefer to close triads with
+female alters who have a different level of prestige. This finding seem
+to imply that female prestige decreases gender clustering in
+collaboration networks, which is in line with <em>hypothesis 3.</em>
+Additionally, given the significant estimate for the prestige of alters,
+it seems to be the case that, at Radboud University and Utrecht
+Univeristy, prestige is a more imporant indicator of collaboration than
+gender. Combined with the findings of Model 3, there is some evidence
+that indicates that the collaboration network is becoming more
+egalitarian and thus <em>hypothesis 3</em> does not need to be rejected.
+However, given the diverse findings and lack of significant parameters
+across the models, the findings should be interpreted with caution.</p>
 <div id="create-sienadata-6" class="section level3" number="5.7.1">
 <h3><span class="header-section-number">5.7.1</span> Create
 SienaData</h3>
-<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" tabindex="-1"></a><span class="co">#---- Dependent ----</span></span>
-<span id="cb68-2"><a href="#cb68-2" tabindex="-1"></a>net <span class="ot">&lt;-</span> <span class="fu">sienaDependent</span>(net_soc_array)</span>
-<span id="cb68-3"><a href="#cb68-3" tabindex="-1"></a></span>
-<span id="cb68-4"><a href="#cb68-4" tabindex="-1"></a><span class="co">#---- Independent ----</span></span>
-<span id="cb68-5"><a href="#cb68-5" tabindex="-1"></a>gender <span class="ot">&lt;-</span> df_ego<span class="sc">$</span>perc_female</span>
-<span id="cb68-6"><a href="#cb68-6" tabindex="-1"></a>G_cent <span class="ot">&lt;-</span> gender <span class="sc">-</span> <span class="fu">mean</span>(gender, <span class="at">na.rm =</span> T)</span>
-<span id="cb68-7"><a href="#cb68-7" tabindex="-1"></a>gender <span class="ot">&lt;-</span> <span class="fu">coCovar</span>(gender)</span>
-<span id="cb68-8"><a href="#cb68-8" tabindex="-1"></a></span>
-<span id="cb68-9"><a href="#cb68-9" tabindex="-1"></a>prestige <span class="ot">&lt;-</span> df_ego <span class="sc">%&gt;%</span> <span class="fu">select</span>(Q1.W1, Q1.W2) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">mean_pres =</span> (Q1.W1 <span class="sc">+</span> Q1.W2)<span class="sc">/</span><span class="dv">2</span>)</span>
-<span id="cb68-10"><a href="#cb68-10" tabindex="-1"></a>prestige <span class="ot">&lt;-</span> prestige<span class="sc">$</span>mean_pres</span>
-<span id="cb68-11"><a href="#cb68-11" tabindex="-1"></a>P_cent <span class="ot">&lt;-</span> prestige <span class="sc">-</span> <span class="fu">mean</span>(prestige)</span>
-<span id="cb68-12"><a href="#cb68-12" tabindex="-1"></a></span>
-<span id="cb68-13"><a href="#cb68-13" tabindex="-1"></a>prestige <span class="ot">&lt;-</span> <span class="fu">coCovar</span>(prestige)</span>
-<span id="cb68-14"><a href="#cb68-14" tabindex="-1"></a></span>
-<span id="cb68-15"><a href="#cb68-15" tabindex="-1"></a></span>
-<span id="cb68-16"><a href="#cb68-16" tabindex="-1"></a>IT_PxG <span class="ot">&lt;-</span> P_cent <span class="sc">*</span> G_cent</span>
-<span id="cb68-17"><a href="#cb68-17" tabindex="-1"></a>IT_PxG <span class="ot">&lt;-</span> <span class="fu">coCovar</span>(IT_PxG, <span class="at">centered =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb68-18"><a href="#cb68-18" tabindex="-1"></a></span>
-<span id="cb68-19"><a href="#cb68-19" tabindex="-1"></a></span>
-<span id="cb68-20"><a href="#cb68-20" tabindex="-1"></a><span class="co">#---- Make Siena df ----</span></span>
-<span id="cb68-21"><a href="#cb68-21" tabindex="-1"></a>mydata_M5 <span class="ot">&lt;-</span> <span class="fu">sienaDataCreate</span>(net, gender, prestige, IT_PxG)</span></code></pre></div>
+<div class="sourceCode" id="cb66"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" tabindex="-1"></a><span class="co">#---- Dependent ----</span></span>
+<span id="cb66-2"><a href="#cb66-2" tabindex="-1"></a>net <span class="ot">&lt;-</span> <span class="fu">sienaDependent</span>(net_soc_array)</span>
+<span id="cb66-3"><a href="#cb66-3" tabindex="-1"></a></span>
+<span id="cb66-4"><a href="#cb66-4" tabindex="-1"></a><span class="co">#---- Independent ----</span></span>
+<span id="cb66-5"><a href="#cb66-5" tabindex="-1"></a>gender <span class="ot">&lt;-</span> df_ego<span class="sc">$</span>perc_female</span>
+<span id="cb66-6"><a href="#cb66-6" tabindex="-1"></a>G_cent <span class="ot">&lt;-</span> gender <span class="sc">-</span> <span class="fu">mean</span>(gender, <span class="at">na.rm =</span> T)</span>
+<span id="cb66-7"><a href="#cb66-7" tabindex="-1"></a>gender <span class="ot">&lt;-</span> <span class="fu">coCovar</span>(gender)</span>
+<span id="cb66-8"><a href="#cb66-8" tabindex="-1"></a></span>
+<span id="cb66-9"><a href="#cb66-9" tabindex="-1"></a>prestige <span class="ot">&lt;-</span> df_ego <span class="sc">%&gt;%</span></span>
+<span id="cb66-10"><a href="#cb66-10" tabindex="-1"></a>    <span class="fu">select</span>(Q1.W1, Q1.W2) <span class="sc">%&gt;%</span></span>
+<span id="cb66-11"><a href="#cb66-11" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">mean_pres =</span> (Q1.W1 <span class="sc">+</span> Q1.W2)<span class="sc">/</span><span class="dv">2</span>)</span>
+<span id="cb66-12"><a href="#cb66-12" tabindex="-1"></a>prestige <span class="ot">&lt;-</span> prestige<span class="sc">$</span>mean_pres</span>
+<span id="cb66-13"><a href="#cb66-13" tabindex="-1"></a>P_cent <span class="ot">&lt;-</span> prestige <span class="sc">-</span> <span class="fu">mean</span>(prestige)</span>
+<span id="cb66-14"><a href="#cb66-14" tabindex="-1"></a></span>
+<span id="cb66-15"><a href="#cb66-15" tabindex="-1"></a>prestige <span class="ot">&lt;-</span> <span class="fu">coCovar</span>(prestige)</span>
+<span id="cb66-16"><a href="#cb66-16" tabindex="-1"></a></span>
+<span id="cb66-17"><a href="#cb66-17" tabindex="-1"></a></span>
+<span id="cb66-18"><a href="#cb66-18" tabindex="-1"></a>IT_PxG <span class="ot">&lt;-</span> P_cent <span class="sc">*</span> G_cent</span>
+<span id="cb66-19"><a href="#cb66-19" tabindex="-1"></a>IT_PxG <span class="ot">&lt;-</span> <span class="fu">coCovar</span>(IT_PxG, <span class="at">centered =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb66-20"><a href="#cb66-20" tabindex="-1"></a></span>
+<span id="cb66-21"><a href="#cb66-21" tabindex="-1"></a></span>
+<span id="cb66-22"><a href="#cb66-22" tabindex="-1"></a><span class="co">#---- Make Siena df ----</span></span>
+<span id="cb66-23"><a href="#cb66-23" tabindex="-1"></a>mydata_M5 <span class="ot">&lt;-</span> <span class="fu">sienaDataCreate</span>(net, gender, prestige, IT_PxG)</span></code></pre></div>
 </div>
 <div id="create-effects-object-6" class="section level3" number="5.7.2">
 <h3><span class="header-section-number">5.7.2</span> Create Effects
 object</h3>
-<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" tabindex="-1"></a>myeff_M5 <span class="ot">&lt;-</span> <span class="fu">getEffects</span>(mydata_M5)</span>
-<span id="cb69-2"><a href="#cb69-2" tabindex="-1"></a><span class="fu">print01Report</span>(mydata, <span class="at">modelname =</span> <span class="st">&quot;./results/Collab_M5&quot;</span>)</span>
-<span id="cb69-3"><a href="#cb69-3" tabindex="-1"></a></span>
-<span id="cb69-4"><a href="#cb69-4" tabindex="-1"></a><span class="co"># ts_dyads_evo(sims = wave_2, net1 = wave_1, forplot = TRUE)</span></span>
-<span id="cb69-5"><a href="#cb69-5" tabindex="-1"></a><span class="co"># ts_triads_evo(sims = wave_2, net1 = wave_1, forplot = TRUE)</span></span></code></pre></div>
+<div class="sourceCode" id="cb67"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" tabindex="-1"></a>myeff_M5 <span class="ot">&lt;-</span> <span class="fu">getEffects</span>(mydata_M5)</span>
+<span id="cb67-2"><a href="#cb67-2" tabindex="-1"></a><span class="fu">print01Report</span>(mydata_M5, <span class="at">modelname =</span> <span class="st">&quot;./results/Collab_M5&quot;</span>)</span>
+<span id="cb67-3"><a href="#cb67-3" tabindex="-1"></a></span>
+<span id="cb67-4"><a href="#cb67-4" tabindex="-1"></a><span class="co"># ts_dyads_evo(sims = wave_2, net1 = wave_1, forplot = TRUE) ts_triads_evo(sims = wave_2, net1 =</span></span>
+<span id="cb67-5"><a href="#cb67-5" tabindex="-1"></a><span class="co"># wave_1, forplot = TRUE)</span></span></code></pre></div>
 </div>
 <div id="add-effects-6" class="section level3" number="5.7.3">
 <h3><span class="header-section-number">5.7.3</span> Add Effects</h3>
-<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" tabindex="-1"></a>myeff_M5 <span class="ot">&lt;-</span> <span class="fu">includeEffects</span>(myeff_M5, isolateNet, inPopSqrt, outAct)</span></code></pre></div>
-<pre><code>##   effectName                   include fix   test  initialValue parm
-## 1 indegree - popularity (sqrt) TRUE    FALSE FALSE          0   0   
-## 2 outdegree - activity         TRUE    FALSE FALSE          0   0   
-## 3 network-isolate              TRUE    FALSE FALSE          0   0</code></pre>
-<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" tabindex="-1"></a>myeff_M5 <span class="ot">&lt;-</span> <span class="fu">includeEffects</span>(myeff_M5, diffX, diffXTransTrip, egoX, altX, <span class="at">interaction1 =</span> <span class="st">&quot;gender&quot;</span>)</span></code></pre></div>
-<pre><code>##   effectName                       include fix   test  initialValue parm
-## 1 gender alter                     TRUE    FALSE FALSE          0   0   
-## 2 gender ego                       TRUE    FALSE FALSE          0   0   
-## 3 gender difference                TRUE    FALSE FALSE          0   0   
-## 4 transitive triplets diff. gender TRUE    FALSE FALSE          0   0</code></pre>
-<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" tabindex="-1"></a>myeff_M5 <span class="ot">&lt;-</span> <span class="fu">includeEffects</span>(myeff_M5, altX, inPopX, <span class="at">interaction1 =</span> <span class="st">&quot;prestige&quot;</span>)</span></code></pre></div>
-<pre><code>##   effectName                        include fix   test  initialValue parm
-## 1 prestige alter                    TRUE    FALSE FALSE          0   0   
-## 2 ind. pop.^(1/#) weighted prestige TRUE    FALSE FALSE          0   1</code></pre>
-<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" tabindex="-1"></a>myeff_M5 <span class="ot">&lt;-</span> <span class="fu">includeEffects</span>(myeff_M5, altX, inPopX, <span class="at">interaction1 =</span> <span class="st">&quot;IT_PxG&quot;</span>)</span></code></pre></div>
-<pre><code>##   effectName                      include fix   test  initialValue parm
-## 1 IT_PxG alter                    TRUE    FALSE FALSE          0   0   
-## 2 ind. pop.^(1/#) weighted IT_PxG TRUE    FALSE FALSE          0   1</code></pre>
-<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" tabindex="-1"></a><span class="co"># myeff_M3 &lt;- includeEffects(myeff_M3, altX, inpopX, interaction1 = &quot;h_index&quot;)</span></span></code></pre></div>
+<div class="sourceCode" id="cb68"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" tabindex="-1"></a>myeff_M5 <span class="ot">&lt;-</span> <span class="fu">includeEffects</span>(myeff_M5, isolateNet, inPopSqrt, outAct)</span></code></pre></div>
+<pre class="test2"><code>#&gt;   effectName                   include fix   test  initialValue parm
+#&gt; 1 indegree - popularity (sqrt) TRUE    FALSE FALSE          0   0   
+#&gt; 2 outdegree - activity         TRUE    FALSE FALSE          0   0   
+#&gt; 3 network-isolate              TRUE    FALSE FALSE          0   0</code></pre>
+<div class="sourceCode" id="cb70"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" tabindex="-1"></a>myeff_M5 <span class="ot">&lt;-</span> <span class="fu">includeEffects</span>(myeff_M5, diffX, diffXTransTrip, egoX, altX, <span class="at">interaction1 =</span> <span class="st">&quot;gender&quot;</span>)</span></code></pre></div>
+<pre class="test2"><code>#&gt;   effectName                       include fix   test  initialValue parm
+#&gt; 1 gender alter                     TRUE    FALSE FALSE          0   0   
+#&gt; 2 gender ego                       TRUE    FALSE FALSE          0   0   
+#&gt; 3 gender difference                TRUE    FALSE FALSE          0   0   
+#&gt; 4 transitive triplets diff. gender TRUE    FALSE FALSE          0   0</code></pre>
+<div class="sourceCode" id="cb72"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" tabindex="-1"></a>myeff_M5 <span class="ot">&lt;-</span> <span class="fu">includeEffects</span>(myeff_M5, egoX, altX, inPopX, <span class="at">interaction1 =</span> <span class="st">&quot;prestige&quot;</span>)</span></code></pre></div>
+<pre class="test2"><code>#&gt;   effectName                        include fix   test  initialValue parm
+#&gt; 1 prestige alter                    TRUE    FALSE FALSE          0   0   
+#&gt; 2 prestige ego                      TRUE    FALSE FALSE          0   0   
+#&gt; 3 ind. pop.^(1/#) weighted prestige TRUE    FALSE FALSE          0   1</code></pre>
+<div class="sourceCode" id="cb74"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" tabindex="-1"></a>myeff_M5 <span class="ot">&lt;-</span> <span class="fu">includeEffects</span>(myeff_M5, egoX, altX, inPopX, diffXTransTrip, <span class="at">interaction1 =</span> <span class="st">&quot;IT_PxG&quot;</span>)</span></code></pre></div>
+<pre class="test2"><code>#&gt;   effectName                       include fix   test  initialValue parm
+#&gt; 1 IT_PxG alter                     TRUE    FALSE FALSE          0   0   
+#&gt; 2 IT_PxG ego                       TRUE    FALSE FALSE          0   0   
+#&gt; 3 ind. pop.^(1/#) weighted IT_PxG  TRUE    FALSE FALSE          0   1   
+#&gt; 4 transitive triplets diff. IT_PxG TRUE    FALSE FALSE          0   0</code></pre>
+<div class="sourceCode" id="cb76"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" tabindex="-1"></a><span class="co"># myeff_M3 &lt;- includeEffects(myeff_M3, altX, inpopX, interaction1 = &#39;h_index&#39;)</span></span></code></pre></div>
 </div>
 <div id="create-and-run-the-algorithm-6" class="section level3"
 number="5.7.4">
 <h3><span class="header-section-number">5.7.4</span> Create and Run the
 Algorithm</h3>
-<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1" tabindex="-1"></a>myAlgorithm_M5 <span class="ot">&lt;-</span> <span class="fu">sienaAlgorithmCreate</span>(<span class="at">projname =</span> <span class="st">&quot;./results/Collab_M5&quot;</span>)</span>
-<span id="cb79-2"><a href="#cb79-2" tabindex="-1"></a>ans_M5 <span class="ot">&lt;-</span> <span class="fu">siena07</span>(myAlgorithm_M5, <span class="at">data =</span> mydata_M5, <span class="at">effects =</span> myeff_M5, <span class="at">returnDeps =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb79-3"><a href="#cb79-3" tabindex="-1"></a>ans_M5</span>
-<span id="cb79-4"><a href="#cb79-4" tabindex="-1"></a></span>
-<span id="cb79-5"><a href="#cb79-5" tabindex="-1"></a><span class="co"># fsave(ans_M5, file = &quot;-ans_M5&quot;)</span></span>
-<span id="cb79-6"><a href="#cb79-6" tabindex="-1"></a></span>
-<span id="cb79-7"><a href="#cb79-7" tabindex="-1"></a><span class="co"># if necessary estimate again!  </span></span>
-<span id="cb79-8"><a href="#cb79-8" tabindex="-1"></a>ans_M5_2 <span class="ot">&lt;-</span> <span class="fu">siena07</span>(myAlgorithm_M5, <span class="at">data =</span> mydata_M5, <span class="at">effects =</span> myeff_M5, <span class="at">prevAns =</span> ans_M5, <span class="at">returnDeps=</span><span class="cn">TRUE</span>)</span>
-<span id="cb79-9"><a href="#cb79-9" tabindex="-1"></a>ans_M5_2</span>
-<span id="cb79-10"><a href="#cb79-10" tabindex="-1"></a><span class="co"># fsave(ans_M5_2, file = &quot;-ans_M5&quot;)</span></span></code></pre></div>
-<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" tabindex="-1"></a>GOF <span class="ot">&lt;-</span> <span class="fu">sienaGOF</span>(ans_M5, IndegreeDistribution, <span class="at">verbose =</span> <span class="cn">FALSE</span>, <span class="at">join =</span> <span class="cn">TRUE</span>, <span class="at">varName =</span> <span class="st">&quot;net&quot;</span>)</span>
-<span id="cb80-2"><a href="#cb80-2" tabindex="-1"></a></span>
-<span id="cb80-3"><a href="#cb80-3" tabindex="-1"></a><span class="fu">plot</span>(GOF, <span class="at">main =</span> <span class="st">&quot;&quot;</span>)</span></code></pre></div>
-<p><img src="Siena_Results_final_files/figure-html/unnamed-chunk-53-1.png" width="672" /></p>
-<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1" tabindex="-1"></a><span class="co"># egoX, altX voor career_age</span></span>
-<span id="cb81-2"><a href="#cb81-2" tabindex="-1"></a><span class="co"># sameX voor ethnicity</span></span></code></pre></div>
-<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1" tabindex="-1"></a><span class="co"># sessionInfo()</span></span>
-<span id="cb82-2"><a href="#cb82-2" tabindex="-1"></a><span class="co"># SienaRI - 1.3.14</span></span>
-<span id="cb82-3"><a href="#cb82-3" tabindex="-1"></a><span class="co">#Rsiena Schatten, ANS opslaan, code chunk, evaluate = FALSE, inladen siena object, die echo = FALSE</span></span>
-<span id="cb82-4"><a href="#cb82-4" tabindex="-1"></a><span class="co"># Alle cache folder leeghalen op het moment dat iets foutgaat met wegschrijven of inladen</span></span></code></pre></div>
+<div class="sourceCode" id="cb77"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" tabindex="-1"></a>myAlgorithm_M5 <span class="ot">&lt;-</span> <span class="fu">sienaAlgorithmCreate</span>(<span class="at">projname =</span> <span class="st">&quot;./results/Collab_M5&quot;</span>)</span>
+<span id="cb77-2"><a href="#cb77-2" tabindex="-1"></a>ans_M5 <span class="ot">&lt;-</span> <span class="fu">siena07</span>(myAlgorithm_M5, <span class="at">data =</span> mydata_M5, <span class="at">effects =</span> myeff_M5, <span class="at">returnDeps =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb77-3"><a href="#cb77-3" tabindex="-1"></a>ans_M5</span>
+<span id="cb77-4"><a href="#cb77-4" tabindex="-1"></a></span>
+<span id="cb77-5"><a href="#cb77-5" tabindex="-1"></a><span class="co"># fsave(ans_M5, file = &#39;-ans_M5&#39;)</span></span>
+<span id="cb77-6"><a href="#cb77-6" tabindex="-1"></a></span>
+<span id="cb77-7"><a href="#cb77-7" tabindex="-1"></a><span class="co"># if necessary estimate again!</span></span>
+<span id="cb77-8"><a href="#cb77-8" tabindex="-1"></a>ans_M5_2 <span class="ot">&lt;-</span> <span class="fu">siena07</span>(myAlgorithm_M5, <span class="at">data =</span> mydata_M5, <span class="at">effects =</span> myeff_M5, <span class="at">prevAns =</span> ans_M5, <span class="at">returnDeps =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb77-9"><a href="#cb77-9" tabindex="-1"></a>ans_M5_2</span>
+<span id="cb77-10"><a href="#cb77-10" tabindex="-1"></a><span class="co"># fsave(ans_M5_2, file = &#39;-ans_M5&#39;)</span></span></code></pre></div>
+<pre class="test2"><code>#&gt; Estimates, standard errors and convergence t-ratios
+#&gt; 
+#&gt;                                              Estimate   Standard   Convergence 
+#&gt;                                                           Error      t-ratio   
+#&gt; 
+#&gt; Rate parameters: 
+#&gt;   0        Rate parameter                     4.1960  (  0.6015  )             
+#&gt; 
+#&gt; Other parameters: 
+#&gt;    1. eval outdegree (density)               -0.8538  (  1.4328  )    0.0090   
+#&gt;    2. eval reciprocity                        2.6262  (  0.3973  )    0.0387   
+#&gt;    3. eval indegree - popularity (sqrt)      -0.4407  (  0.7067  )   -0.0220   
+#&gt;    4. eval outdegree - activity              -0.3443  (  0.2353  )    0.0032   
+#&gt;    5. eval network-isolate                    3.4617  (  1.5804  )   -0.0611   
+#&gt;    6. eval gender alter                       0.7524  ( 17.3879  )    0.0116   
+#&gt;    7. eval gender ego                         0.0406  ( 17.4217  )   -0.0513   
+#&gt;    8. eval gender difference                 -0.6985  ( 17.4066  )    0.0530   
+#&gt;    9. eval transitive triplets diff. gender   0.5492  (  0.4614  )   -0.0288   
+#&gt;   10. eval prestige alter                     0.0672  (  0.0284  )   -0.0290   
+#&gt;   11. eval prestige ego                      -0.0271  (  0.0196  )   -0.0174   
+#&gt;   12. eval ind. pop.^(1/1) weighted prestige -0.0165  (  0.0273  )    0.0143   
+#&gt;   13. eval IT_PxG alter                       0.0387  (  0.0240  )    0.0239   
+#&gt;   14. eval IT_PxG ego                         0.0532  (  0.0349  )    0.0668   
+#&gt;   15. eval ind. pop.^(1/1) weighted IT_PxG   -0.0414  (  0.0451  )    0.0231   
+#&gt;   16. eval transitive triplets diff. IT_PxG   1.1366  (  0.4830  )   -0.0098   
+#&gt; 
+#&gt; Overall maximum convergence ratio:    0.2229 
+#&gt; 
+#&gt; 
+#&gt; Total of 3207 iteration steps.</code></pre>
+</div>
+<div id="goodness-of-fit-6" class="section level3" number="5.7.5">
+<h3><span class="header-section-number">5.7.5</span> Goodness of
+Fit</h3>
+<div class="sourceCode" id="cb79"><pre
+class="sourceCode r test"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1" tabindex="-1"></a>GOF <span class="ot">&lt;-</span> <span class="fu">sienaGOF</span>(ans_M5, IndegreeDistribution, <span class="at">verbose =</span> <span class="cn">FALSE</span>, <span class="at">join =</span> <span class="cn">TRUE</span>, <span class="at">varName =</span> <span class="st">&quot;net&quot;</span>)</span>
+<span id="cb79-2"><a href="#cb79-2" tabindex="-1"></a></span>
+<span id="cb79-3"><a href="#cb79-3" tabindex="-1"></a><span class="fu">plot</span>(GOF, <span class="at">main =</span> <span class="st">&quot;&quot;</span>)</span></code></pre></div>
+<p><img src="Siena_Results_final_files/figure-html/unnamed-chunk-52-1.png" width="672" /></p>
+<div id="refs" class="references csl-bib-body hanging-indent"
+entry-spacing="0">
+<div id="ref-ripley2011manual" class="csl-entry">
+Ripley, Ruth M, Tom AB Snijders, Zsófia Boda, András Vörös, and Paulina
+Preciado. 2011. <span>“Manual for RSIENA.”</span> <em>University of
+Oxford, Department of Statistics, Nuffield College</em> 1: 2011.
+</div>
+</div>
 </div>
 </div>
 </div>
 
-<div id="rmd-source-code">LS0tDQp0aXRsZTogIlJlc3VsdHMgLSBSU2llbmEgTW9kZWxzIg0KI2JpYmxpb2dyYXBoeTogcmVmZXJlbmNlcy5iaWINCmF1dGhvcjogIk5pZWxzIFZ1bGxpbmdzIg0KYmlibGlvZ3JhcGh5OiByZWZlcmVuY2VzLmJpYg0KZWRpdG9yX29wdGlvbnM6IA0KICBtYXJrZG93bjogDQogICAgd3JhcDogNzINCi0tLQ0KDQpgYGB7ciwgZWNobz1GQUxTRX0NCnJtKGxpc3QgPSBscygpKQ0KYGBgDQoNCiMgTG9hZCBVREYNCg0KYGBge3J9DQpjb2xvcml6ZSA8LSBmdW5jdGlvbih4LCBjb2xvcikge3NwcmludGYoIjxzcGFuIHN0eWxlPSdjb2xvcjogJXM7Jz4lczwvc3Bhbj4iLCBjb2xvciwgeCkgfQ0KDQpmcGFja2FnZS5jaGVjayA8LSBmdW5jdGlvbihwYWNrYWdlcykgew0KICBsYXBwbHkocGFja2FnZXMsIEZVTiA9IGZ1bmN0aW9uKHgpIHsNCiAgICBpZiAoIXJlcXVpcmUoeCwgY2hhcmFjdGVyLm9ubHkgPSBUUlVFKSkgew0KICAgICAgaW5zdGFsbC5wYWNrYWdlcyh4LCBkZXBlbmRlbmNpZXMgPSBUUlVFKQ0KICAgICAgbGlicmFyeSh4LCBjaGFyYWN0ZXIub25seSA9IFRSVUUpDQogICAgfQ0KICB9KQ0KfQ0KDQpmc2F2ZSA8LSBmdW5jdGlvbih4LCBmaWxlID0gTlVMTCwgbG9jYXRpb24gPSAiLi9yZXN1bHRzL3Byb2Nlc3NlZC8iKSB7DQogIGlmZWxzZSghZGlyLmV4aXN0cygicmVzdWx0cyIpLCBkaXIuY3JlYXRlKCJkYXRhIiksIEZBTFNFKQ0KICBpZmVsc2UoIWRpci5leGlzdHMoInJlc3VsdHMvcHJvY2Vzc2VkIiksIGRpci5jcmVhdGUoInJlc3VsdHMvcHJvY2Vzc2VkIiksIEZBTFNFKQ0KICBpZiAoaXMubnVsbChmaWxlKSkNCiAgICBmaWxlID0gZGVwYXJzZShzdWJzdGl0dXRlKHgpKQ0KICBkYXRlbmFtZSA8LSBzdWJzdHIoZ3N1YigiWzotXSIsICIiLCBTeXMudGltZSgpKSwgMSwgOCkNCiAgdG90YWxuYW1lIDwtIHBhc3RlKGxvY2F0aW9uLCBkYXRlbmFtZSwgZmlsZSwgIi5yZGEiLCBzZXAgPSAiIikNCiAgc2F2ZSh4LCBmaWxlID0gdG90YWxuYW1lKSAgI25lZWQgdG8gZml4IGlmIGZpbGUgaXMgcmVsb2FkZWQgYXMgaW5wdXQgbmFtZSwgbm90IGFzIHguIA0KfQ0KDQpmbG9hZCA8LSBmdW5jdGlvbihmaWxlbmFtZSkgew0KICBsb2FkKGZpbGVuYW1lKQ0KICBnZXQobHMoKVtscygpICE9ICJmaWxlbmFtZSJdKQ0KfQ0KDQpmc2hvd2RmIDwtIGZ1bmN0aW9uKHgsIC4uLikgew0KICBrbml0cjo6a2FibGUoeCwgZGlnaXRzID0gMiwgImh0bWwiLCAuLi4pICU+JQ0KICAgIGthYmxlRXh0cmE6OmthYmxlX3N0eWxpbmcoYm9vdHN0cmFwX29wdGlvbnMgPSBjKCJzdHJpcGVkIiwgImhvdmVyIikpICU+JQ0KICAgIGthYmxlRXh0cmE6OnNjcm9sbF9ib3god2lkdGggPSAiMTAwJSIsIGhlaWdodCA9ICIzMDBweCIpDQp9DQoNCmBgYA0KDQojIExvYWQgUGFja2FnZXMNCg0KYGBge3IsIHdhcm5pbmc9RkFMU0UsIHJlc3VsdHM9J2hpZGUnLCBtZXNzYWdlPUZBTFNFfQ0KcGFja2FnZXMgPC0gYygidGlkeXZlcnNlIiwgInNuYSIsICJpZ3JhcGgiLCAiUlNpZW5hIiwgIml0ZXJhdG9ycyIsICJkb1BhcmFsbGVsIikNCg0KZnBhY2thZ2UuY2hlY2socGFja2FnZXMpDQoNCmBgYA0KDQojIExvYWQgRGF0YQ0KDQpgYGB7cn0NCiMgTG9hZCBFZ28gZGF0YQ0KbG9hZCgiZGF0YS9wcm9jZXNzZWQvUlVfVVVfZWdvLlJEYXRhIikNCg0KIyBMb2FkIFdvcmtzIGRhdGENCmxvYWQoImRhdGEvcHJvY2Vzc2VkL1JVX1VVX3dvcmtzLlJEYXRhIikNCg0KIyBMb2FkIHJhdyBkYXRhIGZvciBuZXR3b3Jrcw0KbG9hZCgiZGF0YS9wcm9jZXNzZWQvc29jX2RhdGFfcmF3LlJEYXRhIikNCmBgYA0KDQojIE1ha2UgbmV0d29yayBkYXRhIGZvciBSU2llbmENCg0KYGBge3J9DQpwcmludChwYXN0ZTAoIiIsIGRpbShzb2NfZGF0YSRuZXRzKSkpDQoNCndhdmVfMSA8LSBzb2NfZGF0YSRuZXRzWzEsLF0NCmRpYWcod2F2ZV8xKSA8LSAwDQoNCndhdmVfMiA8LSBzb2NfZGF0YSRuZXRzWzIsLF0NCmRpYWcod2F2ZV8yKSA8LSAwDQoNCm5ldF9zb2NfYXJyYXkgPC0gYXJyYXkoZGF0YSA9IGMod2F2ZV8xLCB3YXZlXzIpLCBkaW0gPSBjKGRpbSh3YXZlXzEpLCAyKSkNCmRpbShuZXRfc29jX2FycmF5KQ0KYGBgDQoNCiMgQW5hbHlzaXMgey50YWJzZXR9DQoNCiMjIE1vZGVsIDANClRFWFQNCg0KIyMjIENyZWF0ZSBTaWVuYURhdGENCg0KYGBge3J9DQojLS0tLSBEZXBlbmRlbnQgLS0tLQ0KbmV0IDwtIHNpZW5hRGVwZW5kZW50KG5ldF9zb2NfYXJyYXkpDQoNCiMtLS0tIE1ha2UgU2llbmEgZGYgLS0tLQ0KbXlkYXRhIDwtIHNpZW5hRGF0YUNyZWF0ZShuZXQpDQpgYGANCg0KIyMjIENyZWF0ZSBFZmZlY3RzIG9iamVjdA0KDQpgYGB7cn0NCm15ZWZmX00wIDwtIGdldEVmZmVjdHMobXlkYXRhKQ0KcHJpbnQwMVJlcG9ydChteWRhdGEsIG1vZGVsbmFtZSA9ICIuL3Jlc3VsdHMvQ29sbGFiX00wIikNCg0KIyB0c19keWFkc19ldm8oc2ltcyA9IHdhdmVfMiwgbmV0MSA9IHdhdmVfMSwgZm9ycGxvdCA9IFRSVUUpDQojIHRzX3RyaWFkc19ldm8oc2ltcyA9IHdhdmVfMiwgbmV0MSA9IHdhdmVfMSwgZm9ycGxvdCA9IFRSVUUpDQoNCmBgYA0KDQojIyMgQWRkIEVmZmVjdHMNCg0KIyMjIENyZWF0ZSBhbmQgUnVuIHRoZSBBbGdvcml0aG0NCg0KYGBge3IsIGV2YWw9RkFMU0V9DQpteUFsZ29yaXRobSA8LSBzaWVuYUFsZ29yaXRobUNyZWF0ZShwcm9qbmFtZSA9ICIuL3Jlc3VsdHMvQ29sbGFiX00wIikNCmFuc19NMCA8LSBzaWVuYTA3KG15QWxnb3JpdGhtLCBkYXRhID0gbXlkYXRhLCBlZmZlY3RzID0gbXllZmZfTTAsIHJldHVybkRlcHMgPSBUUlVFKQ0KYW5zX00wDQoNCmZzYXZlKGFuc19NMCwgZmlsZSA9ICItYW5zX00wIikNCg0KIyBpZiBuZWNlc3NhcnkgZXN0aW1hdGUgYWdhaW4hICANCiMgYW5zX00xXzIgPC0gc2llbmEwNyhteUFsZ29yaXRobSwgZGF0YSA9IG15ZGF0YSwgZWZmZWN0cyA9IG15ZWZmLCBwcmV2YW5zXyA9IGFuc19NMSwgcmV0dXJuRGVwcz1UUlVFKQ0KIyBhbnNfTTFfMg0KYGBgDQoNCmBgYHtyLCBlY2hvPUZBTFNFfQ0KDQphbnNfTTAgPC0gZmxvYWQoIi4vcmVzdWx0cy9wcm9jZXNzZWQvMjAyNDEwMjQtYW5zX00wLnJkYSIpDQphbnNfTTANCmBgYA0KDQojIyMgR29vZG5lc3Mgb2YgRml0DQoNCmBgYHtyfQ0KR09GIDwtIHNpZW5hR09GKGFuc19NMCwgSW5kZWdyZWVEaXN0cmlidXRpb24sIHZlcmJvc2UgPSBGQUxTRSwgam9pbiA9IFRSVUUsIHZhck5hbWUgPSAibmV0IikNCg0KcGxvdChHT0YsIG1haW4gPSAiIikNCmBgYA0KDQojIyBNb2RlbCAxDQpURVhUDQoNCg0KIyMjIENyZWF0ZSBTaWVuYURhdGENCg0KYGBge3J9DQojLS0tLSBEZXBlbmRlbnQgLS0tLQ0KbmV0IDwtIHNpZW5hRGVwZW5kZW50KG5ldF9zb2NfYXJyYXkpDQoNCiMtLS0tIE1ha2UgU2llbmEgZGYgLS0tLQ0KbXlkYXRhIDwtIHNpZW5hRGF0YUNyZWF0ZShuZXQpDQpgYGANCg0KIyMjIENyZWF0ZSBFZmZlY3RzIG9iamVjdA0KDQpgYGB7cn0NCm15ZWZmX00xIDwtIGdldEVmZmVjdHMobXlkYXRhKQ0KcHJpbnQwMVJlcG9ydChteWRhdGEsIG1vZGVsbmFtZSA9ICIuL3Jlc3VsdHMvQ29sbGFiX00xIikNCg0KIyB0c19keWFkc19ldm8oc2ltcyA9IHdhdmVfMiwgbmV0MSA9IHdhdmVfMSwgZm9ycGxvdCA9IFRSVUUpDQojIHRzX3RyaWFkc19ldm8oc2ltcyA9IHdhdmVfMiwgbmV0MSA9IHdhdmVfMSwgZm9ycGxvdCA9IFRSVUUpDQoNCmBgYA0KDQojIyMgQWRkIEVmZmVjdHMNCg0KYGBge3J9DQpteWVmZl9NMSA8LSBpbmNsdWRlRWZmZWN0cyhteWVmZl9NMSwgaXNvbGF0ZU5ldCwgaW5Qb3AsIG91dEFjdCkNCmBgYA0KDQojIyMgQ3JlYXRlIGFuZCBSdW4gdGhlIEFsZ29yaXRobQ0KDQpgYGB7ciwgZXZhbD1GQUxTRX0NCg0KbXlBbGdvcml0aG0gPC0gc2llbmFBbGdvcml0aG1DcmVhdGUocHJvam5hbWUgPSAiLi9yZXN1bHRzL0NvbGxhYl9NMSIpDQphbnNfTTEgPC0gc2llbmEwNyhteUFsZ29yaXRobSwgZGF0YSA9IG15ZGF0YSwgZWZmZWN0cyA9IG15ZWZmX00xLCByZXR1cm5EZXBzID0gVFJVRSkNCmFuc19NMQ0KDQojIGZzYXZlKGFuc19NMSwgZmlsZSA9ICItYW5zX00xIikNCg0KIyBpZiBuZWNlc3NhcnkgZXN0aW1hdGUgYWdhaW4hICANCmFuc19NMV8yIDwtIHNpZW5hMDcobXlBbGdvcml0aG0sIGRhdGEgPSBteWRhdGEsIGVmZmVjdHMgPSBteWVmZl9NMSwgcHJldkFucyA9IGFuc19NMSwgcmV0dXJuRGVwcz1UUlVFKQ0KYW5zX00xXzINCg0KZnNhdmUoYW5zX00xXzIsIGZpbGUgPSAiLWFuc19NMV8yIikNCg0KYGBgDQoNCmBgYHtyLCBlY2hvPUZBTFNFfQ0KDQphbnNfTTEgPC0gZmxvYWQoIi4vcmVzdWx0cy9wcm9jZXNzZWQvMjAyNDEwMjQtYW5zX00xXzIucmRhIikNCmFuc19NMQ0KDQpgYGANCg0KIyMjIEdvb2RuZXNzIG9mIEZpdA0KDQpgYGB7cn0NCkdPRiA8LSBzaWVuYUdPRihhbnNfTTEsIEluZGVncmVlRGlzdHJpYnV0aW9uLCB2ZXJib3NlID0gRkFMU0UsIGpvaW4gPSBUUlVFLCB2YXJOYW1lID0gIm5ldCIpDQoNCnBsb3QoR09GLCBtYWluID0gIiIpDQpgYGANCg0KIyMgTW9kZWwgMiAtIEFkZCBHZW5kZXIgKGRyb3BwZWQpDQpURVhUIA0KDQojIyMgQ3JlYXRlIFNpZW5hRGF0YQ0KDQpgYGB7cn0NCiMtLS0tIERlcGVuZGVudCAtLS0tDQpuZXQgPC0gc2llbmFEZXBlbmRlbnQobmV0X3NvY19hcnJheSkNCg0KIy0tLS0gSW5kZXBlbmRlbnQgLS0tLQ0KZ2VuZGVyIDwtIGRmX2VnbyRwZXJjX2ZlbWFsZQ0KZ2VuZGVyIDwtIGNvQ292YXIoZ2VuZGVyKQ0KDQoNCiMtLS0tIE1ha2UgU2llbmEgZGYgLS0tLQ0KbXlkYXRhIDwtIHNpZW5hRGF0YUNyZWF0ZShuZXQsIGdlbmRlcikNCmBgYA0KDQojIyMgQ3JlYXRlIEVmZmVjdHMgb2JqZWN0DQoNCmBgYHtyfQ0KbXllZmZfTTIgPC0gZ2V0RWZmZWN0cyhteWRhdGEpDQpwcmludDAxUmVwb3J0KG15ZGF0YSwgbW9kZWxuYW1lID0gIi4vcmVzdWx0cy9Db2xsYWJfTTIiKQ0KDQpgYGANCg0KIyMjIEFkZCBFZmZlY3RzDQoNCmBgYHtyfQ0KDQpteWVmZl9NMiA8LSBpbmNsdWRlRWZmZWN0cyhteWVmZl9NMiwgaXNvbGF0ZU5ldCwgaW5Qb3AsIG91dEFjdCkNCg0KYGBgDQoNCmBgYHtyfQ0KDQpteWVmZl9NMiA8LSBpbmNsdWRlRWZmZWN0cyhteWVmZl9NMiwgZGlmZlgsIGRpZmZYVHJhbnNUcmlwLCBlZ29YLCBhbHRYLCBpbnRlcmFjdGlvbjEgPSAiZ2VuZGVyIikNCg0KYGBgDQoNCiMjIyBDcmVhdGUgYW5kIFJ1biB0aGUgQWxnb3JpdGhtDQoNCmBgYHtyLCBldmFsPUZBTFNFfQ0KbXlBbGdvcml0aG0gPC0gc2llbmFBbGdvcml0aG1DcmVhdGUocHJvam5hbWUgPSAiLi9yZXN1bHRzL0NvbGxhYl9NMiIpDQphbnNfTTIgPC0gc2llbmEwNyhteUFsZ29yaXRobSwgZGF0YSA9IG15ZGF0YSwgZWZmZWN0cyA9IG15ZWZmX00yLCByZXR1cm5EZXBzID0gVFJVRSkNCmFuc19NMg0KDQojIGZzYXZlKGFuc19NMiwgZmlsZSA9ICItYW5zX00yIikNCg0KDQojIGlmIG5lY2Vzc2FyeSBlc3RpbWF0ZSBhZ2FpbiEgIA0KYW5zX00yXzIgPC0gc2llbmEwNyhteUFsZ29yaXRobSwgZGF0YSA9IG15ZGF0YSwgZWZmZWN0cyA9IG15ZWZmX00yLCBwcmV2QW5zID0gYW5zX00yLCByZXR1cm5EZXBzPVRSVUUpDQphbnNfTTJfMg0KZnNhdmUoYW5zX00yXzIsIGZpbGUgPSAiLWFuc19NMl8yIikNCg0KDQpgYGANCg0KYGBge3IsIGVjaG89RkFMU0V9DQoNCmFuc19NMiA8LSBmbG9hZCgiLi9yZXN1bHRzL3Byb2Nlc3NlZC8yMDI0MTAyNC1hbnNfTTJfMi5yZGEiKQ0KYW5zX00yDQoNCmBgYA0KDQojIyMgR29vZG5lc3Mgb2YgRml0DQoNCmBgYHtyfQ0KR09GIDwtIHNpZW5hR09GKGFuc19NMiwgSW5kZWdyZWVEaXN0cmlidXRpb24sIHZlcmJvc2UgPSBGQUxTRSwgam9pbiA9IFRSVUUsIHZhck5hbWUgPSAibmV0IikNCg0KcGxvdChHT0YsIG1haW4gPSAiIikNCg0KYGBgDQoNCiMjIE1vZGVsIDIuNSAtIEFkZCBHZW5kZXINClRFWFQgDQoNCiMjIyBDcmVhdGUgU2llbmFEYXRhDQoNCmBgYHtyfQ0KIy0tLS0gRGVwZW5kZW50IC0tLS0NCm5ldCA8LSBzaWVuYURlcGVuZGVudChuZXRfc29jX2FycmF5KQ0KDQojLS0tLSBJbmRlcGVuZGVudCAtLS0tDQpnZW5kZXIgPC0gZGZfZWdvJHBlcmNfZmVtYWxlDQpnZW5kZXIgPC0gY29Db3ZhcihnZW5kZXIpDQoNCg0KIy0tLS0gTWFrZSBTaWVuYSBkZiAtLS0tDQpteWRhdGEgPC0gc2llbmFEYXRhQ3JlYXRlKG5ldCwgZ2VuZGVyKQ0KYGBgDQoNCiMjIyBDcmVhdGUgRWZmZWN0cyBvYmplY3QNCg0KYGBge3J9DQpteWVmZl9NMi41IDwtIGdldEVmZmVjdHMobXlkYXRhKQ0KcHJpbnQwMVJlcG9ydChteWRhdGEsIG1vZGVsbmFtZSA9ICIuL3Jlc3VsdHMvQ29sbGFiX00yLjUiKQ0KDQpgYGANCg0KIyMjIEFkZCBFZmZlY3RzDQoNCmBgYHtyfQ0KbXllZmZfTTIuNSA8LSBpbmNsdWRlRWZmZWN0cyhteWVmZl9NMi41LCBpc29sYXRlTmV0LCBpblBvcFNxcnQsIG91dEFjdCkNCg0KYGBgDQoNCmBgYHtyfQ0KbXllZmZfTTIuNSA8LSBpbmNsdWRlRWZmZWN0cyhteWVmZl9NMi41LCBkaWZmWCwgZGlmZlhUcmFuc1RyaXAsIGVnb1gsIGFsdFgsIGludGVyYWN0aW9uMSA9ICJnZW5kZXIiKQ0KDQpgYGANCg0KIyMjIENyZWF0ZSBhbmQgUnVuIHRoZSBBbGdvcml0aG0NCg0KYGBge3IsIGV2YWw9RkFMU0V9DQpteUFsZ29yaXRobSA8LSBzaWVuYUFsZ29yaXRobUNyZWF0ZShwcm9qbmFtZSA9ICIuL3Jlc3VsdHMvQ29sbGFiX00yLjUiKQ0KYW5zX00yLjUgPC0gc2llbmEwNyhteUFsZ29yaXRobSwgZGF0YSA9IG15ZGF0YSwgZWZmZWN0cyA9IG15ZWZmX00yLjUsIHJldHVybkRlcHMgPSBUUlVFKQ0KYW5zX00yLjUNCg0KZnNhdmUoYW5zX00yLjUsIGZpbGUgPSAiLWFuc19NMi41IikNCg0KIyBpZiBuZWNlc3NhcnkgZXN0aW1hdGUgYWdhaW4hICANCiMgYW5zX00yLjVfMiA8LSBzaWVuYTA3KG15QWxnb3JpdGhtLCBkYXRhID0gbXlkYXRhLCBlZmZlY3RzID0gbXllZmZfTTIuNSwgcHJldkFucyA9IGFuc19NMi41LCByZXR1cm5EZXBzPVRSVUUpDQojIGFuc19NMi41XzINCiMgZnNhdmUoYW5zX00yLjVfMiwgZmlsZSA9ICItYW5zX00yLjVfMiIpDQoNCg0KYGBgDQoNCmBgYHtyLCBlY2hvPUZBTFNFfQ0KDQphbnNfTTIuNSA8LSBmbG9hZCgiLi9yZXN1bHRzL3Byb2Nlc3NlZC8yMDI0MTAyNC1hbnNfTTIuNS5yZGEiKQ0KYW5zX00yLjUNCg0KYGBgDQoNCiMjIyBHb29kbmVzcyBvZiBGaXQNCg0KYGBge3J9DQpHT0YgPC0gc2llbmFHT0YoYW5zX00yLjUsIEluZGVncmVlRGlzdHJpYnV0aW9uLCB2ZXJib3NlID0gRkFMU0UsIGpvaW4gPSBUUlVFLCB2YXJOYW1lID0gIm5ldCIpDQoNCnBsb3QoR09GLCBtYWluID0gIiIpDQoNCmBgYA0KDQojIyBNb2RlbCAzIC0gQWRkIFByZXN0aWdlDQpURVhUIA0KDQojIyMgQ3JlYXRlIFNpZW5hRGF0YQ0KDQpgYGB7cn0NCiMtLS0tIERlcGVuZGVudCAtLS0tDQpuZXQgPC0gc2llbmFEZXBlbmRlbnQobmV0X3NvY19hcnJheSkNCg0KIy0tLS0gSW5kZXBlbmRlbnQgLS0tLQ0KIyBnZW5kZXIgPC0gZGZfZWdvJHBlcmNfZmVtYWxlDQojIGdlbmRlciA8LSBjb0NvdmFyKGdlbmRlcikNCg0KcHJlc3RpZ2UgPC0gZGZfZWdvICU+JSBzZWxlY3QoUTEuVzEsIFExLlcyKSAlPiUgbXV0YXRlKG1lYW5fcHJlcyA9IChRMS5XMSArIFExLlcyKS8yKQ0KcHJlc3RpZ2UgPC0gcHJlc3RpZ2UkbWVhbl9wcmVzDQpwcmVzdGlnZSA8LSBjb0NvdmFyKHByZXN0aWdlKQ0KDQojIGhfaW5kZXggPC0gZGZfZWdvJGhfaW5kZXgNCiMgaF9pbmRleCA8LSBjb0NvdmFyKGhfaW5kZXgpDQoNCiMtLS0tIE1ha2UgU2llbmEgZGYgLS0tLQ0KbXlkYXRhX00zIDwtIHNpZW5hRGF0YUNyZWF0ZShuZXQsIGdlbmRlciwgcHJlc3RpZ2UpIywgaF9pbmRleCkNCg0KYGBgDQoNCiMjIyBDcmVhdGUgRWZmZWN0cyBvYmplY3QNCg0KYGBge3J9DQpteWVmZl9NMyA8LSBnZXRFZmZlY3RzKG15ZGF0YSkNCnByaW50MDFSZXBvcnQobXlkYXRhLCBtb2RlbG5hbWUgPSAiLi9yZXN1bHRzL0NvbGxhYl9NMyIpDQoNCiMgdHNfZHlhZHNfZXZvKHNpbXMgPSB3YXZlXzIsIG5ldDEgPSB3YXZlXzEsIGZvcnBsb3QgPSBUUlVFKQ0KIyB0c190cmlhZHNfZXZvKHNpbXMgPSB3YXZlXzIsIG5ldDEgPSB3YXZlXzEsIGZvcnBsb3QgPSBUUlVFKQ0KDQpgYGANCg0KIyMjIEFkZCBFZmZlY3RzDQoNCmBgYHtyfQ0KbXllZmZfTTMgPC0gaW5jbHVkZUVmZmVjdHMobXllZmZfTTMsIGlzb2xhdGVOZXQsIGluUG9wU3FydCwgb3V0QWN0KQ0KYGBgDQoNCmBgYHtyfQ0KbXllZmZfTTMgPC0gaW5jbHVkZUVmZmVjdHMobXllZmZfTTMsIGRpZmZYLCBkaWZmWFRyYW5zVHJpcCwgZWdvWCwgYWx0WCwgaW50ZXJhY3Rpb24xID0gImdlbmRlciIpDQpteWVmZl9NMyA8LSBpbmNsdWRlRWZmZWN0cyhteWVmZl9NMywgYWx0WCwgaW5Qb3BYLCBpbnRlcmFjdGlvbjEgPSAicHJlc3RpZ2UiKQ0KIyBteWVmZl9NMyA8LSBpbmNsdWRlRWZmZWN0cyhteWVmZl9NMywgYWx0WCwgaW5wb3BYLCBpbnRlcmFjdGlvbjEgPSAiaF9pbmRleCIpDQoNCmBgYA0KDQojIyMgQ3JlYXRlIGFuZCBSdW4gdGhlIEFsZ29yaXRobQ0KDQpgYGB7ciwgZXZhbD1GQUxTRX0NCm15QWxnb3JpdGhtX00zIDwtIHNpZW5hQWxnb3JpdGhtQ3JlYXRlKHByb2puYW1lID0gIi4vcmVzdWx0cy9Db2xsYWJfTTMiKQ0KYW5zX00zIDwtIHNpZW5hMDcobXlBbGdvcml0aG0sIGRhdGEgPSBteWRhdGEsIGVmZmVjdHMgPSBteWVmZl9NMywgcmV0dXJuRGVwcyA9IFRSVUUpDQphbnNfTTMNCg0KZnNhdmUoYW5zX00zLCBmaWxlID0gIi1hbnNfTTMiKQ0KDQojIGlmIG5lY2Vzc2FyeSBlc3RpbWF0ZSBhZ2FpbiEgIA0KIyBhbnNfTTNfMiA8LSBzaWVuYTA3KG15QWxnb3JpdGhtLCBkYXRhID0gbXlkYXRhLCBlZmZlY3RzID0gbXllZmZfTTMsIHByZXZBbnMgPSBhbnNfTTMsIHJldHVybkRlcHM9VFJVRSkNCiMgYW5zX00zXzINCiMgZnNhdmUoYW5zX00yXzIsIGZpbGUgPSAiLWFuc19NMl8yIikNCg0KYGBgDQoNCmBgYHtyLCBlY2hvPUZBTFNFfQ0KDQphbnNfTTMgPC0gZmxvYWQoIi4vcmVzdWx0cy9wcm9jZXNzZWQvMjAyNDEwMjQtYW5zX00zLnJkYSIpDQphbnNfTTMNCg0KYGBgDQoNCmBgYHtyLCBlY2hvPUZBTFNFfQ0KDQphbnNfTTNfc3RyYW5nZSA8LSBmbG9hZCgiLi9yZXN1bHRzL3Byb2Nlc3NlZC8yMDI0MTAyMy1hbnNfTTMod2VpcmQpLnJkYSIpDQphbnNfTTNfc3RyYW5nZQ0KDQpgYGANCg0KIyMjIEdvb2RuZXNzIG9mIEZpdA0KYGBge3J9DQpHT0YgPC0gc2llbmFHT0YoYW5zX00zLCBJbmRlZ3JlZURpc3RyaWJ1dGlvbiwgdmVyYm9zZSA9IEZBTFNFLCBqb2luID0gVFJVRSwgdmFyTmFtZSA9ICJuZXQiKQ0KDQpwbG90KEdPRiwgbWFpbiA9ICIiKQ0KDQpHT0Zfc3RyIDwtIHNpZW5hR09GKGFuc19NM19zdHJhbmdlLCBJbmRlZ3JlZURpc3RyaWJ1dGlvbiwgdmVyYm9zZSA9IEZBTFNFLCBqb2luID0gVFJVRSwgdmFyTmFtZSA9ICJuZXQiKQ0KDQpwbG90KEdPRl9zdHIsIG1haW4gPSAiIikNCmBgYA0KDQojIyMgUmVsYXRpdmUgSW5mbHVlbmNlDQpgYGB7cn0NCiMgUklfTTMgPC0gc2llbmFSSShkYXRhID0gbXlkYXRhX00zLGFucyA9IGFuc19NMykNCmBgYA0KDQojIyBNb2RlbCA0IC0gRnVsbCBNb2RlbCAoZHJvcHBlZCkNCiANCg0KIyMjIENyZWF0ZSBTaWVuYURhdGENCg0KYGBge3J9DQojLS0tLSBEZXBlbmRlbnQgLS0tLQ0KIyBuZXQgPC0gc2llbmFEZXBlbmRlbnQobmV0X3NvY19hcnJheSkNCg0KIy0tLS0gSW5kZXBlbmRlbnQgLS0tLQ0KIyBnZW5kZXIgPC0gZGZfZWdvJHBlcmNfZmVtYWxlDQojIGdlbmRlciA8LSBjb0NvdmFyKGdlbmRlcikNCiMgDQojIHByZXN0aWdlIDwtIGRmX2VnbyAlPiUgc2VsZWN0KFExLlcxLCBRMS5XMikgJT4lIG11dGF0ZShtZWFuX3ByZXMgPSAoUTEuVzEgKyBRMS5XMikvMikNCiMgcHJlc3RpZ2UgPC0gcHJlc3RpZ2UkbWVhbl9wcmVzDQojIHByZXN0aWdlIDwtIGNvQ292YXIocHJlc3RpZ2UpDQojIA0KIyBoX2luZGV4IDwtIGRmX2VnbyRoX2luZGV4DQojIGhfaW5kZXggPC0gY29Db3ZhcihoX2luZGV4KQ0KDQpldGhuaWNpdHkgPC0gZGZfZWdvJGV0aG5pY2l0eQ0KZXRobmljaXR5IDwtIGNvQ292YXIoZXRobmljaXR5KQ0KDQpjYXJlZXJfYWdlIDwtIDIwMjQgLSBkZl9lZ28kZmlyc3RfeWVhcl9wdWINCmNhcmVlcl9hZ2UgPC0gY29Db3ZhcihjYXJlZXJfYWdlKQ0KDQojLS0tLSBNYWtlIFNpZW5hIGRmIC0tLS0NCm15ZGF0YSA8LSBzaWVuYURhdGFDcmVhdGUobmV0LCBnZW5kZXIsIHByZXN0aWdlLCBldGhuaWNpdHksIGNhcmVlcl9hZ2UpDQoNCmBgYA0KDQojIyMgQ3JlYXRlIEVmZmVjdHMgb2JqZWN0DQoNCmBgYHtyfQ0KbXllZmZfTTQgPC0gZ2V0RWZmZWN0cyhteWRhdGEpDQpwcmludDAxUmVwb3J0KG15ZGF0YSwgbW9kZWxuYW1lID0gIi4vcmVzdWx0cy9Db2xsYWJfTTQiKQ0KDQojIHRzX2R5YWRzX2V2byhzaW1zID0gd2F2ZV8yLCBuZXQxID0gd2F2ZV8xLCBmb3JwbG90ID0gVFJVRSkNCiMgdHNfdHJpYWRzX2V2byhzaW1zID0gd2F2ZV8yLCBuZXQxID0gd2F2ZV8xLCBmb3JwbG90ID0gVFJVRSkNCg0KYGBgDQoNCiMjIyBBZGQgRWZmZWN0cw0KDQpgYGB7cn0NCm15ZWZmX000IDwtIGluY2x1ZGVFZmZlY3RzKG15ZWZmX000LCBpc29sYXRlTmV0LCBpblBvcFNxcnQsIG91dEFjdCkNCmBgYA0KDQpgYGB7cn0NCm15ZWZmX000IDwtIGluY2x1ZGVFZmZlY3RzKG15ZWZmX000LCBkaWZmWCwgZGlmZlNxWCwgZWdvWCwgYWx0WCwgaW50ZXJhY3Rpb24xID0gImdlbmRlciIpDQpteWVmZl9NNCA8LSBpbmNsdWRlRWZmZWN0cyhteWVmZl9NNCwgYWx0WCwgaW5Qb3BYLCBpbnRlcmFjdGlvbjEgPSAicHJlc3RpZ2UiKQ0KIyBteWVmZl9NNCA8LSBpbmNsdWRlRWZmZWN0cyhteWVmZl9NNCwgYWx0WCwgaW5wb3BYLCBpbnRlcmFjdGlvbjEgPSAiaF9pbmRleCIpDQpteWVmZl9NNCA8LSBpbmNsdWRlRWZmZWN0cyhteWVmZl9NNCwgc2FtZVgsIGludGVyYWN0aW9uMSA9ICJldGhuaWNpdHkiKQ0KbXllZmZfTTQgPC0gaW5jbHVkZUVmZmVjdHMobXllZmZfTTQsIGFsdFgsIGVnb1gsIGludGVyYWN0aW9uMSA9ICJjYXJlZXJfYWdlIikNCg0KDQpgYGANCg0KIyMjIENyZWF0ZSBhbmQgUnVuIHRoZSBBbGdvcml0aG0NCg0KYGBge3IsIGV2YWw9RkFMU0V9DQpteUFsZ29yaXRobV9NNCA8LSBzaWVuYUFsZ29yaXRobUNyZWF0ZShwcm9qbmFtZSA9ICIuL3Jlc3VsdHMvQ29sbGFiX000IikNCmFuc19NNCA8LSBzaWVuYTA3KG15QWxnb3JpdGhtLCBkYXRhID0gbXlkYXRhLCBlZmZlY3RzID0gbXllZmZfTTQsIHJldHVybkRlcHMgPSBUUlVFKQ0KYW5zX000DQoNCmZzYXZlKGFuc19NNCwgZmlsZSA9ICItYW5zX000IikNCg0KIyBpZiBuZWNlc3NhcnkgZXN0aW1hdGUgYWdhaW4hICANCiMgYW5zX00yXzIgPC0gc2llbmEwNyhteUFsZ29yaXRobSwgZGF0YSA9IG15ZGF0YSwgZWZmZWN0cyA9IG15ZWZmLCBwcmV2YW5zXyA9IGFuc19NMSwgcmV0dXJuRGVwcz1UUlVFKQ0KIyBhbnNfTTJfMg0KYGBgDQoNCmBgYHtyLCBlY2hvPUZBTFNFfQ0KDQphbnNfTTQgPC0gZmxvYWQoIi4vcmVzdWx0cy9wcm9jZXNzZWQvMjAyNDEwMjQtYW5zX000LnJkYSIpDQphbnNfTTQNCg0KYGBgDQoNCiMjIyBHb29kbmVzcyBvZiBGaXQNCg0KYGBge3J9DQpHT0YgPC0gc2llbmFHT0YoYW5zX000LCBJbmRlZ3JlZURpc3RyaWJ1dGlvbiwgdmVyYm9zZSA9IEZBTFNFLCBqb2luID0gVFJVRSwgdmFyTmFtZSA9ICJuZXQiKQ0KDQpwbG90KEdPRiwgbWFpbiA9ICIiKQ0KYGBgDQoNCg0KIyMgTW9kZWwgNSAtIEludGVyYWN0aW9uIE1vZGVsDQogDQoNCiMjIyBDcmVhdGUgU2llbmFEYXRhDQpgYGB7cn0NCiMtLS0tIERlcGVuZGVudCAtLS0tDQpuZXQgPC0gc2llbmFEZXBlbmRlbnQobmV0X3NvY19hcnJheSkNCg0KIy0tLS0gSW5kZXBlbmRlbnQgLS0tLQ0KZ2VuZGVyIDwtIGRmX2VnbyRwZXJjX2ZlbWFsZQ0KR19jZW50IDwtIGdlbmRlciAtIG1lYW4oZ2VuZGVyLCBuYS5ybSA9IFQpDQpnZW5kZXIgPC0gY29Db3ZhcihnZW5kZXIpDQoNCnByZXN0aWdlIDwtIGRmX2VnbyAlPiUgc2VsZWN0KFExLlcxLCBRMS5XMikgJT4lIG11dGF0ZShtZWFuX3ByZXMgPSAoUTEuVzEgKyBRMS5XMikvMikNCnByZXN0aWdlIDwtIHByZXN0aWdlJG1lYW5fcHJlcw0KUF9jZW50IDwtIHByZXN0aWdlIC0gbWVhbihwcmVzdGlnZSkNCg0KcHJlc3RpZ2UgPC0gY29Db3ZhcihwcmVzdGlnZSkNCg0KDQpJVF9QeEcgPC0gUF9jZW50ICogR19jZW50DQpJVF9QeEcgPC0gY29Db3ZhcihJVF9QeEcsIGNlbnRlcmVkID0gRkFMU0UpDQoNCg0KIy0tLS0gTWFrZSBTaWVuYSBkZiAtLS0tDQpteWRhdGFfTTUgPC0gc2llbmFEYXRhQ3JlYXRlKG5ldCwgZ2VuZGVyLCBwcmVzdGlnZSwgSVRfUHhHKQ0KDQpgYGANCg0KIyMjIENyZWF0ZSBFZmZlY3RzIG9iamVjdA0KYGBge3J9DQpteWVmZl9NNSA8LSBnZXRFZmZlY3RzKG15ZGF0YV9NNSkNCnByaW50MDFSZXBvcnQobXlkYXRhLCBtb2RlbG5hbWUgPSAiLi9yZXN1bHRzL0NvbGxhYl9NNSIpDQoNCiMgdHNfZHlhZHNfZXZvKHNpbXMgPSB3YXZlXzIsIG5ldDEgPSB3YXZlXzEsIGZvcnBsb3QgPSBUUlVFKQ0KIyB0c190cmlhZHNfZXZvKHNpbXMgPSB3YXZlXzIsIG5ldDEgPSB3YXZlXzEsIGZvcnBsb3QgPSBUUlVFKQ0KDQpgYGANCg0KIyMjIEFkZCBFZmZlY3RzDQpgYGB7cn0NCm15ZWZmX001IDwtIGluY2x1ZGVFZmZlY3RzKG15ZWZmX001LCBpc29sYXRlTmV0LCBpblBvcFNxcnQsIG91dEFjdCkNCmBgYA0KDQpgYGB7cn0NCm15ZWZmX001IDwtIGluY2x1ZGVFZmZlY3RzKG15ZWZmX001LCBkaWZmWCwgZGlmZlhUcmFuc1RyaXAsIGVnb1gsIGFsdFgsIGludGVyYWN0aW9uMSA9ICJnZW5kZXIiKQ0KbXllZmZfTTUgPC0gaW5jbHVkZUVmZmVjdHMobXllZmZfTTUsIGFsdFgsIGluUG9wWCwgaW50ZXJhY3Rpb24xID0gInByZXN0aWdlIikNCm15ZWZmX001IDwtIGluY2x1ZGVFZmZlY3RzKG15ZWZmX001LCBhbHRYLCBpblBvcFgsIGludGVyYWN0aW9uMSA9ICJJVF9QeEciKQ0KDQojIG15ZWZmX00zIDwtIGluY2x1ZGVFZmZlY3RzKG15ZWZmX00zLCBhbHRYLCBpbnBvcFgsIGludGVyYWN0aW9uMSA9ICJoX2luZGV4IikNCg0KYGBgDQoNCiMjIyBDcmVhdGUgYW5kIFJ1biB0aGUgQWxnb3JpdGhtDQpgYGB7ciwgZXZhbD1GQUxTRX0NCm15QWxnb3JpdGhtX001IDwtIHNpZW5hQWxnb3JpdGhtQ3JlYXRlKHByb2puYW1lID0gIi4vcmVzdWx0cy9Db2xsYWJfTTUiKQ0KYW5zX001IDwtIHNpZW5hMDcobXlBbGdvcml0aG1fTTUsIGRhdGEgPSBteWRhdGFfTTUsIGVmZmVjdHMgPSBteWVmZl9NNSwgcmV0dXJuRGVwcyA9IFRSVUUpDQphbnNfTTUNCg0KIyBmc2F2ZShhbnNfTTUsIGZpbGUgPSAiLWFuc19NNSIpDQoNCiMgaWYgbmVjZXNzYXJ5IGVzdGltYXRlIGFnYWluISAgDQphbnNfTTVfMiA8LSBzaWVuYTA3KG15QWxnb3JpdGhtX001LCBkYXRhID0gbXlkYXRhX001LCBlZmZlY3RzID0gbXllZmZfTTUsIHByZXZBbnMgPSBhbnNfTTUsIHJldHVybkRlcHM9VFJVRSkNCmFuc19NNV8yDQojIGZzYXZlKGFuc19NNV8yLCBmaWxlID0gIi1hbnNfTTUiKQ0KDQpgYGANCg0KYGBge3IsIGVjaG89RkFMU0V9DQphbnNfTTUgPC0gZmxvYWQoInJlc3VsdHMvcHJvY2Vzc2VkLzIwMjQxMDI1LWFuc19NNS5yZGEiKQ0KDQpgYGANCg0KYGBge3J9DQpHT0YgPC0gc2llbmFHT0YoYW5zX001LCBJbmRlZ3JlZURpc3RyaWJ1dGlvbiwgdmVyYm9zZSA9IEZBTFNFLCBqb2luID0gVFJVRSwgdmFyTmFtZSA9ICJuZXQiKQ0KDQpwbG90KEdPRiwgbWFpbiA9ICIiKQ0KYGBgDQoNCmBgYHtyfQ0KIyBlZ29YLCBhbHRYIHZvb3IgY2FyZWVyX2FnZQ0KIyBzYW1lWCB2b29yIGV0aG5pY2l0eQ0KYGBgDQoNCg0KYGBge3J9DQojIHNlc3Npb25JbmZvKCkNCiMgU2llbmFSSSAtIDEuMy4xNA0KI1JzaWVuYSBTY2hhdHRlbiwgQU5TIG9wc2xhYW4sIGNvZGUgY2h1bmssIGV2YWx1YXRlID0gRkFMU0UsIGlubGFkZW4gc2llbmEgb2JqZWN0LCBkaWUgZWNobyA9IEZBTFNFDQojIEFsbGUgY2FjaGUgZm9sZGVyIGxlZWdoYWxlbiBvcCBoZXQgbW9tZW50IGRhdCBpZXRzIGZvdXRnYWF0IG1ldCB3ZWdzY2hyaWp2ZW4gb2YgaW5sYWRlbg0KYGBgDQo=</div>
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIlJlc3VsdHMgLSBSU2llbmEgTW9kZWxzIg0KI2JpYmxpb2dyYXBoeTogcmVmZXJlbmNlcy5iaWINCmF1dGhvcjogIk5pZWxzIFZ1bGxpbmdzIg0KYmlibGlvZ3JhcGh5OiByZWZlcmVuY2VzLmJpYg0KZWRpdG9yX29wdGlvbnM6IA0KICBtYXJrZG93bjogDQogICAgd3JhcDogNzINCi0tLQ0KDQpgYGB7PWh0bWx9DQo8c3R5bGU+DQpib2R5IHsNCnRleHQtYWxpZ246IGp1c3RpZnk7DQpmb250LWZhbWlseTogVGltZXM7DQp9DQoNCmgxLCAuaDEsIGgyLCAuaDIsIGgzLCAuaDMgew0KbWFyZ2luLXRvcDogMjRweDsNCmZvbnQtZmFtaWx5OiBUaW1lczsNCn0NCjwvc3R5bGU+DQpgYGANCmBgYHtyLCBnbG9iYWxzZXR0aW5ncywgZWNobz1GQUxTRSwgd2FybmluZz1GQUxTRSwgcmVzdWx0cz0naGlkZSd9DQpsaWJyYXJ5KGtuaXRyKQ0KDQprbml0cjo6b3B0c19jaHVuayRzZXQoZWNobyA9IFRSVUUpDQpvcHRzX2NodW5rJHNldCh0aWR5Lm9wdHM9bGlzdCh3aWR0aC5jdXRvZmY9MTAwKSx0aWR5PVRSVUUsIHdhcm5pbmcgPSBGQUxTRSwgbWVzc2FnZSA9IEZBTFNFLGNvbW1lbnQgPSAiIz4iLCBjYWNoZT1UUlVFLCBjbGFzcy5zb3VyY2U9YygidGVzdCIpLCBjbGFzcy5vdXRwdXQ9YygidGVzdDIiKSkNCm9wdGlvbnMod2lkdGggPSAxMDApDQpyZ2w6OnNldHVwS25pdHIoKQ0KYGBgDQoNCmBgYHtyIGtsaXBweSwgZWNobz1GQUxTRSwgaW5jbHVkZT1UUlVFfQ0Ka2xpcHB5OjprbGlwcHkocG9zaXRpb24gPSBjKCd0b3AnLCAncmlnaHQnKSkNCiMga2xpcHB5OjprbGlwcHkoY29sb3IgPSAnZGFya2dyZWVuJykNCiNrbGlwcHk6OmtsaXBweSh0b29sdGlwX21lc3NhZ2UgPSAnQ2xpY2sgdG8gY29weScsIHRvb2x0aXBfc3VjY2VzcyA9ICdEb25lJykNCmBgYA0KDQpgYGB7ciwgZWNobz1GQUxTRX0NCnJtKGxpc3QgPSBscygpKQ0KYGBgDQoNCiMgTG9hZCBVREYNCg0KYGBge3J9DQoNCmNvbG9yaXplIDwtIGZ1bmN0aW9uKHgsIGNvbG9yKSB7c3ByaW50ZigiPHNwYW4gc3R5bGU9J2NvbG9yOiAlczsnPiVzPC9zcGFuPiIsIGNvbG9yLCB4KSB9DQoNCmZwYWNrYWdlLmNoZWNrIDwtIGZ1bmN0aW9uKHBhY2thZ2VzKSB7DQogIGxhcHBseShwYWNrYWdlcywgRlVOID0gZnVuY3Rpb24oeCkgew0KICAgIGlmICghcmVxdWlyZSh4LCBjaGFyYWN0ZXIub25seSA9IFRSVUUpKSB7DQogICAgICBpbnN0YWxsLnBhY2thZ2VzKHgsIGRlcGVuZGVuY2llcyA9IFRSVUUpDQogICAgICBsaWJyYXJ5KHgsIGNoYXJhY3Rlci5vbmx5ID0gVFJVRSkNCiAgICB9DQogIH0pDQp9DQoNCmZzYXZlIDwtIGZ1bmN0aW9uKHgsIGZpbGUgPSBOVUxMLCBsb2NhdGlvbiA9ICIuL3Jlc3VsdHMvcHJvY2Vzc2VkLyIpIHsNCiAgaWZlbHNlKCFkaXIuZXhpc3RzKCJyZXN1bHRzIiksIGRpci5jcmVhdGUoImRhdGEiKSwgRkFMU0UpDQogIGlmZWxzZSghZGlyLmV4aXN0cygicmVzdWx0cy9wcm9jZXNzZWQiKSwgZGlyLmNyZWF0ZSgicmVzdWx0cy9wcm9jZXNzZWQiKSwgRkFMU0UpDQogIGlmIChpcy5udWxsKGZpbGUpKQ0KICAgIGZpbGUgPSBkZXBhcnNlKHN1YnN0aXR1dGUoeCkpDQogIGRhdGVuYW1lIDwtIHN1YnN0cihnc3ViKCJbOi1dIiwgIiIsIFN5cy50aW1lKCkpLCAxLCA4KQ0KICB0b3RhbG5hbWUgPC0gcGFzdGUobG9jYXRpb24sIGRhdGVuYW1lLCBmaWxlLCAiLnJkYSIsIHNlcCA9ICIiKQ0KICBzYXZlKHgsIGZpbGUgPSB0b3RhbG5hbWUpICAjbmVlZCB0byBmaXggaWYgZmlsZSBpcyByZWxvYWRlZCBhcyBpbnB1dCBuYW1lLCBub3QgYXMgeC4gDQp9DQoNCmZsb2FkIDwtIGZ1bmN0aW9uKGZpbGVuYW1lKSB7DQogIGxvYWQoZmlsZW5hbWUpDQogIGdldChscygpW2xzKCkgIT0gImZpbGVuYW1lIl0pDQp9DQoNCmZzaG93ZGYgPC0gZnVuY3Rpb24oeCwgLi4uKSB7DQogIGtuaXRyOjprYWJsZSh4LCBkaWdpdHMgPSAyLCAiaHRtbCIsIC4uLikgJT4lDQogICAga2FibGVFeHRyYTo6a2FibGVfc3R5bGluZyhib290c3RyYXBfb3B0aW9ucyA9IGMoInN0cmlwZWQiLCAiaG92ZXIiKSkgJT4lDQogICAga2FibGVFeHRyYTo6c2Nyb2xsX2JveCh3aWR0aCA9ICIxMDAlIiwgaGVpZ2h0ID0gIjMwMHB4IikNCn0NCg0KYGBgDQoNCiMgTG9hZCBQYWNrYWdlcw0KDQpgYGB7ciwgd2FybmluZz1GQUxTRSwgcmVzdWx0cz0naGlkZScsIG1lc3NhZ2U9RkFMU0V9DQpwYWNrYWdlcyA8LSBjKCJ0aWR5dmVyc2UiLCAic25hIiwgImlncmFwaCIsICJSU2llbmEiLCAiaXRlcmF0b3JzIiwgImRvUGFyYWxsZWwiKQ0KDQpmcGFja2FnZS5jaGVjayhwYWNrYWdlcykNCg0KYGBgDQoNCiMgTG9hZCBEYXRhDQoNCmBgYHtyfQ0KIyBMb2FkIEVnbyBkYXRhDQpsb2FkKCJkYXRhL3Byb2Nlc3NlZC9SVV9VVV9lZ28uUkRhdGEiKQ0KDQojIExvYWQgV29ya3MgZGF0YQ0KbG9hZCgiZGF0YS9wcm9jZXNzZWQvUlVfVVVfd29ya3MuUkRhdGEiKQ0KDQojIExvYWQgcmF3IGRhdGEgZm9yIG5ldHdvcmtzDQpsb2FkKCJkYXRhL3Byb2Nlc3NlZC9zb2NfZGF0YV9yYXcuUkRhdGEiKQ0KYGBgDQoNCiMgTWFrZSBuZXR3b3JrIGRhdGEgZm9yIFJTaWVuYQ0KDQpgYGB7cn0NCnByaW50KHBhc3RlMCgiIiwgZGltKHNvY19kYXRhJG5ldHMpKSkNCg0Kd2F2ZV8xIDwtIHNvY19kYXRhJG5ldHNbMSwsXQ0KZGlhZyh3YXZlXzEpIDwtIDANCg0Kd2F2ZV8yIDwtIHNvY19kYXRhJG5ldHNbMiwsXQ0KZGlhZyh3YXZlXzIpIDwtIDANCg0KbmV0X3NvY19hcnJheSA8LSBhcnJheShkYXRhID0gYyh3YXZlXzEsIHdhdmVfMiksIGRpbSA9IGMoZGltKHdhdmVfMSksIDIpKQ0KZGltKG5ldF9zb2NfYXJyYXkpDQpgYGANCg0KLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tDQoNCiMgQW5hbHlzaXMgey50YWJzZXR9DQoNCiMjIE1vZGVsIDANCg0KVGhlIE51bGwgbW9kZWwsIGNvbnRhaW5pbmcgcmVjaXByb2NpdHkgYW5kIGRlbnNpdHksIGhhcyBhIGNvbnZlcmdlbmNlIG9mDQowLjA1NyBhbmQgYSBHb29kbmVzcyBvZiBGaXQgb24gdGhlIGluZGVncmVlIGRpc3RyaWJ1dGlvbiBvZiAwLA0KaW5kaWNhdGluZyB0aGF0IHRoZSBtb2RlbCBmaXRzIHRoZSBkYXRhIHZlcnkgYmFkbHkuIFRoaXMgbWFrZXMgc2Vuc2UsDQpnaXZlbiB0aGF0IHRoZSBtb2RlbCBkb2VzIG5vdCBpbmNsdWRlIGFueSBuZXR3b3JrIHN0YXRpc3RpY3MuIEJvdGgNCnJlY2lwcm9jaXR5IGFuZCBkZW5zaXR5IGFyZSBzaWduaWZpY2FudCBmb3IgYW4gYWxwaGEgb2YgMC4wNS4gSXQgaXMNCmltcG9ydGFudCB0byBtZW50aW9uIHRoYXQgc2lnbmlmaWNhbmNlIGluIFJTaWVuYSBtZWFucyBzb21ldGhpbmcNCmRpZmZlcmVudCB0aGFuIGluIGNvbnZlbnRpb25hbCBzdGF0aXN0aWNzLiBJbiBub3JtYWwgc3RhdGlzdGljcywgc3VjaCBhcw0KT0xTLXJlZ3Jlc3Npb24sIHNpZ25pZmljYW5jZSBvZiBlc3RpbWF0ZXMgcmVmZXJzIHRvIHRoZSBmYWN0IHRoYXQgdGhleQ0KYXJlIG5vdCAwLCBJbiBSU2llbmEsIGhvd2V2ZXIsIGl0IHJlZmVycyB0byB0aGUgZmFjdCB0aGF0IHRoZSBlc3RpbWF0ZXMNCndlcmUgcHJlY2lzZWx5IGRldGVybWluZWQgW0ByaXBsZXkyMDExbWFudWFsXS4gR29pbmcgZm9yd2FyZCB3aXRoIHRoaXMNCmNoYXB0ZXIsIHNpZ25pZmljYW5jZSB3aWxsIHJlZmVyIHRvIHRoaXMgZGVmaW5pdGlvbiBvZiBzaWduaWZpY2FuY2UuIFRoZQ0KZGVuc2l0eSBwYXJhbWV0ZXIgaGFzIGEgdmFsdWUgb2YgLTIuNDQsIHdoaWNoIG1lYW5zIHRoYXQgcGVvcGxlDQpnZW5lcmFsbHkgZG8gbm90IHdhbnQgdG8gaGF2ZSBhIGRlbnNlIG5ldHdvcmsuIFRoZSByZWNpcHJvY2l0eSBwYXJhbWV0ZXINCmhhcyBhIHZhbHVlIG9mIDIuMjQsIHdoaWNoIG1lYW5zIHRoYXQgcGVvcGxlIGxpa2UgdG8gc2VuZCB0aWVzIGJhY2sgdG8NCnBlb3BsZSB3aG8gaGF2ZSBzZW50IGEgdGllIHRvIHRoZW0uDQoNCiMjIyBDcmVhdGUgU2llbmFEYXRhDQoNCmBgYHtyfQ0KIy0tLS0gRGVwZW5kZW50IC0tLS0NCm5ldCA8LSBzaWVuYURlcGVuZGVudChuZXRfc29jX2FycmF5KQ0KDQojLS0tLSBNYWtlIFNpZW5hIGRmIC0tLS0NCm15ZGF0YV9NMCA8LSBzaWVuYURhdGFDcmVhdGUobmV0KQ0KYGBgDQoNCiMjIyBDcmVhdGUgRWZmZWN0cyBvYmplY3QNCg0KYGBge3J9DQpteWVmZl9NMCA8LSBnZXRFZmZlY3RzKG15ZGF0YV9NMCkNCnByaW50MDFSZXBvcnQobXlkYXRhX00wLCBtb2RlbG5hbWUgPSAiLi9yZXN1bHRzL0NvbGxhYl9NMCIpDQoNCiMgdHNfZHlhZHNfZXZvKHNpbXMgPSB3YXZlXzIsIG5ldDEgPSB3YXZlXzEsIGZvcnBsb3QgPSBUUlVFKQ0KIyB0c190cmlhZHNfZXZvKHNpbXMgPSB3YXZlXzIsIG5ldDEgPSB3YXZlXzEsIGZvcnBsb3QgPSBUUlVFKQ0KDQpgYGANCg0KIyMjIEFkZCBFZmZlY3RzDQoNCiMjIyBDcmVhdGUgYW5kIFJ1biB0aGUgQWxnb3JpdGhtDQoNCmBgYHtyLCBldmFsPUZBTFNFfQ0KbXlBbGdvcml0aG1fTTAgPC0gc2llbmFBbGdvcml0aG1DcmVhdGUocHJvam5hbWUgPSAiLi9yZXN1bHRzL0NvbGxhYl9NMCIpDQphbnNfTTAgPC0gc2llbmEwNyhteUFsZ29yaXRobV9NMCwgZGF0YSA9IG15ZGF0YV9NMCwgZWZmZWN0cyA9IG15ZWZmX00wLCByZXR1cm5EZXBzID0gVFJVRSkNCmFuc19NMA0KDQpmc2F2ZShhbnNfTTAsIGZpbGUgPSAiLWFuc19NMCIpDQoNCiMgaWYgbmVjZXNzYXJ5IGVzdGltYXRlIGFnYWluISAgDQojIGFuc19NMV8yIDwtIHNpZW5hMDcobXlBbGdvcml0aG0sIGRhdGEgPSBteWRhdGEsIGVmZmVjdHMgPSBteWVmZiwgcHJldmFuc18gPSBhbnNfTTEsIHJldHVybkRlcHM9VFJVRSkNCiMgYW5zX00xXzINCmBgYA0KDQpgYGB7ciwgZWNobz1GQUxTRX0NCg0KYW5zX00wIDwtIGZsb2FkKCIuL3Jlc3VsdHMvcHJvY2Vzc2VkLzIwMjQxMDI0LWFuc19NMC5yZGEiKQ0KYW5zX00wDQpgYGANCg0KIyMjIEdvb2RuZXNzIG9mIEZpdA0KDQpgYGB7cn0NCkdPRiA8LSBzaWVuYUdPRihhbnNfTTAsIEluZGVncmVlRGlzdHJpYnV0aW9uLCB2ZXJib3NlID0gRkFMU0UsIGpvaW4gPSBUUlVFLCB2YXJOYW1lID0gIm5ldCIpDQoNCnBsb3QoR09GLCBtYWluID0gIiIpDQpgYGANCg0KIyMgTW9kZWwgMQ0KDQpUaGlzIG1vZGVsIGluY2x1ZGVzIHRoZSByZWxldmFudCBuZXR3b3JrIHN0YXRpc3RpY3M6IEluUG9wLCBvdXRBY3QsDQppc29sYXRlTmV0LiBJdCBoYXMgYSBjb252ZXJnZW5jZSBvZiAwLjE3IGFuZCBhIEdvb2RuZXNzIG9mIEZpdCBvbiB0aGUNCmluZGVncmVlIGRpc3RyaWJ1dGlvbiBvZiAwLjAxNi4gSW5kZWdyZWUgUG9wdWxhcml0eSAoaW5Qb3ApIGlzIGRlZmluZWQNCmFzIHRoZSBleHRlbnQgdG8gd2hpY2ggcGVvcGxlIHdobyBoYXZlIGEgbG90IG9mIGluZGVncmVlcyBhcmUgbW9yZQ0KcG9wdWxhciB0byBjb25uZWN0IHdpdGguIFRoaXMgcGFyYW1ldGVyIGlzIDAuMTgsIG1lYW5pbmcgdGhhdCBhY3RvcnMNCmhhdmUgYSBwcmVmZXJlbmNlIHRvIGNvbm5lY3Qgd2l0aCBhY3RvcnMgd2hvIGhhdmUgYSBsb3Qgb2YgaW5kZWdyZWVzLg0KVGhlIHBhcmFtZXRlciBpcyBzaWduaWZpY2FudCBmb3IgYW4gYWxwaGEgb2YgMC4wNS4gT3V0ZGVncmVlIEFjdGl2aXR5DQoob3V0QWN0KSBoYXMgYSB2YWx1ZSBvZiAtMC4xMywgYnV0IGlzIG5vdCBzaWduaWZpY2FudC4gSXNvbGF0ZU5ldCBpcw0Kc2lnbmlmaWNhbnQgYW5kaGFzIGEgdmFsdWUgb2YgMy45MSBhbmQgcmVmZXJzIHRvIHRoZSBwcmVmZXJlbmNlIG9mDQpyZW1haW5pbmcgYW4gaXNvbGF0ZS4gQXMgdGhpcyB2YWx1ZSBpcyBwb3NpdGl2ZSwgaXQgbWVhbnMgdGhhdCBwZW9wbGUNCnByZWZlciB0byBiZSBhbiBpc29sYXRlIGluIHRoZSBuZXR3b3JrLg0KDQojIyMgQ3JlYXRlIFNpZW5hRGF0YQ0KDQpgYGB7cn0NCiMtLS0tIERlcGVuZGVudCAtLS0tDQpuZXQgPC0gc2llbmFEZXBlbmRlbnQobmV0X3NvY19hcnJheSkNCg0KIy0tLS0gTWFrZSBTaWVuYSBkZiAtLS0tDQpteWRhdGFfTTEgPC0gc2llbmFEYXRhQ3JlYXRlKG5ldCkNCg0KYGBgDQoNCiMjIyBDcmVhdGUgRWZmZWN0cyBvYmplY3QNCg0KYGBge3J9DQpteWVmZl9NMSA8LSBnZXRFZmZlY3RzKG15ZGF0YV9NMSkNCnByaW50MDFSZXBvcnQobXlkYXRhX00xLCBtb2RlbG5hbWUgPSAiLi9yZXN1bHRzL0NvbGxhYl9NMSIpDQoNCiMgdHNfZHlhZHNfZXZvKHNpbXMgPSB3YXZlXzIsIG5ldDEgPSB3YXZlXzEsIGZvcnBsb3QgPSBUUlVFKQ0KIyB0c190cmlhZHNfZXZvKHNpbXMgPSB3YXZlXzIsIG5ldDEgPSB3YXZlXzEsIGZvcnBsb3QgPSBUUlVFKQ0KDQpgYGANCg0KIyMjIEFkZCBFZmZlY3RzDQoNCmBgYHtyfQ0KbXllZmZfTTEgPC0gaW5jbHVkZUVmZmVjdHMobXllZmZfTTEsIGlzb2xhdGVOZXQsIGluUG9wLCBvdXRBY3QpDQpgYGANCg0KIyMjIENyZWF0ZSBhbmQgUnVuIHRoZSBBbGdvcml0aG0NCg0KYGBge3IsIGV2YWw9RkFMU0V9DQoNCm15QWxnb3JpdGhtX00xIDwtIHNpZW5hQWxnb3JpdGhtQ3JlYXRlKHByb2puYW1lID0gIi4vcmVzdWx0cy9Db2xsYWJfTTEiKQ0KYW5zX00xIDwtIHNpZW5hMDcobXlBbGdvcml0aG1fTTEsIGRhdGEgPSBteWRhdGFfTTEsIGVmZmVjdHMgPSBteWVmZl9NMSwgcmV0dXJuRGVwcyA9IFRSVUUpDQphbnNfTTENCg0KIyBmc2F2ZShhbnNfTTEsIGZpbGUgPSAiLWFuc19NMSIpDQoNCiMgaWYgbmVjZXNzYXJ5IGVzdGltYXRlIGFnYWluISAgDQojIGFuc19NMV8yIDwtIHNpZW5hMDcobXlBbGdvcml0aG1fTTEsIGRhdGEgPSBteWRhdGFfTTEsIGVmZmVjdHMgPSBteWVmZl9NMSwgcHJldkFucyA9IGFuc19NMSwgcmV0dXJuRGVwcz1UUlVFKQ0KIyBhbnNfTTFfMg0KDQojIGZzYXZlKGFuc19NMV8yLCBmaWxlID0gIi1hbnNfTTFfMiIpDQoNCmBgYA0KDQpgYGB7ciwgZWNobz1GQUxTRX0NCg0KYW5zX00xIDwtIGZsb2FkKCIuL3Jlc3VsdHMvcHJvY2Vzc2VkLzIwMjQxMDI0LWFuc19NMV8yLnJkYSIpDQphbnNfTTENCg0KYGBgDQoNCiMjIyBHb29kbmVzcyBvZiBGaXQNCg0KYGBge3J9DQpHT0YgPC0gc2llbmFHT0YoYW5zX00xLCBJbmRlZ3JlZURpc3RyaWJ1dGlvbiwgdmVyYm9zZSA9IEZBTFNFLCBqb2luID0gVFJVRSwgdmFyTmFtZSA9ICJuZXQiKQ0KDQpwbG90KEdPRiwgbWFpbiA9ICIiKQ0KYGBgDQoNCiMjIE1vZGVsIDIgLSBBZGQgR2VuZGVyIChkcm9wcGVkKQ0KDQpNb2RlbCAyIGJ1aWxkcyBvbiBNb2RlbCAxIGFuZCBpbmNsdWRlcyB0aGUgbmV0d29yayBzdGF0aXN0aWNzIGZvcg0KZ2VuZGVyOiBkaWZmWCwgZGlmZlhUcmFuc1RyaXAsIGVnb1ggJiBhbHRYLiBUaGlzIG1vZGVsIGhhcyBhIGNvbnZlcmdlbmNlDQpvZiAwLjIzIGFuZCBhIEdvb2RuZXNzIG9mIEZpdCBvbiB0aGUgaW5kZWdyZWUgZGlzdHJpYnV0aW9uIG9mIDAuMTg0LiBGb3INCnRoZSBzdHJ1Y3R1cmFsIG5ldHdvcmsgc3RhdGlzdGljcyB3ZSBmaW5kIHNpbWlsYXIgcmVzdWx0cywgaW4gdGVybXMgb2YNCmVzdGltYXRlIHNpemUgYW5kIHNpZ25pZmljYW5jZSwgYXMgaW4gTW9kZWwgMS4gSG93ZXZlciwgdGhlIG91dGRlZ3JlZQ0KYWN0aXZpdHkgcGFyYW1ldGVyIGFsbW9zdCByZWFjaGVzIHNpZ25pZmljYW5jZSAoYHIgLTAuMjY1NiAvIDAuMTU1MGApLg0KV2l0aCByZWdhcmQgdG8gdGhlIGNvdmFyaWF0ZSBuZXR3b3JrIHN0YXRpc3RpY3MsIHdlIGZpbmQgdGhhdCB0aGUgZ2VuZGVyDQpvZiBlZ28gKGVnb1gpLCB0aGUgZ2VuZGVyIG9mIGFsdGVyIChhbHRYKSBhbmQgdGhlIGRpZmZlcmVuY2UgYmV0d2VlbiBlZ28NCmFuZCBhbHRlciAoZGlmZlgpIGlzIG5vdCBzaWduaWZpY2FudCBhbmQgdGh1cyB0aGUgZXN0aW1hdGUgY2Fubm90IGJlDQp0cnVzdGVkLiBUaGUgdHJhbnN0cmlwIGZvciBkaWZmZXJlbnQgZ2VuZGVyIChkaWZmWFRyYW5zVHJpcCkgaXMgcG9zaXRpdmUNCmFuZCBzaWduaWZpY2FudCwgd2hpY2ggaW1wbGllcyB0aGF0IGFuIGVnbyBwcmVmZXJzIHRvIGNsb3NlIHRyaWFkcyB3aXRoDQphbHRlcnMgd2hvIGhhdmUgYSBkaWZmZXJlbnQgZ2VuZGVyIHNjb3JlIHRoYW4gdGhlaXJzLiBUaGlzIGlzIGFuDQppbnRlcmVzdGluZyBmaW5kaW5nLCBiZWNhdXNlIGl0IGltcGxpZXMgdGhhdCB0aGVpciBpcyBhIHRlbmRlbmN5IHRvd2FyZHMNCmRpdmVyc2UgY29sbGFib3JhdGlvbi4gSG93ZXZlciwgd2hlbiBjb21wYXJlZCB0byB0aGUgbGV2ZWwgb2YgZ2VuZGVyDQpjbHVzdGVyaW5nIGFuZCB0aGUgZmFjdCB0aGF0IHRoaXMgY2x1c3RlcmluZyBkZWNyZWFzZWQsIHRoaXMgZmluZGluZw0KZG9lcyBtYWtlIHNlbnNlLg0KDQojIyMgQ3JlYXRlIFNpZW5hRGF0YQ0KDQpgYGB7cn0NCiMtLS0tIERlcGVuZGVudCAtLS0tDQpuZXQgPC0gc2llbmFEZXBlbmRlbnQobmV0X3NvY19hcnJheSkNCg0KIy0tLS0gSW5kZXBlbmRlbnQgLS0tLQ0KZ2VuZGVyIDwtIGRmX2VnbyRwZXJjX2ZlbWFsZQ0KZ2VuZGVyIDwtIGNvQ292YXIoZ2VuZGVyKQ0KDQoNCiMtLS0tIE1ha2UgU2llbmEgZGYgLS0tLQ0KbXlkYXRhX00yIDwtIHNpZW5hRGF0YUNyZWF0ZShuZXQsIGdlbmRlcikNCmBgYA0KDQojIyMgQ3JlYXRlIEVmZmVjdHMgb2JqZWN0DQoNCmBgYHtyfQ0KbXllZmZfTTIgPC0gZ2V0RWZmZWN0cyhteWRhdGFfTTIpDQpwcmludDAxUmVwb3J0KG15ZGF0YV9NMiwgbW9kZWxuYW1lID0gIi4vcmVzdWx0cy9Db2xsYWJfTTIiKQ0KDQpgYGANCg0KIyMjIEFkZCBFZmZlY3RzDQoNCmBgYHtyfQ0KDQpteWVmZl9NMiA8LSBpbmNsdWRlRWZmZWN0cyhteWVmZl9NMiwgaXNvbGF0ZU5ldCwgaW5Qb3AsIG91dEFjdCkNCg0KYGBgDQoNCmBgYHtyfQ0KDQpteWVmZl9NMiA8LSBpbmNsdWRlRWZmZWN0cyhteWVmZl9NMiwgZGlmZlgsIGRpZmZYVHJhbnNUcmlwLCBlZ29YLCBhbHRYLCBpbnRlcmFjdGlvbjEgPSAiZ2VuZGVyIikNCg0KYGBgDQoNCiMjIyBDcmVhdGUgYW5kIFJ1biB0aGUgQWxnb3JpdGhtDQoNCmBgYHtyLCBldmFsPUZBTFNFfQ0KbXlBbGdvcml0aG1fTTIgPC0gc2llbmFBbGdvcml0aG1DcmVhdGUocHJvam5hbWUgPSAiLi9yZXN1bHRzL0NvbGxhYl9NMiIpDQphbnNfTTIgPC0gc2llbmEwNyhteUFsZ29yaXRobV9NMiwgZGF0YSA9IG15ZGF0YV9NMiwgZWZmZWN0cyA9IG15ZWZmX00yLCByZXR1cm5EZXBzID0gVFJVRSkNCmFuc19NMg0KDQojIGZzYXZlKGFuc19NMiwgZmlsZSA9ICItYW5zX00yIikNCg0KDQojIGlmIG5lY2Vzc2FyeSBlc3RpbWF0ZSBhZ2FpbiEgIA0KYW5zX00yXzIgPC0gc2llbmEwNyhteUFsZ29yaXRobSwgZGF0YSA9IG15ZGF0YV9NMiwgZWZmZWN0cyA9IG15ZWZmX00yLCBwcmV2QW5zID0gYW5zX00yLCByZXR1cm5EZXBzPVRSVUUpDQphbnNfTTJfMg0KZnNhdmUoYW5zX00yXzIsIGZpbGUgPSAiLWFuc19NMl8yIikNCg0KDQpgYGANCg0KYGBge3IsIGVjaG89RkFMU0V9DQoNCmFuc19NMiA8LSBmbG9hZCgiLi9yZXN1bHRzL3Byb2Nlc3NlZC8yMDI0MTAyNC1hbnNfTTJfMi5yZGEiKQ0KYW5zX00yDQoNCmBgYA0KDQojIyMgR29vZG5lc3Mgb2YgRml0DQoNCmBgYHtyfQ0KR09GIDwtIHNpZW5hR09GKGFuc19NMiwgSW5kZWdyZWVEaXN0cmlidXRpb24sIHZlcmJvc2UgPSBGQUxTRSwgam9pbiA9IFRSVUUsIHZhck5hbWUgPSAibmV0IikNCg0KcGxvdChHT0YsIG1haW4gPSAiIikNCg0KYGBgDQoNCiMjIE1vZGVsIDIuNSAtIEFkZCBHZW5kZXINCg0KTW9kZWwgMi41IGlzIHByYWN0aWNhbGx5IHRoZSBzYW1lIG1vZGVsIGFzIE1vZGVsIDIsIGJ1dCB3aXRoIGluUG9wU3FydA0KKGluZGVncmVlIHBvcHVsYXJpdHkgc3F1YXJlZCkgaW5zdGVhZCBvZiBpblBvcC4gVGhlc2UgbW9kZWxzIHdlcmUNCmVzdGltYXRlZCB0byBjaGVjayB3aGljaCBoYWQgdGhlIGJldHRlciBHb29kbmVzcyBvZiBGaXQsIHdoaWNoIGFjY29yZGluZw0KdG8gdGhlIFJTaWVuYSBNYW51YWwgc2hvdWxkIGJlIGluUG9wU3FydCBbQHJpcGxleTIwMTFtYW51YWxdLiBUaGlzIG1vZGVsDQpoYXMgYSBjb252ZXJnZW5jZSByYXRpbyBvZiAwLjIxIGFuZCBhIEdvb2RuZXNzIG9mIEZpdCBvbiB0aGUgaW5kZWdyZWUNCmRpc3RyaWJ1dGlvbiBvZiAwLjg5LCBpbXBseWluZyBhIG11Y2ggYmV0dGVyIGZpdCB3aXRoIHRoZSBkYXRhLiBPdmVyYWxsLA0KdGhlIGVzdGltYXRlcyBvZiB0aGlzIG1vZGVsIHdlcmUgc2ltaWxhciB0byBNb2RlbCAyLiBUaGVyZSBpcyBzb21lDQp2YXJpYWJpbGl0eSBpbiB0aGUgc2l6ZXMgb2YgdGhlIGVzdGltYXRlcyBhbmQgc3RhbmRhcmQgZXJyb3JzLCBidXQgdGhpcw0KaXMgZHVlIHRvIHRoZSBzaW11bGF0aW9uIHByb2Nlc3MsIHdoaWNoIGRvZXMgbm90IHByb2R1Y2UgaWRlbnRpY2FsDQplc3RpbWF0ZXMuIFlldCwgdGhlIGdlbmVyYWwgZGlyZWN0aW9uIG9mIHRoZSBlZmZlY3QgYW5kIHRoZSBzaWduaWZpY2FuY2UNCmlzIG5vdCBkaWZmZXJlbnQgYmV0d2VlbiB0aGVzZSBtb2RlbHMgYW5kIGFyZSB0aHVzIGhhdmUgY29uc2lzdGVudA0KZmluZGluZ3MuDQoNCiMjIyBDcmVhdGUgU2llbmFEYXRhDQoNCmBgYHtyfQ0KIy0tLS0gRGVwZW5kZW50IC0tLS0NCm5ldCA8LSBzaWVuYURlcGVuZGVudChuZXRfc29jX2FycmF5KQ0KDQojLS0tLSBJbmRlcGVuZGVudCAtLS0tDQpnZW5kZXIgPC0gZGZfZWdvJHBlcmNfZmVtYWxlDQpnZW5kZXIgPC0gY29Db3ZhcihnZW5kZXIpDQoNCg0KIy0tLS0gTWFrZSBTaWVuYSBkZiAtLS0tDQpteWRhdGFfTTIuNSA8LSBzaWVuYURhdGFDcmVhdGUobmV0LCBnZW5kZXIpDQpgYGANCg0KIyMjIENyZWF0ZSBFZmZlY3RzIG9iamVjdA0KDQpgYGB7cn0NCm15ZWZmX00yLjUgPC0gZ2V0RWZmZWN0cyhteWRhdGFfTTIuNSkNCnByaW50MDFSZXBvcnQobXlkYXRhX00yLjUsIG1vZGVsbmFtZSA9ICIuL3Jlc3VsdHMvQ29sbGFiX00yLjUiKQ0KDQpgYGANCg0KIyMjIEFkZCBFZmZlY3RzDQoNCmBgYHtyfQ0KbXllZmZfTTIuNSA8LSBpbmNsdWRlRWZmZWN0cyhteWVmZl9NMi41LCBpc29sYXRlTmV0LCBpblBvcFNxcnQsIG91dEFjdCkNCg0KYGBgDQoNCmBgYHtyfQ0KbXllZmZfTTIuNSA8LSBpbmNsdWRlRWZmZWN0cyhteWVmZl9NMi41LCBkaWZmWCwgZGlmZlhUcmFuc1RyaXAsIGVnb1gsIGFsdFgsIGludGVyYWN0aW9uMSA9ICJnZW5kZXIiKQ0KDQpgYGANCg0KIyMjIENyZWF0ZSBhbmQgUnVuIHRoZSBBbGdvcml0aG0NCg0KYGBge3IsIGV2YWw9RkFMU0V9DQpteUFsZ29yaXRobV9NMi41IDwtIHNpZW5hQWxnb3JpdGhtQ3JlYXRlKHByb2puYW1lID0gIi4vcmVzdWx0cy9Db2xsYWJfTTIuNSIpDQphbnNfTTIuNSA8LSBzaWVuYTA3KG15QWxnb3JpdGhtX00yLjUsIGRhdGEgPSBteWRhdGFfTTIuNSwgZWZmZWN0cyA9IG15ZWZmX00yLjUsIHJldHVybkRlcHMgPSBUUlVFKQ0KYW5zX00yLjUNCg0KZnNhdmUoYW5zX00yLjUsIGZpbGUgPSAiLWFuc19NMi41IikNCg0KIyBpZiBuZWNlc3NhcnkgZXN0aW1hdGUgYWdhaW4hICANCiMgYW5zX00yLjVfMiA8LSBzaWVuYTA3KG15QWxnb3JpdGhtLCBkYXRhID0gbXlkYXRhLCBlZmZlY3RzID0gbXllZmZfTTIuNSwgcHJldkFucyA9IGFuc19NMi41LCByZXR1cm5EZXBzPVRSVUUpDQojIGFuc19NMi41XzINCiMgZnNhdmUoYW5zX00yLjVfMiwgZmlsZSA9ICItYW5zX00yLjVfMiIpDQoNCg0KYGBgDQoNCmBgYHtyLCBlY2hvPUZBTFNFfQ0KDQphbnNfTTIuNSA8LSBmbG9hZCgiLi9yZXN1bHRzL3Byb2Nlc3NlZC8yMDI0MTAyNC1hbnNfTTIuNS5yZGEiKQ0KYW5zX00yLjUNCg0KYGBgDQoNCiMjIyBHb29kbmVzcyBvZiBGaXQNCg0KYGBge3J9DQpHT0YgPC0gc2llbmFHT0YoYW5zX00yLjUsIEluZGVncmVlRGlzdHJpYnV0aW9uLCB2ZXJib3NlID0gRkFMU0UsIGpvaW4gPSBUUlVFLCB2YXJOYW1lID0gIm5ldCIpDQoNCnBsb3QoR09GLCBtYWluID0gIiIpDQoNCmBgYA0KDQojIyBNb2RlbCAzIC0gQWRkIFByZXN0aWdlDQoNCk1vZGVsIDMgaW5jbHVkZXMgdGhlIGNvdmFyaWF0ZSBuZXR3b3JrIHN0YXRpc3RpY3MgZm9yIFByZXN0aWdlOiBlZ29YLA0KYWx0WCBhbmQgaW5Qb3BYLiBUaGlzIG1vZGVsIGhhcyBhIGNvbnZlcmdlbmNlIHJhdGlvIG9mIDAuMjMgYW5kIGEgYQ0KR29vZG5lc3Mgb2YgRml0IG9uIHRoZSBpbmRlZ3JlZSBkaXN0cmlidXRpb24gb2YgMC42NC4gSW4gdGhpcyBtb2RlbCwgdGhlDQpwYXJhbWV0ZXJzIGZvciBkZW5zaXR5IGFuZCByZWNpcHJvY2l0eSBhcmUgc3RpbGwgc2lnbmlmaWNhbnQsIHdpdGgNCnZhbHVlcyBvZiAtMS45OCAoc2UgPSAwLjcxKSBhbmQgMi41OSAoc2UgPSAwLjM4KSByZXNwZWN0aXZlbHksIG1lYW5pbmcNCnRoYXQgYWN0b3JzIHByZWZlciBzcGFyc2UgbmV0d29ya3MsIGJ1dCBkbyBwcmVmZXIgdG8gc2VuZCB0aWVzIHRvIGFsdGVycw0Kd2hvIGhhdmUgc2VudCB0aWVzIHRvIHRoZW0uIElzb2xhdGVOZXQgaXMgc3RpbGwgc2lnbmlmaWNhbnQgd2l0aCBhIHZhbHVlDQpvZiAzLjIzIChzZSA9IDEuMDYpLCBpbXBseWluZyB0aGF0IGFjdG9ycyBwcmVmZXIgdG8gYmUgaXNvbGF0ZXMuIEluIHRoaXMNCm1vZGVsLCBpbmRlZ3JlZSBwb3B1bGFyaXR5IHNxdWFyZWQgKGIgPSAwLjE3LCBzZSA9IDAuMjEpIGlzIG5vIGxvbmdlcg0Kc2lnbmlmaWNhbnQsIGltcGx5aW5nIHRoYXQgdGhpcyBtaWdodCBiZSBleHBsYWluZWQgYnkgb3RoZXIgbmV0d29yaw0Kc3RhdGlzdGljcyBpbiB0aGUgbW9kZWwuIFRoZSBjb3ZhcmlhdGUgc3RhdGlzdGljcyBmb3IgZ2VuZGVyIHNob3cNCnNpbWlsYXIgZmluZGluZ3MgYXMgTW9kZWwgMiAmIE1vZGVsIDIuNSwgbmFtZWx5IHRoYXQgYWN0b3JzIHByZWZlciB0bw0KY2xvc2UgdHJpYWRzIHdpdGggYWx0ZXJzIHRoYXQgaGF2ZSBhIGRpZmZlcmVudCBzY29yZSBmb3IgZ2VuZGVyIChiID0NCjEuNTEsIHNlID0gMC40NCkuIHRoZSBlZ28gZWZmZWN0IGFuZCBhbHRlciBlZmZlY3QgZm9yIGdlbmRlciBhcmUNCm5vbi1zaWduaWZpY2FudCwgYXMgd2FzIHRoZSBjYXNlIGluIE1vZGVsIDIgJiBNb2RlbCAyLjUuXA0K4oCDIExhc3RseSwgTW9kZWwgMyBzaG93cyBzb21lIHNpZ25pZmljYW50IHJlc3VsdHMgd2l0aCByZWdhcmRzIHRvIHRoZQ0KY292YXJpYXRlIG5ldHdvcmsgc3RhdGlzdGljcyBmb3IgcHJlc3RpZ2UuIFRoZSBwcmVzdGlnZSBlZmZlY3QgZm9yDQphbHRlcnMgaXMgcG9zaXRpdmUsIGltcGx5aW5nIHRoYXQgcGVvcGxlIHByZWZlciB0byBzZW5kIHRpZXMgdG8gcGVvcGxlDQp3aG8gaGF2ZSBhIGhpZ2hlciBhbW91bnQgb2YgcHJlc3RpZ2UgKGIgPSAwLjA0Miwgc2UgPSAwLjAwODkpLg0KQWRkaXRpb25hbGx5LCB0aGUgcHJlc3RpZ2UgZWZmZWN0IGZvciBlZ29zIGlzIG5lZ2F0aXZlLCB3aGljaCBpbmRpY2F0ZXMNCnRoYXQgcGVvcGxlIHdobyBoYXZlIGhpZ2hlciBwcmVzdGlnZSBzZW5kIGxlc3MgdGllcyAoYiA9IC0wLjAzMCwgc2UgPQ0KMC4wMTUpLiBUaGlzIGlzIGluIGxpbmUgd2l0aCB0aGVvcmllcyBvZiBwcmVmZXJlbnRpYWwgYXR0YWNobWVudCBhbmQNCnVwd2FyZCBtb2JpbGl0eSwgYmVjYXVzZSBhcyBlZ29zIHdpdGggaGlnaGVyIHByZXN0aWdlIHdpbGwgYXJlIG1vcmUNCmxpa2VseSB0byByZWNlaXZlIHJlcXVlc3QgZm9yIGNvbGxhYm9yYXRpb24gcmF0aGVyIHRoZW4gc2VuZGluZyByZXF1ZXN0DQpmb3IgY29sbGFib3JhdGlvbi4gSW50ZXJlc3RpbmdseSBlbm91Z2gsIHRoZSBpbmRlZ3JlZSBwb3B1bGFyaXR5DQpzdGF0aXN0aWMgZm9yIHByZXN0aWdlIGlzIG5vdCBzaWduaWZpY2FudCAoYiA9IC0wLjAxMiwgc2UgPSAwLjAyMyksDQppbXBseWluZyB0aGF0IGFjdG9ycyB3aG8gYXJlIG1vcmUgcHJlc3RpZ2lvdXMgZG8gbm90IHJlY2VpdmUgbW9yZQ0KaW5kZWdyZWVzLg0KDQojIyMgQ3JlYXRlIFNpZW5hRGF0YQ0KDQpgYGB7cn0NCiMtLS0tIERlcGVuZGVudCAtLS0tDQpuZXQgPC0gc2llbmFEZXBlbmRlbnQobmV0X3NvY19hcnJheSkNCg0KIy0tLS0gSW5kZXBlbmRlbnQgLS0tLQ0KZ2VuZGVyIDwtIGRmX2VnbyRwZXJjX2ZlbWFsZQ0KZ2VuZGVyIDwtIGNvQ292YXIoZ2VuZGVyKQ0KDQpwcmVzdGlnZSA8LSBkZl9lZ28gJT4lIHNlbGVjdChRMS5XMSwgUTEuVzIpICU+JSBtdXRhdGUobWVhbl9wcmVzID0gKFExLlcxICsgUTEuVzIpLzIpDQpwcmVzdGlnZSA8LSBwcmVzdGlnZSRtZWFuX3ByZXMNCnByZXN0aWdlIDwtIGNvQ292YXIocHJlc3RpZ2UpDQoNCiMgaF9pbmRleCA8LSBkZl9lZ28kaF9pbmRleA0KIyBoX2luZGV4IDwtIGNvQ292YXIoaF9pbmRleCkNCg0KIy0tLS0gTWFrZSBTaWVuYSBkZiAtLS0tDQpteWRhdGFfTTMgPC0gc2llbmFEYXRhQ3JlYXRlKG5ldCwgZ2VuZGVyLCBwcmVzdGlnZSkjLCBoX2luZGV4KQ0KDQpgYGANCg0KIyMjIENyZWF0ZSBFZmZlY3RzIG9iamVjdA0KDQpgYGB7cn0NCm15ZWZmX00zIDwtIGdldEVmZmVjdHMobXlkYXRhX00zKQ0KcHJpbnQwMVJlcG9ydChteWRhdGFfTTMsIG1vZGVsbmFtZSA9ICIuL3Jlc3VsdHMvQ29sbGFiX00zIikNCg0KIyB0c19keWFkc19ldm8oc2ltcyA9IHdhdmVfMiwgbmV0MSA9IHdhdmVfMSwgZm9ycGxvdCA9IFRSVUUpDQojIHRzX3RyaWFkc19ldm8oc2ltcyA9IHdhdmVfMiwgbmV0MSA9IHdhdmVfMSwgZm9ycGxvdCA9IFRSVUUpDQoNCmBgYA0KDQojIyMgQWRkIEVmZmVjdHMNCg0KYGBge3J9DQpteWVmZl9NMyA8LSBpbmNsdWRlRWZmZWN0cyhteWVmZl9NMywgaXNvbGF0ZU5ldCwgaW5Qb3BTcXJ0LCBvdXRBY3QpDQpgYGANCg0KYGBge3J9DQpteWVmZl9NMyA8LSBpbmNsdWRlRWZmZWN0cyhteWVmZl9NMywgZGlmZlgsIGRpZmZYVHJhbnNUcmlwLCBlZ29YLCBhbHRYLCBpbnRlcmFjdGlvbjEgPSAiZ2VuZGVyIikNCm15ZWZmX00zIDwtIGluY2x1ZGVFZmZlY3RzKG15ZWZmX00zLCBlZ29YLCBhbHRYLCBpblBvcFgsIGludGVyYWN0aW9uMSA9ICJwcmVzdGlnZSIpDQojIG15ZWZmX00zIDwtIGluY2x1ZGVFZmZlY3RzKG15ZWZmX00zLCBhbHRYLCBpbnBvcFgsIGludGVyYWN0aW9uMSA9ICJoX2luZGV4IikNCg0KYGBgDQoNCiMjIyBDcmVhdGUgYW5kIFJ1biB0aGUgQWxnb3JpdGhtDQoNCmBgYHtyLCBldmFsPUZBTFNFfQ0KbXlBbGdvcml0aG1fTTMgPC0gc2llbmFBbGdvcml0aG1DcmVhdGUocHJvam5hbWUgPSAiLi9yZXN1bHRzL0NvbGxhYl9NMyIpDQphbnNfTTMgPC0gc2llbmEwNyhteUFsZ29yaXRobV9NMywgZGF0YSA9IG15ZGF0YV9NMywgZWZmZWN0cyA9IG15ZWZmX00zLCByZXR1cm5EZXBzID0gVFJVRSkNCmFuc19NMw0KDQpmc2F2ZShhbnNfTTMsIGZpbGUgPSAiLWFuc19NMyIpDQoNCiMgaWYgbmVjZXNzYXJ5IGVzdGltYXRlIGFnYWluISAgDQphbnNfTTNfMiA8LSBzaWVuYTA3KG15QWxnb3JpdGhtX00zLCBkYXRhID0gbXlkYXRhX00zLCBlZmZlY3RzID0gbXllZmZfTTMsIHByZXZBbnMgPSBhbnNfTTMsIHJldHVybkRlcHM9VFJVRSkNCmFuc19NM18yDQojIGZzYXZlKGFuc19NM18yLCBmaWxlID0gIi1hbnNfTTMiKQ0KDQpgYGANCg0KYGBge3IsIGVjaG89RkFMU0V9DQoNCmFuc19NMyA8LSBmbG9hZCgiLi9yZXN1bHRzL3Byb2Nlc3NlZC8yMDI0MTAyOS1hbnNfTTMucmRhIikNCmFuc19NMw0KDQpgYGANCg0KYGBge3IsIGVjaG89RkFMU0V9DQoNCmFuc19NM19zdHJhbmdlIDwtIGZsb2FkKCIuL3Jlc3VsdHMvcHJvY2Vzc2VkLzIwMjQxMDIzLWFuc19NMyh3ZWlyZCkucmRhIikNCmFuc19NM19zdHJhbmdlDQoNCmBgYA0KDQojIyMgR29vZG5lc3Mgb2YgRml0DQoNCmBgYHtyfQ0KR09GIDwtIHNpZW5hR09GKGFuc19NMywgSW5kZWdyZWVEaXN0cmlidXRpb24sIHZlcmJvc2UgPSBGQUxTRSwgam9pbiA9IFRSVUUsIHZhck5hbWUgPSAibmV0IikNCg0KcGxvdChHT0YsIG1haW4gPSAiIikNCg0KYGBgDQoNCiMjIE1vZGVsIDQgLSBGdWxsIE1vZGVsIChkcm9wcGVkKQ0KDQojIyMgQ3JlYXRlIFNpZW5hRGF0YQ0KDQpgYGB7cn0NCiMtLS0tIERlcGVuZGVudCAtLS0tDQpuZXQgPC0gc2llbmFEZXBlbmRlbnQobmV0X3NvY19hcnJheSkNCg0KIy0tLS0gSW5kZXBlbmRlbnQgLS0tLQ0KIyBnZW5kZXIgPC0gZGZfZWdvJHBlcmNfZmVtYWxlDQojIGdlbmRlciA8LSBjb0NvdmFyKGdlbmRlcikNCiMgDQojIHByZXN0aWdlIDwtIGRmX2VnbyAlPiUgc2VsZWN0KFExLlcxLCBRMS5XMikgJT4lIG11dGF0ZShtZWFuX3ByZXMgPSAoUTEuVzEgKyBRMS5XMikvMikNCiMgcHJlc3RpZ2UgPC0gcHJlc3RpZ2UkbWVhbl9wcmVzDQojIHByZXN0aWdlIDwtIGNvQ292YXIocHJlc3RpZ2UpDQojIA0KIyBoX2luZGV4IDwtIGRmX2VnbyRoX2luZGV4DQojIGhfaW5kZXggPC0gY29Db3ZhcihoX2luZGV4KQ0KDQpldGhuaWNpdHkgPC0gZGZfZWdvJGV0aG5pY2l0eQ0KZXRobmljaXR5IDwtIGNvQ292YXIoZXRobmljaXR5KQ0KDQpjYXJlZXJfYWdlIDwtIDIwMjQgLSBkZl9lZ28kZmlyc3RfeWVhcl9wdWINCmNhcmVlcl9hZ2UgPC0gY29Db3ZhcihjYXJlZXJfYWdlKQ0KDQojLS0tLSBNYWtlIFNpZW5hIGRmIC0tLS0NCm15ZGF0YV9NNCA8LSBzaWVuYURhdGFDcmVhdGUobmV0LCBnZW5kZXIsIHByZXN0aWdlLCBldGhuaWNpdHksIGNhcmVlcl9hZ2UpDQoNCmBgYA0KDQojIyMgQ3JlYXRlIEVmZmVjdHMgb2JqZWN0DQoNCmBgYHtyfQ0KbXllZmZfTTQgPC0gZ2V0RWZmZWN0cyhteWRhdGFfTTQpDQpwcmludDAxUmVwb3J0KG15ZGF0YV9NNCwgbW9kZWxuYW1lID0gIi4vcmVzdWx0cy9Db2xsYWJfTTQiKQ0KDQojIHRzX2R5YWRzX2V2byhzaW1zID0gd2F2ZV8yLCBuZXQxID0gd2F2ZV8xLCBmb3JwbG90ID0gVFJVRSkNCiMgdHNfdHJpYWRzX2V2byhzaW1zID0gd2F2ZV8yLCBuZXQxID0gd2F2ZV8xLCBmb3JwbG90ID0gVFJVRSkNCg0KYGBgDQoNCiMjIyBBZGQgRWZmZWN0cw0KDQpgYGB7cn0NCm15ZWZmX000IDwtIGluY2x1ZGVFZmZlY3RzKG15ZWZmX000LCBpc29sYXRlTmV0LCBpblBvcFNxcnQsIG91dEFjdCkNCmBgYA0KDQpgYGB7cn0NCm15ZWZmX000IDwtIGluY2x1ZGVFZmZlY3RzKG15ZWZmX000LCBkaWZmWCwgZGlmZlNxWCwgZWdvWCwgYWx0WCwgaW50ZXJhY3Rpb24xID0gImdlbmRlciIpDQpteWVmZl9NNCA8LSBpbmNsdWRlRWZmZWN0cyhteWVmZl9NNCwgYWx0WCwgaW5Qb3BYLCBpbnRlcmFjdGlvbjEgPSAicHJlc3RpZ2UiKQ0KIyBteWVmZl9NNCA8LSBpbmNsdWRlRWZmZWN0cyhteWVmZl9NNCwgYWx0WCwgaW5wb3BYLCBpbnRlcmFjdGlvbjEgPSAiaF9pbmRleCIpDQpteWVmZl9NNCA8LSBpbmNsdWRlRWZmZWN0cyhteWVmZl9NNCwgc2FtZVgsIGludGVyYWN0aW9uMSA9ICJldGhuaWNpdHkiKQ0KbXllZmZfTTQgPC0gaW5jbHVkZUVmZmVjdHMobXllZmZfTTQsIGFsdFgsIGVnb1gsIGludGVyYWN0aW9uMSA9ICJjYXJlZXJfYWdlIikNCg0KDQpgYGANCg0KIyMjIENyZWF0ZSBhbmQgUnVuIHRoZSBBbGdvcml0aG0NCg0KYGBge3IsIGV2YWw9RkFMU0V9DQpteUFsZ29yaXRobV9NNCA8LSBzaWVuYUFsZ29yaXRobUNyZWF0ZShwcm9qbmFtZSA9ICIuL3Jlc3VsdHMvQ29sbGFiX000IikNCmFuc19NNCA8LSBzaWVuYTA3KG15QWxnb3JpdGhtX000LCBkYXRhID0gbXlkYXRhX000LCBlZmZlY3RzID0gbXllZmZfTTQsIHJldHVybkRlcHMgPSBUUlVFKQ0KYW5zX000DQoNCmZzYXZlKGFuc19NNCwgZmlsZSA9ICItYW5zX000IikNCg0KIyBpZiBuZWNlc3NhcnkgZXN0aW1hdGUgYWdhaW4hICANCiMgYW5zX00yXzIgPC0gc2llbmEwNyhteUFsZ29yaXRobSwgZGF0YSA9IG15ZGF0YSwgZWZmZWN0cyA9IG15ZWZmLCBwcmV2YW5zXyA9IGFuc19NMSwgcmV0dXJuRGVwcz1UUlVFKQ0KIyBhbnNfTTJfMg0KYGBgDQoNCmBgYHtyLCBlY2hvPUZBTFNFfQ0KDQphbnNfTTQgPC0gZmxvYWQoIi4vcmVzdWx0cy9wcm9jZXNzZWQvMjAyNDEwMjQtYW5zX000LnJkYSIpDQphbnNfTTQNCg0KYGBgDQoNCiMjIyBHb29kbmVzcyBvZiBGaXQNCg0KYGBge3J9DQpHT0YgPC0gc2llbmFHT0YoYW5zX000LCBJbmRlZ3JlZURpc3RyaWJ1dGlvbiwgdmVyYm9zZSA9IEZBTFNFLCBqb2luID0gVFJVRSwgdmFyTmFtZSA9ICJuZXQiKQ0KDQpwbG90KEdPRiwgbWFpbiA9ICIiKQ0KYGBgDQoNCiMjIE1vZGVsIDUgLSBJbnRlcmFjdGlvbiBNb2RlbA0KDQpNb2RlbCA1LCB0aGUgZmluYWwgbW9kZWwsIGNvbnRhaW5zIHRoZSBuZXR3b3JrIHN0YXRpc3RpY3Mgb2YgTW9kZWwgMywNCmFuZCBpbmNsdWRlcyBhbiBpbnRlcmFjdGlvbiB0ZXJtIGZvciBnZW5kZXIgXCogcHJlc3RpZ2UuIFRoaXMNCmludGVyYWN0aW9uIHRlcm0gd2FzIGNlbnRlcmVkIGJlZm9yZWhhbmQgdG8gZW5zdXJlIHRoYXQgdGhlcmUgd2FzIHN0aWxsDQphIG1lYW5pbmdmdWwgMCAoaS5lLiB0aGUgcHJlc3RpZ2Ugc2NvcmUgb2YgbWFsZSBzb2Npb2xvZ2lzdHMpLiBUaGlzIHdheSwNCnRoZSBtb2RlbCB3aWxsIGVzdGltYXRlIGhvdyB0aGUgcHJlc3RpZ2Ugb2YgZmVtYWxlIHNvY2lvbG9naXN0cw0KaW5mbHVlbmNlcyB0aGUgbmV0d29yaywgdXNpbmcgdGhlIGZvbGxvd2luZyBuZXR3b3JrIHN0YXRpc3RpY3M6IGVnb1gsDQphbHRYLCBpblBvcFggJiBkaWZmWFRyYW5zVHJpcC4gVGhpcyBtb2RlbCBoYXMgYSBjb252ZXJnZW5jZSBvZiAwLjIyIGFuZA0KYSBHb29kbmVzcyBvZiBGaXQgZm9yIHRoZSBpbmRlZ3JlZSBkaXN0cmlidXRpb24gb2YgMC43Ny4gV2l0aCByZWdhcmQgdG8NCnRoZSBzdHJ1Y3R1cmFsIGVmZmVjdHMsIHRoZXJlIGFyZSBvbmx5IHNpZ25pZmljYW50IGVzdGltYXRlcyBmb3INCnJlY2lwcm9jaXR5IChiID0gMi42Miwgc2UgPSAwLjM5KSBhbmQgaXNvbGF0ZU5ldCAoYiA9IDMuNDYsIHNlID0gMS41OCkuDQpUaGUgcGFyYW1ldGVyIGVzdGltYXRlcyBvZiBkZW5zaXR5LCBvdXRkZWdyZWUgYWN0aXZpdHkgYW5kIGluZGVncmVlDQpwb3B1bGFyaXR5IGNvdWxkIG5vdCBiZSBwcmVjaXNlbHkgZGV0ZXJtaW5lZCBpbiBNb2RlbCA1LlwNCuKAgyBSZWdhcmRpbmcgdGhlIGNvdmFyaWF0ZSBuZXR3b3JrIHN0YXRpc3RpY3MsIHRoZXJlIGFyZSBubyBzaWduaWZpY2FudA0KZXN0aW1hdGVzLCBhcGFydCBmcm9tIHRoZSBhbHRlciBwcmVzdGlnZSBlZmZlY3QgKGIgPSAwLjA2Nywgc2UgPSAwLjAyOCkNCmFuZCB0aGUgZGlmZlhUcmFuc1RyaXAgc3RhdGlzdGljIG9mIHRoZSBpbnRlcmFjdGlvbiB0ZXJtIChiID0gMS4xNCwgc2UgPQ0KMC40OCkuIFRoZSBsYXR0ZXIgaW5kaWNhdGVzIHRoYXQgYWN0b3JzIHByZWZlciB0byBjbG9zZSB0cmlhZHMgd2l0aA0KZmVtYWxlIGFsdGVycyB3aG8gaGF2ZSBhIGRpZmZlcmVudCBsZXZlbCBvZiBwcmVzdGlnZS4gVGhpcyBmaW5kaW5nIHNlZW0NCnRvIGltcGx5IHRoYXQgZmVtYWxlIHByZXN0aWdlIGRlY3JlYXNlcyBnZW5kZXIgY2x1c3RlcmluZyBpbg0KY29sbGFib3JhdGlvbiBuZXR3b3Jrcywgd2hpY2ggaXMgaW4gbGluZSB3aXRoICpoeXBvdGhlc2lzIDMuKg0KQWRkaXRpb25hbGx5LCBnaXZlbiB0aGUgc2lnbmlmaWNhbnQgZXN0aW1hdGUgZm9yIHRoZSBwcmVzdGlnZSBvZiBhbHRlcnMsDQppdCBzZWVtcyB0byBiZSB0aGUgY2FzZSB0aGF0LCBhdCBSYWRib3VkIFVuaXZlcnNpdHkgYW5kIFV0cmVjaHQNClVuaXZlcmlzdHksIHByZXN0aWdlIGlzIGEgbW9yZSBpbXBvcmFudCBpbmRpY2F0b3Igb2YgY29sbGFib3JhdGlvbiB0aGFuDQpnZW5kZXIuIENvbWJpbmVkIHdpdGggdGhlIGZpbmRpbmdzIG9mIE1vZGVsIDMsIHRoZXJlIGlzIHNvbWUgZXZpZGVuY2UNCnRoYXQgaW5kaWNhdGVzIHRoYXQgdGhlIGNvbGxhYm9yYXRpb24gbmV0d29yayBpcyBiZWNvbWluZyBtb3JlDQplZ2FsaXRhcmlhbiBhbmQgdGh1cyAqaHlwb3RoZXNpcyAzKiBkb2VzIG5vdCBuZWVkIHRvIGJlIHJlamVjdGVkLg0KSG93ZXZlciwgZ2l2ZW4gdGhlIGRpdmVyc2UgZmluZGluZ3MgYW5kIGxhY2sgb2Ygc2lnbmlmaWNhbnQgcGFyYW1ldGVycw0KYWNyb3NzIHRoZSBtb2RlbHMsIHRoZSBmaW5kaW5ncyBzaG91bGQgYmUgaW50ZXJwcmV0ZWQgd2l0aCBjYXV0aW9uLg0KDQojIyMgQ3JlYXRlIFNpZW5hRGF0YQ0KDQpgYGB7cn0NCiMtLS0tIERlcGVuZGVudCAtLS0tDQpuZXQgPC0gc2llbmFEZXBlbmRlbnQobmV0X3NvY19hcnJheSkNCg0KIy0tLS0gSW5kZXBlbmRlbnQgLS0tLQ0KZ2VuZGVyIDwtIGRmX2VnbyRwZXJjX2ZlbWFsZQ0KR19jZW50IDwtIGdlbmRlciAtIG1lYW4oZ2VuZGVyLCBuYS5ybSA9IFQpDQpnZW5kZXIgPC0gY29Db3ZhcihnZW5kZXIpDQoNCnByZXN0aWdlIDwtIGRmX2VnbyAlPiUgc2VsZWN0KFExLlcxLCBRMS5XMikgJT4lIG11dGF0ZShtZWFuX3ByZXMgPSAoUTEuVzEgKyBRMS5XMikvMikNCnByZXN0aWdlIDwtIHByZXN0aWdlJG1lYW5fcHJlcw0KUF9jZW50IDwtIHByZXN0aWdlIC0gbWVhbihwcmVzdGlnZSkNCg0KcHJlc3RpZ2UgPC0gY29Db3ZhcihwcmVzdGlnZSkNCg0KDQpJVF9QeEcgPC0gUF9jZW50ICogR19jZW50DQpJVF9QeEcgPC0gY29Db3ZhcihJVF9QeEcsIGNlbnRlcmVkID0gRkFMU0UpDQoNCg0KIy0tLS0gTWFrZSBTaWVuYSBkZiAtLS0tDQpteWRhdGFfTTUgPC0gc2llbmFEYXRhQ3JlYXRlKG5ldCwgZ2VuZGVyLCBwcmVzdGlnZSwgSVRfUHhHKQ0KDQpgYGANCg0KIyMjIENyZWF0ZSBFZmZlY3RzIG9iamVjdA0KDQpgYGB7cn0NCm15ZWZmX001IDwtIGdldEVmZmVjdHMobXlkYXRhX001KQ0KcHJpbnQwMVJlcG9ydChteWRhdGFfTTUsIG1vZGVsbmFtZSA9ICIuL3Jlc3VsdHMvQ29sbGFiX001IikNCg0KIyB0c19keWFkc19ldm8oc2ltcyA9IHdhdmVfMiwgbmV0MSA9IHdhdmVfMSwgZm9ycGxvdCA9IFRSVUUpDQojIHRzX3RyaWFkc19ldm8oc2ltcyA9IHdhdmVfMiwgbmV0MSA9IHdhdmVfMSwgZm9ycGxvdCA9IFRSVUUpDQoNCmBgYA0KDQojIyMgQWRkIEVmZmVjdHMNCg0KYGBge3J9DQpteWVmZl9NNSA8LSBpbmNsdWRlRWZmZWN0cyhteWVmZl9NNSwgaXNvbGF0ZU5ldCwgaW5Qb3BTcXJ0LCBvdXRBY3QpDQpgYGANCg0KYGBge3J9DQpteWVmZl9NNSA8LSBpbmNsdWRlRWZmZWN0cyhteWVmZl9NNSwgZGlmZlgsIGRpZmZYVHJhbnNUcmlwLCBlZ29YLCBhbHRYLCBpbnRlcmFjdGlvbjEgPSAiZ2VuZGVyIikNCm15ZWZmX001IDwtIGluY2x1ZGVFZmZlY3RzKG15ZWZmX001LCBlZ29YLCBhbHRYLCBpblBvcFgsIGludGVyYWN0aW9uMSA9ICJwcmVzdGlnZSIpDQpteWVmZl9NNSA8LSBpbmNsdWRlRWZmZWN0cyhteWVmZl9NNSwgZWdvWCwgYWx0WCwgaW5Qb3BYLCBkaWZmWFRyYW5zVHJpcCwgaW50ZXJhY3Rpb24xID0gIklUX1B4RyIpDQoNCiMgbXllZmZfTTMgPC0gaW5jbHVkZUVmZmVjdHMobXllZmZfTTMsIGFsdFgsIGlucG9wWCwgaW50ZXJhY3Rpb24xID0gImhfaW5kZXgiKQ0KDQpgYGANCg0KIyMjIENyZWF0ZSBhbmQgUnVuIHRoZSBBbGdvcml0aG0NCg0KYGBge3IsIGV2YWw9RkFMU0V9DQpteUFsZ29yaXRobV9NNSA8LSBzaWVuYUFsZ29yaXRobUNyZWF0ZShwcm9qbmFtZSA9ICIuL3Jlc3VsdHMvQ29sbGFiX001IikNCmFuc19NNSA8LSBzaWVuYTA3KG15QWxnb3JpdGhtX001LCBkYXRhID0gbXlkYXRhX001LCBlZmZlY3RzID0gbXllZmZfTTUsIHJldHVybkRlcHMgPSBUUlVFKQ0KYW5zX001DQoNCiMgZnNhdmUoYW5zX001LCBmaWxlID0gIi1hbnNfTTUiKQ0KDQojIGlmIG5lY2Vzc2FyeSBlc3RpbWF0ZSBhZ2FpbiEgIA0KYW5zX001XzIgPC0gc2llbmEwNyhteUFsZ29yaXRobV9NNSwgZGF0YSA9IG15ZGF0YV9NNSwgZWZmZWN0cyA9IG15ZWZmX001LCBwcmV2QW5zID0gYW5zX001LCByZXR1cm5EZXBzPVRSVUUpDQphbnNfTTVfMg0KIyBmc2F2ZShhbnNfTTVfMiwgZmlsZSA9ICItYW5zX001IikNCg0KYGBgDQoNCmBgYHtyLCBlY2hvPUZBTFNFfQ0KYW5zX001IDwtIGZsb2FkKCJyZXN1bHRzL3Byb2Nlc3NlZC8yMDI0MTAyOS1hbnNfTTUucmRhIikNCmFuc19NNQ0KYGBgDQojIyMgR29vZG5lc3Mgb2YgRml0DQpgYGB7cn0NCkdPRiA8LSBzaWVuYUdPRihhbnNfTTUsIEluZGVncmVlRGlzdHJpYnV0aW9uLCB2ZXJib3NlID0gRkFMU0UsIGpvaW4gPSBUUlVFLCB2YXJOYW1lID0gIm5ldCIpDQoNCnBsb3QoR09GLCBtYWluID0gIiIpDQpgYGANCg==</div>
 
 
 </div>
