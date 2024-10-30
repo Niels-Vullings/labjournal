@@ -5,6 +5,19 @@ author: "Niels Vullings"
 bibliography: references.bib
 ---
 
+```{=html}
+<style>
+body {
+text-align: justify;
+font-family: Times;
+}
+
+h1, .h1, h2, .h2, h3, .h3 {
+margin-top: 24px;
+font-family: Times;
+}
+</style>
+```
 ```{r, echo=FALSE}
 rm(list = ls())
 ```

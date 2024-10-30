@@ -6,7 +6,7 @@ Filename is ./results/Collab_M4.txt.
 
 This file contains primary output for SIENA project <<./results/Collab_M4>>.
 
-Date and time: 30/10/2024 13:18:11 
+Date and time: 30/10/2024 13:45:43 
 
 RSiena version 1.4.7 (20 02 2024)
 
