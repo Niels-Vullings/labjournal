@@ -6,7 +6,7 @@ Filename is ./results/Collab_M4.txt.
 
 This file contains primary output for SIENA project <<./results/Collab_M4>>.
 
-Date and time: 29/10/2024 17:28:45 
+Date and time: 30/10/2024 13:18:11 
 
 RSiena version 1.4.7 (20 02 2024)
 
@@ -21,7 +21,7 @@ Data input.
 0 dependent bipartite variables,
 0 dependent discrete behavior variables,
 0 dependent continuous behavior variables,
-4 constant actor covariates,
+3 constant actor covariates,
 0 exogenous changing actor covariates,
 0 constant dyadic covariates,
 0 exogenous changing dyadic covariates,
@@ -97,28 +97,24 @@ No missing data for observation 2.
 Reading constant actor covariates.
 ----------------------------------
 
-4 variables, named:
+3 variables, named:
 gender          
 prestige        
-ethnicity       
-career_age      
+IT_PxG          
 
-A total of 4 non-changing individual covariates.
+A total of 3 non-changing individual covariates.
 
 Number of missing cases:
 gender          1 	( 1.0 %)
 prestige        0 	( 0.0 %)
-ethnicity       1 	( 1.0 %)
-career_age      0 	( 0.0 %)
+IT_PxG          1 	( 1.0 %)
 
 Information about covariates:
               minimum  maximum	  mean  centered 
 gender          0.0     1.0      0.458    Y 
 prestige        0.0    55.0     11.310    Y 
-ethnicity       0.0     1.0      0.879    Y 
-career_age      0.0    44.0     14.180    Y 
-The mean values are subtracted from the covariates.
-
+IT_PxG        -20.0    16.1     -1.547    N 
+For the centered variables, the mean values are subtracted from the covariates.
 
 
 The mean structural dissimilarity value subtracted in the
@@ -129,8 +125,7 @@ the mean is subtracted.
 These means are:
 Similarity gender                   :       0.4995 
 Similarity prestige                 :       0.7767 
-Similarity ethnicity                :       0.7848 
-Similarity career_age               :       0.6942 
+Similarity IT_PxG                   :       0.8315 
 
 
 

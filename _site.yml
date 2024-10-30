@@ -30,6 +30,8 @@ navbar:
             href: Week5_RSiena.html
       - text: "Week 6"
         href: Week6.html
+      - text: "Rsiena Behavior"
+        href: Siena_Behavior.html
     - text: "Data Preparation"
       menu:
       - text: "Data Exploration"
@@ -40,7 +42,7 @@ navbar:
             href: Data_preparation.html
           - text: "Data Prep (New)"
             href: Data_preparation_2.html
-    - text: "Paper (draft)"
+    - text: "Final Paper"
       menu:
       - text: "Introduction"
         href: Introduction2-1.html
@@ -56,8 +58,6 @@ navbar:
           href: Siena_Results_final.html
         - text: "RSiena GoF"
           href: Siena_GOF.html
-        - text: "Rsiena Behavior"
-          href: Siena_Behavior.html
       - text: "Conclusion"
         href: Conclusion.html
         

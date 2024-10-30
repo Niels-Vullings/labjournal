@@ -616,7 +616,7 @@ myAlgorithm_M4 <- sienaAlgorithmCreate(projname = "./results/Collab_M4")
 ans_M4 <- siena07(myAlgorithm_M4, data = mydata_M4, effects = myeff_M4, returnDeps = TRUE)
 ans_M4
 
-fsave(ans_M4, file = "-ans_M4")
+# fsave(ans_M4, file = "-ans_M4")
 
 # if necessary estimate again!  
 # ans_M2_2 <- siena07(myAlgorithm, data = mydata, effects = myeff, prevans_ = ans_M1, returnDeps=TRUE)
@@ -625,17 +625,17 @@ fsave(ans_M4, file = "-ans_M4")
 
 ```{r, echo=FALSE}
 
-ans_M4 <- fload("./results/processed/20241024-ans_M4.rda")
-ans_M4
+# ans_M4 <- fload("./results/processed/20241024-ans_M4.rda")
+# ans_M4
 
 ```
 
 ### Goodness of Fit
 
 ```{r}
-GOF <- sienaGOF(ans_M4, IndegreeDistribution, verbose = FALSE, join = TRUE, varName = "net")
+# GOF <- sienaGOF(ans_M4, IndegreeDistribution, verbose = FALSE, join = TRUE, varName = "net")
 
-plot(GOF, main = "")
+# plot(GOF, main = "")
 ```
 
 ## Model 5 - Interaction Model
