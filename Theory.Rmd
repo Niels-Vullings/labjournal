@@ -1,5 +1,5 @@
 ---
-title: "Theory (draft)"
+title: "Theory"
 #bibliography: references.bib
 author: "Niels Vullings"
 bibliography: references.bib
@@ -50,7 +50,7 @@ Last compiled on `r format(Sys.time(), '%B, %Y')`
 
 To study how gender clustering prevail throughout collaboration networks, we must first understand how relationships in these networks manifest themselves. To explain this, I draw on the homophily principle [@mcpherson2001birds], which argues that people who are more alike are more likely to connect. In terms of gender, it means that men are more likely to interact with other men, while women are more likely to interact with other women. For this study, this implies that men will have a preference to co-author with other men, while women will have a preference to coauthor with other women. One study that looked at collaborative networks found that the gender homophily principle holds for men in particular, meaning it is mostly men who prefer to work with other men [@kwiek2021gender]. The study explains this finding with gender norms that persist in both society and academia, particularly that it is "more occupationally advantageous" for young male academics to publish with other older male academics, while for women it is more advantageous to have publications with both male and female academics. However, they also find that this finding is inversed for field which are female dominated [@kwiek2021gender], implying that it is mostly important to coauthor with a member of the majority group. This presents an interesting case, as the division of gender in the social sciences is often presented as equal, while there are still structural gender differences when it comes to positions as senior researchers and professors [@bellotti2022]. However, as the division of male and female scholars is mostly even in the social sciences [@kwiek2021gender], I argue that men and women both seek to coauthor with others who share their gender. As men are found to prefer coauthoring with other men in the literature, it will cause a selection effect where women are more likely to coauthor with other women, because there are less men available to coauthor with. As a result, more coauthorship with members of the same gender will cluster networks, because people are familiar with the work of others and, when this work is valued positively, they are more likely to maintain their ties of send ties to others who they deem to be similar. This leads to the first hypothesis:
 
--   *H1: People are more likely to collaborative with others of the same gender, resulting in clustered networks.*
+-   *H1: Actors are more likely to collaborate with alters of the same gender, leading to gender clustering of collaboration networks.*
 
 ## Hypothesis 2
 
