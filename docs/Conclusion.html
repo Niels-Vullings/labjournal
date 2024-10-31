@@ -62,6 +62,29 @@
 }
 </style>
 
+<style type="text/css">
+/* for pandoc --citeproc since 2.11 */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
 
 <link rel="stylesheet" href="tweaks.css" type="text/css" />
 
@@ -482,9 +505,169 @@ h1, .h1, h2, .h2, h3, .h3 {
 <hr />
 <div id="conclusion" class="section level1" number="1">
 <h1><span class="header-section-number">1</span> Conclusion</h1>
+<p>This paper aimed to study how collaboration between sociologists at
+Radboud University and Utrecht Unversity is determined and influenced by
+gender inequalities. Particularly, the study aims to see how the
+prestige of female sociologists influences gender clustering in the
+collaboration network. Previous studies have proven persisting gender
+inequalities in (social) science, relating to prestige &amp; job status
+<span class="citation">(Bellotti et al. 2022; Y. S. Wang et al. 2023;
+Kim, Hofstra, and Galvez 2024)</span>, career opportunities<span
+class="citation">(Mulders, Hofstra, and Tolsma 2024)</span>,
+publications <span class="citation">(McDowell, Singell, and Stater 2006;
+Bozeman and Gaughan 2011; Kwiek and Roszka 2021)</span> and other
+inequalities. Taking inspiration from the gender homophily principle, I
+theorized that people prefer to collaborate with others from the same
+gender, due to gender biases and perceived status differences <span
+class="citation">(Kwiek and Roszka 2021; Y. S. Wang et al. 2023)</span>,
+which leads to clustered networks in terms of gender, as both men and
+women prefer to work with other men and women, when given the chance
+(<em>Hypothesis 1</em>). However, as structural differences between male
+and female scholars decrease due to policy changes, genderclustering of
+collaboration networks will similarly decrease (<em>Hypothesis 2</em>).
+Lastly, Due to these structural changes, prestige of both male and
+female sociologists will be evenly distributed <span
+class="citation">(Bellotti et al. 2022; Kwiek and Roszka 2021;
+Knobloch-Westerwick, Glynn, and Huge 2013)</span>. Consequently,
+sociologists will choose their collaborators less in terms of gender and
+more in terms of prestige, as proposed by the Matthew effect <span
+class="citation">(Bol, De Vaan, and Rijt 2018; J. Wang 2014)</span>.
+This will decrease gender clustering in collaboration networks
+(<em>Hypothesis 3</em>).<br />
+  Using webscraped publication data from OpenAlex, I was able to
+determine the collaborative networks of scholars between 2015-2024. The
+results of this study did not give a concrete answer to the research
+question. First of all, a descriptive analysis showed that there is some
+gender clustering worth noting. This indicates that there is some
+evidence that supports hypothesis 1. Additionally, this level of
+clustering seemed to decrease over time, as both gender clustering and
+the amount of indegrees became more evenly distributed over time.
+However, this decrease was found not to be significant, which was cause
+to reject <em>hypothesis 2.<br />
+</em>  To investigate how these collaboration networks evolve, this data
+was analysed with RSiena, a simulation method for studying the evolution
+of social networks <span class="citation">(Ripley et al. 2011)</span>.
+Interestingly, preliminary models indicated that difference in gender is
+positively associated with transitivity, indicating that actors want to
+close triads with alters from a different gender. This is in contrast
+with the current literature on the Matilda effect <span
+class="citation">(Bellotti et al. 2022; Knobloch-Westerwick, Glynn, and
+Huge 2013; Y. S. Wang et al. 2023)</span>. However, later models
+indicated prestige is the only significant determinant of collaborating
+than gender. Prestige was found to be a determinant for being a
+preferred collaborator. When looking for a person to collaborate with,
+actors prefer to send ties to alters who have a higher level of prestige
+(i.e. having worked on more Q1 publications in a given wave). Similarly,
+the prestige of female sociologists is also found to be indicator of
+collaboration. <em>Hypothesis 3</em> thus finds some evidence and does
+not need to be rejected However, as said before, due to the diverse
+findings of this study, conclusive answers cannot be drawn.<br />
+ As many studies, this study has its limitations. One of the main
+limitations of the data is the short time frame in which the data was
+collected. Because the data is still in the process of being collected,
+it was not possible to have two good size waves that also contained 2022
+and 2024. Therefore, wave 1 was very sparse, as most PhD’s and postdocs
+were not yet in the department and therefore (might) not have published
+anything in the first wave. This means that the density of the network
+is not due to structural effects of the network, but due to the process
+in which the data was collected. Having another wave in 2026 will ensure
+that more scholars are present in both waves and that collaboration
+networks will be more representative of society. Another data related
+issue is the lack of focus on structurally determined collaboration. for
+example, PhD’s always collaborate with their promotor during their
+dissertation. Thus, it would be more accurate if these relations were
+determined by structural 1’s, an option of RSiena which means that these
+actors are always 1, regardless of the structural effects in the model
+<span class="citation">(Ripley et al. 2011)</span>. Future research
+would do well to include these structural ties, as the network would
+likely have created more representative of how collaboration works in
+the academic world.<br />
+  Relating to the results, future research should focus on finding more
+concrete answers to this research question, as the results are not in
+line with the current literature. Similarly, based on the Goodness of
+Fit of the dyad census, these models would likely have benefited from
+some form of dyadic covariate network statistics, as the models were not
+very well able to correctly estimate the dyadic transitions. This makes
+sense theorywise, as collaboration indicates that there might be a
+context apart from the ego that is important to take into account.
+However, given certain time and knowledge restriction, this was not
+achievable in this study. Additionally, generalizing this to the larger
+academic setting might also prove beneficial, as this study only looked
+at two sociology departments at Dutch universities.<br />
+  Overall, this study showed that the way in which scholars at Dutch
+Universities collaborate is quite complex and not always easy to model.
+In sum, while there is clustering in terms of gender in these
+collaboration networks, it seems to be the case that people prefer to
+work with scholars who have a higher prestige, be it prestigious female
+scholars or prestigious male scholars <span class="citation">(Bol, De
+Vaan, and Rijt 2018)</span>.</p>
+<div id="refs" class="references csl-bib-body hanging-indent"
+entry-spacing="0">
+<div id="ref-bellotti2022" class="csl-entry">
+Bellotti, E., D. Czerniawska, M. G. Everett, and Luigi Guadalupi. 2022.
+<span>“Gender Inequalities in Research Funding: Unequal Network
+Configurations, or Unequal Network Returns?”</span> <em>Social
+Networks</em> 70 (July): 138–51. <a
+href="https://doi.org/10.1016/j.socnet.2021.12.007">https://doi.org/10.1016/j.socnet.2021.12.007</a>.
+</div>
+<div id="ref-bol2018matthew" class="csl-entry">
+Bol, Thijs, Mathijs De Vaan, and Arnout van de Rijt. 2018. <span>“The
+Matthew Effect in Science Funding.”</span> <em>Proceedings of the
+National Academy of Sciences</em> 115 (19): 4887–90.
+</div>
+<div id="ref-bozeman2011men" class="csl-entry">
+Bozeman, Barry, and Monica Gaughan. 2011. <span>“How Do Men and Women
+Differ in Research Collaborations? An Analysis of the Collaborative
+Motives and Strategies of Academic Researchers.”</span> <em>Research
+Policy</em> 40 (10): 1393–1402.
+</div>
+<div id="ref-kim2024persistent" class="csl-entry">
+Kim, Lanu, Bas Hofstra, and Sebastian Munoz-Najar Galvez. 2024. <span>“A
+Persistent Gender Pay Gap Among Faculty in a Public University
+System.”</span> <em>Scientific Reports</em> 14 (1): 22212.
+</div>
+<div id="ref-knobloch2013matilda" class="csl-entry">
+Knobloch-Westerwick, Silvia, Carroll J Glynn, and Michael Huge. 2013.
+<span>“The Matilda Effect in Science Communication: An Experiment on
+Gender Bias in Publication Quality Perceptions and Collaboration
+Interest.”</span> <em>Science Communication</em> 35 (5): 603–25.
+</div>
+<div id="ref-kwiek2021gender" class="csl-entry">
+Kwiek, Marek, and Wojciech Roszka. 2021. <span>“Gender-Based Homophily
+in Research: A Large-Scale Study of Man-Woman Collaboration.”</span>
+<em>Journal of Informetrics</em> 15 (3): 101171.
+</div>
+<div id="ref-mcdowell2006a" class="csl-entry">
+McDowell, John M., Larry D. Singell, and Mark Stater. 2006. <span>“Two
+to Tango? Gender Differences in the Decision to Publish and
+Coauthor.”</span> <em>Economic Inquiry</em> 44 (1): 153–68. <a
+href="https://doi.org/10.1093/ei/cbi065">https://doi.org/10.1093/ei/cbi065</a>.
+</div>
+<div id="ref-mulders2024matter" class="csl-entry">
+Mulders, Anne Maaike, Bas Hofstra, and Jochem Tolsma. 2024. <span>“A
+Matter of Time? Gender and Ethnic Inequality in the Academic Publishing
+Careers of Dutch PhDs.”</span> <em>Quantitative Science Studies</em>,
+1–29.
+</div>
+<div id="ref-ripley2011manual" class="csl-entry">
+Ripley, Ruth M, Tom AB Snijders, Zsófia Boda, András Vörös, and Paulina
+Preciado. 2011. <span>“Manual for RSIENA.”</span> <em>University of
+Oxford, Department of Statistics, Nuffield College</em> 1: 2011.
+</div>
+<div id="ref-wang2014unpacking" class="csl-entry">
+Wang, Jian. 2014. <span>“Unpacking the Matthew Effect in
+Citations.”</span> <em>Journal of Informetrics</em> 8 (2): 329–39.
+</div>
+<div id="ref-wang2023gender" class="csl-entry">
+Wang, Y Samuel, Carole J Lee, Jevin D West, Carl T Bergstrom, and Elena
+A Erosheva. 2023. <span>“Gender-Based Homophily in Collaborations Across
+a Heterogeneous Scholarly Landscape.”</span> <em>Plos One</em> 18 (4):
+e0283106.
+</div>
+</div>
 </div>
 
-<div id="rmd-source-code">LS0tDQp0aXRsZTogIkNvbmNsdXNpb24gJiBEaXNjdXNzaW9uIg0KI2JpYmxpb2dyYXBoeTogcmVmZXJlbmNlcy5iaWINCmF1dGhvcjogIk5pZWxzIFZ1bGxpbmdzIg0KYmlibGlvZ3JhcGh5OiByZWZlcmVuY2VzLmJpYg0KLS0tDQoNCmBgYHs9aHRtbH0NCjxzdHlsZT4NCmJvZHkgew0KICB0ZXh0LWFsaWduOiBqdXN0aWZ5Ow0KICBmb250LWZhbWlseTogVGltZXM7DQp9DQoNCmgxLCAuaDEsIGgyLCAuaDIsIGgzLCAuaDMgew0KICBtYXJnaW4tdG9wOiAyNHB4Ow0KICBmb250LWZhbWlseTogVGltZXM7DQp9DQo8L3N0eWxlPg0KYGBgDQpgYGB7ciwgZ2xvYmFsc2V0dGluZ3MsIGVjaG89RkFMU0UsIHdhcm5pbmc9RkFMU0UsIHJlc3VsdHM9J2hpZGUnfQ0KbGlicmFyeShrbml0cikNCg0Ka25pdHI6Om9wdHNfY2h1bmskc2V0KGVjaG8gPSBUUlVFKQ0Kb3B0c19jaHVuayRzZXQodGlkeS5vcHRzPWxpc3Qod2lkdGguY3V0b2ZmPTEwMCksdGlkeT1UUlVFLCB3YXJuaW5nID0gRkFMU0UsIG1lc3NhZ2UgPSBGQUxTRSxjb21tZW50ID0gIiM+IiwgY2FjaGU9VFJVRSwgY2xhc3Muc291cmNlPWMoInRlc3QiKSwgY2xhc3Mub3V0cHV0PWMoInRlc3QyIikpDQpvcHRpb25zKHdpZHRoID0gMTAwKQ0KcmdsOjpzZXR1cEtuaXRyKCkNCg0KDQoNCmNvbG9yaXplIDwtIGZ1bmN0aW9uKHgsIGNvbG9yKSB7c3ByaW50ZigiPHNwYW4gc3R5bGU9J2NvbG9yOiAlczsnPiVzPC9zcGFuPiIsIGNvbG9yLCB4KSB9DQoNCmBgYA0KDQpgYGB7ciBrbGlwcHksIGVjaG89RkFMU0UsIGluY2x1ZGU9VFJVRX0NCmtsaXBweTo6a2xpcHB5KHBvc2l0aW9uID0gYygndG9wJywgJ3JpZ2h0JykpDQojIGtsaXBweTo6a2xpcHB5KGNvbG9yID0gJ2RhcmtncmVlbicpDQoja2xpcHB5OjprbGlwcHkodG9vbHRpcF9tZXNzYWdlID0gJ0NsaWNrIHRvIGNvcHknLCB0b29sdGlwX3N1Y2Nlc3MgPSAnRG9uZScpDQpgYGANCg0KTGFzdCBjb21waWxlZCBvbiBgciBmb3JtYXQoU3lzLnRpbWUoKSwgJyVCLCAlWScpYA0KDQo8YnI+DQoNCi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQ0KDQojIENvbmNsdXNpb24NCg==</div>
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIkNvbmNsdXNpb24gJiBEaXNjdXNzaW9uIg0KI2JpYmxpb2dyYXBoeTogcmVmZXJlbmNlcy5iaWINCmF1dGhvcjogIk5pZWxzIFZ1bGxpbmdzIg0KYmlibGlvZ3JhcGh5OiByZWZlcmVuY2VzLmJpYg0KLS0tDQoNCmBgYHs9aHRtbH0NCjxzdHlsZT4NCmJvZHkgew0KICB0ZXh0LWFsaWduOiBqdXN0aWZ5Ow0KICBmb250LWZhbWlseTogVGltZXM7DQp9DQoNCmgxLCAuaDEsIGgyLCAuaDIsIGgzLCAuaDMgew0KICBtYXJnaW4tdG9wOiAyNHB4Ow0KICBmb250LWZhbWlseTogVGltZXM7DQp9DQo8L3N0eWxlPg0KYGBgDQpgYGB7ciwgZ2xvYmFsc2V0dGluZ3MsIGVjaG89RkFMU0UsIHdhcm5pbmc9RkFMU0UsIHJlc3VsdHM9J2hpZGUnfQ0KbGlicmFyeShrbml0cikNCg0Ka25pdHI6Om9wdHNfY2h1bmskc2V0KGVjaG8gPSBUUlVFKQ0Kb3B0c19jaHVuayRzZXQodGlkeS5vcHRzPWxpc3Qod2lkdGguY3V0b2ZmPTEwMCksdGlkeT1UUlVFLCB3YXJuaW5nID0gRkFMU0UsIG1lc3NhZ2UgPSBGQUxTRSxjb21tZW50ID0gIiM+IiwgY2FjaGU9VFJVRSwgY2xhc3Muc291cmNlPWMoInRlc3QiKSwgY2xhc3Mub3V0cHV0PWMoInRlc3QyIikpDQpvcHRpb25zKHdpZHRoID0gMTAwKQ0KcmdsOjpzZXR1cEtuaXRyKCkNCg0KDQoNCmNvbG9yaXplIDwtIGZ1bmN0aW9uKHgsIGNvbG9yKSB7c3ByaW50ZigiPHNwYW4gc3R5bGU9J2NvbG9yOiAlczsnPiVzPC9zcGFuPiIsIGNvbG9yLCB4KSB9DQoNCmBgYA0KDQpgYGB7ciBrbGlwcHksIGVjaG89RkFMU0UsIGluY2x1ZGU9VFJVRX0NCmtsaXBweTo6a2xpcHB5KHBvc2l0aW9uID0gYygndG9wJywgJ3JpZ2h0JykpDQojIGtsaXBweTo6a2xpcHB5KGNvbG9yID0gJ2RhcmtncmVlbicpDQoja2xpcHB5OjprbGlwcHkodG9vbHRpcF9tZXNzYWdlID0gJ0NsaWNrIHRvIGNvcHknLCB0b29sdGlwX3N1Y2Nlc3MgPSAnRG9uZScpDQpgYGANCg0KTGFzdCBjb21waWxlZCBvbiBgciBmb3JtYXQoU3lzLnRpbWUoKSwgJyVCLCAlWScpYA0KDQo8YnI+DQoNCi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQ0KDQojIENvbmNsdXNpb24NCg0KVGhpcyBwYXBlciBhaW1lZCB0byBzdHVkeSBob3cgY29sbGFib3JhdGlvbiBiZXR3ZWVuIHNvY2lvbG9naXN0cyBhdCBSYWRib3VkIFVuaXZlcnNpdHkgYW5kIFV0cmVjaHQgVW52ZXJzaXR5IGlzIGRldGVybWluZWQgYW5kIGluZmx1ZW5jZWQgYnkgZ2VuZGVyIGluZXF1YWxpdGllcy4gUGFydGljdWxhcmx5LCB0aGUgc3R1ZHkgYWltcyB0byBzZWUgaG93IHRoZSBwcmVzdGlnZSBvZiBmZW1hbGUgc29jaW9sb2dpc3RzIGluZmx1ZW5jZXMgZ2VuZGVyIGNsdXN0ZXJpbmcgaW4gdGhlIGNvbGxhYm9yYXRpb24gbmV0d29yay4gUHJldmlvdXMgc3R1ZGllcyBoYXZlIHByb3ZlbiBwZXJzaXN0aW5nIGdlbmRlciBpbmVxdWFsaXRpZXMgaW4gKHNvY2lhbCkgc2NpZW5jZSwgcmVsYXRpbmcgdG8gcHJlc3RpZ2UgJiBqb2Igc3RhdHVzIFtAYmVsbG90dGkyMDIyOyBAd2FuZzIwMjNnZW5kZXI7IEBraW0yMDI0cGVyc2lzdGVudF0sIGNhcmVlciBvcHBvcnR1bml0aWVzW0BtdWxkZXJzMjAyNG1hdHRlcl0sIHB1YmxpY2F0aW9ucyBbQG1jZG93ZWxsMjAwNmE7IEBib3plbWFuMjAxMW1lbjsgQGt3aWVrMjAyMWdlbmRlcl0gYW5kIG90aGVyIGluZXF1YWxpdGllcy4gVGFraW5nIGluc3BpcmF0aW9uIGZyb20gdGhlIGdlbmRlciBob21vcGhpbHkgcHJpbmNpcGxlLCBJIHRoZW9yaXplZCB0aGF0IHBlb3BsZSBwcmVmZXIgdG8gY29sbGFib3JhdGUgd2l0aCBvdGhlcnMgZnJvbSB0aGUgc2FtZSBnZW5kZXIsIGR1ZSB0byBnZW5kZXIgYmlhc2VzIGFuZCBwZXJjZWl2ZWQgc3RhdHVzIGRpZmZlcmVuY2VzIFtAa3dpZWsyMDIxZ2VuZGVyOyBAd2FuZzIwMjNnZW5kZXJdLCB3aGljaCBsZWFkcyB0byBjbHVzdGVyZWQgbmV0d29ya3MgaW4gdGVybXMgb2YgZ2VuZGVyLCBhcyBib3RoIG1lbiBhbmQgd29tZW4gcHJlZmVyIHRvIHdvcmsgd2l0aCBvdGhlciBtZW4gYW5kIHdvbWVuLCB3aGVuIGdpdmVuIHRoZSBjaGFuY2UgKCpIeXBvdGhlc2lzIDEqKS4gSG93ZXZlciwgYXMgc3RydWN0dXJhbCBkaWZmZXJlbmNlcyBiZXR3ZWVuIG1hbGUgYW5kIGZlbWFsZSBzY2hvbGFycyBkZWNyZWFzZSBkdWUgdG8gcG9saWN5IGNoYW5nZXMsIGdlbmRlcmNsdXN0ZXJpbmcgb2YgY29sbGFib3JhdGlvbiBuZXR3b3JrcyB3aWxsIHNpbWlsYXJseSBkZWNyZWFzZSAoKkh5cG90aGVzaXMgMiopLiBMYXN0bHksIER1ZSB0byB0aGVzZSBzdHJ1Y3R1cmFsIGNoYW5nZXMsIHByZXN0aWdlIG9mIGJvdGggbWFsZSBhbmQgZmVtYWxlIHNvY2lvbG9naXN0cyB3aWxsIGJlIGV2ZW5seSBkaXN0cmlidXRlZCBbQGJlbGxvdHRpMjAyMjsgQGt3aWVrMjAyMWdlbmRlcjsgQGtub2Jsb2NoMjAxM21hdGlsZGFdLiBDb25zZXF1ZW50bHksIHNvY2lvbG9naXN0cyB3aWxsIGNob29zZSB0aGVpciBjb2xsYWJvcmF0b3JzIGxlc3MgaW4gdGVybXMgb2YgZ2VuZGVyIGFuZCBtb3JlIGluIHRlcm1zIG9mIHByZXN0aWdlLCBhcyBwcm9wb3NlZCBieSB0aGUgTWF0dGhldyBlZmZlY3QgW0Bib2wyMDE4bWF0dGhldzsgQHdhbmcyMDE0dW5wYWNraW5nXS4gVGhpcyB3aWxsIGRlY3JlYXNlIGdlbmRlciBjbHVzdGVyaW5nIGluIGNvbGxhYm9yYXRpb24gbmV0d29ya3MgKCpIeXBvdGhlc2lzIDMqKS5cDQrigIMgVXNpbmcgd2Vic2NyYXBlZCBwdWJsaWNhdGlvbiBkYXRhIGZyb20gT3BlbkFsZXgsIEkgd2FzIGFibGUgdG8gZGV0ZXJtaW5lIHRoZSBjb2xsYWJvcmF0aXZlIG5ldHdvcmtzIG9mIHNjaG9sYXJzIGJldHdlZW4gMjAxNS0yMDI0LiBUaGUgcmVzdWx0cyBvZiB0aGlzIHN0dWR5IGRpZCBub3QgZ2l2ZSBhIGNvbmNyZXRlIGFuc3dlciB0byB0aGUgcmVzZWFyY2ggcXVlc3Rpb24uIEZpcnN0IG9mIGFsbCwgYSBkZXNjcmlwdGl2ZSBhbmFseXNpcyBzaG93ZWQgdGhhdCB0aGVyZSBpcyBzb21lIGdlbmRlciBjbHVzdGVyaW5nIHdvcnRoIG5vdGluZy4gVGhpcyBpbmRpY2F0ZXMgdGhhdCB0aGVyZSBpcyBzb21lIGV2aWRlbmNlIHRoYXQgc3VwcG9ydHMgaHlwb3RoZXNpcyAxLiBBZGRpdGlvbmFsbHksIHRoaXMgbGV2ZWwgb2YgY2x1c3RlcmluZyBzZWVtZWQgdG8gZGVjcmVhc2Ugb3ZlciB0aW1lLCBhcyBib3RoIGdlbmRlciBjbHVzdGVyaW5nIGFuZCB0aGUgYW1vdW50IG9mIGluZGVncmVlcyBiZWNhbWUgbW9yZSBldmVubHkgZGlzdHJpYnV0ZWQgb3ZlciB0aW1lLiBIb3dldmVyLCB0aGlzIGRlY3JlYXNlIHdhcyBmb3VuZCBub3QgdG8gYmUgc2lnbmlmaWNhbnQsIHdoaWNoIHdhcyBjYXVzZSB0byByZWplY3QgKmh5cG90aGVzaXMgMi5cDQoq4oCDIFRvIGludmVzdGlnYXRlIGhvdyB0aGVzZSBjb2xsYWJvcmF0aW9uIG5ldHdvcmtzIGV2b2x2ZSwgdGhpcyBkYXRhIHdhcyBhbmFseXNlZCB3aXRoIFJTaWVuYSwgYSBzaW11bGF0aW9uIG1ldGhvZCBmb3Igc3R1ZHlpbmcgdGhlIGV2b2x1dGlvbiBvZiBzb2NpYWwgbmV0d29ya3MgW0ByaXBsZXkyMDExbWFudWFsXS4gSW50ZXJlc3RpbmdseSwgcHJlbGltaW5hcnkgbW9kZWxzIGluZGljYXRlZCB0aGF0IGRpZmZlcmVuY2UgaW4gZ2VuZGVyIGlzIHBvc2l0aXZlbHkgYXNzb2NpYXRlZCB3aXRoIHRyYW5zaXRpdml0eSwgaW5kaWNhdGluZyB0aGF0IGFjdG9ycyB3YW50IHRvIGNsb3NlIHRyaWFkcyB3aXRoIGFsdGVycyBmcm9tIGEgZGlmZmVyZW50IGdlbmRlci4gVGhpcyBpcyBpbiBjb250cmFzdCB3aXRoIHRoZSBjdXJyZW50IGxpdGVyYXR1cmUgb24gdGhlIE1hdGlsZGEgZWZmZWN0IFtAYmVsbG90dGkyMDIyOyBAa25vYmxvY2gyMDEzbWF0aWxkYTsgQHdhbmcyMDIzZ2VuZGVyXS4gSG93ZXZlciwgbGF0ZXIgbW9kZWxzIGluZGljYXRlZCBwcmVzdGlnZSBpcyB0aGUgb25seSBzaWduaWZpY2FudCBkZXRlcm1pbmFudCBvZiBjb2xsYWJvcmF0aW5nIHRoYW4gZ2VuZGVyLiBQcmVzdGlnZSB3YXMgZm91bmQgdG8gYmUgYSBkZXRlcm1pbmFudCBmb3IgYmVpbmcgYSBwcmVmZXJyZWQgY29sbGFib3JhdG9yLiBXaGVuIGxvb2tpbmcgZm9yIGEgcGVyc29uIHRvIGNvbGxhYm9yYXRlIHdpdGgsIGFjdG9ycyBwcmVmZXIgdG8gc2VuZCB0aWVzIHRvIGFsdGVycyB3aG8gaGF2ZSBhIGhpZ2hlciBsZXZlbCBvZiBwcmVzdGlnZSAoaS5lLiBoYXZpbmcgd29ya2VkIG9uIG1vcmUgUTEgcHVibGljYXRpb25zIGluIGEgZ2l2ZW4gd2F2ZSkuIFNpbWlsYXJseSwgdGhlIHByZXN0aWdlIG9mIGZlbWFsZSBzb2Npb2xvZ2lzdHMgaXMgYWxzbyBmb3VuZCB0byBiZSBpbmRpY2F0b3Igb2YgY29sbGFib3JhdGlvbi4gKkh5cG90aGVzaXMgMyogdGh1cyBmaW5kcyBzb21lIGV2aWRlbmNlIGFuZCBkb2VzIG5vdCBuZWVkIHRvIGJlIHJlamVjdGVkIEhvd2V2ZXIsIGFzIHNhaWQgYmVmb3JlLCBkdWUgdG8gdGhlIGRpdmVyc2UgZmluZGluZ3Mgb2YgdGhpcyBzdHVkeSwgY29uY2x1c2l2ZSBhbnN3ZXJzIGNhbm5vdCBiZSBkcmF3bi5cDQrigINBcyBtYW55IHN0dWRpZXMsIHRoaXMgc3R1ZHkgaGFzIGl0cyBsaW1pdGF0aW9ucy4gT25lIG9mIHRoZSBtYWluIGxpbWl0YXRpb25zIG9mIHRoZSBkYXRhIGlzIHRoZSBzaG9ydCB0aW1lIGZyYW1lIGluIHdoaWNoIHRoZSBkYXRhIHdhcyBjb2xsZWN0ZWQuIEJlY2F1c2UgdGhlIGRhdGEgaXMgc3RpbGwgaW4gdGhlIHByb2Nlc3Mgb2YgYmVpbmcgY29sbGVjdGVkLCBpdCB3YXMgbm90IHBvc3NpYmxlIHRvIGhhdmUgdHdvIGdvb2Qgc2l6ZSB3YXZlcyB0aGF0IGFsc28gY29udGFpbmVkIDIwMjIgYW5kIDIwMjQuIFRoZXJlZm9yZSwgd2F2ZSAxIHdhcyB2ZXJ5IHNwYXJzZSwgYXMgbW9zdCBQaEQncyBhbmQgcG9zdGRvY3Mgd2VyZSBub3QgeWV0IGluIHRoZSBkZXBhcnRtZW50IGFuZCB0aGVyZWZvcmUgKG1pZ2h0KSBub3QgaGF2ZSBwdWJsaXNoZWQgYW55dGhpbmcgaW4gdGhlIGZpcnN0IHdhdmUuIFRoaXMgbWVhbnMgdGhhdCB0aGUgZGVuc2l0eSBvZiB0aGUgbmV0d29yayBpcyBub3QgZHVlIHRvIHN0cnVjdHVyYWwgZWZmZWN0cyBvZiB0aGUgbmV0d29yaywgYnV0IGR1ZSB0byB0aGUgcHJvY2VzcyBpbiB3aGljaCB0aGUgZGF0YSB3YXMgY29sbGVjdGVkLiBIYXZpbmcgYW5vdGhlciB3YXZlIGluIDIwMjYgd2lsbCBlbnN1cmUgdGhhdCBtb3JlIHNjaG9sYXJzIGFyZSBwcmVzZW50IGluIGJvdGggd2F2ZXMgYW5kIHRoYXQgY29sbGFib3JhdGlvbiBuZXR3b3JrcyB3aWxsIGJlIG1vcmUgcmVwcmVzZW50YXRpdmUgb2Ygc29jaWV0eS4gQW5vdGhlciBkYXRhIHJlbGF0ZWQgaXNzdWUgaXMgdGhlIGxhY2sgb2YgZm9jdXMgb24gc3RydWN0dXJhbGx5IGRldGVybWluZWQgY29sbGFib3JhdGlvbi4gZm9yIGV4YW1wbGUsIFBoRCdzIGFsd2F5cyBjb2xsYWJvcmF0ZSB3aXRoIHRoZWlyIHByb21vdG9yIGR1cmluZyB0aGVpciBkaXNzZXJ0YXRpb24uIFRodXMsIGl0IHdvdWxkIGJlIG1vcmUgYWNjdXJhdGUgaWYgdGhlc2UgcmVsYXRpb25zIHdlcmUgZGV0ZXJtaW5lZCBieSBzdHJ1Y3R1cmFsIDEncywgYW4gb3B0aW9uIG9mIFJTaWVuYSB3aGljaCBtZWFucyB0aGF0IHRoZXNlIGFjdG9ycyBhcmUgYWx3YXlzIDEsIHJlZ2FyZGxlc3Mgb2YgdGhlIHN0cnVjdHVyYWwgZWZmZWN0cyBpbiB0aGUgbW9kZWwgW0ByaXBsZXkyMDExbWFudWFsXS4gRnV0dXJlIHJlc2VhcmNoIHdvdWxkIGRvIHdlbGwgdG8gaW5jbHVkZSB0aGVzZSBzdHJ1Y3R1cmFsIHRpZXMsIGFzIHRoZSBuZXR3b3JrIHdvdWxkIGxpa2VseSBoYXZlIGNyZWF0ZWQgbW9yZSByZXByZXNlbnRhdGl2ZSBvZiBob3cgY29sbGFib3JhdGlvbiB3b3JrcyBpbiB0aGUgYWNhZGVtaWMgd29ybGQuXA0K4oCDIFJlbGF0aW5nIHRvIHRoZSByZXN1bHRzLCBmdXR1cmUgcmVzZWFyY2ggc2hvdWxkIGZvY3VzIG9uIGZpbmRpbmcgbW9yZSBjb25jcmV0ZSBhbnN3ZXJzIHRvIHRoaXMgcmVzZWFyY2ggcXVlc3Rpb24sIGFzIHRoZSByZXN1bHRzIGFyZSBub3QgaW4gbGluZSB3aXRoIHRoZSBjdXJyZW50IGxpdGVyYXR1cmUuIFNpbWlsYXJseSwgYmFzZWQgb24gdGhlIEdvb2RuZXNzIG9mIEZpdCBvZiB0aGUgZHlhZCBjZW5zdXMsIHRoZXNlIG1vZGVscyB3b3VsZCBsaWtlbHkgaGF2ZSBiZW5lZml0ZWQgZnJvbSBzb21lIGZvcm0gb2YgZHlhZGljIGNvdmFyaWF0ZSBuZXR3b3JrIHN0YXRpc3RpY3MsIGFzIHRoZSBtb2RlbHMgd2VyZSBub3QgdmVyeSB3ZWxsIGFibGUgdG8gY29ycmVjdGx5IGVzdGltYXRlIHRoZSBkeWFkaWMgdHJhbnNpdGlvbnMuIFRoaXMgbWFrZXMgc2Vuc2UgdGhlb3J5d2lzZSwgYXMgY29sbGFib3JhdGlvbiBpbmRpY2F0ZXMgdGhhdCB0aGVyZSBtaWdodCBiZSBhIGNvbnRleHQgYXBhcnQgZnJvbSB0aGUgZWdvIHRoYXQgaXMgaW1wb3J0YW50IHRvIHRha2UgaW50byBhY2NvdW50LiBIb3dldmVyLCBnaXZlbiBjZXJ0YWluIHRpbWUgYW5kIGtub3dsZWRnZSByZXN0cmljdGlvbiwgdGhpcyB3YXMgbm90IGFjaGlldmFibGUgaW4gdGhpcyBzdHVkeS4gQWRkaXRpb25hbGx5LCBnZW5lcmFsaXppbmcgdGhpcyB0byB0aGUgbGFyZ2VyIGFjYWRlbWljIHNldHRpbmcgbWlnaHQgYWxzbyBwcm92ZSBiZW5lZmljaWFsLCBhcyB0aGlzIHN0dWR5IG9ubHkgbG9va2VkIGF0IHR3byBzb2Npb2xvZ3kgZGVwYXJ0bWVudHMgYXQgRHV0Y2ggdW5pdmVyc2l0aWVzLlwNCuKAgyBPdmVyYWxsLCB0aGlzIHN0dWR5IHNob3dlZCB0aGF0IHRoZSB3YXkgaW4gd2hpY2ggc2Nob2xhcnMgYXQgRHV0Y2ggVW5pdmVyc2l0aWVzIGNvbGxhYm9yYXRlIGlzIHF1aXRlIGNvbXBsZXggYW5kIG5vdCBhbHdheXMgZWFzeSB0byBtb2RlbC4gSW4gc3VtLCB3aGlsZSB0aGVyZSBpcyBjbHVzdGVyaW5nIGluIHRlcm1zIG9mIGdlbmRlciBpbiB0aGVzZSBjb2xsYWJvcmF0aW9uIG5ldHdvcmtzLCBpdCBzZWVtcyB0byBiZSB0aGUgY2FzZSB0aGF0IHBlb3BsZSBwcmVmZXIgdG8gd29yayB3aXRoIHNjaG9sYXJzIHdobyBoYXZlIGEgaGlnaGVyIHByZXN0aWdlLCBiZSBpdCBwcmVzdGlnaW91cyBmZW1hbGUgc2Nob2xhcnMgb3IgcHJlc3RpZ2lvdXMgbWFsZSBzY2hvbGFycyBbQGJvbDIwMThtYXR0aGV3XS4NCg==</div>
 
 
 </div>

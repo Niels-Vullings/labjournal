@@ -88,22 +88,118 @@ dim(net_soc_array)
 
 # Analysis {.tabset}
 
-TEXT
+Originally, my idea for this study was to see how prestige changes based
+on specific network structures. I soon realized that this would be to
+advanced for my current understanding of both Social Networks and
+RSiena, to make that happen. That is why in this section, I will use
+Model 2.5 of my study to see how prestige changes based on the gender
+covariate network statistics. As behavioural statistics, I added
+indegree isolates and outdegree isolates effects and the total
+similarity x alter popularity statistic. To my understanding, this
+statistic Unfortunately, after trying several times, I was not able to
+get the model to converge. Therefore, I just included one of the models
+to show the output.
 
 ### Create SienaData
 
 ```{r}
-# #---- Dependent ----
-# net <- sienaDependent(net_soc_array)
-# 
-# Beh_pres <- sienaDependent(Beh_pres, type = "behavior")
-# 
-# #---- Independent ----
-# # gender <- 
-#   
-# # prestige <- 
-# 
-# #---- Make Siena df ----
-# mydata <- sienaDataCreate(net, Beh_pres)
+#---- Dependent ----
+net <- sienaDependent(net_soc_array)
+
+Beh_pres <- df_ego %>% select(Q1.W1, Q1.W2) %>% as.matrix()
+
+Beh_pres <- sienaDependent(Beh_pres, type = "behavior")
+
+#---- Independent ----
+gender <- df_ego$perc_female
+
+gender <- coCovar(gender)
+
+#---- Make Siena df ----
+mydata_Beh <- sienaDataCreate(net, Beh_pres, gender)
 ```
 
+### Create Effects object
+
+```{r}
+myeff_Beh <- getEffects(mydata_Beh)
+print01Report(mydata_Beh, modelname = "./results/Collab_Beh")
+
+```
+
+### Add Effects
+
+```{r}
+myeff_Beh <- includeEffects(myeff_Beh, isolateNet, inPopSqrt, outAct)
+
+```
+
+```{r}
+myeff_Beh <- includeEffects(myeff_Beh, diffX, diffXTransTrip, egoX, altX, interaction1 = "gender")
+myeff_Beh <- includeEffects(myeff_Beh, name = "Beh_pres", totSimPopAlt, isolate,  interaction1 = "net")
+myeff_Beh <- includeEffects(myeff_Beh, name = "Beh_pres", effFrom, interaction1 = "gender")
+
+```
+
+### Create and Run the Algorithm
+
+#### Set up parallel cluster
+
+```{r, results='hide'}
+no_cores <- detectCores() - 1
+mycl <- makeCluster(rep("localhost", no_cores))
+clusterEvalQ(mycl, library(RSiena))
+registerDoParallel(mycl)
+# stopCluster(mycl)
+
+```
+
+```{r, eval=FALSE}
+myAlgorithm_Beh <- sienaAlgorithmCreate(projname = "./results/Collab_Beh")
+ans_Beh1 <- siena07(myAlgorithm_Beh, useCluster = T, nbrNodes = no_cores, data = mydata_Beh, effects = myeff_Beh, returnDeps = TRUE)
+ans_Beh1
+# fsave(ans_Beh1, file = "-ans_Beh1")
+
+ans_Beh2 <- siena07(myAlgorithm_Beh, useCluster = T, nbrNodes = no_cores, data = mydata_Beh, effects = myeff_Beh, returnDeps = TRUE)
+ans_Beh2
+# fsave(ans_Beh2, file = "-ans_Beh2")
+
+ans_Beh3 <- siena07(myAlgorithm_Beh, useCluster = T, nbrNodes = no_cores, data = mydata_Beh, effects = myeff_Beh, returnDeps = TRUE)
+ans_Beh3
+# fsave(ans_Beh3, file = "-ans_Beh3")
+
+ans_Beh4 <- siena07(myAlgorithm_Beh, useCluster = T, nbrNodes = no_cores, data = mydata_Beh, effects = myeff_Beh, returnDeps = TRUE)
+ans_Beh4
+# fsave(ans_Beh4, file = "-ans_Beh4")
+
+ans_Beh5 <- siena07(myAlgorithm_Beh, useCluster = T, nbrNodes = no_cores, data = mydata_Beh, effects = myeff_Beh, returnDeps = TRUE)
+ans_Beh5
+# fsave(ans_Beh5, file = "-ans_Beh5")
+
+
+# stopCluster(mycl)
+
+
+# if necessary estimate again!  
+ans_Beh_2 <- siena07(myAlgorithm_Beh, data = mydata_Beh, effects = myeff_Beh, prevAns = ans_Beh1, returnDeps=TRUE)
+ans_Beh_2
+fsave(ans_Beh_2, file = "-ans_Beh_2")
+
+
+```
+
+```{r, echo=FALSE}
+
+ans_Beh <- fload("./results/processed/20241030-ans_Beh1.rda")
+ans_Beh
+
+```
+
+### Goodness of Fit
+
+```{r}
+# GOF <- sienaGOF(ans_Beh, IndegreeDistribution, verbose = FALSE, join = TRUE, varName = "net")
+
+# plot(GOF, main = "")
+
+```

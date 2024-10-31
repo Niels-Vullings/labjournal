@@ -167,7 +167,7 @@ myAlgorithm_M0 <- sienaAlgorithmCreate(projname = "./results/Collab_M0")
 ans_M0 <- siena07(myAlgorithm_M0, data = mydata_M0, effects = myeff_M0, returnDeps = TRUE)
 ans_M0
 
-fsave(ans_M0, file = "-ans_M0")
+# fsave(ans_M0, file = "-ans_M0")
 
 # if necessary estimate again!  
 # ans_M1_2 <- siena07(myAlgorithm, data = mydata, effects = myeff, prevans_ = ans_M1, returnDeps=TRUE)
@@ -332,7 +332,7 @@ ans_M2
 # if necessary estimate again!  
 ans_M2_2 <- siena07(myAlgorithm, data = mydata_M2, effects = myeff_M2, prevAns = ans_M2, returnDeps=TRUE)
 ans_M2_2
-fsave(ans_M2_2, file = "-ans_M2_2")
+# fsave(ans_M2_2, file = "-ans_M2_2")
 
 
 ```

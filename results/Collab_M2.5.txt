@@ -6,7 +6,7 @@ Filename is ./results/Collab_M2.5.txt.
 
 This file contains primary output for SIENA project <<./results/Collab_M2.5>>.
 
-Date and time: 30/10/2024 13:45:39 
+Date and time: 31/10/2024 15:22:24 
 
 RSiena version 1.4.7 (20 02 2024)
 

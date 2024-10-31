@@ -642,26 +642,145 @@ RSiena</h1>
 <div id="analysis" class="section level1 tabset" number="5">
 <h1 class="tabset"><span class="header-section-number">5</span>
 Analysis</h1>
-<p>TEXT</p>
+<p>Originally, my idea for this study was to see how prestige changes
+based on specific network structures. I soon realized that this would be
+to advanced for my current understanding of both Social Networks and
+RSiena, to make that happen. That is why in this section, I will use
+Model 2.5 of my study to see how prestige changes based on the gender
+covariate network statistics. As behavioural statistics, I added
+indegree isolates and outdegree isolates effects and the total
+similarity x alter popularity statistic. To my understanding, this
+statistic Unfortunately, after trying several times, I was not able to
+get the model to converge. Therefore, I just included one of the models
+to show the output.</p>
 <div id="create-sienadata" class="section level3" number="5.0.1">
 <h3><span class="header-section-number">5.0.1</span> Create
 SienaData</h3>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="co"># #---- Dependent ----</span></span>
-<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a><span class="co"># net &lt;- sienaDependent(net_soc_array)</span></span>
-<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a><span class="co"># </span></span>
-<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a><span class="co"># Beh_pres &lt;- sienaDependent(Beh_pres, type = &quot;behavior&quot;)</span></span>
-<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a><span class="co"># </span></span>
-<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a><span class="co"># #---- Independent ----</span></span>
-<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a><span class="co"># # gender &lt;- </span></span>
-<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a><span class="co">#   </span></span>
-<span id="cb8-9"><a href="#cb8-9" tabindex="-1"></a><span class="co"># # prestige &lt;- </span></span>
-<span id="cb8-10"><a href="#cb8-10" tabindex="-1"></a><span class="co"># </span></span>
-<span id="cb8-11"><a href="#cb8-11" tabindex="-1"></a><span class="co"># #---- Make Siena df ----</span></span>
-<span id="cb8-12"><a href="#cb8-12" tabindex="-1"></a><span class="co"># mydata &lt;- sienaDataCreate(net, Beh_pres)</span></span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="co">#---- Dependent ----</span></span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>net <span class="ot">&lt;-</span> <span class="fu">sienaDependent</span>(net_soc_array)</span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a>Beh_pres <span class="ot">&lt;-</span> df_ego <span class="sc">%&gt;%</span> <span class="fu">select</span>(Q1.W1, Q1.W2) <span class="sc">%&gt;%</span> <span class="fu">as.matrix</span>()</span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a></span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a>Beh_pres <span class="ot">&lt;-</span> <span class="fu">sienaDependent</span>(Beh_pres, <span class="at">type =</span> <span class="st">&quot;behavior&quot;</span>)</span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a></span>
+<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a><span class="co">#---- Independent ----</span></span>
+<span id="cb8-9"><a href="#cb8-9" tabindex="-1"></a>gender <span class="ot">&lt;-</span> df_ego<span class="sc">$</span>perc_female</span>
+<span id="cb8-10"><a href="#cb8-10" tabindex="-1"></a></span>
+<span id="cb8-11"><a href="#cb8-11" tabindex="-1"></a>gender <span class="ot">&lt;-</span> <span class="fu">coCovar</span>(gender)</span>
+<span id="cb8-12"><a href="#cb8-12" tabindex="-1"></a></span>
+<span id="cb8-13"><a href="#cb8-13" tabindex="-1"></a><span class="co">#---- Make Siena df ----</span></span>
+<span id="cb8-14"><a href="#cb8-14" tabindex="-1"></a>mydata_Beh <span class="ot">&lt;-</span> <span class="fu">sienaDataCreate</span>(net, Beh_pres, gender)</span></code></pre></div>
+</div>
+<div id="create-effects-object" class="section level3" number="5.0.2">
+<h3><span class="header-section-number">5.0.2</span> Create Effects
+object</h3>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a>myeff_Beh <span class="ot">&lt;-</span> <span class="fu">getEffects</span>(mydata_Beh)</span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a><span class="fu">print01Report</span>(mydata_Beh, <span class="at">modelname =</span> <span class="st">&quot;./results/Collab_Beh&quot;</span>)</span></code></pre></div>
+</div>
+<div id="add-effects" class="section level3" number="5.0.3">
+<h3><span class="header-section-number">5.0.3</span> Add Effects</h3>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>myeff_Beh <span class="ot">&lt;-</span> <span class="fu">includeEffects</span>(myeff_Beh, isolateNet, inPopSqrt, outAct)</span></code></pre></div>
+<pre><code>##   effectName                   include fix   test  initialValue parm
+## 1 indegree - popularity (sqrt) TRUE    FALSE FALSE          0   0   
+## 2 outdegree - activity         TRUE    FALSE FALSE          0   0   
+## 3 network-isolate              TRUE    FALSE FALSE          0   0</code></pre>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a>myeff_Beh <span class="ot">&lt;-</span> <span class="fu">includeEffects</span>(myeff_Beh, diffX, diffXTransTrip, egoX, altX, <span class="at">interaction1 =</span> <span class="st">&quot;gender&quot;</span>)</span></code></pre></div>
+<pre><code>##   effectName                       include fix   test  initialValue parm
+## 1 gender alter                     TRUE    FALSE FALSE          0   0   
+## 2 gender ego                       TRUE    FALSE FALSE          0   0   
+## 3 gender difference                TRUE    FALSE FALSE          0   0   
+## 4 transitive triplets diff. gender TRUE    FALSE FALSE          0   0</code></pre>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a>myeff_Beh <span class="ot">&lt;-</span> <span class="fu">includeEffects</span>(myeff_Beh, <span class="at">name =</span> <span class="st">&quot;Beh_pres&quot;</span>, totSimPopAlt, isolate,  <span class="at">interaction1 =</span> <span class="st">&quot;net&quot;</span>)</span></code></pre></div>
+<pre><code>##   effectName                            include fix   test  initialValue parm
+## 1 Beh_pres in-isolate                   TRUE    FALSE FALSE          0   0   
+## 2 Beh_pres tot. sim. x popularity alter TRUE    FALSE FALSE          0   0</code></pre>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a>myeff_Beh <span class="ot">&lt;-</span> <span class="fu">includeEffects</span>(myeff_Beh, <span class="at">name =</span> <span class="st">&quot;Beh_pres&quot;</span>, effFrom, <span class="at">interaction1 =</span> <span class="st">&quot;gender&quot;</span>)</span></code></pre></div>
+<pre><code>##   effectName                   include fix   test  initialValue parm
+## 1 Beh_pres: effect from gender TRUE    FALSE FALSE          0   0</code></pre>
+</div>
+<div id="create-and-run-the-algorithm" class="section level3"
+number="5.0.4">
+<h3><span class="header-section-number">5.0.4</span> Create and Run the
+Algorithm</h3>
+<div id="set-up-parallel-cluster" class="section level4"
+number="5.0.4.1">
+<h4><span class="header-section-number">5.0.4.1</span> Set up parallel
+cluster</h4>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a>no_cores <span class="ot">&lt;-</span> <span class="fu">detectCores</span>() <span class="sc">-</span> <span class="dv">1</span></span>
+<span id="cb18-2"><a href="#cb18-2" tabindex="-1"></a>mycl <span class="ot">&lt;-</span> <span class="fu">makeCluster</span>(<span class="fu">rep</span>(<span class="st">&quot;localhost&quot;</span>, no_cores))</span>
+<span id="cb18-3"><a href="#cb18-3" tabindex="-1"></a><span class="fu">clusterEvalQ</span>(mycl, <span class="fu">library</span>(RSiena))</span>
+<span id="cb18-4"><a href="#cb18-4" tabindex="-1"></a><span class="fu">registerDoParallel</span>(mycl)</span>
+<span id="cb18-5"><a href="#cb18-5" tabindex="-1"></a><span class="co"># stopCluster(mycl)</span></span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a>myAlgorithm_Beh <span class="ot">&lt;-</span> <span class="fu">sienaAlgorithmCreate</span>(<span class="at">projname =</span> <span class="st">&quot;./results/Collab_Beh&quot;</span>)</span>
+<span id="cb19-2"><a href="#cb19-2" tabindex="-1"></a>ans_Beh1 <span class="ot">&lt;-</span> <span class="fu">siena07</span>(myAlgorithm_Beh, <span class="at">useCluster =</span> T, <span class="at">nbrNodes =</span> no_cores, <span class="at">data =</span> mydata_Beh, <span class="at">effects =</span> myeff_Beh, <span class="at">returnDeps =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb19-3"><a href="#cb19-3" tabindex="-1"></a>ans_Beh1</span>
+<span id="cb19-4"><a href="#cb19-4" tabindex="-1"></a><span class="co"># fsave(ans_Beh1, file = &quot;-ans_Beh1&quot;)</span></span>
+<span id="cb19-5"><a href="#cb19-5" tabindex="-1"></a></span>
+<span id="cb19-6"><a href="#cb19-6" tabindex="-1"></a>ans_Beh2 <span class="ot">&lt;-</span> <span class="fu">siena07</span>(myAlgorithm_Beh, <span class="at">useCluster =</span> T, <span class="at">nbrNodes =</span> no_cores, <span class="at">data =</span> mydata_Beh, <span class="at">effects =</span> myeff_Beh, <span class="at">returnDeps =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb19-7"><a href="#cb19-7" tabindex="-1"></a>ans_Beh2</span>
+<span id="cb19-8"><a href="#cb19-8" tabindex="-1"></a><span class="co"># fsave(ans_Beh2, file = &quot;-ans_Beh2&quot;)</span></span>
+<span id="cb19-9"><a href="#cb19-9" tabindex="-1"></a></span>
+<span id="cb19-10"><a href="#cb19-10" tabindex="-1"></a>ans_Beh3 <span class="ot">&lt;-</span> <span class="fu">siena07</span>(myAlgorithm_Beh, <span class="at">useCluster =</span> T, <span class="at">nbrNodes =</span> no_cores, <span class="at">data =</span> mydata_Beh, <span class="at">effects =</span> myeff_Beh, <span class="at">returnDeps =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb19-11"><a href="#cb19-11" tabindex="-1"></a>ans_Beh3</span>
+<span id="cb19-12"><a href="#cb19-12" tabindex="-1"></a><span class="co"># fsave(ans_Beh3, file = &quot;-ans_Beh3&quot;)</span></span>
+<span id="cb19-13"><a href="#cb19-13" tabindex="-1"></a></span>
+<span id="cb19-14"><a href="#cb19-14" tabindex="-1"></a>ans_Beh4 <span class="ot">&lt;-</span> <span class="fu">siena07</span>(myAlgorithm_Beh, <span class="at">useCluster =</span> T, <span class="at">nbrNodes =</span> no_cores, <span class="at">data =</span> mydata_Beh, <span class="at">effects =</span> myeff_Beh, <span class="at">returnDeps =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb19-15"><a href="#cb19-15" tabindex="-1"></a>ans_Beh4</span>
+<span id="cb19-16"><a href="#cb19-16" tabindex="-1"></a><span class="co"># fsave(ans_Beh4, file = &quot;-ans_Beh4&quot;)</span></span>
+<span id="cb19-17"><a href="#cb19-17" tabindex="-1"></a></span>
+<span id="cb19-18"><a href="#cb19-18" tabindex="-1"></a>ans_Beh5 <span class="ot">&lt;-</span> <span class="fu">siena07</span>(myAlgorithm_Beh, <span class="at">useCluster =</span> T, <span class="at">nbrNodes =</span> no_cores, <span class="at">data =</span> mydata_Beh, <span class="at">effects =</span> myeff_Beh, <span class="at">returnDeps =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb19-19"><a href="#cb19-19" tabindex="-1"></a>ans_Beh5</span>
+<span id="cb19-20"><a href="#cb19-20" tabindex="-1"></a><span class="co"># fsave(ans_Beh5, file = &quot;-ans_Beh5&quot;)</span></span>
+<span id="cb19-21"><a href="#cb19-21" tabindex="-1"></a></span>
+<span id="cb19-22"><a href="#cb19-22" tabindex="-1"></a></span>
+<span id="cb19-23"><a href="#cb19-23" tabindex="-1"></a><span class="co"># stopCluster(mycl)</span></span>
+<span id="cb19-24"><a href="#cb19-24" tabindex="-1"></a></span>
+<span id="cb19-25"><a href="#cb19-25" tabindex="-1"></a></span>
+<span id="cb19-26"><a href="#cb19-26" tabindex="-1"></a><span class="co"># if necessary estimate again!  </span></span>
+<span id="cb19-27"><a href="#cb19-27" tabindex="-1"></a>ans_Beh_2 <span class="ot">&lt;-</span> <span class="fu">siena07</span>(myAlgorithm_Beh, <span class="at">data =</span> mydata_Beh, <span class="at">effects =</span> myeff_Beh, <span class="at">prevAns =</span> ans_Beh1, <span class="at">returnDeps=</span><span class="cn">TRUE</span>)</span>
+<span id="cb19-28"><a href="#cb19-28" tabindex="-1"></a>ans_Beh_2</span>
+<span id="cb19-29"><a href="#cb19-29" tabindex="-1"></a><span class="fu">fsave</span>(ans_Beh_2, <span class="at">file =</span> <span class="st">&quot;-ans_Beh_2&quot;</span>)</span></code></pre></div>
+<pre><code>## Estimates, standard errors and convergence t-ratios
+## 
+##                                                  Estimate   Standard    Convergence 
+##                                                               Error       t-ratio   
+## Network Dynamics 
+##    1. rate basic rate parameter net                5.1648 (    2.8430 )   -1.2339   
+##    2. eval outdegree (density)                     5.2758 (  134.0635 )   -2.5992   
+##    3. eval reciprocity                             3.6114 (   18.4312 )    0.5127   
+##    4. eval indegree - popularity (sqrt)            1.1011 (    2.5849 )   -0.2599   
+##    5. eval outdegree - activity                   -3.5495 (   38.8500 )   -5.8652   
+##    6. eval network-isolate                         7.6729 (  104.7417 )    0.4531   
+##    7. eval gender alter                           -6.8173 (  278.2063 )   -0.0992   
+##    8. eval gender ego                              9.5063 (  291.3086 )    0.5389   
+##    9. eval gender difference                       6.9217 (  274.6736 )   -0.2360   
+##   10. eval transitive triplets diff. gender        2.8314 (    5.4108 )    0.1688   
+## 
+## Behavior Dynamics
+##   11. rate rate Beh_pres period 1                 14.4737 (   18.3308 )   -2.0286   
+##   12. eval Beh_pres linear shape                   9.9658 (  237.6731 )    0.0622   
+##   13. eval Beh_pres quadratic shape               -0.3257 (    5.8989 )    1.0249   
+##   14. eval Beh_pres in-isolate                     3.4069 (  107.6120 )   -0.1384   
+##   15. eval Beh_pres out-isolate                  -22.0533 (  460.5644 )    0.2018   
+##   16. eval Beh_pres tot. sim. x popularity alter -58.5835 ( 1434.6944 )    0.8722   
+##   17. eval Beh_pres: effect from gender           -8.0424 (   77.9568 )   -1.7150   
+## 
+## Overall maximum convergence ratio:   23.3378 
+## 
+## 
+## Total of 2171 iteration steps.</code></pre>
+</div>
+</div>
+<div id="goodness-of-fit" class="section level3" number="5.0.5">
+<h3><span class="header-section-number">5.0.5</span> Goodness of
+Fit</h3>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" tabindex="-1"></a><span class="co"># GOF &lt;- sienaGOF(ans_Beh, IndegreeDistribution, verbose = FALSE, join = TRUE, varName = &quot;net&quot;)</span></span>
+<span id="cb21-2"><a href="#cb21-2" tabindex="-1"></a></span>
+<span id="cb21-3"><a href="#cb21-3" tabindex="-1"></a><span class="co"># plot(GOF, main = &quot;&quot;)</span></span></code></pre></div>
 </div>
 </div>
 
-<div id="rmd-source-code">LS0tDQp0aXRsZTogIlJTaWVuYSBCZWhhdmlvdXJhbCBNb2RlbHMiDQojYmlibGlvZ3JhcGh5OiByZWZlcmVuY2VzLmJpYg0KYXV0aG9yOiAiTmllbHMgVnVsbGluZ3MiDQpiaWJsaW9ncmFwaHk6IHJlZmVyZW5jZXMuYmliDQplZGl0b3Jfb3B0aW9uczogDQogIG1hcmtkb3duOiANCiAgICB3cmFwOiA3Mg0KLS0tDQoNCmBgYHtyLCBlY2hvPUZBTFNFfQ0Kcm0obGlzdCA9IGxzKCkpDQpgYGANCg0KIyBMb2FkIFVERg0KDQpgYGB7cn0NCmNvbG9yaXplIDwtIGZ1bmN0aW9uKHgsIGNvbG9yKSB7c3ByaW50ZigiPHNwYW4gc3R5bGU9J2NvbG9yOiAlczsnPiVzPC9zcGFuPiIsIGNvbG9yLCB4KSB9DQoNCmZwYWNrYWdlLmNoZWNrIDwtIGZ1bmN0aW9uKHBhY2thZ2VzKSB7DQogIGxhcHBseShwYWNrYWdlcywgRlVOID0gZnVuY3Rpb24oeCkgew0KICAgIGlmICghcmVxdWlyZSh4LCBjaGFyYWN0ZXIub25seSA9IFRSVUUpKSB7DQogICAgICBpbnN0YWxsLnBhY2thZ2VzKHgsIGRlcGVuZGVuY2llcyA9IFRSVUUpDQogICAgICBsaWJyYXJ5KHgsIGNoYXJhY3Rlci5vbmx5ID0gVFJVRSkNCiAgICB9DQogIH0pDQp9DQoNCmZzYXZlIDwtIGZ1bmN0aW9uKHgsIGZpbGUgPSBOVUxMLCBsb2NhdGlvbiA9ICIuL3Jlc3VsdHMvcHJvY2Vzc2VkLyIpIHsNCiAgaWZlbHNlKCFkaXIuZXhpc3RzKCJyZXN1bHRzIiksIGRpci5jcmVhdGUoImRhdGEiKSwgRkFMU0UpDQogIGlmZWxzZSghZGlyLmV4aXN0cygicmVzdWx0cy9wcm9jZXNzZWQiKSwgZGlyLmNyZWF0ZSgicmVzdWx0cy9wcm9jZXNzZWQiKSwgRkFMU0UpDQogIGlmIChpcy5udWxsKGZpbGUpKQ0KICAgIGZpbGUgPSBkZXBhcnNlKHN1YnN0aXR1dGUoeCkpDQogIGRhdGVuYW1lIDwtIHN1YnN0cihnc3ViKCJbOi1dIiwgIiIsIFN5cy50aW1lKCkpLCAxLCA4KQ0KICB0b3RhbG5hbWUgPC0gcGFzdGUobG9jYXRpb24sIGRhdGVuYW1lLCBmaWxlLCAiLnJkYSIsIHNlcCA9ICIiKQ0KICBzYXZlKHgsIGZpbGUgPSB0b3RhbG5hbWUpICAjbmVlZCB0byBmaXggaWYgZmlsZSBpcyByZWxvYWRlZCBhcyBpbnB1dCBuYW1lLCBub3QgYXMgeC4gDQp9DQoNCmZsb2FkIDwtIGZ1bmN0aW9uKGZpbGVuYW1lKSB7DQogIGxvYWQoZmlsZW5hbWUpDQogIGdldChscygpW2xzKCkgIT0gImZpbGVuYW1lIl0pDQp9DQoNCmZzaG93ZGYgPC0gZnVuY3Rpb24oeCwgLi4uKSB7DQogIGtuaXRyOjprYWJsZSh4LCBkaWdpdHMgPSAyLCAiaHRtbCIsIC4uLikgJT4lDQogICAga2FibGVFeHRyYTo6a2FibGVfc3R5bGluZyhib290c3RyYXBfb3B0aW9ucyA9IGMoInN0cmlwZWQiLCAiaG92ZXIiKSkgJT4lDQogICAga2FibGVFeHRyYTo6c2Nyb2xsX2JveCh3aWR0aCA9ICIxMDAlIiwgaGVpZ2h0ID0gIjMwMHB4IikNCn0NCg0KYGBgDQoNCiMgTG9hZCBQYWNrYWdlcw0KDQpgYGB7ciwgd2FybmluZz1GQUxTRSwgcmVzdWx0cz0naGlkZScsIG1lc3NhZ2U9RkFMU0V9DQpwYWNrYWdlcyA8LSBjKCJ0aWR5dmVyc2UiLCAic25hIiwgImlncmFwaCIsICJSU2llbmEiLCAiaXRlcmF0b3JzIiwgImRvUGFyYWxsZWwiKQ0KDQpmcGFja2FnZS5jaGVjayhwYWNrYWdlcykNCg0KYGBgDQoNCiMgTG9hZCBEYXRhDQoNCmBgYHtyfQ0KIyBMb2FkIEVnbyBkYXRhDQpsb2FkKCJkYXRhL3Byb2Nlc3NlZC9SVV9VVV9lZ28uUkRhdGEiKQ0KDQojIExvYWQgV29ya3MgZGF0YQ0KbG9hZCgiZGF0YS9wcm9jZXNzZWQvUlVfVVVfd29ya3MuUkRhdGEiKQ0KDQojIExvYWQgcmF3IGRhdGEgZm9yIG5ldHdvcmtzDQpsb2FkKCJkYXRhL3Byb2Nlc3NlZC9zb2NfZGF0YV9yYXcuUkRhdGEiKQ0KYGBgDQoNCiMgTWFrZSBuZXR3b3JrIGRhdGEgZm9yIFJTaWVuYQ0KDQpgYGB7cn0NCnByaW50KHBhc3RlMCgiIiwgZGltKHNvY19kYXRhJG5ldHMpKSkNCg0Kd2F2ZV8xIDwtIHNvY19kYXRhJG5ldHNbMSwsXQ0KZGlhZyh3YXZlXzEpIDwtIDANCg0Kd2F2ZV8yIDwtIHNvY19kYXRhJG5ldHNbMiwsXQ0KZGlhZyh3YXZlXzIpIDwtIDANCg0KbmV0X3NvY19hcnJheSA8LSBhcnJheShkYXRhID0gYyh3YXZlXzEsIHdhdmVfMiksIGRpbSA9IGMoZGltKHdhdmVfMSksIDIpKQ0KZGltKG5ldF9zb2NfYXJyYXkpDQpgYGANCg0KIyBBbmFseXNpcyB7LnRhYnNldH0NCg0KVEVYVA0KDQojIyMgQ3JlYXRlIFNpZW5hRGF0YQ0KDQpgYGB7cn0NCiMgIy0tLS0gRGVwZW5kZW50IC0tLS0NCiMgbmV0IDwtIHNpZW5hRGVwZW5kZW50KG5ldF9zb2NfYXJyYXkpDQojIA0KIyBCZWhfcHJlcyA8LSBzaWVuYURlcGVuZGVudChCZWhfcHJlcywgdHlwZSA9ICJiZWhhdmlvciIpDQojIA0KIyAjLS0tLSBJbmRlcGVuZGVudCAtLS0tDQojICMgZ2VuZGVyIDwtIA0KIyAgIA0KIyAjIHByZXN0aWdlIDwtIA0KIyANCiMgIy0tLS0gTWFrZSBTaWVuYSBkZiAtLS0tDQojIG15ZGF0YSA8LSBzaWVuYURhdGFDcmVhdGUobmV0LCBCZWhfcHJlcykNCmBgYA0KDQo=</div>
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIlJTaWVuYSBCZWhhdmlvdXJhbCBNb2RlbHMiDQojYmlibGlvZ3JhcGh5OiByZWZlcmVuY2VzLmJpYg0KYXV0aG9yOiAiTmllbHMgVnVsbGluZ3MiDQpiaWJsaW9ncmFwaHk6IHJlZmVyZW5jZXMuYmliDQplZGl0b3Jfb3B0aW9uczogDQogIG1hcmtkb3duOiANCiAgICB3cmFwOiA3Mg0KLS0tDQoNCmBgYHtyLCBlY2hvPUZBTFNFfQ0Kcm0obGlzdCA9IGxzKCkpDQpgYGANCg0KIyBMb2FkIFVERg0KDQpgYGB7cn0NCmNvbG9yaXplIDwtIGZ1bmN0aW9uKHgsIGNvbG9yKSB7c3ByaW50ZigiPHNwYW4gc3R5bGU9J2NvbG9yOiAlczsnPiVzPC9zcGFuPiIsIGNvbG9yLCB4KSB9DQoNCmZwYWNrYWdlLmNoZWNrIDwtIGZ1bmN0aW9uKHBhY2thZ2VzKSB7DQogIGxhcHBseShwYWNrYWdlcywgRlVOID0gZnVuY3Rpb24oeCkgew0KICAgIGlmICghcmVxdWlyZSh4LCBjaGFyYWN0ZXIub25seSA9IFRSVUUpKSB7DQogICAgICBpbnN0YWxsLnBhY2thZ2VzKHgsIGRlcGVuZGVuY2llcyA9IFRSVUUpDQogICAgICBsaWJyYXJ5KHgsIGNoYXJhY3Rlci5vbmx5ID0gVFJVRSkNCiAgICB9DQogIH0pDQp9DQoNCmZzYXZlIDwtIGZ1bmN0aW9uKHgsIGZpbGUgPSBOVUxMLCBsb2NhdGlvbiA9ICIuL3Jlc3VsdHMvcHJvY2Vzc2VkLyIpIHsNCiAgaWZlbHNlKCFkaXIuZXhpc3RzKCJyZXN1bHRzIiksIGRpci5jcmVhdGUoImRhdGEiKSwgRkFMU0UpDQogIGlmZWxzZSghZGlyLmV4aXN0cygicmVzdWx0cy9wcm9jZXNzZWQiKSwgZGlyLmNyZWF0ZSgicmVzdWx0cy9wcm9jZXNzZWQiKSwgRkFMU0UpDQogIGlmIChpcy5udWxsKGZpbGUpKQ0KICAgIGZpbGUgPSBkZXBhcnNlKHN1YnN0aXR1dGUoeCkpDQogIGRhdGVuYW1lIDwtIHN1YnN0cihnc3ViKCJbOi1dIiwgIiIsIFN5cy50aW1lKCkpLCAxLCA4KQ0KICB0b3RhbG5hbWUgPC0gcGFzdGUobG9jYXRpb24sIGRhdGVuYW1lLCBmaWxlLCAiLnJkYSIsIHNlcCA9ICIiKQ0KICBzYXZlKHgsIGZpbGUgPSB0b3RhbG5hbWUpICAjbmVlZCB0byBmaXggaWYgZmlsZSBpcyByZWxvYWRlZCBhcyBpbnB1dCBuYW1lLCBub3QgYXMgeC4gDQp9DQoNCmZsb2FkIDwtIGZ1bmN0aW9uKGZpbGVuYW1lKSB7DQogIGxvYWQoZmlsZW5hbWUpDQogIGdldChscygpW2xzKCkgIT0gImZpbGVuYW1lIl0pDQp9DQoNCmZzaG93ZGYgPC0gZnVuY3Rpb24oeCwgLi4uKSB7DQogIGtuaXRyOjprYWJsZSh4LCBkaWdpdHMgPSAyLCAiaHRtbCIsIC4uLikgJT4lDQogICAga2FibGVFeHRyYTo6a2FibGVfc3R5bGluZyhib290c3RyYXBfb3B0aW9ucyA9IGMoInN0cmlwZWQiLCAiaG92ZXIiKSkgJT4lDQogICAga2FibGVFeHRyYTo6c2Nyb2xsX2JveCh3aWR0aCA9ICIxMDAlIiwgaGVpZ2h0ID0gIjMwMHB4IikNCn0NCg0KYGBgDQoNCiMgTG9hZCBQYWNrYWdlcw0KDQpgYGB7ciwgd2FybmluZz1GQUxTRSwgcmVzdWx0cz0naGlkZScsIG1lc3NhZ2U9RkFMU0V9DQpwYWNrYWdlcyA8LSBjKCJ0aWR5dmVyc2UiLCAic25hIiwgImlncmFwaCIsICJSU2llbmEiLCAiaXRlcmF0b3JzIiwgImRvUGFyYWxsZWwiKQ0KDQpmcGFja2FnZS5jaGVjayhwYWNrYWdlcykNCg0KYGBgDQoNCiMgTG9hZCBEYXRhDQoNCmBgYHtyfQ0KIyBMb2FkIEVnbyBkYXRhDQpsb2FkKCJkYXRhL3Byb2Nlc3NlZC9SVV9VVV9lZ28uUkRhdGEiKQ0KDQojIExvYWQgV29ya3MgZGF0YQ0KbG9hZCgiZGF0YS9wcm9jZXNzZWQvUlVfVVVfd29ya3MuUkRhdGEiKQ0KDQojIExvYWQgcmF3IGRhdGEgZm9yIG5ldHdvcmtzDQpsb2FkKCJkYXRhL3Byb2Nlc3NlZC9zb2NfZGF0YV9yYXcuUkRhdGEiKQ0KYGBgDQoNCiMgTWFrZSBuZXR3b3JrIGRhdGEgZm9yIFJTaWVuYQ0KDQpgYGB7cn0NCnByaW50KHBhc3RlMCgiIiwgZGltKHNvY19kYXRhJG5ldHMpKSkNCg0Kd2F2ZV8xIDwtIHNvY19kYXRhJG5ldHNbMSwsXQ0KZGlhZyh3YXZlXzEpIDwtIDANCg0Kd2F2ZV8yIDwtIHNvY19kYXRhJG5ldHNbMiwsXQ0KZGlhZyh3YXZlXzIpIDwtIDANCg0KbmV0X3NvY19hcnJheSA8LSBhcnJheShkYXRhID0gYyh3YXZlXzEsIHdhdmVfMiksIGRpbSA9IGMoZGltKHdhdmVfMSksIDIpKQ0KZGltKG5ldF9zb2NfYXJyYXkpDQpgYGANCg0KIyBBbmFseXNpcyB7LnRhYnNldH0NCg0KT3JpZ2luYWxseSwgbXkgaWRlYSBmb3IgdGhpcyBzdHVkeSB3YXMgdG8gc2VlIGhvdyBwcmVzdGlnZSBjaGFuZ2VzIGJhc2VkDQpvbiBzcGVjaWZpYyBuZXR3b3JrIHN0cnVjdHVyZXMuIEkgc29vbiByZWFsaXplZCB0aGF0IHRoaXMgd291bGQgYmUgdG8NCmFkdmFuY2VkIGZvciBteSBjdXJyZW50IHVuZGVyc3RhbmRpbmcgb2YgYm90aCBTb2NpYWwgTmV0d29ya3MgYW5kDQpSU2llbmEsIHRvIG1ha2UgdGhhdCBoYXBwZW4uIFRoYXQgaXMgd2h5IGluIHRoaXMgc2VjdGlvbiwgSSB3aWxsIHVzZQ0KTW9kZWwgMi41IG9mIG15IHN0dWR5IHRvIHNlZSBob3cgcHJlc3RpZ2UgY2hhbmdlcyBiYXNlZCBvbiB0aGUgZ2VuZGVyDQpjb3ZhcmlhdGUgbmV0d29yayBzdGF0aXN0aWNzLiBBcyBiZWhhdmlvdXJhbCBzdGF0aXN0aWNzLCBJIGFkZGVkDQppbmRlZ3JlZSBpc29sYXRlcyBhbmQgb3V0ZGVncmVlIGlzb2xhdGVzIGVmZmVjdHMgYW5kIHRoZSB0b3RhbA0Kc2ltaWxhcml0eSB4IGFsdGVyIHBvcHVsYXJpdHkgc3RhdGlzdGljLiBUbyBteSB1bmRlcnN0YW5kaW5nLCB0aGlzDQpzdGF0aXN0aWMgVW5mb3J0dW5hdGVseSwgYWZ0ZXIgdHJ5aW5nIHNldmVyYWwgdGltZXMsIEkgd2FzIG5vdCBhYmxlIHRvDQpnZXQgdGhlIG1vZGVsIHRvIGNvbnZlcmdlLiBUaGVyZWZvcmUsIEkganVzdCBpbmNsdWRlZCBvbmUgb2YgdGhlIG1vZGVscw0KdG8gc2hvdyB0aGUgb3V0cHV0Lg0KDQojIyMgQ3JlYXRlIFNpZW5hRGF0YQ0KDQpgYGB7cn0NCiMtLS0tIERlcGVuZGVudCAtLS0tDQpuZXQgPC0gc2llbmFEZXBlbmRlbnQobmV0X3NvY19hcnJheSkNCg0KQmVoX3ByZXMgPC0gZGZfZWdvICU+JSBzZWxlY3QoUTEuVzEsIFExLlcyKSAlPiUgYXMubWF0cml4KCkNCg0KQmVoX3ByZXMgPC0gc2llbmFEZXBlbmRlbnQoQmVoX3ByZXMsIHR5cGUgPSAiYmVoYXZpb3IiKQ0KDQojLS0tLSBJbmRlcGVuZGVudCAtLS0tDQpnZW5kZXIgPC0gZGZfZWdvJHBlcmNfZmVtYWxlDQoNCmdlbmRlciA8LSBjb0NvdmFyKGdlbmRlcikNCg0KIy0tLS0gTWFrZSBTaWVuYSBkZiAtLS0tDQpteWRhdGFfQmVoIDwtIHNpZW5hRGF0YUNyZWF0ZShuZXQsIEJlaF9wcmVzLCBnZW5kZXIpDQpgYGANCg0KIyMjIENyZWF0ZSBFZmZlY3RzIG9iamVjdA0KDQpgYGB7cn0NCm15ZWZmX0JlaCA8LSBnZXRFZmZlY3RzKG15ZGF0YV9CZWgpDQpwcmludDAxUmVwb3J0KG15ZGF0YV9CZWgsIG1vZGVsbmFtZSA9ICIuL3Jlc3VsdHMvQ29sbGFiX0JlaCIpDQoNCmBgYA0KDQojIyMgQWRkIEVmZmVjdHMNCg0KYGBge3J9DQpteWVmZl9CZWggPC0gaW5jbHVkZUVmZmVjdHMobXllZmZfQmVoLCBpc29sYXRlTmV0LCBpblBvcFNxcnQsIG91dEFjdCkNCg0KYGBgDQoNCmBgYHtyfQ0KbXllZmZfQmVoIDwtIGluY2x1ZGVFZmZlY3RzKG15ZWZmX0JlaCwgZGlmZlgsIGRpZmZYVHJhbnNUcmlwLCBlZ29YLCBhbHRYLCBpbnRlcmFjdGlvbjEgPSAiZ2VuZGVyIikNCm15ZWZmX0JlaCA8LSBpbmNsdWRlRWZmZWN0cyhteWVmZl9CZWgsIG5hbWUgPSAiQmVoX3ByZXMiLCB0b3RTaW1Qb3BBbHQsIGlzb2xhdGUsICBpbnRlcmFjdGlvbjEgPSAibmV0IikNCm15ZWZmX0JlaCA8LSBpbmNsdWRlRWZmZWN0cyhteWVmZl9CZWgsIG5hbWUgPSAiQmVoX3ByZXMiLCBlZmZGcm9tLCBpbnRlcmFjdGlvbjEgPSAiZ2VuZGVyIikNCg0KYGBgDQoNCiMjIyBDcmVhdGUgYW5kIFJ1biB0aGUgQWxnb3JpdGhtDQoNCiMjIyMgU2V0IHVwIHBhcmFsbGVsIGNsdXN0ZXINCg0KYGBge3IsIHJlc3VsdHM9J2hpZGUnfQ0Kbm9fY29yZXMgPC0gZGV0ZWN0Q29yZXMoKSAtIDENCm15Y2wgPC0gbWFrZUNsdXN0ZXIocmVwKCJsb2NhbGhvc3QiLCBub19jb3JlcykpDQpjbHVzdGVyRXZhbFEobXljbCwgbGlicmFyeShSU2llbmEpKQ0KcmVnaXN0ZXJEb1BhcmFsbGVsKG15Y2wpDQojIHN0b3BDbHVzdGVyKG15Y2wpDQoNCmBgYA0KDQpgYGB7ciwgZXZhbD1GQUxTRX0NCm15QWxnb3JpdGhtX0JlaCA8LSBzaWVuYUFsZ29yaXRobUNyZWF0ZShwcm9qbmFtZSA9ICIuL3Jlc3VsdHMvQ29sbGFiX0JlaCIpDQphbnNfQmVoMSA8LSBzaWVuYTA3KG15QWxnb3JpdGhtX0JlaCwgdXNlQ2x1c3RlciA9IFQsIG5ick5vZGVzID0gbm9fY29yZXMsIGRhdGEgPSBteWRhdGFfQmVoLCBlZmZlY3RzID0gbXllZmZfQmVoLCByZXR1cm5EZXBzID0gVFJVRSkNCmFuc19CZWgxDQojIGZzYXZlKGFuc19CZWgxLCBmaWxlID0gIi1hbnNfQmVoMSIpDQoNCmFuc19CZWgyIDwtIHNpZW5hMDcobXlBbGdvcml0aG1fQmVoLCB1c2VDbHVzdGVyID0gVCwgbmJyTm9kZXMgPSBub19jb3JlcywgZGF0YSA9IG15ZGF0YV9CZWgsIGVmZmVjdHMgPSBteWVmZl9CZWgsIHJldHVybkRlcHMgPSBUUlVFKQ0KYW5zX0JlaDINCiMgZnNhdmUoYW5zX0JlaDIsIGZpbGUgPSAiLWFuc19CZWgyIikNCg0KYW5zX0JlaDMgPC0gc2llbmEwNyhteUFsZ29yaXRobV9CZWgsIHVzZUNsdXN0ZXIgPSBULCBuYnJOb2RlcyA9IG5vX2NvcmVzLCBkYXRhID0gbXlkYXRhX0JlaCwgZWZmZWN0cyA9IG15ZWZmX0JlaCwgcmV0dXJuRGVwcyA9IFRSVUUpDQphbnNfQmVoMw0KIyBmc2F2ZShhbnNfQmVoMywgZmlsZSA9ICItYW5zX0JlaDMiKQ0KDQphbnNfQmVoNCA8LSBzaWVuYTA3KG15QWxnb3JpdGhtX0JlaCwgdXNlQ2x1c3RlciA9IFQsIG5ick5vZGVzID0gbm9fY29yZXMsIGRhdGEgPSBteWRhdGFfQmVoLCBlZmZlY3RzID0gbXllZmZfQmVoLCByZXR1cm5EZXBzID0gVFJVRSkNCmFuc19CZWg0DQojIGZzYXZlKGFuc19CZWg0LCBmaWxlID0gIi1hbnNfQmVoNCIpDQoNCmFuc19CZWg1IDwtIHNpZW5hMDcobXlBbGdvcml0aG1fQmVoLCB1c2VDbHVzdGVyID0gVCwgbmJyTm9kZXMgPSBub19jb3JlcywgZGF0YSA9IG15ZGF0YV9CZWgsIGVmZmVjdHMgPSBteWVmZl9CZWgsIHJldHVybkRlcHMgPSBUUlVFKQ0KYW5zX0JlaDUNCiMgZnNhdmUoYW5zX0JlaDUsIGZpbGUgPSAiLWFuc19CZWg1IikNCg0KDQojIHN0b3BDbHVzdGVyKG15Y2wpDQoNCg0KIyBpZiBuZWNlc3NhcnkgZXN0aW1hdGUgYWdhaW4hICANCmFuc19CZWhfMiA8LSBzaWVuYTA3KG15QWxnb3JpdGhtX0JlaCwgZGF0YSA9IG15ZGF0YV9CZWgsIGVmZmVjdHMgPSBteWVmZl9CZWgsIHByZXZBbnMgPSBhbnNfQmVoMSwgcmV0dXJuRGVwcz1UUlVFKQ0KYW5zX0JlaF8yDQpmc2F2ZShhbnNfQmVoXzIsIGZpbGUgPSAiLWFuc19CZWhfMiIpDQoNCg0KYGBgDQoNCmBgYHtyLCBlY2hvPUZBTFNFfQ0KDQphbnNfQmVoIDwtIGZsb2FkKCIuL3Jlc3VsdHMvcHJvY2Vzc2VkLzIwMjQxMDMwLWFuc19CZWgxLnJkYSIpDQphbnNfQmVoDQoNCmBgYA0KDQojIyMgR29vZG5lc3Mgb2YgRml0DQoNCmBgYHtyfQ0KIyBHT0YgPC0gc2llbmFHT0YoYW5zX0JlaCwgSW5kZWdyZWVEaXN0cmlidXRpb24sIHZlcmJvc2UgPSBGQUxTRSwgam9pbiA9IFRSVUUsIHZhck5hbWUgPSAibmV0IikNCg0KIyBwbG90KEdPRiwgbWFpbiA9ICIiKQ0KDQpgYGANCg==</div>
 
 
 </div>
